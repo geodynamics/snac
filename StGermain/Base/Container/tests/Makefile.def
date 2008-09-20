@@ -1,0 +1,86 @@
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##
+## Copyright (C), 2003, Victorian Partnership for Advanced Computing (VPAC) Ltd, 110 Victoria Street, Melbourne, 3053, Australia.
+##
+## Authors:
+##	Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+##	Patrick D. Sunter, Software Engineer, VPAC. (pds@vpac.org)
+##	Luke J. Hodkinson, Computational Engineer, VPAC. (lhodkins@vpac.org)
+##	Siew-Ching Tan, Software Engineer, VPAC. (siew@vpac.org)
+##	Alan H. Lo, Computational Engineer, VPAC. (alan@vpac.org)
+##	Raquibul Hassan, Computational Engineer, VPAC. (raq@vpac.org)
+##
+##  This library is free software; you can redistribute it and/or
+##  modify it under the terms of the GNU Lesser General Public
+##  License as published by the Free Software Foundation; either
+##  version 2.1 of the License, or (at your option) any later version.
+##
+##  This library is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+##  Lesser General Public License for more details.
+##
+##  You should have received a copy of the GNU Lesser General Public
+##  License along with this library; if not, write to the Free Software
+##  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+##
+## $Id: Makefile.def 4063 2007-04-04 02:51:49Z RaquibulHassan $
+##
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def_tst = libStGermainBaseContainer
+
+def_srcs = \
+	testIndexSet.c \
+	testIndexSet-badAssign.c \
+	testIndexSet-badAccess.c \
+	testPtrMap.c \
+	testIndexMap.c \
+	testList.c \
+	testArray.c \
+	testUniqueList.c \
+	testLinkedList.c \
+	testLinkedListIterator.c \
+	testSet.c \
+	testHashTable.c \
+	testPtrSet.c \
+	testMap.c \
+	testBTree.c \
+	testMaxHeap.c \
+	testMPIRoutines.c \
+	testUIntMap.c \
+	testMemoryPool.c \
+	testRangeSet.c
+
+def_checks = \
+	testIndexSet.0of1.sh \
+	testPtrMap.0of1.sh \
+	testIndexMap.0of1.sh \
+	testList.0of1.sh \
+	testArray.0of1.sh \
+	testLinkedList.0of1.sh \
+	testLinkedListIterator.0of1.sh \
+	testBTree.0of1.sh \
+	testHashTable.0of1.sh \
+	testMaxHeap.0of1.sh \
+	testMPIRoutines.0of1.sh \
+	testMPIRoutines.0of2.sh \
+	testMPIRoutines.1of2.sh \
+	testMPIRoutines.0of3.sh \
+	testMPIRoutines.1of3.sh \
+	testMPIRoutines.2of3.sh \
+	testUIntMap.0of1.sh \
+	testUIntMap.0of2.sh \
+	testUIntMap.1of2.sh \
+	testUIntMap.0of3.sh \
+	testUIntMap.1of3.sh \
+	testUIntMap.2of3.sh \
+	testMemoryPool.0of1.sh \
+	testRangeSet.0of1.sh
+
+ifdef USE_CAUTIOUS
+	def_checks += \
+		testIndexSet-badAssign.0of1.sh \
+		testIndexSet-badAccess.0of1.sh 
+endif
+	

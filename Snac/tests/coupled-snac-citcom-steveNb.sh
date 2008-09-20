@@ -1,0 +1,36 @@
+./coupled-snac-citcom.py -i \
+--staging.nodegen=localhost \
+--staging.nodes=2 \
+--layout.coarse=[0] \
+--layout.fine=[1] \
+--coarse.datafile=coarse \
+--coarse.mesher.nodex=13 \
+--coarse.mesher.nodey=13 \
+--coarse.mesher.nodez=9 \
+--coarse.mesher.theta_max=2.0943951023931953 \
+--coarse.mesher.theta_min=1.0471975511965976 \
+--coarse.mesher.fi_max=2.0943951023931953 \
+--coarse.mesher.fi_min=1.0471975511965976 \
+--coarse.mesher.radius_inner=0.6 \
+--coarse.mesher.radius_outer=1.0 \
+--coarse.vsolver.accuracy=1e-9 \
+--coarse.vsolver.tole_compressibility=1e-5 \
+--coarse.bc.side_sbcs=on \
+--coarse.rayleigh=3.53e08 \
+--inputFilename="./coupled-snac-citcom.xml" \
+--steps=3 \
+--controller.monitoringFrequency=1 \
+--journal.debug.Exchanger=on \
+--journal.info.GlobalBBox=on \
+--journal.info.RemoteBBox=on \
+--journal.info.Boundary-X=off \
+--journal.info.X_recv=off \
+--journal.info.before_send_bbox=off \
+--journal.info.converted_bbox=off \
+--journal.info.FBC=on \
+--journal.info.gtraction=off \
+--journal.debug.Boundary=on \
+--journal.debug.Interior=on \
+--journal.debug.BoundaryConditionSink=on
+
+

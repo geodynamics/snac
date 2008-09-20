@@ -1,0 +1,289 @@
+TriSurfTopology (ptr): (0x8068648)
+	dictionary (ptr): 0x80563f8
+	listKey (ptr): (0x8052731)
+		listKey: imElements
+	elementTbl (ptr): 0x8058898
+		elementTbl[0]: {0, 1, 5}
+		elementTbl[1]: {1, 2, 6}
+		elementTbl[2]: {2, 3, 7}
+		elementTbl[3]: {3, 4, 8}
+		elementTbl[4]: {1, 6, 5}
+		elementTbl[5]: {2, 7, 6}
+		elementTbl[6]: {3, 8, 7}
+		elementTbl[7]: {4, 9, 8}
+		elementTbl[8]: {5, 6, 10}
+		elementTbl[9]: {6, 7, 11}
+		elementTbl[10]: {7, 8, 12}
+		elementTbl[11]: {8, 9, 13}
+		elementTbl[12]: {6, 11, 10}
+		elementTbl[13]: {7, 12, 11}
+		elementTbl[14]: {8, 13, 12}
+		elementTbl[15]: {9, 14, 13}
+		elementTbl[16]: {10, 11, 15}
+		elementTbl[17]: {11, 12, 16}
+		elementTbl[18]: {12, 13, 17}
+		elementTbl[19]: {13, 14, 18}
+		elementTbl[20]: {11, 16, 15}
+		elementTbl[21]: {12, 17, 16}
+		elementTbl[22]: {13, 18, 17}
+		elementTbl[23]: {14, 19, 18}
+		elementTbl[24]: {15, 16, 20}
+		elementTbl[25]: {16, 17, 21}
+		elementTbl[26]: {17, 18, 22}
+		elementTbl[27]: {18, 19, 23}
+		elementTbl[28]: {16, 21, 20}
+		elementTbl[29]: {17, 22, 21}
+		elementTbl[30]: {18, 23, 22}
+		elementTbl[31]: {19, 24, 23}
+	edgeCount: 56
+	edgeTbl (ptr): 0x80564b0
+		edgeTbl[0]: {0, 1}
+		edgeTbl[1]: {1, 5}
+		edgeTbl[2]: {5, 0}
+		edgeTbl[3]: {1, 2}
+		edgeTbl[4]: {2, 6}
+		edgeTbl[5]: {6, 1}
+		edgeTbl[6]: {2, 3}
+		edgeTbl[7]: {3, 7}
+		edgeTbl[8]: {7, 2}
+		edgeTbl[9]: {3, 4}
+		edgeTbl[10]: {4, 8}
+		edgeTbl[11]: {8, 3}
+		edgeTbl[12]: {6, 5}
+		edgeTbl[13]: {7, 6}
+		edgeTbl[14]: {8, 7}
+		edgeTbl[15]: {4, 9}
+		edgeTbl[16]: {9, 8}
+		edgeTbl[17]: {6, 10}
+		edgeTbl[18]: {10, 5}
+		edgeTbl[19]: {7, 11}
+		edgeTbl[20]: {11, 6}
+		edgeTbl[21]: {8, 12}
+		edgeTbl[22]: {12, 7}
+		edgeTbl[23]: {9, 13}
+		edgeTbl[24]: {13, 8}
+		edgeTbl[25]: {11, 10}
+		edgeTbl[26]: {12, 11}
+		edgeTbl[27]: {13, 12}
+		edgeTbl[28]: {9, 14}
+		edgeTbl[29]: {14, 13}
+		edgeTbl[30]: {11, 15}
+		edgeTbl[31]: {15, 10}
+		edgeTbl[32]: {12, 16}
+		edgeTbl[33]: {16, 11}
+		edgeTbl[34]: {13, 17}
+		edgeTbl[35]: {17, 12}
+		edgeTbl[36]: {14, 18}
+		edgeTbl[37]: {18, 13}
+		edgeTbl[38]: {16, 15}
+		edgeTbl[39]: {17, 16}
+		edgeTbl[40]: {18, 17}
+		edgeTbl[41]: {14, 19}
+		edgeTbl[42]: {19, 18}
+		edgeTbl[43]: {16, 20}
+		edgeTbl[44]: {20, 15}
+		edgeTbl[45]: {17, 21}
+		edgeTbl[46]: {21, 16}
+		edgeTbl[47]: {18, 22}
+		edgeTbl[48]: {22, 17}
+		edgeTbl[49]: {19, 23}
+		edgeTbl[50]: {23, 18}
+		edgeTbl[51]: {21, 20}
+		edgeTbl[52]: {22, 21}
+		edgeTbl[53]: {23, 22}
+		edgeTbl[54]: {19, 24}
+		edgeTbl[55]: {24, 23}
+	edgeElementsTbl (ptr): 0x8068758
+		edgeElementsTbl[0]: {0, 32}
+		edgeElementsTbl[1]: {0, 4}
+		edgeElementsTbl[2]: {0, 32}
+		edgeElementsTbl[3]: {1, 32}
+		edgeElementsTbl[4]: {1, 5}
+		edgeElementsTbl[5]: {1, 4}
+		edgeElementsTbl[6]: {2, 32}
+		edgeElementsTbl[7]: {2, 6}
+		edgeElementsTbl[8]: {2, 5}
+		edgeElementsTbl[9]: {3, 32}
+		edgeElementsTbl[10]: {3, 7}
+		edgeElementsTbl[11]: {3, 6}
+		edgeElementsTbl[12]: {4, 8}
+		edgeElementsTbl[13]: {5, 9}
+		edgeElementsTbl[14]: {6, 10}
+		edgeElementsTbl[15]: {7, 32}
+		edgeElementsTbl[16]: {7, 11}
+		edgeElementsTbl[17]: {8, 12}
+		edgeElementsTbl[18]: {8, 32}
+		edgeElementsTbl[19]: {9, 13}
+		edgeElementsTbl[20]: {9, 12}
+		edgeElementsTbl[21]: {10, 14}
+		edgeElementsTbl[22]: {10, 13}
+		edgeElementsTbl[23]: {11, 15}
+		edgeElementsTbl[24]: {11, 14}
+		edgeElementsTbl[25]: {12, 16}
+		edgeElementsTbl[26]: {13, 17}
+		edgeElementsTbl[27]: {14, 18}
+		edgeElementsTbl[28]: {15, 32}
+		edgeElementsTbl[29]: {15, 19}
+		edgeElementsTbl[30]: {16, 20}
+		edgeElementsTbl[31]: {16, 32}
+		edgeElementsTbl[32]: {17, 21}
+		edgeElementsTbl[33]: {17, 20}
+		edgeElementsTbl[34]: {18, 22}
+		edgeElementsTbl[35]: {18, 21}
+		edgeElementsTbl[36]: {19, 23}
+		edgeElementsTbl[37]: {19, 22}
+		edgeElementsTbl[38]: {20, 24}
+		edgeElementsTbl[39]: {21, 25}
+		edgeElementsTbl[40]: {22, 26}
+		edgeElementsTbl[41]: {23, 32}
+		edgeElementsTbl[42]: {23, 27}
+		edgeElementsTbl[43]: {24, 28}
+		edgeElementsTbl[44]: {24, 32}
+		edgeElementsTbl[45]: {25, 29}
+		edgeElementsTbl[46]: {25, 28}
+		edgeElementsTbl[47]: {26, 30}
+		edgeElementsTbl[48]: {26, 29}
+		edgeElementsTbl[49]: {27, 31}
+		edgeElementsTbl[50]: {27, 30}
+		edgeElementsTbl[51]: {28, 32}
+		edgeElementsTbl[52]: {29, 32}
+		edgeElementsTbl[53]: {30, 32}
+		edgeElementsTbl[54]: {31, 32}
+		edgeElementsTbl[55]: {31, 32}
+MeshTopology (ptr): 0x8068648
+	nodeNeighbourCount (func ptr): 0x804ae6f
+	nodeBuildNeighbours (func ptr): 0x804aed7
+	nodeElementCount (func ptr): 0x804af92
+	nodeBuildElements (func ptr): 0x804b022
+	elementNeighbourCount (func ptr): 0x804b0c5
+	elementBuildNeighbours (func ptr): 0x804b302
+	elementNodeCount (func ptr): 0x804b54f
+	elementBuildNodes (func ptr): 0x804b57b
+	nodeCount: 25
+	elementCount: 32
+	boundaryNodeCount: 0
+	boundaryNodeTbl (ptr): (nil)
+Class (ptr): 0x8068648
+	sizeOfSelf: 92
+	_deleteSelf: True
+	type: TriSurfTopology
+	_delete (func ptr): 0x804ab8b
+	_print (func ptr): 0x804ac05
+Node global: 0, Neighbours: 2, {1, 5}
+Node global: 1, Neighbours: 4, {0, 5, 2, 6}
+Node global: 2, Neighbours: 4, {1, 6, 3, 7}
+Node global: 3, Neighbours: 4, {2, 7, 4, 8}
+Node global: 4, Neighbours: 3, {3, 8, 9}
+Node global: 5, Neighbours: 4, {1, 0, 6, 10}
+Node global: 6, Neighbours: 6, {2, 1, 5, 7, 10, 11}
+Node global: 7, Neighbours: 6, {3, 2, 6, 8, 11, 12}
+Node global: 8, Neighbours: 6, {4, 3, 7, 9, 12, 13}
+Node global: 9, Neighbours: 4, {4, 8, 13, 14}
+Node global: 10, Neighbours: 4, {6, 5, 11, 15}
+Node global: 11, Neighbours: 6, {7, 6, 10, 12, 15, 16}
+Node global: 12, Neighbours: 6, {8, 7, 11, 13, 16, 17}
+Node global: 13, Neighbours: 6, {9, 8, 12, 14, 17, 18}
+Node global: 14, Neighbours: 4, {9, 13, 18, 19}
+Node global: 15, Neighbours: 4, {11, 10, 16, 20}
+Node global: 16, Neighbours: 6, {12, 11, 15, 17, 20, 21}
+Node global: 17, Neighbours: 6, {13, 12, 16, 18, 21, 22}
+Node global: 18, Neighbours: 6, {14, 13, 17, 19, 22, 23}
+Node global: 19, Neighbours: 4, {14, 18, 23, 24}
+Node global: 20, Neighbours: 3, {16, 15, 21}
+Node global: 21, Neighbours: 4, {17, 16, 20, 22}
+Node global: 22, Neighbours: 4, {18, 17, 21, 23}
+Node global: 23, Neighbours: 4, {19, 18, 22, 24}
+Node global: 24, Neighbours: 2, {19, 23}
+
+Node global: 0, Elements: 1, {0}
+Node global: 1, Elements: 3, {0, 1, 4}
+Node global: 2, Elements: 3, {1, 2, 5}
+Node global: 3, Elements: 3, {2, 3, 6}
+Node global: 4, Elements: 2, {3, 7}
+Node global: 5, Elements: 3, {0, 4, 8}
+Node global: 6, Elements: 6, {1, 4, 5, 8, 9, 12}
+Node global: 7, Elements: 6, {2, 5, 6, 9, 10, 13}
+Node global: 8, Elements: 6, {3, 6, 7, 10, 11, 14}
+Node global: 9, Elements: 3, {7, 11, 15}
+Node global: 10, Elements: 3, {8, 12, 16}
+Node global: 11, Elements: 6, {9, 12, 13, 16, 17, 20}
+Node global: 12, Elements: 6, {10, 13, 14, 17, 18, 21}
+Node global: 13, Elements: 6, {11, 14, 15, 18, 19, 22}
+Node global: 14, Elements: 3, {15, 19, 23}
+Node global: 15, Elements: 3, {16, 20, 24}
+Node global: 16, Elements: 6, {17, 20, 21, 24, 25, 28}
+Node global: 17, Elements: 6, {18, 21, 22, 25, 26, 29}
+Node global: 18, Elements: 6, {19, 22, 23, 26, 27, 30}
+Node global: 19, Elements: 3, {23, 27, 31}
+Node global: 20, Elements: 2, {24, 28}
+Node global: 21, Elements: 3, {25, 28, 29}
+Node global: 22, Elements: 3, {26, 29, 30}
+Node global: 23, Elements: 3, {27, 30, 31}
+Node global: 24, Elements: 1, {31}
+
+Element global: 0, Neighbours: 3, {1, 4, 8}
+Element global: 1, Neighbours: 7, {0, 2, 4, 5, 8, 9, 12}
+Element global: 2, Neighbours: 7, {1, 3, 5, 6, 9, 10, 13}
+Element global: 3, Neighbours: 6, {2, 6, 7, 10, 11, 14}
+Element global: 4, Neighbours: 6, {0, 1, 5, 8, 9, 12}
+Element global: 5, Neighbours: 9, {1, 2, 4, 6, 8, 9, 10, 12, 13}
+Element global: 6, Neighbours: 9, {2, 3, 5, 7, 9, 10, 11, 13, 14}
+Element global: 7, Neighbours: 6, {3, 6, 10, 11, 14, 15}
+Element global: 8, Neighbours: 7, {0, 1, 4, 5, 9, 12, 16}
+Element global: 9, Neighbours: 12, {1, 2, 4, 5, 6, 8, 10, 12, 13, 16, 17, 20}
+Element global: 10, Neighbours: 12, {2, 3, 5, 6, 7, 9, 11, 13, 14, 17, 18, 21}
+Element global: 11, Neighbours: 9, {3, 6, 7, 10, 14, 15, 18, 19, 22}
+Element global: 12, Neighbours: 9, {1, 4, 5, 8, 9, 13, 16, 17, 20}
+Element global: 13, Neighbours: 12, {2, 5, 6, 9, 10, 12, 14, 16, 17, 18, 20, 21}
+Element global: 14, Neighbours: 12, {3, 6, 7, 10, 11, 13, 15, 17, 18, 19, 21, 22}
+Element global: 15, Neighbours: 7, {7, 11, 14, 18, 19, 22, 23}
+Element global: 16, Neighbours: 7, {8, 9, 12, 13, 17, 20, 24}
+Element global: 17, Neighbours: 12, {9, 10, 12, 13, 14, 16, 18, 20, 21, 24, 25, 28}
+Element global: 18, Neighbours: 12, {10, 11, 13, 14, 15, 17, 19, 21, 22, 25, 26, 29}
+Element global: 19, Neighbours: 9, {11, 14, 15, 18, 22, 23, 26, 27, 30}
+Element global: 20, Neighbours: 9, {9, 12, 13, 16, 17, 21, 24, 25, 28}
+Element global: 21, Neighbours: 12, {10, 13, 14, 17, 18, 20, 22, 24, 25, 26, 28, 29}
+Element global: 22, Neighbours: 12, {11, 14, 15, 18, 19, 21, 23, 25, 26, 27, 29, 30}
+Element global: 23, Neighbours: 7, {15, 19, 22, 26, 27, 30, 31}
+Element global: 24, Neighbours: 6, {16, 17, 20, 21, 25, 28}
+Element global: 25, Neighbours: 9, {17, 18, 20, 21, 22, 24, 26, 28, 29}
+Element global: 26, Neighbours: 9, {18, 19, 21, 22, 23, 25, 27, 29, 30}
+Element global: 27, Neighbours: 6, {19, 22, 23, 26, 30, 31}
+Element global: 28, Neighbours: 6, {17, 20, 21, 24, 25, 29}
+Element global: 29, Neighbours: 7, {18, 21, 22, 25, 26, 28, 30}
+Element global: 30, Neighbours: 7, {19, 22, 23, 26, 27, 29, 31}
+Element global: 31, Neighbours: 3, {23, 27, 30}
+
+Element global: 0, Nodes: 3, {0, 1, 5}
+Element global: 1, Nodes: 3, {1, 2, 6}
+Element global: 2, Nodes: 3, {2, 3, 7}
+Element global: 3, Nodes: 3, {3, 4, 8}
+Element global: 4, Nodes: 3, {1, 6, 5}
+Element global: 5, Nodes: 3, {2, 7, 6}
+Element global: 6, Nodes: 3, {3, 8, 7}
+Element global: 7, Nodes: 3, {4, 9, 8}
+Element global: 8, Nodes: 3, {5, 6, 10}
+Element global: 9, Nodes: 3, {6, 7, 11}
+Element global: 10, Nodes: 3, {7, 8, 12}
+Element global: 11, Nodes: 3, {8, 9, 13}
+Element global: 12, Nodes: 3, {6, 11, 10}
+Element global: 13, Nodes: 3, {7, 12, 11}
+Element global: 14, Nodes: 3, {8, 13, 12}
+Element global: 15, Nodes: 3, {9, 14, 13}
+Element global: 16, Nodes: 3, {10, 11, 15}
+Element global: 17, Nodes: 3, {11, 12, 16}
+Element global: 18, Nodes: 3, {12, 13, 17}
+Element global: 19, Nodes: 3, {13, 14, 18}
+Element global: 20, Nodes: 3, {11, 16, 15}
+Element global: 21, Nodes: 3, {12, 17, 16}
+Element global: 22, Nodes: 3, {13, 18, 17}
+Element global: 23, Nodes: 3, {14, 19, 18}
+Element global: 24, Nodes: 3, {15, 16, 20}
+Element global: 25, Nodes: 3, {16, 17, 21}
+Element global: 26, Nodes: 3, {17, 18, 22}
+Element global: 27, Nodes: 3, {18, 19, 23}
+Element global: 28, Nodes: 3, {16, 21, 20}
+Element global: 29, Nodes: 3, {17, 22, 21}
+Element global: 30, Nodes: 3, {18, 23, 22}
+Element global: 31, Nodes: 3, {19, 24, 23}
+

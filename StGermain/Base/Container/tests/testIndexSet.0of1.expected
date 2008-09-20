@@ -1,0 +1,67 @@
+Watching rank: 0
+* Test Construction *
+* Test Insertion(Add) *
+is->_container[0-3]: 10000001, 10000000, 00000011, 
+* Test removal *
+is->_container[0-3]: 10000001, 10000000, 00000001, 
+* Test IsMember *
+Index: 0, Is member: yes
+Index: 1, Is member: no
+Index: 2, Is member: no
+Index: 3, Is member: no
+Index: 4, Is member: no
+Index: 5, Is member: no
+Index: 6, Is member: no
+Index: 7, Is member: yes
+Index: 8, Is member: yes
+Index: 9, Is member: no
+Index: 10, Is member: no
+Index: 11, Is member: no
+Index: 12, Is member: no
+Index: 13, Is member: no
+Index: 14, Is member: no
+Index: 15, Is member: no
+Index: 16, Is member: no
+Index: 17, Is member: no
+Index: 18, Is member: no
+Index: 19, Is member: no
+Index: 20, Is member: no
+Index: 21, Is member: no
+Index: 22, Is member: no
+Index: 23, Is member: yes
+* Test UpdateMembersCount *
+Members count is now 4
+* Test GetIndexOfNthMember 0*
+Index of member 0=0
+* Test GetIndexOfNthMember 1*
+Index of member 1=7
+* Test GetIndexOfNthMember 2*
+Index of member 2=8
+* Test GetIndexOfNthMember 3*
+Index of member 3=23
+* Test GetIndexOfNthMember 4*
+Index of member 4=24 (invalid)
+* Test GetMembers 1*
+setArray[0-4]: 0, 7, 8, 23, 
+* Test GetMembers 2*
+setArray[0-4]: 0, 7, 8, 23, 
+* Test GetVacancies 1*
+setArray[0-20]: 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 
+* Test GetVacancies 2*
+setArray[0-20]: 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 
+* Test AddAll *
+is->_container[0-3]: 11111111, 11111111, 11111111, 
+* Test RemoveAll *
+is->_container[0-3]: 00000000, 00000000, 00000000, 
+* Test Duplicate *
+* Test Merge_OR *
+Pre_Merge
+is->_container[0-3]: 10000001, 00000000, 00000000, 
+is->_container[0-3]: 00000001, 10000000, 00000010, 
+Post_Merge
+is->_container[0-3]: 10000001, 10000000, 00000010, 
+is->_container[0-3]: 00000001, 10000000, 00000010, 
+Test GetMembers again
+setArray[0-4]: 0, 7, 8, 22, 
+Final remove then GetMembers test
+setArray[0-3]: 0, 8, 22, 

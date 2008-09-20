@@ -1,0 +1,85 @@
+<html>
+	<head><title>Sumamry Page</title></head>
+	<body>
+		<h1>Summary Page</h1>
+		<p>
+		Links: <a href=Summary.cgi>Summary</a> | <a href=Machine.cgi>Machine</a> | <a href=Build.cgi>Build</a> | <a href=Run.cgi>Run</a> | <a href=UnitTestCheck.cgi>UnitTestCheck</a> | <a href=FailedUnitSubTest.cgi>FailedUnitSubTest</a>
+		</p>
+		<form action="Summary.cgi" method="get">
+		<table>
+		<tr>
+		<td>Machine Name:</td><td><input type="text" name="Machine.Name" value="<TMPL_VAR NAME=searchMachine>" size=20 /></td>
+		</tr>
+		<tr>
+		<td>Project Name:</td><td><input type="text" name="Project.Name" value="<TMPL_VAR NAME=searchProject>" size=20 /></td>
+		</tr>
+		<tr>
+		<td>BuildOptions:</td><td><input type="text" name="BuildOptions" value="<TMPL_VAR NAME=searchBuildOptions>" size=20 /></td>
+		</tr>
+		<tr>
+		<td>CC:</td><td><input type="text" name="CC" value="<TMPL_VAR NAME=searchCC>" size=10 /></td>
+		</tr>
+		<tr>
+		<td>Revision:</td><td><input type="text" name="Revision" value="<TMPL_VAR NAME=searchRevision>" size=20 /></td>
+		</tr>
+		<tr>
+		<td>Who:</td><td><input type="text" name="Who" value="<TMPL_VAR NAME=searchWho>" size=20 /></td>
+		</tr>
+		<tr>
+		<td>LocalModification:</td><td><input type="text" name="LocalModification" value="<TMPL_VAR NAME=searchLocalModification>" size=20 /></td>
+		</tr>
+		<tr>
+		<td>Compiled:</td><td><input type="text" name="Compiled" value="<TMPL_VAR NAME=searchCompiled>" size=20 /></td>
+		</tr>
+		<tr>
+		<td>Date &gt;=</td><td><input type="text" name="Date>" value="<TMPL_VAR NAME=minDate>" size=10 /></td>
+		<td>Date &lt;=</td><td><input type="text" name="Date<" value="<TMPL_VAR NAME=maxDate>" size=10 /></td>
+		</tr>
+		<tr>
+		<td>Time &gt;=</td><td><input type="text" name="Time>" value="<TMPL_VAR NAME=minTime>" size=10 /></td>
+		<td>Time &lt;=</td><td><input type="text" name="Time<" value="<TMPL_VAR NAME=maxTime>" size=10 /></td>
+		</tr>
+		</table>
+		<input type="submit" value="Filter" /> <input type="reset" value="Clear">
+		</form>
+		<TMPL_VAR NAME=message>
+		<table border=1>
+		<tr>
+			<td><b>Machine Name</b></td>
+			<td><b>Project</b></td>
+			<td><b>Build Options</b></td>
+			<td><b>Compiler (CC)</b></td>
+			<td><b>Revision</b></td>
+			<td><b>Who</b></td>
+			<td><b>LocalModification</b></td>
+			<td><b>Date</b></td>
+			<td><b>Time</b></td>
+			<td><b>Compiled</b></td>
+			<td><b>Makefile</b></td>
+			<td><b>Log</b></td>
+			<td><b>Passes</b></td>
+			<td><b>Fails</b></td>
+			<td><b>Total Tests</b></td>
+		</tr>
+		<TMPL_LOOP NAME=data>
+		<tr>
+			<td><a href=Machine.cgi#<TMPL_VAR NAME=MachineID>><TMPL_VAR NAME=Name></a></td>
+			<td><TMPL_VAR NAME=Project></td>
+			<td><TMPL_VAR NAME=BuildOptions></td>
+			<td><TMPL_VAR NAME=CC></td>
+			<td><TMPL_VAR NAME=Revision></td>
+			<td><TMPL_VAR NAME=Who></td>
+			<td><TMPL_VAR NAME=LocalModification></td>
+			<td><TMPL_VAR NAME=Date></td>
+			<td><TMPL_VAR NAME=Time></td>
+			<td><TMPL_VAR NAME=Compiled></td>
+			<td><a href=downloadBuildMakefile.cgi?ID=<TMPL_VAR NAME=BuildID>>Makefile.system</a></td>
+			<td><a href=downloadBuildLog.cgi?ID=<TMPL_VAR NAME=BuildID>>Compile Log</a></td>
+			<td><a href=UnitTestCheck.cgi?Passed=1&&RunID=<TMPL_VAR NAME=RunID>><TMPL_VAR NAME=Passes></a></td>
+			<td><a href=UnitTestCheck.cgi?Passed=0&&RunID=<TMPL_VAR NAME=RunID>><TMPL_VAR NAME=Fails></a></td>
+			<td><a href=UnitTestCheck.cgi?RunID=<TMPL_VAR NAME=RunID>><TMPL_VAR NAME=Total></a></td>
+		</tr>
+		</TMPL_LOOP>
+		</table>
+	</body>
+</html>

@@ -1,0 +1,56 @@
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+## Copyright (C), 2003, Victorian Partnership for Advanced Computing (VPAC) Ltd, 110 Victoria Street, Melbourne, 3053, Australia.
+##
+## Authors:
+##      Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+##      Patrick D. Sunter, Software Engineer, VPAC. (pds@vpac.org)
+##      Luke J. Hodkinson, Computational Engineer, VPAC. (lhodkins@vpac.org)
+##      Siew-Ching Tan, Software Engineer, VPAC. (siew@vpac.org)
+##      Alan H. Lo, Computational Engineer, VPAC. (alan@vpac.org)
+##      Raquibul Hassan, Computational Engineer, VPAC. (raq@vpac.org)
+##
+##  This library is free software; you can redistribute it and/or
+##  modify it under the terms of the GNU Lesser General Public
+##  License as published by the Free Software Foundation; either
+##  version 2.1 of the License, or (at your option) any later version.
+##
+##  This library is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+##  Lesser General Public License for more details.
+##
+##  You should have received a copy of the GNU Lesser General Public
+##  License along with this library; if not, write to the Free Software
+##  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+##
+## $Id: touch.vmake 2586 2005-01-28 00:08:55Z AlanLo $
+##
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ifndef LISTDIR
+	LISTDIR=${HOME}
+endif
+
+ifdef NOLIST
+
+touch-list:
+
+else
+
+TOUCH_DATE=$(shell date +"%Y-%b-%d-%a-%H-%M")
+TOUCH_FILE=${TOUCH_DATE}-touch.list
+
+touch-list:
+	@(echo "Creating touch list in ${LISTDIR}/${TOUCH_FILE}"; ${LS} -rtl > ${LISTDIR}/${TOUCH_FILE})
+	-@(if test "`echo ${EXPORT_DIR} | grep ${PROJ_ROOT}`x" = "x"; then echo "Appending binary file list..."; ${LS} -rtl ${EXPORT_DIR}/ 2> /dev/null >> ${LISTDIR}/${TOUCH_FILE}; fi)
+	-@(if test "`echo ${BLD_DIR} | grep ${PROJ_ROOT}`x" = "x"; then echo "Appending temp file list..."; ${LS} -rtl ${BLD_DIR} 2> /dev/null >> ${LISTDIR}/${TOUCH_FILE}; fi )
+
+endif
+
+touch: touch-list
+	@(echo "Touch files..."; find . -type f | xargs touch)
+	-@(if test "`echo ${EXPORT_DIR} | grep ${PROJ_ROOT}`x" = "x"; then echo "Touch binary files..."; find ${EXPORT_DIR} -type f 2> /dev/null | xargs touch 2> /dev/null; fi)
+	-@(if test "`echo ${BLD_DIR} | grep ${PROJ_ROOT}`x" = "x"; then echo "Touch temp files..."; find ${BLD_DIR} -type f 2> /dev/null | xargs touch 2> /dev/null; fi)
+
+
+

@@ -1,0 +1,275 @@
+Testing basic Insertion, Deletion and Query functions
+Inserting data into the Tree
+
+Printing the tree
+Stg_Class (ptr): 0x806a478
+	sizeOfSelf: 52
+	_deleteSelf: Yes
+	type: BTree
+	_delete (func ptr): 0x8058f78
+	_print (func ptr): 0x80590d9
+	_copy (func ptr): (nil)
+BTree (ptr): (0x806a478)
+	1
+	2
+	3
+	4
+	5
+	6
+	7
+	8
+	9
+	10
+	11
+	12
+	13
+	14
+	15
+	16
+	17
+	18
+	19
+	20
+	21
+	22
+	23
+	24
+	25
+	26
+	27
+	28
+	29
+	30
+	31
+	32
+	33
+	34
+	35
+	36
+	37
+	38
+	39
+	40
+	41
+	42
+	43
+	44
+	45
+	46
+	47
+	48
+	49
+	50
+	51
+	52
+	53
+	54
+	55
+	56
+	57
+	58
+	59
+	60
+	61
+	62
+	63
+	64
+	65
+	66
+	67
+	68
+	69
+	70
+	71
+	72
+	73
+	74
+	75
+	76
+	77
+	78
+	79
+	80
+	81
+	82
+	83
+	84
+	85
+	86
+	87
+	88
+	89
+	90
+	91
+	92
+	93
+	94
+	95
+	96
+	97
+	98
+	99
+	100
+
+Deleting half the nodes previously inserted into the tree
+
+Printing the tree
+Stg_Class (ptr): 0x806a478
+	sizeOfSelf: 52
+	_deleteSelf: Yes
+	type: BTree
+	_delete (func ptr): 0x8058f78
+	_print (func ptr): 0x80590d9
+	_copy (func ptr): (nil)
+BTree (ptr): (0x806a478)
+	1
+	2
+	3
+	4
+	5
+	6
+	7
+	8
+	9
+	10
+	11
+	12
+	13
+	14
+	15
+	16
+	17
+	18
+	19
+	20
+	21
+	22
+	23
+	24
+	25
+	26
+	27
+	28
+	29
+	30
+	31
+	32
+	33
+	34
+	35
+	36
+	37
+	38
+	39
+	40
+	41
+	42
+	43
+	44
+	45
+	46
+	47
+	48
+	49
+	50
+
+Searching for Node data in the tree
+Looking for - 1, Found..
+Looking for - 2, Found..
+Looking for - 3, Found..
+Looking for - 4, Found..
+Looking for - 5, Found..
+Looking for - 6, Found..
+Looking for - 7, Found..
+Looking for - 8, Found..
+Looking for - 9, Found..
+Looking for - 10, Found..
+Looking for - 11, Found..
+Looking for - 12, Found..
+Looking for - 13, Found..
+Looking for - 14, Found..
+Looking for - 15, Found..
+Looking for - 16, Found..
+Looking for - 17, Found..
+Looking for - 18, Found..
+Looking for - 19, Found..
+Looking for - 20, Found..
+Looking for - 21, Found..
+Looking for - 22, Found..
+Looking for - 23, Found..
+Looking for - 24, Found..
+
+Printing the iterator
+Stg_Class (ptr): 0x806c578
+	sizeOfSelf: 432
+	_deleteSelf: Yes
+	type: BTreeIterator
+	_delete (func ptr): 0x8059522
+	_print (func ptr): 0x805954b
+	_copy (func ptr): (nil)
+BTreeIterator (ptr): (0x806c578)
+	Tree (ptr): (0x806a478)
+	Depth : 0
+
+Iterating over all the nodes and printing them
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+
+Deleting all the nodes previously inserted into the tree
+
+Calculating Complexity
+BTree_FindNode has a complexity of O(log n)
+This implies similar complexity for Insertion and Deletion
+
+Calculating the average of all the numbers stored in the tree
+Average calculated corrrectly
+
+Deleting the Tree

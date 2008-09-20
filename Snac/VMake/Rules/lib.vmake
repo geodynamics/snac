@@ -1,0 +1,118 @@
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+## Copyright (C), 2003, Victorian Partnership for Advanced Computing (VPAC) Ltd, 110 Victoria Street, Melbourne, 3053, Australia.
+##
+## Authors:
+##      Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+##      Patrick D. Sunter, Software Engineer, VPAC. (pds@vpac.org)
+##      Luke J. Hodkinson, Computational Engineer, VPAC. (lhodkins@vpac.org)
+##      Siew-Ching Tan, Software Engineer, VPAC. (siew@vpac.org)
+##      Alan H. Lo, Computational Engineer, VPAC. (alan@vpac.org)
+##      Raquibul Hassan, Computational Engineer, VPAC. (raq@vpac.org)
+##
+##  This library is free software; you can redistribute it and/or
+##  modify it under the terms of the GNU Lesser General Public
+##  License as published by the Free Software Foundation; either
+##  version 2.1 of the License, or (at your option) any later version.
+##
+##  This library is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+##  Lesser General Public License for more details.
+##
+##  You should have received a copy of the GNU Lesser General Public
+##  License along with this library; if not, write to the Free Software
+##  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+##
+## $Id: lib.vmake 2586 2005-01-28 00:08:55Z AlanLo $
+##
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+## Scope	: Public
+## Role		: Create a library static or dynamic
+
+# "lib" specifies the name of the library to be created
+# Set "libstatic" or "libdynamic" to yes to select what type of library is to be made
+ifdef lib
+	lib := $(strip ${lib})
+
+	# static lib setup
+	libstatic := $(strip ${libstatic})
+	ifeq (${libstatic},yes)
+		LIB_STATIC = ${LIB_DIR}/lib${lib}.a
+		LIB_STATIC_TMP = ${TMP_DIR}/lib-lib${lib}.a/lib${lib}.a.
+		MAKE_DIRECTORIES += ${TMP_DIR}/lib-lib${lib}.a
+	endif
+	
+	# dynamic lib setup
+	libdynamic := $(strip ${libdynamic})
+	ifeq (${libdynamic},yes)
+		LIB_DYNAMIC = ${LIB_DIR}/lib${lib}.${SO_EXT}
+		MAKE_DIRECTORIES += ${TMP_DIR}/lib-lib${lib}.${SO_EXT}
+	endif
+
+	ifdef PROJ_OBJLISTS
+		OBJLISTS=$(addprefix ${TMP_DIR}/, $(addsuffix .objlist, ${PROJ_OBJLISTS}))
+		EXTERNAL_OBJS += $(foreach OBJLIST,${OBJLISTS},\
+			$(addprefix ${TMP_DIR}/,\
+				$(shell for i in ${OBJLIST}; do if test -r $$i; then cat $$i; fi; done; ) \
+			) \
+		)
+	endif
+
+	# Flags setup
+	PROJ_CFLAGS += -DCURR_MODULE_NAME=\"${lib}\"
+	PROJ_CFLAGS += ${CC_WARNINGLEVEL} ${CC_SYMBOLLEVEL} ${CC_OPTIMISATIONLEVEL} 
+	PROJ_LFLAGS += -L${LIB_DIR}
+
+	ifeq (Darwin,${SYSTEM})
+		INSTALL_NAME = -install_name ${LIB_DYNAMIC}
+	else
+		INSTALL_NAME =
+	endif
+
+
+	LIB_OBJS_IN_TMP = ${addprefix            lib-lib${lib}/, ${addsuffix .o,      ${basename ${SRCS}}}}
+	LIB_OBJS =        ${addprefix ${TMP_DIR}/lib-lib${lib}/, ${addsuffix .o,      ${basename ${SRCS}}}}
+	LIB_OBJLIST = ${TMP_DIR}/${lib}.objlist
+
+
+	LIB = ${LIB_STATIC} ${LIB_DYNAMIC}
+	TARGETS += ${LIB} ${LIB_OBJLIST}
+
+	# Directories to use
+	MAKE_DIRECTORIES +=  ${LIB_DIR} 
+	COMPILE_DIRECTORY := ${TMP_DIR}/lib-lib${lib}
+
+	RM_LIST_TEMPS += ${LIB_STATIC_TMP} ${LIB_OBJS} ${LIB_OBJLIST}
+	RM_LIST += ${LIB}
+
+
+### Rules ###
+
+${LIB_DIR}/lib${lib}.a: ${LIB_STATIC_TMP}
+	@${CP_F} $< $@
+
+${LIB_STATIC_TMP}: ${LIB_OBJS} ${EXTERNAL_OBJS}
+	@(if test -r $@; then ${RM_F} $@; fi)
+	${AR_C} $@ $^
+	${RANLIB} $@
+
+${LIB_DIR}/lib${lib}.${SO_EXT}: ${LIB_OBJS} ${EXTERNAL_OBJS}
+	@echo "Install name: ${INSTALL_NAME}"
+	${CC} ${CC_PIPE} ${CFLAGS} -o $@ ${SO_LFLAGS} ${RPATH_LFLAGS} $^ ${LFLAGS} ${LIBS} ${EXTERNAL_LIBS} ${INSTALL_NAME}
+
+${LIB_OBJLIST}:
+	@echo ${LIB_OBJS_IN_TMP} > ${LIB_OBJLIST}
+	@if test ! "${OBJLISTS}x" = "x"; then cat ${OBJLISTS} >> ${LIB_OBJLIST}; fi
+
+endif
+
+
+
+
+
+
+
+
+
+

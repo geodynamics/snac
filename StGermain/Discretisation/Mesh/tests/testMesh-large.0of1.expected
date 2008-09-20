@@ -1,0 +1,10 @@
+Watching rank 0
+StGermain Framework. Copyright (C) 2003-2005 VPAC.
+Building mesh:
+Done.
+partitionedAxis: { False, False, False }
+partitionCounts: { 1, 1, 1 }
+elementGlobalCounts: { 32, 32, 32 }
+	elementLocalCounts[0]: { 32, 32, 32 }
+nodeGlobalCounts: { 33, 33, 33 }
+	nodeLocalCounts[0]: { 33, 33, 33 }

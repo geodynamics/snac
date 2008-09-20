@@ -1,0 +1,38 @@
+<html>
+	<head><title>FailedUnitSubTest Table</title></head>
+	<body>
+		<h1>FailedUnitSubTest Table</h1>
+		<p>
+		Links: <a href=Summary.cgi>Summary</a> | <a href=Machine.cgi>Machine</a> | <a href=Build.cgi>Build</a> | <a href=Run.cgi>Run</a> | <a href=UnitTestCheck.cgi>UnitTestCheck</a> | <a href=FailedUnitSubTest.cgi>FailedUnitSubTest</a>
+		</p>
+		<form action="FailedUnitSubTest.cgi" method="get">
+		<table>
+		<tr>
+		<td>RunID:</td><td><input type="text" name="UnitTestCheckID" value="" size=5 /></td>
+		</tr>
+		<tr>
+		<td>SubTest:</td><td><input type="text" name="SubTest" value="" size=5 /></td>
+		</tr>
+		</table>
+		<input type="submit" value="Filter" /> <input type="reset" value="Clear">
+		</form>
+		<table border=1>
+		<tr>
+			<td><b>ID</b></td>
+			<td><b>UnitTestCheckID</b></td>
+			<td><b>TestName</b></td>
+			<td><b>SubTest</b></td>
+			<td><b>Output</b></td>
+		</tr>
+		<TMPL_LOOP NAME=data>
+		<tr>
+			<td><TMPL_VAR NAME=ID></td>
+			<td><a href=UnitTestCheck.cgi#<TMPL_VAR NAME=UnitTestCheckID>><TMPL_VAR NAME=UnitTestCheckID></a></td>
+			<td><a href=UnitTestCheck.cgi#<TMPL_VAR NAME=UnitTestCheckID>><TMPL_VAR NAME=TestName></a></td>
+			<td><TMPL_VAR NAME=SubTest></td>
+			<td><a href=downloadFailedUnitSubTestOutput.cgi?ID=<TMPL_VAR NAME=ID>>more info...</a></td>
+		</tr>
+		</TMPL_LOOP>
+		</table>
+	</body>
+</html>

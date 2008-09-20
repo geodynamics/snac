@@ -1,0 +1,132 @@
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+## Copyright (C), 2003, Victorian Partnership for Advanced Computing (VPAC) Ltd, 110 Victoria Street, Melbourne, 3053, Australia.
+##
+## Authors:
+##      Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+##      Patrick D. Sunter, Software Engineer, VPAC. (pds@vpac.org)
+##      Luke J. Hodkinson, Computational Engineer, VPAC. (lhodkins@vpac.org)
+##      Siew-Ching Tan, Software Engineer, VPAC. (siew@vpac.org)
+##      Alan H. Lo, Computational Engineer, VPAC. (alan@vpac.org)
+##      Raquibul Hassan, Computational Engineer, VPAC. (raq@vpac.org)
+##
+##  This library is free software; you can redistribute it and/or
+##  modify it under the terms of the GNU Lesser General Public
+##  License as published by the Free Software Foundation; either
+##  version 2.1 of the License, or (at your option) any later version.
+##
+##  This library is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+##  Lesser General Public License for more details.
+##
+##  You should have received a copy of the GNU Lesser General Public
+##  License along with this library; if not, write to the Free Software
+##  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+##
+## $Id: Makefile.vmake 2586 2005-01-28 00:08:55Z AlanLo $
+##
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ifdef REGRESSION_RUN
+	PROJ_CFLAGS += -DREGRESSION_RUN -DREGRESSTOR_URL=\"${REGRESSTOR_URL}\"
+endif
+ifdef RUNID
+	PROJ_CFLAGS += -DRUNID=\"${RUNID}\"
+endif
+
+ifdef HAVE_SOAP
+
+.PHONY: regression regression_check submit_build
+
+REGRESSION_TEST_CLEAN_SUBDIRS = ${addsuffix -regression_clean, ${subdirs}}
+REGRESSION_TEST_CLEAN_FILES = ${TESTS} ${TEST_OBJS}
+
+regression_test_clean: ${REGRESSION_TEST_CLEAN_SUBDIRS} regression_test_cleanfiles
+
+regression_test_cleanfiles:
+	@if test `echo ${REGRESSION_TEST_CLEAN_FILES} | wc -w` -gt 0; then \
+		echo "${RM_F} ${REGRESSION_TEST_CLEAN_FILES}"; \
+		${RM_F} ${REGRESSION_TEST_CLEAN_FILES}; \
+	fi
+
+%-regression_clean: %
+	@(${CD} `echo $@ |${SED} 's/-regression_clean//'`; ${MAKE} PROJ_ROOT=${PROJ_ROOT} regression_test_clean)
+
+
+regression:
+	@(${MAKE} clean)
+	@(if test ! "`find . -name BUILDID`x" = "x"; then find . -name BUILDID | xargs ${RM}; fi)
+	@(${MAKE} all)
+	@(if test "`grep -v 'error[s]*.o' make${OPTIONS}.log | grep -i 'error'`x" = "x"; \
+		then COMPILED=1 ${MAKE} submit_build; \
+		else COMPILED=0 ${MAKE} submit_build; \
+		fi)
+
+submit_build:
+	@if test -x ${BLD_DIR}/bin/regresstorSubmitBuild; then \
+		ulimit -c unlimited; \
+		${BLD_DIR}/bin/regresstorSubmitBuild \
+				"Project=${PROJECT}" \
+				"BuildOptions=${OPTIONS}" \
+				"CC=${CC}" \
+				"Revision=${VERSION}" \
+				"MachineName=`hostname`" \
+				"Hardware=${MACHINE}" \
+				"OS=${SYSTEM}" \
+				"Kernel=${KERNEL_RELEASE}" \
+				"Who=${USER}" \
+				"LocalModification=`if ${SVN} st | ${GREP} '^[M,A,G,C,!] ' > /dev/null; then echo '1'; else echo '0'; fi`" \
+				"Compiled=${COMPILED}" \
+				"MakefileLocation=${PROJ_ROOT}/Makefile.system" \
+				"LogLocation=./make${OPTIONS}.log" \
+				"URL=${REGRESSTOR_URL}"; \
+		else \
+			echo "regresstorSubmitBuild failed!!!"; \
+		fi 
+
+regression_check:
+	@(if test -e RUNID; then ${RM} RUNID; fi)               # Remove previous RUNID if any
+	@(if test -r BUILDID; then \
+		echo "Starting Run..."; \
+		${BLD_DIR}/bin/regresstorStartRun \
+			"BuildID=`cat BUILDID`" \
+			"URL=${REGRESSTOR_URL}"; \
+		else echo "Run make regression first"; \
+		fi)
+	@(if test -r RUNID; then ${MAKE} regression_test_clean; fi)
+	@(if test -r RUNID; then REGRESSION_RUN=1 RUNID=`cat RUNID` REGRESSTOR_URL=${REGRESSTOR_URL} ${MAKE}; fi )
+	@(if test -r RUNID; then ${MAKE} RUNID=`cat RUNID` check; fi)
+	@(if test -r RUNID; then \
+		${BLD_DIR}/bin/regresstorEndRun \
+			"RunID=`cat RUNID`" \
+			"URL=${REGRESSTOR_URL}"; \
+		fi)
+else
+
+regression:
+	@echo "CSOAP not available"
+
+submit_build:
+	@echo "CSOAP not available"
+
+regression_check:
+	@echo "CSOAP not available"
+
+endif
+
+
+
+regression-help: help-title regression-command-header
+	@echo "Performs a make all for regression testing."
+	@echo "This command is only available when CSOAP is detected."
+	@echo "Results of compile (pass/faila) are sent to web service at"
+	@echo "REGRESSTOR_URL variable."
+	
+regression-check-help: help-title regression-check-command-header
+	@echo "Performs a make check for regression testing."
+	@echo "This command is only available when CSOAP is detected."
+	@echo "Results of tests (pass/faila) are sent to web service at"
+	@echo "REGRESSTOR_URL variable."
+
+COMMAND_HELP += regression-help regression-check-help
+

@@ -1,0 +1,119 @@
+StGermain Framework revision 3618. Copyright (C) 2003-2005 VPAC.
+StGermain Discretisation Library revision 3618. Copyright (C) 2003-2005 VPAC.
+Snac Framework. Copyright (C) 2003-2005 Caltech, VPAC & University of Texas.
+Watching rank: 0
+"dtType" not specified in Dictionary... assuming "dynamic", of init value: 0
+"forceCalcType" set by Dictionary to "quick"
+For Material 0:
+	rheology = 1
+	alpha = 0.000000e+00
+	beta = 0.000000e+00
+
+	lambda = 3.000000e+10
+	mu = 3.000000e+10
+
+	maxiterations = 1
+	constitutivetolerance = 1.000000e-03
+	yieldcriterion = 0
+	nsegments = 2
+		seg 0: plstrain = 0.000000e+00
+		seg 0: frictionAngle = 0.000000e+00
+		seg 0: dilationAngle = 0.000000e+00
+		seg 0: cohesion = 0.000000e+00
+		seg 1: plstrain = 0.000000e+00
+		seg 1: frictionAngle = 0.000000e+00
+		seg 1: dilationAngle = 0.000000e+00
+		seg 1: cohesion = 0.000000e+00
+		seg 2: plstrain = 0.000000e+00
+		seg 2: frictionAngle = 0.000000e+00
+		seg 2: dilationAngle = 0.000000e+00
+		seg 2: cohesion = 0.000000e+00
+	ten_off = 0.000000e+00
+	puSeeds = 0
+
+	vis_min = 1.000000e+18
+	vis_max = 3.000000e+27
+	refvisc = 1.000000e+19
+	refsrate = 1.000000e-15
+	reftemp = 1.400000e+03
+	activationE = 5.400000e+03
+	srexponent = 1.000000e+00
+	srexponent1 = 1.000000e+00
+	srexponent2 = 1.000000e+00
+
+	density = 2.700000e+03
+In: Snac_Context_TimeStepZero
+self->timeStep: 0 (update elements only)
+self->currentTime: 0
+Element: 0, Coords: (0 -300 0), (100 -300 0), (0 -200 0), (100 -200 0), (0 -300 100) (100 -300 100) (0 -200 100) (100 -200 100)
+Element: 0, Vel: (3e-10 3e-10 6e-10), (3e-10 3e-10 6e-10), (3e-10 3e-10 6e-10), (3e-10 3e-10 6e-10), (3e-10 3e-10 6e-10) (3e-10 3e-10 6e-10) (3e-10 3e-10 6e-10) (3e-10 3e-10 6e-10)
+Global minLengthScale: 19.245
+Dt: 320750
+Speed of sound: 3e-05
+Corner Node 0 (0,0,0): force: (0 -3.31088e+09 0)
+Edge Node 1 (1,0,0): force: (0 -6.62175e+09 0)
+Surface Node 5 (1,1,0): force: (0 -1.32435e+10 0)
+Internal Node 21 (1,1,1): force: (0 -2.6487e+10 0)
+Edge Node 1: has same values as node {1, 0, 0}.
+Edge Node 2: has same values as node {1, 0, 0}.
+Corner Node 3: has same values as node {0, 0, 0}.
+Edge Node 4: has same values as node {1, 0, 0}.
+Surface Node 5: has same values as node {1, 1, 0}.
+Surface Node 6: has same values as node {1, 1, 0}.
+Edge Node 7: has same values as node {1, 0, 0}.
+Edge Node 8: has same values as node {1, 0, 0}.
+Surface Node 9: has same values as node {1, 1, 0}.
+Surface Node 10: has same values as node {1, 1, 0}.
+Edge Node 11: has same values as node {1, 0, 0}.
+Corner Node 12: has same values as node {0, 0, 0}.
+Edge Node 13: has same values as node {1, 0, 0}.
+Edge Node 14: has same values as node {1, 0, 0}.
+Corner Node 15: has same values as node {0, 0, 0}.
+Edge Node 16: has same values as node {1, 0, 0}.
+Surface Node 17: has same values as node {1, 1, 0}.
+Surface Node 18: has same values as node {1, 1, 0}.
+Edge Node 19: has same values as node {1, 0, 0}.
+Surface Node 20: has same values as node {1, 1, 0}.
+Internal Node 21: has same values as node {1, 1, 1}.
+Internal Node 22: has same values as node {1, 1, 1}.
+Surface Node 23: has same values as node {1, 1, 0}.
+Surface Node 24: has same values as node {1, 1, 0}.
+Internal Node 25: has same values as node {1, 1, 1}.
+Internal Node 26: has same values as node {1, 1, 1}.
+Surface Node 27: has same values as node {1, 1, 0}.
+Edge Node 28: has same values as node {1, 0, 0}.
+Surface Node 29: has same values as node {1, 1, 0}.
+Surface Node 30: has same values as node {1, 1, 0}.
+Edge Node 31: has same values as node {1, 0, 0}.
+Edge Node 32: has same values as node {1, 0, 0}.
+Surface Node 33: has same values as node {1, 1, 0}.
+Surface Node 34: has same values as node {1, 1, 0}.
+Edge Node 35: has same values as node {1, 0, 0}.
+Surface Node 36: has same values as node {1, 1, 0}.
+Internal Node 37: has same values as node {1, 1, 1}.
+Internal Node 38: has same values as node {1, 1, 1}.
+Surface Node 39: has same values as node {1, 1, 0}.
+Surface Node 40: has same values as node {1, 1, 0}.
+Internal Node 41: has same values as node {1, 1, 1}.
+Internal Node 42: has same values as node {1, 1, 1}.
+Surface Node 43: has same values as node {1, 1, 0}.
+Edge Node 44: has same values as node {1, 0, 0}.
+Surface Node 45: has same values as node {1, 1, 0}.
+Surface Node 46: has same values as node {1, 1, 0}.
+Edge Node 47: has same values as node {1, 0, 0}.
+Corner Node 48: has same values as node {0, 0, 0}.
+Edge Node 49: has same values as node {1, 0, 0}.
+Edge Node 50: has same values as node {1, 0, 0}.
+Corner Node 51: has same values as node {0, 0, 0}.
+Edge Node 52: has same values as node {1, 0, 0}.
+Surface Node 53: has same values as node {1, 1, 0}.
+Surface Node 54: has same values as node {1, 1, 0}.
+Edge Node 55: has same values as node {1, 0, 0}.
+Edge Node 56: has same values as node {1, 0, 0}.
+Surface Node 57: has same values as node {1, 1, 0}.
+Surface Node 58: has same values as node {1, 1, 0}.
+Edge Node 59: has same values as node {1, 0, 0}.
+Corner Node 60: has same values as node {0, 0, 0}.
+Edge Node 61: has same values as node {1, 0, 0}.
+Edge Node 62: has same values as node {1, 0, 0}.
+Corner Node 63: has same values as node {0, 0, 0}.

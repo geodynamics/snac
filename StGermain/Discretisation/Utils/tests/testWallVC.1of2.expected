@@ -1,0 +1,1051 @@
+StGermain Framework revision 3605. Copyright (C) 2003-2005 VPAC.
+Testing for WallVC_Front
+WallVC (ptr): 0x806da50
+	dictionary (ptr): 0x805e558
+	_dictionaryEntryName (ptr): 0x8049ea8
+		_dictionaryEntryName: WallVC_Front
+	_wall: Front
+	_entryCount: 3
+	_entryTbl (ptr): 0x806e240
+		_entryTbl[0]:
+			varName (ptr): 0x8067ec0
+				varName: vx
+			value:
+				type: VC_ValueType_Double
+				asDouble: 2
+		_entryTbl[1]:
+			varName (ptr): 0x805eb10
+				varName: vy
+			value:
+				type: VC_ValueType_Double
+				asDouble: 3
+		_entryTbl[2]:
+			varName (ptr): 0x805eb70
+				varName: vz
+			value:
+				type: VC_ValueType_Double
+				asDouble: 1
+	_mesh (ptr): 0x8061048
+VariableCondition (ptr): 0x806da50
+Stg_Component (ptr): 0x806da50
+Stg_Object (ptr): 0x806da50
+	Stg_Class (ptr): 0x806da50
+		sizeOfSelf: 192
+		_deleteSelf: Yes
+		type: WallVC
+		_delete (func ptr): 0xb7f78fd3
+		_print (func ptr): 0xb7f79019
+		_copy (func ptr): 0xb7f795ca
+	name: WallVC_FrontName
+	nameAllocationType: NON_GLOBAL
+	_defaultConstructor (func ptr): 0xb7f782a4
+	_construct (func ptr): 0xb7f797df
+	_build (func ptr): 0xb7f7979d
+	_initialise (func ptr): 0xb7edcde2
+	_execute (func ptr): 0xb7edcea6
+	_destroy (func ptr): 0xb7edced6
+	isConstructed: True
+	isBuilt: True
+	isInitialised: False
+	hasExecuted: False
+	isDestroyed: False
+	constructor function name: WallVC_FrontName-Construct
+	build function name: WallVC_FrontName-Build
+	initialise function name: WallVC_FrontName-Initialise
+	execute function name: WallVC_FrontName-Execute
+	destroy function name: WallVC_FrontName-Destroy
+	_getSet (func ptr): 0xb7f7982e
+	_getVariableCount (func ptr): 0xb7f79bc4
+	_getVariableIndex (func ptr): 0xb7f79bdb
+	_getValueIndex (func ptr): 0xb7f79cb6
+	_getValueCount (func ptr): 0xb7f79cbe
+	_getValue (func ptr): 0xb7f79cd5
+	variable_Register (ptr): 0x806e290
+	conFunc_Register (ptr): 0x805b9f8
+	_set (ptr): 0x806e328
+	indexCount: 8
+	indexTbl (ptr): 0x806c0d8
+		indexTbl[0]: 24
+		indexTbl[1]: 25
+		indexTbl[2]: 26
+		indexTbl[3]: 27
+		indexTbl[4]: 28
+		indexTbl[5]: 29
+		indexTbl[6]: 30
+		indexTbl[7]: 31
+	vcVarCountTbl (ptr): 0x806c108
+		vcVarCountTbl[0]: 3
+		vcVarCountTbl[1]: 3
+		vcVarCountTbl[2]: 3
+		vcVarCountTbl[3]: 3
+		vcVarCountTbl[4]: 3
+		vcVarCountTbl[5]: 3
+		vcVarCountTbl[6]: 3
+		vcVarCountTbl[7]: 3
+	vcTbl (ptr): 0x806c138
+		vcTbl[0][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[0][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[0][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[1][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[1][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[1][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[2][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[2][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[2][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[3][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[3][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[3][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[4][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[4][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[4][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[5][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[5][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[5][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[6][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[6][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[6][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[7][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[7][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[7][2]:
+			varIndex: 5
+			valIndex: 2
+	valueCount: 3
+	valueTbl (ptr): 0x806c228
+		valueTbl[0]:
+			type: VC_ValueType_Double
+			asDouble: 2
+		valueTbl[1]:
+			type: VC_ValueType_Double
+			asDouble: 3
+		valueTbl[2]:
+			type: VC_ValueType_Double
+			asDouble: 1
+
+
+var[0]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[1]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[2]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[3]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00
+var[4]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 3.00, 3.00, 3.00, 3.00, 3.00, 3.00, 3.00, 3.00
+var[5]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00
+var[6]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False True  True  True  True  True  True  True  True  
+False False False False False False False False False False False False False False False False False False False False False False False False True  True  True  True  True  True  True  True  
+False False False False False False False False False False False False False False False False False False False False False False False False True  True  True  True  True  True  True  True  
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 000 000 000 000 000 000 000 000 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 001 001 001 001 001 001 001 001 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 002 002 002 002 002 002 002 002 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+
+Testing for WallVC_Back
+WallVC (ptr): 0x806da50
+	dictionary (ptr): 0x805e558
+	_dictionaryEntryName (ptr): 0x8049eb5
+		_dictionaryEntryName: WallVC_Back
+	_wall: Back
+	_entryCount: 1
+	_entryTbl (ptr): 0x806e150
+		_entryTbl[0]:
+			varName (ptr): 0x805f068
+				varName: temp
+			value:
+				type: VC_ValueType_DoubleArray
+				arraySize: 5
+				asDoubleArray (ptr): 0x806bf38
+				asDoubleArray[0]: 5
+				asDoubleArray[1]: 6
+				asDoubleArray[2]: 7
+				asDoubleArray[3]: 8
+				asDoubleArray[4]: 9
+	_mesh (ptr): 0x8061048
+VariableCondition (ptr): 0x806da50
+Stg_Component (ptr): 0x806da50
+Stg_Object (ptr): 0x806da50
+	Stg_Class (ptr): 0x806da50
+		sizeOfSelf: 192
+		_deleteSelf: Yes
+		type: WallVC
+		_delete (func ptr): 0xb7f78fd3
+		_print (func ptr): 0xb7f79019
+		_copy (func ptr): 0xb7f795ca
+	name: WallVC_BackName
+	nameAllocationType: NON_GLOBAL
+	_defaultConstructor (func ptr): 0xb7f782a4
+	_construct (func ptr): 0xb7f797df
+	_build (func ptr): 0xb7f7979d
+	_initialise (func ptr): 0xb7edcde2
+	_execute (func ptr): 0xb7edcea6
+	_destroy (func ptr): 0xb7edced6
+	isConstructed: True
+	isBuilt: True
+	isInitialised: False
+	hasExecuted: False
+	isDestroyed: False
+	constructor function name: WallVC_BackName-Construct
+	build function name: WallVC_BackName-Build
+	initialise function name: WallVC_BackName-Initialise
+	execute function name: WallVC_BackName-Execute
+	destroy function name: WallVC_BackName-Destroy
+	_getSet (func ptr): 0xb7f7982e
+	_getVariableCount (func ptr): 0xb7f79bc4
+	_getVariableIndex (func ptr): 0xb7f79bdb
+	_getValueIndex (func ptr): 0xb7f79cb6
+	_getValueCount (func ptr): 0xb7f79cbe
+	_getValue (func ptr): 0xb7f79cd5
+	variable_Register (ptr): 0x806e290
+	conFunc_Register (ptr): 0x805b9f8
+	_set (ptr): 0x806e328
+	indexCount: 8
+	indexTbl (ptr): 0x806c228
+		indexTbl[0]: 0
+		indexTbl[1]: 1
+		indexTbl[2]: 2
+		indexTbl[3]: 3
+		indexTbl[4]: 4
+		indexTbl[5]: 5
+		indexTbl[6]: 6
+		indexTbl[7]: 7
+	vcVarCountTbl (ptr): 0x806c108
+		vcVarCountTbl[0]: 1
+		vcVarCountTbl[1]: 1
+		vcVarCountTbl[2]: 1
+		vcVarCountTbl[3]: 1
+		vcVarCountTbl[4]: 1
+		vcVarCountTbl[5]: 1
+		vcVarCountTbl[6]: 1
+		vcVarCountTbl[7]: 1
+	vcTbl (ptr): 0x806c3b0
+		vcTbl[0][0]:
+			varIndex: 6
+			valIndex: 0
+		vcTbl[1][0]:
+			varIndex: 6
+			valIndex: 0
+		vcTbl[2][0]:
+			varIndex: 6
+			valIndex: 0
+		vcTbl[3][0]:
+			varIndex: 6
+			valIndex: 0
+		vcTbl[4][0]:
+			varIndex: 6
+			valIndex: 0
+		vcTbl[5][0]:
+			varIndex: 6
+			valIndex: 0
+		vcTbl[6][0]:
+			varIndex: 6
+			valIndex: 0
+		vcTbl[7][0]:
+			varIndex: 6
+			valIndex: 0
+	valueCount: 1
+	valueTbl (ptr): 0x806c0b0
+		valueTbl[0]:
+			type: VC_ValueType_DoubleArray
+			arraySize: 5
+			asDoubleArray (ptr): 0x806bf38
+				asDoubleArray[0]: 5
+				asDoubleArray[1]: 6
+				asDoubleArray[2]: 7
+				asDoubleArray[3]: 8
+				asDoubleArray[4]: 9
+
+
+var[0]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[1]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[2]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[3]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[4]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[5]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[6]: 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+True  True  True  True  True  True  True  True  False False False False False False False False False False False False False False False False False False False False False False False False 
+
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+000 000 000 000 000 000 000 000 XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+
+Testing for WallVC_Left
+WallVC (ptr): 0x806da50
+	dictionary (ptr): 0x805e558
+	_dictionaryEntryName (ptr): 0x8049ec1
+		_dictionaryEntryName: WallVC_Left
+	_wall: Left
+	_entryCount: 3
+	_entryTbl (ptr): 0x806e328
+		_entryTbl[0]:
+			varName (ptr): 0x80665c0
+				varName: vx
+			value:
+				type: VC_ValueType_CFIndex
+				asCFIndex: 0
+		_entryTbl[1]:
+			varName (ptr): 0x8066a70
+				varName: vy
+			value:
+				type: VC_ValueType_CFIndex
+				asCFIndex: 0
+		_entryTbl[2]:
+			varName (ptr): 0x8066c40
+				varName: vz
+			value:
+				type: VC_ValueType_CFIndex
+				asCFIndex: 0
+	_mesh (ptr): 0x8061048
+VariableCondition (ptr): 0x806da50
+Stg_Component (ptr): 0x806da50
+Stg_Object (ptr): 0x806da50
+	Stg_Class (ptr): 0x806da50
+		sizeOfSelf: 192
+		_deleteSelf: Yes
+		type: WallVC
+		_delete (func ptr): 0xb7f78fd3
+		_print (func ptr): 0xb7f79019
+		_copy (func ptr): 0xb7f795ca
+	name: WallVC_LeftName
+	nameAllocationType: NON_GLOBAL
+	_defaultConstructor (func ptr): 0xb7f782a4
+	_construct (func ptr): 0xb7f797df
+	_build (func ptr): 0xb7f7979d
+	_initialise (func ptr): 0xb7edcde2
+	_execute (func ptr): 0xb7edcea6
+	_destroy (func ptr): 0xb7edced6
+	isConstructed: True
+	isBuilt: True
+	isInitialised: False
+	hasExecuted: False
+	isDestroyed: False
+	constructor function name: WallVC_LeftName-Construct
+	build function name: WallVC_LeftName-Build
+	initialise function name: WallVC_LeftName-Initialise
+	execute function name: WallVC_LeftName-Execute
+	destroy function name: WallVC_LeftName-Destroy
+	_getSet (func ptr): 0xb7f7982e
+	_getVariableCount (func ptr): 0xb7f79bc4
+	_getVariableIndex (func ptr): 0xb7f79bdb
+	_getValueIndex (func ptr): 0xb7f79cb6
+	_getValueCount (func ptr): 0xb7f79cbe
+	_getValue (func ptr): 0xb7f79cd5
+	variable_Register (ptr): 0x806e290
+	conFunc_Register (ptr): 0x805b9f8
+	_set (ptr): 0x806e240
+	indexCount: 0
+	indexTbl (ptr): (nil)
+	vcVarCountTbl (ptr): (nil)
+	vcTbl (ptr): (nil)
+	valueCount: 3
+	valueTbl (ptr): 0x806c108
+		valueTbl[0]:
+			type: VC_ValueType_CFIndex
+			asCFIndex: 0
+		valueTbl[1]:
+			type: VC_ValueType_CFIndex
+			asCFIndex: 0
+		valueTbl[2]:
+			type: VC_ValueType_CFIndex
+			asCFIndex: 0
+
+
+var[0]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[1]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[2]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[3]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[4]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[5]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[6]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+
+Testing for WallVC_Right
+WallVC (ptr): 0x806da50
+	dictionary (ptr): 0x805e558
+	_dictionaryEntryName (ptr): 0x8049ecd
+		_dictionaryEntryName: WallVC_Right
+	_wall: Right
+	_entryCount: 3
+	_entryTbl (ptr): 0x806e240
+		_entryTbl[0]:
+			varName (ptr): 0x8067f80
+				varName: vx
+			value:
+				type: VC_ValueType_CFIndex
+				asCFIndex: 1
+		_entryTbl[1]:
+			varName (ptr): 0x8067208
+				varName: vy
+			value:
+				type: VC_ValueType_CFIndex
+				asCFIndex: 1
+		_entryTbl[2]:
+			varName (ptr): 0x80673d8
+				varName: vz
+			value:
+				type: VC_ValueType_CFIndex
+				asCFIndex: 1
+	_mesh (ptr): 0x8061048
+VariableCondition (ptr): 0x806da50
+Stg_Component (ptr): 0x806da50
+Stg_Object (ptr): 0x806da50
+	Stg_Class (ptr): 0x806da50
+		sizeOfSelf: 192
+		_deleteSelf: Yes
+		type: WallVC
+		_delete (func ptr): 0xb7f78fd3
+		_print (func ptr): 0xb7f79019
+		_copy (func ptr): 0xb7f795ca
+	name: WallVC_RightName
+	nameAllocationType: NON_GLOBAL
+	_defaultConstructor (func ptr): 0xb7f782a4
+	_construct (func ptr): 0xb7f797df
+	_build (func ptr): 0xb7f7979d
+	_initialise (func ptr): 0xb7edcde2
+	_execute (func ptr): 0xb7edcea6
+	_destroy (func ptr): 0xb7edced6
+	isConstructed: True
+	isBuilt: True
+	isInitialised: False
+	hasExecuted: False
+	isDestroyed: False
+	constructor function name: WallVC_RightName-Construct
+	build function name: WallVC_RightName-Build
+	initialise function name: WallVC_RightName-Initialise
+	execute function name: WallVC_RightName-Execute
+	destroy function name: WallVC_RightName-Destroy
+	_getSet (func ptr): 0xb7f7982e
+	_getVariableCount (func ptr): 0xb7f79bc4
+	_getVariableIndex (func ptr): 0xb7f79bdb
+	_getValueIndex (func ptr): 0xb7f79cb6
+	_getValueCount (func ptr): 0xb7f79cbe
+	_getValue (func ptr): 0xb7f79cd5
+	variable_Register (ptr): 0x806e290
+	conFunc_Register (ptr): 0x805b9f8
+	_set (ptr): 0x806e328
+	indexCount: 16
+	indexTbl (ptr): 0x8068668
+		indexTbl[0]: 1
+		indexTbl[1]: 3
+		indexTbl[2]: 5
+		indexTbl[3]: 7
+		indexTbl[4]: 9
+		indexTbl[5]: 11
+		indexTbl[6]: 13
+		indexTbl[7]: 15
+		indexTbl[8]: 17
+		indexTbl[9]: 19
+		indexTbl[10]: 21
+		indexTbl[11]: 23
+		indexTbl[12]: 25
+		indexTbl[13]: 27
+		indexTbl[14]: 29
+		indexTbl[15]: 31
+	vcVarCountTbl (ptr): 0x8068328
+		vcVarCountTbl[0]: 3
+		vcVarCountTbl[1]: 3
+		vcVarCountTbl[2]: 3
+		vcVarCountTbl[3]: 3
+		vcVarCountTbl[4]: 3
+		vcVarCountTbl[5]: 3
+		vcVarCountTbl[6]: 3
+		vcVarCountTbl[7]: 3
+		vcVarCountTbl[8]: 3
+		vcVarCountTbl[9]: 3
+		vcVarCountTbl[10]: 3
+		vcVarCountTbl[11]: 3
+		vcVarCountTbl[12]: 3
+		vcVarCountTbl[13]: 3
+		vcVarCountTbl[14]: 3
+		vcVarCountTbl[15]: 3
+	vcTbl (ptr): 0x806c438
+		vcTbl[0][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[0][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[0][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[1][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[1][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[1][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[2][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[2][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[2][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[3][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[3][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[3][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[4][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[4][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[4][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[5][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[5][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[5][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[6][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[6][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[6][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[7][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[7][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[7][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[8][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[8][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[8][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[9][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[9][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[9][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[10][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[10][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[10][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[11][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[11][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[11][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[12][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[12][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[12][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[13][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[13][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[13][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[14][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[14][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[14][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[15][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[15][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[15][2]:
+			varIndex: 5
+			valIndex: 2
+	valueCount: 3
+	valueTbl (ptr): 0x806c108
+		valueTbl[0]:
+			type: VC_ValueType_CFIndex
+			asCFIndex: 1
+		valueTbl[1]:
+			type: VC_ValueType_CFIndex
+			asCFIndex: 1
+		valueTbl[2]:
+			type: VC_ValueType_CFIndex
+			asCFIndex: 1
+
+
+var[0]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[1]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[2]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[3]: 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00
+var[4]: 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00
+var[5]: 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00, 0.00, 30.00
+var[6]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  
+False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  
+False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  False True  
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX 000 XXX 000 XXX 000 XXX 000 XXX 000 XXX 000 XXX 000 XXX 000 XXX 000 XXX 000 XXX 000 XXX 000 XXX 000 XXX 000 XXX 000 XXX 000 
+XXX 001 XXX 001 XXX 001 XXX 001 XXX 001 XXX 001 XXX 001 XXX 001 XXX 001 XXX 001 XXX 001 XXX 001 XXX 001 XXX 001 XXX 001 XXX 001 
+XXX 002 XXX 002 XXX 002 XXX 002 XXX 002 XXX 002 XXX 002 XXX 002 XXX 002 XXX 002 XXX 002 XXX 002 XXX 002 XXX 002 XXX 002 XXX 002 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+
+Testing for WallVC_Top
+WallVC (ptr): 0x806da50
+	dictionary (ptr): 0x805e558
+	_dictionaryEntryName (ptr): 0x8049eda
+		_dictionaryEntryName: WallVC_Top
+	_wall: Top
+	_entryCount: 1
+	_entryTbl (ptr): 0x806e150
+		_entryTbl[0]:
+			varName (ptr): 0x8065cf0
+				varName: temp
+			value:
+				type: VC_ValueType_DoubleArray
+				arraySize: 5
+				asDoubleArray (ptr): 0x806e1a0
+				asDoubleArray[0]: 5
+				asDoubleArray[1]: 6
+				asDoubleArray[2]: 7
+				asDoubleArray[3]: 8
+				asDoubleArray[4]: 9
+	_mesh (ptr): 0x8061048
+VariableCondition (ptr): 0x806da50
+Stg_Component (ptr): 0x806da50
+Stg_Object (ptr): 0x806da50
+	Stg_Class (ptr): 0x806da50
+		sizeOfSelf: 192
+		_deleteSelf: Yes
+		type: WallVC
+		_delete (func ptr): 0xb7f78fd3
+		_print (func ptr): 0xb7f79019
+		_copy (func ptr): 0xb7f795ca
+	name: WallVC_TopName
+	nameAllocationType: NON_GLOBAL
+	_defaultConstructor (func ptr): 0xb7f782a4
+	_construct (func ptr): 0xb7f797df
+	_build (func ptr): 0xb7f7979d
+	_initialise (func ptr): 0xb7edcde2
+	_execute (func ptr): 0xb7edcea6
+	_destroy (func ptr): 0xb7edced6
+	isConstructed: True
+	isBuilt: True
+	isInitialised: False
+	hasExecuted: False
+	isDestroyed: False
+	constructor function name: WallVC_TopName-Construct
+	build function name: WallVC_TopName-Build
+	initialise function name: WallVC_TopName-Initialise
+	execute function name: WallVC_TopName-Execute
+	destroy function name: WallVC_TopName-Destroy
+	_getSet (func ptr): 0xb7f7982e
+	_getVariableCount (func ptr): 0xb7f79bc4
+	_getVariableIndex (func ptr): 0xb7f79bdb
+	_getValueIndex (func ptr): 0xb7f79cb6
+	_getValueCount (func ptr): 0xb7f79cbe
+	_getValue (func ptr): 0xb7f79cd5
+	variable_Register (ptr): 0x806e290
+	conFunc_Register (ptr): 0x805b9f8
+	_set (ptr): 0x806e328
+	indexCount: 8
+	indexTbl (ptr): 0x806c108
+		indexTbl[0]: 6
+		indexTbl[1]: 7
+		indexTbl[2]: 14
+		indexTbl[3]: 15
+		indexTbl[4]: 22
+		indexTbl[5]: 23
+		indexTbl[6]: 30
+		indexTbl[7]: 31
+	vcVarCountTbl (ptr): 0x806c228
+		vcVarCountTbl[0]: 1
+		vcVarCountTbl[1]: 1
+		vcVarCountTbl[2]: 1
+		vcVarCountTbl[3]: 1
+		vcVarCountTbl[4]: 1
+		vcVarCountTbl[5]: 1
+		vcVarCountTbl[6]: 1
+		vcVarCountTbl[7]: 1
+	vcTbl (ptr): 0x806c608
+		vcTbl[0][0]:
+			varIndex: 6
+			valIndex: 0
+		vcTbl[1][0]:
+			varIndex: 6
+			valIndex: 0
+		vcTbl[2][0]:
+			varIndex: 6
+			valIndex: 0
+		vcTbl[3][0]:
+			varIndex: 6
+			valIndex: 0
+		vcTbl[4][0]:
+			varIndex: 6
+			valIndex: 0
+		vcTbl[5][0]:
+			varIndex: 6
+			valIndex: 0
+		vcTbl[6][0]:
+			varIndex: 6
+			valIndex: 0
+		vcTbl[7][0]:
+			varIndex: 6
+			valIndex: 0
+	valueCount: 1
+	valueTbl (ptr): 0x806c0b0
+		valueTbl[0]:
+			type: VC_ValueType_DoubleArray
+			arraySize: 5
+			asDoubleArray (ptr): 0x806e1a0
+				asDoubleArray[0]: 5
+				asDoubleArray[1]: 6
+				asDoubleArray[2]: 7
+				asDoubleArray[3]: 8
+				asDoubleArray[4]: 9
+
+
+var[0]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[1]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[2]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[3]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[4]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[5]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[6]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00
+
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False True  True  False False False False False False True  True  False False False False False False True  True  False False False False False False True  True  
+
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX 000 000 XXX XXX XXX XXX XXX XXX 000 000 XXX XXX XXX XXX XXX XXX 000 000 XXX XXX XXX XXX XXX XXX 000 000 
+
+Testing for WallVC_Bottom
+WallVC (ptr): 0x806da50
+	dictionary (ptr): 0x805e558
+	_dictionaryEntryName (ptr): 0x8049ee5
+		_dictionaryEntryName: WallVC_Bottom
+	_wall: Bottom
+	_entryCount: 3
+	_entryTbl (ptr): 0x806e328
+		_entryTbl[0]:
+			varName (ptr): 0x8068168
+				varName: vx
+			value:
+				type: VC_ValueType_Double
+				asDouble: 2
+		_entryTbl[1]:
+			varName (ptr): 0x8068190
+				varName: vy
+			value:
+				type: VC_ValueType_Double
+				asDouble: 3
+		_entryTbl[2]:
+			varName (ptr): 0x8067fb0
+				varName: vz
+			value:
+				type: VC_ValueType_Double
+				asDouble: 1
+	_mesh (ptr): 0x8061048
+VariableCondition (ptr): 0x806da50
+Stg_Component (ptr): 0x806da50
+Stg_Object (ptr): 0x806da50
+	Stg_Class (ptr): 0x806da50
+		sizeOfSelf: 192
+		_deleteSelf: Yes
+		type: WallVC
+		_delete (func ptr): 0xb7f78fd3
+		_print (func ptr): 0xb7f79019
+		_copy (func ptr): 0xb7f795ca
+	name: WallVC_BottomName
+	nameAllocationType: NON_GLOBAL
+	_defaultConstructor (func ptr): 0xb7f782a4
+	_construct (func ptr): 0xb7f797df
+	_build (func ptr): 0xb7f7979d
+	_initialise (func ptr): 0xb7edcde2
+	_execute (func ptr): 0xb7edcea6
+	_destroy (func ptr): 0xb7edced6
+	isConstructed: True
+	isBuilt: True
+	isInitialised: False
+	hasExecuted: False
+	isDestroyed: False
+	constructor function name: WallVC_BottomName-Construct
+	build function name: WallVC_BottomName-Build
+	initialise function name: WallVC_BottomName-Initialise
+	execute function name: WallVC_BottomName-Execute
+	destroy function name: WallVC_BottomName-Destroy
+	_getSet (func ptr): 0xb7f7982e
+	_getVariableCount (func ptr): 0xb7f79bc4
+	_getVariableIndex (func ptr): 0xb7f79bdb
+	_getValueIndex (func ptr): 0xb7f79cb6
+	_getValueCount (func ptr): 0xb7f79cbe
+	_getValue (func ptr): 0xb7f79cd5
+	variable_Register (ptr): 0x806e290
+	conFunc_Register (ptr): 0x805b9f8
+	_set (ptr): 0x806e240
+	indexCount: 8
+	indexTbl (ptr): 0x806c228
+		indexTbl[0]: 0
+		indexTbl[1]: 1
+		indexTbl[2]: 8
+		indexTbl[3]: 9
+		indexTbl[4]: 16
+		indexTbl[5]: 17
+		indexTbl[6]: 24
+		indexTbl[7]: 25
+	vcVarCountTbl (ptr): 0x806c108
+		vcVarCountTbl[0]: 3
+		vcVarCountTbl[1]: 3
+		vcVarCountTbl[2]: 3
+		vcVarCountTbl[3]: 3
+		vcVarCountTbl[4]: 3
+		vcVarCountTbl[5]: 3
+		vcVarCountTbl[6]: 3
+		vcVarCountTbl[7]: 3
+	vcTbl (ptr): 0x806c678
+		vcTbl[0][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[0][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[0][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[1][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[1][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[1][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[2][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[2][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[2][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[3][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[3][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[3][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[4][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[4][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[4][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[5][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[5][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[5][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[6][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[6][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[6][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[7][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[7][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[7][2]:
+			varIndex: 5
+			valIndex: 2
+	valueCount: 3
+	valueTbl (ptr): 0x806c0d8
+		valueTbl[0]:
+			type: VC_ValueType_Double
+			asDouble: 2
+		valueTbl[1]:
+			type: VC_ValueType_Double
+			asDouble: 3
+		valueTbl[2]:
+			type: VC_ValueType_Double
+			asDouble: 1
+
+
+var[0]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[1]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[2]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[3]: 2.00, 2.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.00, 2.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.00, 2.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.00, 2.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[4]: 3.00, 3.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 3.00, 3.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 3.00, 3.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 3.00, 3.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[5]: 1.00, 1.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 1.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 1.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 1.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[6]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+True  True  False False False False False False True  True  False False False False False False True  True  False False False False False False True  True  False False False False False False 
+True  True  False False False False False False True  True  False False False False False False True  True  False False False False False False True  True  False False False False False False 
+True  True  False False False False False False True  True  False False False False False False True  True  False False False False False False True  True  False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+000 000 XXX XXX XXX XXX XXX XXX 000 000 XXX XXX XXX XXX XXX XXX 000 000 XXX XXX XXX XXX XXX XXX 000 000 XXX XXX XXX XXX XXX XXX 
+001 001 XXX XXX XXX XXX XXX XXX 001 001 XXX XXX XXX XXX XXX XXX 001 001 XXX XXX XXX XXX XXX XXX 001 001 XXX XXX XXX XXX XXX XXX 
+002 002 XXX XXX XXX XXX XXX XXX 002 002 XXX XXX XXX XXX XXX XXX 002 002 XXX XXX XXX XXX XXX XXX 002 002 XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+

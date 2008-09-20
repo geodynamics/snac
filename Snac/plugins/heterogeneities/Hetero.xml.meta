@@ -1,0 +1,98 @@
+<!--
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**
+** Copyright (C), 2003,
+**      Steve Quenette, 110 Victoria Street, Melbourne, Victoria, 3053, Australia.
+**      Californian Institute of Technology, 1200 East California Boulevard, Pasadena, Californ
+ia, 91125, USA.
+**      University of Texas, 1 University Station, Austin, Texas, 78712, USA.
+**
+** Authors:
+**      Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+**      Stevan M. Quenette, Visitor in Geophysics, Caltech.
+**      Luc Lavier, Research Scientist, The University of Texas. (luc@utig.ug.utexas.edu)
+**      Luc Lavier, Research Scientist, Caltech.
+**
+** This program is free software; you can redistribute it and/or modify it
+** under the terms of the GNU General Public License as published by the
+** Free Software Foundation; either version 2, or (at your option) any
+** later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+**
+** $Id: Hetero.meta.xml  2006-06-19 18:21:50Z LaetitiaLePourhiet $
+**
+**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ -->
+<!-- this example introduce a 5 km thick vertical dyke of material one in which the temperature is set calling the function SnacTemperature_Citcom_Compatible
+the second heterogeneity is a sphere of radius 10km,which center coordinates are Xc=25000,Yc=-30000,Zc=15000 it does change the material properties but does not affect the temperature -->
+
+
+  <list name="heterogeneities">
+    <struct>
+      <param name="geometry">Dyke</param>
+      <param name="a_shape">-1.0</param>
+      <param name="b_shape">0</param>
+      <param name="c_shape">0</param>
+      <param name="d_shape">30000.0</param>
+      <param name="e_shape">5000</param>
+      <struct name="elementVCs">
+        <list name="vcList">
+          <struct>
+            <param name="type">AllElementsVC</param>
+            <list name="variables">
+              <struct>
+                <param name="name">elementMaterial</param>
+                <param name="type">int</param>
+                <param name="value">1</param>
+              </struct>
+            </list>
+          </struct>
+        </list>
+      </struct>
+      <struct name="nodeVCs">
+        <list name="vcList">
+          <struct>
+            <param name="type">AllNodesVC</param>
+            <list name="variables">
+              <struct>
+                <param name="name">temperature</param>
+                <param name="type">func</param>
+                <param name="value">SnacTemperature_Citcom_Compatible</param>
+              </struct>
+            </list>
+          </struct>
+        </list>
+      </struct>
+    </struct>
+    <struct>
+      <param name="geometry">Sphere</param>
+      <param name="a_shape">25000.0</param>
+      <param name="b_shape">-30000.0</param>
+      <param name="c_shape">15000.0</param>
+      <param name="d_shape">9200.0</param>
+      <param name="e_shape">10000.0</param>
+      <struct name="elementVCs">
+        <list name="vcList">
+          <struct>
+            <param name="type">AllElementsVC</param>
+            <list name="variables">
+              <struct>
+                <param name="name">elementMaterial</param>
+                <param name="type">int</param>
+                <param name="value">1</param>
+              </struct>
+            </list>
+          </struct>
+        </list>
+      </struct>
+    </struct>
+  </list>
+

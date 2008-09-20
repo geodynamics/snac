@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<!-- StGermain-Snac input file -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+ 
+ 	<!-- StGermain simulation parameters -->
+	<param name="start"> 0 </param>
+	<param name="end"> 1 </param>
+	<param name="outputPath">./</param>
+ 
+	<!-- Mesh size -->
+	<param name="meshSizeI"> 8 </param>
+	<param name="meshSizeJ"> 8 </param>
+	<param name="meshSizeK"> 8 </param>
+
+	<!-- Initial geometry -->
+	<param name="minX"> 0 </param>
+	<param name="minY"> -300 </param>
+	<param name="minZ"> 0 </param>
+	<param name="maxX"> 300 </param>
+	<param name="maxY"> 0 </param>
+	<param name="maxZ"> 300 </param>
+
+	<!-- Intial velocity (note: this way is dated and needs replacing) -->
+	<param name="Snac_InitialVelocityType">constant</param>
+	<param name="Snac_InitialVelocityX"> 0 </param>
+	<param name="Snac_InitialVelocityY"> 0 </param>
+	<param name="Snac_InitialVelocityZ"> 0 </param>
+
+	<!-- Boundary conditions -->
+	<struct name="leftwall">
+		<param name="type"> WallVC </param>
+		<param name="wall"> left </param>
+		<list name="variables">
+			<struct>
+				<param name="name">vx</param>
+				<param name="type">double</param>
+				<param name="value"> 0 </param>
+			</struct>
+		</list>
+	</struct>
+	<struct name="rightwall">
+		<param name="type"> WallVC </param>
+		<param name="wall"> right </param>
+		<list name="variables">
+			<struct>
+				<param name="name">vx</param>
+				<param name="type">double</param>
+				<param name="value"> 0 </param>
+			</struct>
+		</list>
+	</struct>
+	<struct name="backwall">
+		<param name="type"> WallVC </param>
+		<param name="wall"> back </param>
+		<list name="variables">
+			<struct>
+				<param name="name">vx</param>
+				<param name="type">double</param>
+				<param name="value"> 0 </param>
+			</struct>
+		</list>
+	</struct>
+	<struct name="frontwall">
+		<param name="type"> WallVC </param>
+		<param name="wall"> front </param>
+		<list name="variables">
+			<struct>
+				<param name="name">vx</param>
+				<param name="type">double</param>
+				<param name="value"> 0 </param>
+			</struct>
+		</list>
+	</struct>
+
+</StGermainData>

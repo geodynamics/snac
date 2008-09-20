@@ -1,0 +1,116 @@
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+## Copyright (C), 2003, Victorian Partnership for Advanced Computing (VPAC) Ltd, 110 Victoria Street, Melbourne, 3053, Australia.
+##
+## Authors:
+##      Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+##      Patrick D. Sunter, Software Engineer, VPAC. (pds@vpac.org)
+##      Luke J. Hodkinson, Computational Engineer, VPAC. (lhodkins@vpac.org)
+##      Siew-Ching Tan, Software Engineer, VPAC. (siew@vpac.org)
+##      Alan H. Lo, Computational Engineer, VPAC. (alan@vpac.org)
+##      Raquibul Hassan, Computational Engineer, VPAC. (raq@vpac.org)
+##
+##  This library is free software; you can redistribute it and/or
+##  modify it under the terms of the GNU Lesser General Public
+##  License as published by the Free Software Foundation; either
+##  version 2.1 of the License, or (at your option) any later version.
+##
+##  This library is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+##  Lesser General Public License for more details.
+##
+##  You should have received a copy of the GNU Lesser General Public
+##  License along with this library; if not, write to the Free Software
+##  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+##
+## $Id: all.vmake 2586 2005-01-28 00:08:55Z AlanLo $
+##
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.PHONY: install install_build
+
+RUN_TEE=true
+
+ifndef TEE
+	RUN_TEE=false
+endif
+ifdef USE_NOLOG
+	RUN_TEE=false
+endif
+ifdef TEE_ON
+	RUN_TEE=false
+endif
+
+ifeq (${RUN_TEE}, true)
+install: override EXPORT_DIR=${PREFIX_DIR}
+install:
+	@TEE_ON=1 ${MAKE} install_build 2>&1 | ${TEE} make${OPTIONS}.log
+	@echo "---------------------"
+	@echo "*** Build Summary ***"
+	@if grep -i "warning" make${OPTIONS}.log > make${OPTIONS}.warning; \
+		then echo "Warnings during build. See make${OPTIONS}.warning for details"; \
+		else ${RM} make${OPTIONS}.warning; echo "No warnings"; \
+		fi
+	@if grep -v "error[s]*.o" make${OPTIONS}.log | grep -i "error" > make${OPTIONS}.error; \
+		then echo "Errors during build. See make${OPTIONS}.error for details"; \
+		else ${RM} make${OPTIONS}.error; echo "No Errors"; \
+		fi
+	@echo "Log stored in: make${OPTIONS}.log"
+	@echo "---------------------"
+	@if test -r make${OPTIONS}.error; \
+		then ${MAKE} errorhelp; \
+		fi
+else
+install: override EXPORT_DIR=${PREFIX_DIR}
+install:
+	@${MAKE} install_build
+endif
+
+# Default build rule
+ifeq (${BUILD_SUBDIRS_LAST},true)
+INSTALL_BUILD_LIST := \
+	${PRE_MAKE} \
+	${SUBPROJ} \
+	${TARGETS} \
+	${HEADERS} \
+	${LIB} \
+	${MOD} \
+	${PLUGINS_OBJS} \
+	${PLUGINS} \
+	${PYB} \
+	${PYC} \
+	${TESTS} \
+	${BIN} \
+	${SUBDIRS} \
+	${POST_MAKE} 
+	remove-meta
+
+else
+INSTALL_BUILD_LIST := \
+	${PRE_MAKE} \
+	${SUBPROJ} \
+	${SUBDIRS} \
+	${TARGETS} \
+	${HEADERS} \
+	${LIB} \
+	${MOD} \
+	${PLUGINS_OBJS} \
+	${PLUGINS} \
+	${PYB} \
+	${PYC} \
+	${TESTS} \
+	${BIN} \
+	${POST_MAKE} 
+#	remove-meta 
+	
+endif
+
+install_build:
+	@${MAKE} all_build EXPORT_DIR=${PREFIX_DIR} RPATH_FLAG="-L"
+
+
+install-help: help-title install-command-header
+	@echo "Compiles and installs into the prefix directory."
+
+
+COMMAND_HELP += install-help

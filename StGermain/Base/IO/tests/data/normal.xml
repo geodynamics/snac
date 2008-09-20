@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<!-- A StGermain input file -->
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<!--
+	Proposed format: Use tags that represent structure, but not type. Also,
+	tagnames for key objects such as meshes and entrypoints have their name
+	specially set (need a good way of extending this)
+-->
+	<param name="test">a test string</param>
+	<param name="testbool" type="Bool">1</param>
+	<param name="height">7</param>
+
+	<struct name=" geom  ">
+		<param name="x" type="int">-55</param>
+		<param name="y">80</param>
+	</struct>
+	
+	<struct name="emptystruct  ">
+	</struct>
+
+	<struct name="geom">
+		<param name="  x" type="int">79</param>
+		<param name="y">90</param>
+		<struct name="z">
+			<param name="z1">45</param>
+			<param name="z2">47</param>
+		</struct>
+		<param name="a" type="uint"> 93 </param>
+		<param name="b" type="unsigned int"> 78 </param>
+	</struct>
+	
+	<list name="  faults">
+		<param>SanAndreas</param>
+		<param>Delta</param>
+	</list>
+	
+	<list name="emptylist">
+	</list>
+
+	<param name="emptyparam"></param>
+	<param name="1space"> </param>
+	<param name="allspaces">  	  </param>
+	<param name="leadingspace">		the main bit</param>
+	<param name="trailingspace">the main bit  	
+	</param>
+	<param name="leadingtrailingspace">		the main bit 		</param>
+
+	<include> empty.xml</include>
+	
+	<searchPath>./subdir/another/</searchPath>
+	<include>empty2.xml</include>
+	
+	<param type="path" name="someBCs"> someBCs.in </param>
+
+<!-- Do we want to have some special tagnames for key features? -->
+<!--
+<entrypoint name="postsolve">
+	<LibraryName></LibraryName>
+	<Function></Function>
+</entrypoint>	
+-->
+
+</StGermainData>

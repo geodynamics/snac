@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<param name="Name">WithinShapeParticleLayout</param>
+<param name="Author">...</param>
+<param name="Organisation">VPAC</param>
+<param name="Project">StGermain</param>
+<param name="Location">./StGermain/Discretisation/Swarm/src/</param>
+<param name="Project Web">https://csd.vpac.org/twiki/bin/view/Stgermain/WebHome</param>
+<param name="Copyright">StGermain Framework. Copyright (C) 2003-2005 VPAC.</param>
+<param name="License">The Gnu Lesser General Public License http://www.gnu.org/licenses/lgpl.html</param>
+<param name="Parent">SpaceFillerParticleLayout</param>
+<param name="Reference">...</param>
+<param name="Summary">...</param>
+<param name="Description">This uses the SpaceFillerParticleLayout class to choose quasi-random particle positions, but it only places a particle there if it is within a particular shape.</param>
+
+<!--Now the interesting stuff-->
+<list name="Params">
+
+</list>
+
+<list name="Dependencies">
+	<struct>
+		<param name="Essential">True</param>
+		<param name="Name">shape</param>
+		<param name="Type">Stg_Shape</param>
+		<param name="Description">This is the shape within which all the particles will be laid out.</param>
+	</struct>
+</list>
+
+<!-- Add an exmaple XML if possible -->
+<param name="Example">
+	<struct name="particleLayout">
+		<param name="Type">WithinShapeParticleLayout</param>
+		<param name="totalInitialParticles">6000</param>
+		<param name="shape">boxShape</param>
+	</struct>
+</param>
+
+
+</StGermainData>

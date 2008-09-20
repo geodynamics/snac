@@ -1,0 +1,79 @@
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##
+## Copyright (C), 2003, Victorian Partnership for Advanced Computing (VPAC) Ltd, 110 Victoria Street, Melbourne, 3053, Australia.
+##
+## Authors:
+##	Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+##	Patrick D. Sunter, Software Engineer, VPAC. (pds@vpac.org)
+##	Luke J. Hodkinson, Computational Engineer, VPAC. (lhodkins@vpac.org)
+##	Siew-Ching Tan, Software Engineer, VPAC. (siew@vpac.org)
+##	Alan H. Lo, Computational Engineer, VPAC. (alan@vpac.org)
+##	Raquibul Hassan, Computational Engineer, VPAC. (raq@vpac.org)
+##
+##  This library is free software; you can redistribute it and/or
+##  modify it under the terms of the GNU Lesser General Public
+##  License as published by the Free Software Foundation; either
+##  version 2.1 of the License, or (at your option) any later version.
+##
+##  This library is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+##  Lesser General Public License for more details.
+##
+##  You should have received a copy of the GNU Lesser General Public
+##  License along with this library; if not, write to the Free Software
+##  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+##
+## $Id: Makefile.def 3462 2006-02-19 06:53:24Z WalterLandry $
+##
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def_tst = libStGermainBaseIO
+
+def_test_support_srcs = \
+	BTreeWrappers.c \
+	PtrMapWrappers.c \
+
+def_srcs = \
+	testDictionary.c \
+	testDictionary-merge.c \
+	testDictionary-commandLine.c \
+	testDictionary-shortcuts.c \
+	testIO_Handler-file_sanity.c \
+	testIO_Handler-normal.c \
+	testIO_Handler-raw_data.c \
+	testIO_Handler-duplicate.c \
+	testIO_Handler-commandLine.c \
+	testJournal.c \
+	testJournal1.c \
+	testJournal-Dictionary.c \
+	testJournal-Firewall.c \
+	testRankFormatter.c \
+	testPathUtils.c \
+	testJournalShortcuts.c \
+	testMPIStream.c
+
+def_checks = \
+	testDictionary.0of1.sh \
+	testDictionary-merge.0of1.sh \
+	testDictionary-commandLine.0of1.sh \
+	testDictionary-shortcuts.0of1.sh \
+	testIO_Handler-normal.0of1.sh \
+	testIO_Handler-raw_data.0of1.sh \
+	testIO_Handler-duplicate.0of1.sh \
+	testIO_Handler-commandLine.0of1.sh \
+	testJournal.0of1.sh \
+	testJournal-Dictionary.0of1.sh \
+	testJournal-Firewall.0of1.sh \
+	testRankFormatter.0of2.sh \
+	testJournalShortcuts.0of1.sh \
+	testMPIStream.0of2.sh
+	# Not running since fails in dict reading now cause firewall exits
+	# testIO_Handler-file_sanity.0of1.sh
+
+
+ifeq (true,$(shell if echo $$CFLAGS | grep USE_MEMORY_STATS > /dev/null; then echo true; fi ))
+	def_checks += \
+	testJournal1.0of1.sh
+endif	
+

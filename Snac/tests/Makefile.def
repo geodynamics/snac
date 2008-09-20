@@ -1,0 +1,74 @@
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##
+## Copyright (C), 2003, 
+##	Steve Quenette, 110 Victoria Street, Melbourne, Victoria, 3053, Australia.
+##	Californian Institute of Technology, 1200 East California Boulevard, Pasadena, California, 91125, USA.
+##	University of Texas, 1 University Station, Austin, Texas, 78712, USA.
+##
+## Authors:
+##	Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+##	Stevan M. Quenette, Visitor in Geophysics, Caltech.
+##	Luc Lavier, Research Scientist, The University of Texas. (luc@utig.ug.utexas.edu)
+##	Luc Lavier, Research Scientist, Caltech.
+##
+## This program is free software; you can redistribute it and/or modify it
+## under the terms of the GNU General Public License as published by the
+## Free Software Foundation; either version 2, or (at your option) any
+## later version.
+## 
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+## 
+## You should have received a copy of the GNU General Public License
+## along with this program; if not, write to the Free Software
+## Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+##
+## $Id: Makefile.def 3239 2006-07-12 18:02:17Z EunseoChoi $
+##
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def_tst = Snac
+
+def_checks = \
+	test-basic.sh \
+	test-basic.0of2.sh \
+	test-basic.1of2.sh \
+	test-basic.0of3.sh \
+	test-basic.1of3.sh \
+	test-basic.2of3.sh \
+	test-basic-temperature.sh \
+	test-basic-hydroStatic.sh \
+	test-basic-python.sh \
+	test-initonly-pyre.sh \
+	test-basic-pyre.sh
+
+## Disabled tests:
+#	test-basic-remesher.sh
+#	test-basic-hydroStatic.0of1.sh \
+#	test-basic-velocity-quickForceCalc.sh \
+#	test-basic-velocity-quickForceCalc.0of2.sh \
+#	test-basic-velocity-quickForceCalc.1of2.sh \
+#	test-basic-velocity-quickForceCalc.0of3.sh \
+#	test-basic-velocity-quickForceCalc.1of3.sh \
+#	test-basic-velocity-quickForceCalc.2of3.sh \
+#	test-basic-velocity-normalForceCalc.sh \
+#	test-basic-velocity-normalForceCalc.0of2.sh \
+#	test-basic-velocity-normalForceCalc.1of2.sh \
+#	test-basic-velocity-normalForceCalc.0of3.sh \
+#	test-basic-velocity-normalForceCalc.1of3.sh \
+#	test-basic-velocity-normalForceCalc.2of3.sh \
+#	test-basic-velocity-completeForceCalc.sh \
+#	test-basic-velocity-completeForceCalc.0of2.sh \
+#	test-basic-velocity-completeForceCalc.1of2.sh \
+#	test-basic-velocity-completeForceCalc.0of3.sh \
+#	test-basic-velocity-completeForceCalc.1of3.sh \
+#	test-basic-velocity-completeForceCalc.2of3.sh \
+#	test-basic-remesher-1D.0of2.sh \
+#	test-basic-remesher-1D.1of2.sh \
+#	test-basic-remesher-2D.0of4.sh \
+#	test-basic-remesher-2D.1of4.sh \
+#	test-basic-remesher-2D.2of4.sh \
+#	test-basic-remesher-2D.3of4.sh \
+

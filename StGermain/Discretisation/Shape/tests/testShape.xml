@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+<!--Purpose: Defines the testing conditions for a simulation-->	
+	<param name="journal-level.info.Stg_ComponentFactory"> 2 </param>
+	<param name="outputPath"> ./output </param>
+	<param name="dim"> 2 </param>
+	<param name="testCoordCount"> 10000 </param>
+	
+</StGermainData>

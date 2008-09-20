@@ -1,0 +1,106 @@
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##
+## Copyright (C), 2003, Victorian Partnership for Advanced Computing (VPAC) Ltd, 110 Victoria Street, Melbourne, 3053, Australia.
+##
+## Authors:
+##	Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+##	Patrick D. Sunter, Software Engineer, VPAC. (pds@vpac.org)
+##	Luke J. Hodkinson, Computational Engineer, VPAC. (lhodkins@vpac.org)
+##	Siew-Ching Tan, Software Engineer, VPAC. (siew@vpac.org)
+##	Alan H. Lo, Computational Engineer, VPAC. (alan@vpac.org)
+##	Raquibul Hassan, Computational Engineer, VPAC. (raq@vpac.org)
+##
+##  This library is free software; you can redistribute it and/or
+##  modify it under the terms of the GNU Lesser General Public
+##  License as published by the Free Software Foundation; either
+##  version 2.1 of the License, or (at your option) any later version.
+##
+##  This library is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+##  Lesser General Public License for more details.
+##
+##  You should have received a copy of the GNU Lesser General Public
+##  License along with this library; if not, write to the Free Software
+##  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+##
+## Role:
+##	Contains rules and "engine" for building StGermain or a StGermain-based code.
+##	See csd.vpac.org/twiki/Stgermain/BuildSystem for an explanation of how
+##	the build system works.
+##
+## $Id: Makefile.vmake 2586 2005-01-28 00:08:55Z AlanLo $
+##
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.PHONY: defaultrule
+
+defaultrule: all
+
+# Initialise
+include ${PROJ_ROOT}/VMake/Initialise/ProjectVariable.vmake
+include ${PROJ_ROOT}/VMake/Initialise/UserVariables.vmake
+include ${PROJ_ROOT}/VMake/Initialise/DirectoryVariables.vmake
+include ${PROJ_ROOT}/VMake/Initialise/Subversion.vmake
+include ${PROJ_ROOT}/VMake/Initialise/VersionVariables.vmake
+include ${PROJ_ROOT}/VMake/Initialise/BuildOptions.vmake
+
+# Rules
+include ${PROJ_ROOT}/VMake/Rules/subdirs.vmake		# Allows recursive processing with SUBDIRS
+
+include ${PROJ_ROOT}/VMake/Rules/tau.vmake		# TAU instrumentation phase
+include ${PROJ_ROOT}/VMake/Rules/meta.vmake		# Metadata compilation phase
+
+include ${PROJ_ROOT}/VMake/Rules/includes.vmake
+
+include ${PROJ_ROOT}/VMake/Rules/lib.vmake
+include ${PROJ_ROOT}/VMake/Rules/mod.vmake
+include ${PROJ_ROOT}/VMake/Rules/plugins.vmake
+include ${PROJ_ROOT}/VMake/Rules/pyb.vmake
+include ${PROJ_ROOT}/VMake/Rules/pyc.vmake
+include ${PROJ_ROOT}/VMake/Rules/tests.vmake
+include ${PROJ_ROOT}/VMake/Rules/bin.vmake
+include ${PROJ_ROOT}/VMake/Rules/apps_xml.vmake
+include ${PROJ_ROOT}/VMake/Rules/input_xml.vmake
+include ${PROJ_ROOT}/VMake/Rules/xmls.vmake
+
+
+include ${PROJ_ROOT}/VMake/Rules/checks.vmake
+
+include ${PROJ_ROOT}/VMake/Rules/packages.vmake
+
+
+include ${PROJ_ROOT}/VMake/Rules/source.vmake
+include ${PROJ_ROOT}/VMake/Rules/processflags.vmake
+include ${PROJ_ROOT}/VMake/Rules/compile.vmake
+
+
+include ${PROJ_ROOT}/VMake/Rules/makedirs.vmake
+include ${PROJ_ROOT}/VMake/Rules/intermediate.vmake
+
+# Commands
+
+
+include ${PROJ_ROOT}/VMake/Commands/all.vmake
+include ${PROJ_ROOT}/VMake/Commands/clean.vmake
+include ${PROJ_ROOT}/VMake/Commands/regresstor.vmake
+include ${PROJ_ROOT}/VMake/Commands/check.vmake
+include ${PROJ_ROOT}/VMake/Commands/long_check.vmake
+include ${PROJ_ROOT}/VMake/Commands/scibenchmark_check.vmake
+include ${PROJ_ROOT}/VMake/Commands/docs.vmake
+include ${PROJ_ROOT}/VMake/Commands/examples.vmake
+include ${PROJ_ROOT}/VMake/Commands/echo.vmake
+include ${PROJ_ROOT}/VMake/Commands/touch.vmake
+include ${PROJ_ROOT}/VMake/Commands/find_fail.vmake
+include ${PROJ_ROOT}/VMake/Commands/single_exe.vmake
+include ${PROJ_ROOT}/VMake/Commands/update.vmake
+include ${PROJ_ROOT}/VMake/Commands/version.vmake
+include ${PROJ_ROOT}/VMake/Commands/svncleanup.vmake
+
+include ${PROJ_ROOT}/VMake/Commands/errorhelp.vmake
+include ${PROJ_ROOT}/VMake/Commands/help.vmake
+
+
+# Unknown rule handler
+#%::
+#	@echo "doh" $@

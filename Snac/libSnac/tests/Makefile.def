@@ -1,0 +1,88 @@
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##
+## Copyright (C), 2003, 
+##	Steve Quenette, 110 Victoria Street, Melbourne, Victoria, 3053, Australia.
+##	Californian Institute of Technology, 1200 East California Boulevard, Pasadena, California, 91125, USA.
+##	University of Texas, 1 University Station, Austin, Texas, 78712, USA.
+##
+## Authors:
+##	Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+##	Stevan M. Quenette, Visitor in Geophysics, Caltech.
+##	Luc Lavier, Research Scientist, The University of Texas. (luc@utig.ug.utexas.edu)
+##	Luc Lavier, Research Scientist, Caltech.
+##
+## This program is free software; you can redistribute it and/or modify it
+## under the terms of the GNU General Public License as published by the
+## Free Software Foundation; either version 2, or (at your option) any
+## later version.
+## 
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+## 
+## You should have received a copy of the GNU General Public License
+## along with this program; if not, write to the Free Software
+## Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+##
+## $Id: Makefile.def 3229 2006-06-19 01:09:20Z EunseoChoi $
+##
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def_tst = libSnac
+
+def_test_support_srcs = \
+	TestUtilities.c \
+	TestStress.c
+
+def_srcs = \
+	testSnacContext-4-4-4.c \
+	testTetrahedra-volume-4-4-4.c \
+	testTetrahedra-face-area-4-4-4.c \
+	testTetrahedra-face-normal-4-4-4.c \
+	testUpdateElement-tetra-volume-4-4-4.c \
+	testUpdateElement-tetra-face-area-4-4-4.c \
+	testUpdateElement-tetra-face-normal-4-4-4.c \
+	testUpdateElement-tetra-strain-4-4-4.c \
+	testUpdateElement-minLengthScale-4-4-4.c \
+	testUpdateElement-volume-4-4-4.c \
+	testUpdateNode-mass-4-4-4.c \
+	testUpdateNode-velocity-4-4-4.c \
+	testUpdateNode-coord-4-4-4.c \
+	testStrainRate-tetra-strainRate-4-4-4.c \
+	testStrainRate-strainRate-4-4-4.c \
+	testStress-tetra-strain-4-4-4.c \
+	#testUpdateElement-tetra-stress-4-4-4.c \
+	testStress-tetra-stress-4-4-4.c \
+	testStress-stress-4-4-4.c \
+	testSnacContext-boundWalls-4-4-4.c \
+	testUpdateNode-force-4-4-4.c \
+	testUpdateNode-balance-4-4-4.c \
+
+
+def_checks = \
+	testSnacContext-4-4-4.0of1.sh \
+	testTetrahedra-volume-4-4-4.0of1.sh \
+	testTetrahedra-face-area-4-4-4.0of1.sh \
+	testTetrahedra-face-normal-4-4-4.0of1.sh \
+	testUpdateElement-tetra-volume-4-4-4.0of1.sh \
+	testUpdateElement-tetra-face-area-4-4-4.0of1.sh \
+	testUpdateElement-tetra-face-normal-4-4-4.0of1.sh \
+	testUpdateElement-tetra-strain-4-4-4.0of1.sh \
+	testUpdateElement-minLengthScale-4-4-4.0of1.sh \
+	testUpdateElement-volume-4-4-4.0of1.sh \
+	testUpdateNode-mass-4-4-4.0of1.sh \
+	testUpdateNode-velocity-4-4-4.0of1.sh \
+	testUpdateNode-coord-4-4-4.0of1.sh \
+	testStrainRate-tetra-strainRate-4-4-4.0of1.sh \
+	testStrainRate-strainRate-4-4-4.0of1.sh \
+	testStress-tetra-strain-4-4-4.0of1.sh \
+	#testUpdateElement-tetra-stress-4-4-4.0of1.sh \
+	testStress-tetra-stress-4-4-4.0of1.sh \
+	testStress-stress-4-4-4.0of1.sh \
+	testSnacContext-boundWalls-4-4-4.0of1.sh \
+	testUpdateNode-force-4-4-4.0of1.sh \
+	testUpdateNode-balance-4-4-4.0of1.sh \
+
+
+

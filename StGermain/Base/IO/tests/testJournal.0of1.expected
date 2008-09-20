@@ -1,0 +1,99 @@
+Blah Blah Blah
+Integer:99
+Float:88.110001
+Char:s
+String:myString
+Double:0.880000
+testing journal.
+1 	
+	2 3 
+4
+
+
+
+
+G'day
+Hello
+0 no indent
+	1 with 1 indent
+		2 with 2 indent
+	2 with 1 indent
+1 with no indent
+2 with no indent
+Journal_Register2 works
+
+Summary of Journal and Stream Status:
+Journal Enabled: True
+Explanation of the following stream status printout:
+The streams are organised hierarchically, as trees, according to the
+purpose of the stream - the key stream types "info", "debug" and "error"
+are at the top, with all other streams as their children.
+We also display the status of each stream: the "Enabled" parameter, which can
+be individually set from input files/command line, determines whether output sent
+to a given stream will print or not. The "Level" parameter determines the level
+of detail that it will output - 1 is the default, 4 means very verbose.
+For full details on Journalling, go to https://csd.vpac.org/twiki/bin/view/Stgermain/Journal
+
+Typed Streams:
+Stream "info":
+	Enabled: True
+	Level: 1
+	Children:
+		Stream "TimeMonitor":
+			Enabled: False
+			Level: 1
+		Stream "MemMonitor":
+			Enabled: False
+			Level: 1
+		Stream "LiveDebug":
+			Enabled: True
+			Level: 1
+		Stream "myComponent":
+			Enabled: True
+			Level: 1
+			Children:
+				Stream "child1":
+					Enabled: True
+					Level: 1
+					Children:
+						Stream "child2":
+							Enabled: True
+							Level: 1
+		Stream "File test":
+			Enabled: True
+			Level: 1
+		Stream "Component":
+			Enabled: True
+			Level: 1
+			Children:
+				Stream "Instance":
+					Enabled: True
+					Level: 1
+		Stream "Journal":
+			Enabled: True
+			Level: 1
+Stream "debug":
+	Enabled: True
+	Level: 1
+	Children:
+		Stream "Context":
+			Enabled: False
+			Level: 1
+		Stream "myDebug":
+			Enabled: True
+			Level: 1
+Stream "dump":
+	Enabled: False
+	Level: 1
+Stream "error":
+	Enabled: True
+	Level: 1
+	Children:
+		Stream "myError":
+			Enabled: True
+			Level: 1
+Stream "MPIStream":
+	Enabled: True
+	Level: 1
+
+StGermain IO Report - File Flush called 85 times.

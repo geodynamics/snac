@@ -1,0 +1,55 @@
+StGermain Framework revision 3667. Copyright (C) 2003-2005 VPAC.
+
+Testing irregular parallel triangulation..
+
+
+	Running Parallel Triangulator on 100 nodes
+
+		Parallel Voronoi Area test: passed
+		Parallel Voronoi Sides test: passed
+		Parallel Triangle count test: passed
+
+	Running Parallel Triangulator on 400 nodes
+
+		Parallel Voronoi Area test: passed
+		Parallel Voronoi Sides test: passed
+		Parallel Triangle count test: passed
+
+	Running Parallel Triangulator on 900 nodes
+
+		Parallel Voronoi Area test: passed
+		Parallel Voronoi Sides test: passed
+		Parallel Triangle count test: passed
+
+	Running Parallel Triangulator on 1600 nodes
+
+		Parallel Voronoi Area test: passed
+		Parallel Voronoi Sides test: passed
+		Parallel Triangle count test: passed
+
+Testing regular parallel triangulation..
+
+
+	Running Parallel Triangulator on 100 nodes
+
+		Parallel Voronoi Area test: passed
+		Parallel Voronoi Sides test: passed
+		Parallel Triangle count test: passed
+
+	Running Parallel Triangulator on 400 nodes
+
+		Parallel Voronoi Area test: passed
+		Parallel Voronoi Sides test: passed
+		Parallel Triangle count test: passed
+
+	Running Parallel Triangulator on 900 nodes
+
+		Parallel Voronoi Area test: passed
+		Parallel Voronoi Sides test: passed
+		Parallel Triangle count test: passed
+
+	Running Parallel Triangulator on 1600 nodes
+
+		Parallel Voronoi Area test: passed
+		Parallel Voronoi Sides test: passed
+		Parallel Triangle count test: passed

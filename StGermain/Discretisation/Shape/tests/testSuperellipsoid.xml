@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+	
+	<include>testShape.xml</include>
+
+	<struct name="components" mergeType="merge">
+		<struct name="shape">
+			<param name="Type">Superellipsoid</param>
+			<param name="CentreX">0.0</param>
+			<param name="CentreY">0.0</param>
+			<param name="CentreZ">0.0</param>
+			<param name="epsilon1">0.5</param>
+			<param name="epsilon2">1.5</param>
+			<param name="radiusX">0.3</param>
+			<param name="radiusY">0.4</param>
+			<param name="radiusZ">0.4</param>
+		</struct>	
+	</struct>
+
+</StGermainData>

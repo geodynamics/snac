@@ -1,0 +1,37 @@
+Watching rank: 0
+Passed test initialSize: Is the initial size correct
+Passed test First offset: Is the first offset at the correct position
+Passed test finalSize: Is the final size correct
+Passed test count: Is the number of extensions correct
+Passed test Extension 0: Is offset correct
+Passed test Extension 1: Is offset correct
+Passed test Extension 2: Is offset correct
+Passed test Extension 3: Is offset correct
+Passed test Extension 4: Is offset correct
+Passed test Extension 5: Is offset correct
+Passed test Extension 6: Is offset correct
+Passed test Extension 7: Is offset correct
+Passed test Extension 8: Is offset correct
+Passed test Extension 9: Is offset correct
+Passed test Write: Can we write to the extensions
+'n(BaseClass)'->x: 1
+'n(BaseClass)'->y: 2
+'n(BaseClass)'->z: 3
+'n(BaseClass)'->dim: 4
+'n(Type0)'->type: 5
+'n(Temp0)'->temp: 6
+'n(Pres0)'->pres: 7
+'n(Pres0)'->flag: 8
+'n(BC_Set0)'->dd: 9
+'n(BC_Set0)'->cc: 10
+'n(BC_Set0)'->bc: 11
+'n(Weight0)'->wf: 12
+'n(Type1)'->type: 13
+'n(Temp1)'->temp: 14
+'n(Pres1)'->pres: 15
+'n(Pres1)'->flag: 16
+'n(BC_Set1)'->dd: 17
+'n(BC_Set1)'->cc: 18
+'n(BC_Set1)'->bc: 19
+'n(Weight1)'->wf: 20
+Passed test Delete: Can we delete the extensions

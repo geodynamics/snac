@@ -1,0 +1,77 @@
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+## Copyright (C), 2003, Victorian Partnership for Advanced Computing (VPAC) Ltd, 110 Victoria Street, Melbourne, 3053, Australia.
+##
+## Authors:
+##      Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+##      Patrick D. Sunter, Software Engineer, VPAC. (pds@vpac.org)
+##      Luke J. Hodkinson, Computational Engineer, VPAC. (lhodkins@vpac.org)
+##      Siew-Ching Tan, Software Engineer, VPAC. (siew@vpac.org)
+##      Alan H. Lo, Computational Engineer, VPAC. (alan@vpac.org)
+##      Raquibul Hassan, Computational Engineer, VPAC. (raq@vpac.org)
+##
+##  This library is free software; you can redistribute it and/or
+##  modify it under the terms of the GNU Lesser General Public
+##  License as published by the Free Software Foundation; either
+##  version 2.1 of the License, or (at your option) any later version.
+##
+##  This library is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+##  Lesser General Public License for more details.
+##
+##  You should have received a copy of the GNU Lesser General Public
+##  License along with this library; if not, write to the Free Software
+##  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+##
+## $Id: plugin.vmake 2586 2005-01-28 00:08:55Z AlanLo $
+##
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+# Makes a plugin out of each listed plugin name (assumes extension) in the plugins variable.
+ifdef plugins
+
+	SRCS += ${plugins}
+	
+	plugins := $(subst .c,, ${plugins})
+	plugins := $(subst .f,, ${plugins})
+	plugins := $(subst .${CXX_EXT},, ${plugins})
+	plugins := $(subst .m,, ${plugins})
+	plugins := $(strip ${plugins})
+	
+	PLUGINS_DIR = ${LIB_DIR}
+	
+	PLUGIN := $(shell basename $(subst src,, ${CURRENT_DIR}))
+	PLUGINS_TMPDIR = ${TMP_DIR}/plugin-${PLUGIN}module.${MODULE_EXT}
+	PROJ_CFLAGS += -DCURR_MODULE_NAME=\"${PLUGIN}\"
+	
+	PROJ_CFLAGS += ${CC_WARNINGLEVEL} ${CC_SYMBOLLEVEL} ${CC_OPTIMISATIONLEVEL}
+
+	PLUGINS = ${addprefix ${PLUGINS_DIR}/, ${addsuffix module.${MODULE_EXT}, ${plugins}}}
+	#PLUGINS_OBJS = ${addprefix ${PLUGINS_TMPDIR}/, ${addsuffix .o,      ${basename ${plugins}}}}
+	PLUGINS_OBJS = ${addprefix ${PLUGINS_TMPDIR}/, ${addsuffix .o,      ${basename ${SRCS}}}}
+
+	RM_LIST_TEMPS += ${PLUGINS_OBJS}
+	RM_LIST += ${PLUGINS}
+
+	MAKE_DIRECTORIES += ${LIB_DIR}
+	COMPILE_DIRECTORY := ${TMP_DIR}/plugin-${PLUGIN}module.${MODULE_EXT}
+
+
+### Rules ###
+
+${PLUGINS_DIR}/%module.${MODULE_EXT}: ${PLUGINS_OBJS} ${EXTERNAL_OBJS}
+	${CC} ${CC_PIPE} ${CFLAGS} -o $@ ${TMP_DIR}/plugin-${PLUGIN}module.${MODULE_EXT}/$*.o $(if $(shell if test -r ${TMP_DIR}/plugin-${PLUGIN}module.${MODULE_EXT}/$*-meta.o; then echo exist; fi),${TMP_DIR}/plugin-${PLUGIN}module.${MODULE_EXT}/$*-meta.o) ${EXTERNAL_OBJS} ${MODULE_LFLAGS} ${LFLAGS} ${LIBS} ${EXTERNAL_LIBS}
+
+endif
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,58 @@
+StGermain Framework revision 3890. Copyright (C) 2003-2005 VPAC.
+StGermain Discretisation Library revision 3890. Copyright (C) 2003-2005 VPAC.
+Snac Framework. Copyright (C) 2003-2005 Caltech, VPAC & University of Texas.
+Watching rank: 0
+"dtType" set by Dictionary to "constant"
+"forceCalcType" set by Dictionary to "complete"
+Constructing context..
+	
+	Creating Stg_Components from the component-list
+	
+	
+	Constructing Stg_Components from the live-component register
+	
+For Material 0:
+	rheology = 1
+	alpha = 0.000000e+00
+	beta = 0.000000e+00
+
+	lambda = 3.000000e+10
+	mu = 3.000000e+10
+
+	maxiterations = 1
+	constitutivetolerance = 1.000000e-03
+	yieldcriterion = 0
+	nsegments = 2
+		seg 0: plstrain = 0.000000e+00
+		seg 0: frictionAngle = 0.000000e+00
+		seg 0: dilationAngle = 0.000000e+00
+		seg 0: cohesion = 0.000000e+00
+		seg 1: plstrain = 0.000000e+00
+		seg 1: frictionAngle = 0.000000e+00
+		seg 1: dilationAngle = 0.000000e+00
+		seg 1: cohesion = 0.000000e+00
+		seg 2: plstrain = 0.000000e+00
+		seg 2: frictionAngle = 0.000000e+00
+		seg 2: dilationAngle = 0.000000e+00
+		seg 2: cohesion = 0.000000e+00
+	ten_off = 0.000000e+00
+	puSeeds = 0
+
+	vis_min = 1.000000e+18
+	vis_max = 3.000000e+27
+	refvisc = 1.000000e+19
+	refsrate = 1.000000e-15
+	reftemp = 1.400000e+03
+	activationE = 5.400000e+03
+	srexponent = 1.000000e+00
+	srexponent1 = 1.000000e+00
+	srexponent2 = 1.000000e+00
+
+	thermal conductivity = 2.000000e+00
+	heat capacity = 1.000000e+03
+	density = 2.700000e+03
+In: Snac_Context_TimeStepZero
+self->timeStep: 0 (update elements only)
+self->currentTime: 0
+Element: 1, Coords: (0.5 -1 0) (1 -1 0) (1 -0.5 0) (0.5 -0.5 0) (0.5 -1 0.5) (1 -1 0.5) (1 -0.5 0.5) (0.5 -0.5 0.5) 
+Element: 1, Vel: (0 0 0) (0.01 0 0) (0.01 0 0) (0 0 0) (0 0 0) (0.01 0 0) (0.01 0 0) (0 0 0) 

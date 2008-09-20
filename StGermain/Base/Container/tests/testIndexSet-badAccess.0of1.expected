@@ -1,0 +1,4 @@
+Watching rank: 0
+* Test Construction *
+* Test Access(IsMember) over limit *
+Error- IndexSet_IsMember: index 24 outside current size 24. Aborting.

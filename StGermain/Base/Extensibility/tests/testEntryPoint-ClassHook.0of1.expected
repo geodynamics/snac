@@ -1,0 +1,12 @@
+Watching rank: 0
+Passed test EntryPoint creation with ClassHook types: Can we create an EntryPoint with ClassHook run casts
+Passed test Adding ClassHooks: Can we add class hooks onto EntryPoints
+Listener_0_Func printing 0
+Listener_0_Func printing 1
+Listener_0_Func printing 2
+Passed test Run ClassHook with 0 arguments: Can we run ClassHook with 0 arguments
+Listener_VoidPtr_Func printing 0 and 5 
+Listener_VoidPtr_Func printing 1 and 5 
+Listener_VoidPtr_Func printing 2 and 5 
+Passed test Run ClassHook with 1 argument: Can we run ClassHook with 1 argument
+Passed test Destruction of ClassHooks: Can we delete the ClassHooks

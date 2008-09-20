@@ -1,0 +1,69 @@
+<html>
+	<head><title>Run Table</title></head>
+	<body>
+		<h1>Run Table</h1>
+		<p>
+		Links: <a href=Summary.cgi>Summary</a> | <a href=Machine.cgi>Machine</a> | <a href=Build.cgi>Build</a> | <a href=Run.cgi>Run</a> | <a href=UnitTestCheck.cgi>UnitTestCheck</a> | <a href=FailedUnitSubTest.cgi>FailedUnitSubTest</a>
+		</p>
+		<form action="Run.cgi" method="get">
+		<table>
+		<tr>
+		<td>BuildID:</td><td><input type="text" name="BuildID" value="" size=5 /></td>
+		</tr>
+		<tr>
+		<td>Project Name:</td><td><input type="text" name="Project.Name" value="" size=20 /></td>
+		</tr>
+		<tr>
+		<td>Machine Name:</td><td><input type="text" name="Machine.Name" value="" size=20 /></td>
+		</tr>
+		<tr>
+		<td>Notification Sent:</td><td><input type="text" name="NotificationSent" value="" size=1 /></td>
+		</tr>
+		<tr>
+		<td>StartDate &gt;=</td><td><input type="text" name="StartDate>" value="" size=10 /></td>
+		<td>StartDate &lt;=</td><td><input type="text" name="StartDate<" value="" size=10 /></td>
+		</tr>
+		<tr>
+		<td>StartTime &gt;=</td><td><input type="text" name="StartTime>" value="" size=10 /></td>
+		<td>StartTime &lt;=</td><td><input type="text" name="StartTime<" value="" size=10 /></td>
+		</tr>
+		<tr>
+		<td>EndDate &gt;=</td><td><input type="text" name="EndDate>" value="" size=10 /></td>
+		<td>EndDate &lt;=</td><td><input type="text" name="EndDate<" value="" size=10 /></td>
+		</tr>
+		<tr>
+		<td>EndTime &gt;=</td><td><input type="text" name="EndTime>" value="" size=10 /></td>
+		<td>EndTime &lt;=</td><td><input type="text" name="EndTime<" value="" size=10 /></td>
+		</tr>
+		</table>
+		<input type="submit" value="Filter" /> <input type="reset" value="Clear">
+		</form>
+		<table border=1>
+		<tr>
+			<td><b>ID</b></td>
+			<td><b>BuildID</b></td>
+			<td><b>Project</b></td>
+			<td><b>Machine</b></td>
+			<td><b>StartDate</b></td>
+			<td><b>StartTime</b></td>
+			<td><b>EndDate</b></td>
+			<td><b>EndTime</b></td>
+			<td><b>Notification Sent</b></td>
+		</tr>
+		<TMPL_LOOP NAME=data>
+		<tr>
+			
+			<td><a name=<TMPL_VAR NAME=ID>><TMPL_VAR NAME=ID></a></td>
+			<td><a href=Build.cgi#<TMPL_VAR NAME=BuildID>><TMPL_VAR NAME=BuildID></a></td>
+			<td><a href=Build.cgi#<TMPL_VAR NAME=BuildID>><TMPL_VAR NAME=ProjName></a></td>
+			<td><a href=Machine.cgi#<TMPL_VAR NAME=MachineID>><TMPL_VAR NAME=MachineName></a></td>
+			<td><TMPL_VAR NAME=StartDate></td>
+			<td><TMPL_VAR NAME=StartTime></td>
+			<td><TMPL_VAR NAME=EndDate></td>
+			<td><TMPL_VAR NAME=EndTime></td>
+			<td><TMPL_VAR NAME=NotificationSent></td>
+		</tr>
+		</TMPL_LOOP>
+		</table>
+	</body>
+</html>

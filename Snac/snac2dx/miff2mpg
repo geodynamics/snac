@@ -1,0 +1,82 @@
+#!/bin/bash
+
+function usage ()
+{
+echo 1>&2
+echo "Usage: miff2mpg [-f frames_per_second]" 1>&2
+echo "                 [-o outfile.mp4]" 1>&2
+echo "                 [-b bitrate]" 1>&2
+echo "                 file.miff" 1>&2
+echo 1>&2
+echo "  Converts file.miff to file.mp4 (or outfile.mpg if -o is given)" 1>&2
+echo "  using frames_per_second as framerate (defaults to 5)" 1>&2
+echo 1>&2
+echo "  Assumes \"convert\" (ImageMagick) and \"ffmpeg\"" 1>&2
+echo "  (http://ffmpeg.sourceforge.net/index.php) are installed." 1>&2
+echo  1>&2
+echo  1>&2
+echo "  file.miff should contain all the frames to be animated. " 1>&2
+echo "  $0 does not accept a file list (e.g. file*.miff) as an argument. " 1>&2
+echo  1>&2
+echo "  This script was originally written by Ulrich Oelmann <Ulrich.Oelmann@iws.uni-stuttgart.de>. " 1>&2
+echo "  See http://opendx.npaci.edu/mail/opendx-users/2004.10/msg00026.html" 1>&2
+echo  1>&2
+exit 0
+}
+
+if [ $[$# < 1 ] = 1 ]; then
+    usage
+fi
+if [ "`which convert`x" = "x" ]; then
+    usage
+fi
+if [ "`which ffmpeg`x" = "x" ]; then
+    usage
+fi
+
+FOPTION=5;
+OOPTION="";
+BOPTION=1800;
+
+while getopts "f:o:b:" OPTION; do
+    case $OPTION in
+	f) FOPTION=$OPTARG;;
+	o) OOPTION=$OPTARG;;
+	b) BOPTION=$OPTARG;;
+	?) usage;;
+    esac
+done
+
+shift $[$OPTIND-1]
+
+if [ x"$OOPTION" == "x" ]; then
+    OOPTION=`basename $1 .miff`
+    OOPTION=`basename $OOPTION .MIFF`
+    OOPTION=`dirname $1`/$OOPTION".mp4"
+fi
+
+TMPDIR=`mktemp -d miff2xvid.XXXXXXXXXX`
+mkdir -p $TMPDIR
+
+declare -i FRAMES X Y
+
+echo "######### Analyzing $1"
+
+IDENTIFY=`identify -format "%n %w %h" $1 | \
+    tail -n 2 | head -n 1`
+FRAMES=`echo $IDENTIFY | gawk '{ print $1 }'`
+X=`echo $IDENTIFY | gawk '{ print $2 }'`
+Y=`echo $IDENTIFY | gawk '{ print $3 }'`
+
+FRAMES=$(( FRAMES-1 ))
+
+echo "######### Extracting $(( FRAMES+1 )) frames out of $1"
+
+convert -quality 9 $1 $TMPDIR/frame%03d.png
+
+echo "######### Encoding animation to $OOPTION"
+echo
+
+ffmpeg -r $FOPTION -b $BOPTION -i $TMPDIR/frame%03d.png $OOPTION
+
+rm -rf $TMPDIR

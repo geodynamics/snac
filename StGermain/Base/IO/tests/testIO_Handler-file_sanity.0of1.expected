@@ -1,0 +1,16 @@
+test for nonexistent files:
+Error: File i_dont_exist doesn't exist, not readable, or not valid.
+
+test of existing, but invalid file:
+Error: File data/invalid.xml doesn't exist, not readable, or not valid.
+
+test of valid, but wrong namespace file:
+Error: resource data/wrong_namespace.xml of the wrong type, unknown namespace wasn't expected value of http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003.
+Error: no children nodes in resource data/wrong_namespace.xml. Not parsing.
+
+test of valid, but wrong root node file:
+resource data/wrong_root_node.xml of wrong type, root node =<Wrong>, should be <StGermainData>.
+Not parsing.
+
+test of valid, but empty apart from root node:
+Error: no children nodes in resource data/empty.xml. Not parsing.

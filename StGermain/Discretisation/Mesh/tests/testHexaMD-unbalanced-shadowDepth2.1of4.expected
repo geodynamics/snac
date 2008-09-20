@@ -1,0 +1,158 @@
+StGermain Framework revision 3570. Copyright (C) 2003-2005 VPAC.
+Corner Node Layout
+Current processor is 1 of 4 in use (4 total).
+allowUnusedCPUs: False
+allowPartitionOnNode: True
+allowPartitionOnElement: False
+allowUnbalancing: True
+shadowDepth: 2
+procTopology:
+	IJKTopology (ptr): (0x8060df0)
+		size : (4,1,1)
+		isPeriodic : (False,False,False)
+		dynamicSizes : True
+partitionedAxis: { True, False, False }
+partitionCounts: { 4, 1, 1 }
+elementGlobalCounts: { 10, 1, 1 }
+elementGlobalCount: 10
+	elementLocalCounts[0]: { 3, 1, 1 }
+	elementLocalCounts[1]: { 3, 1, 1 }
+	elementLocalCounts[2]: { 2, 1, 1 }
+	elementLocalCounts[3]: { 2, 1, 1 }
+elementDomainCounts: { 7, 1, 1 }
+nodeGlobalCounts: { 11, 2, 2 }
+nodeGlobalCount: 44
+	nodeLocalCounts[0]: { 4, 2, 2 }
+	nodeLocalCounts[1]: { 4, 2, 2 }
+	nodeLocalCounts[2]: { 3, 2, 2 }
+	nodeLocalCounts[3]: { 3, 2, 2 }
+Element, global: 0 - local: X - shadow: X - domain: X
+Element, global: 1 - local: X - shadow: 0 - domain: 3
+Element, global: 2 - local: X - shadow: 1 - domain: 4
+Element, global: 3 - local: 0 - shadow: X - domain: 0
+Element, global: 4 - local: 1 - shadow: X - domain: 1
+Element, global: 5 - local: 2 - shadow: X - domain: 2
+Element, global: 6 - local: X - shadow: 2 - domain: 5
+Element, global: 7 - local: X - shadow: 3 - domain: 6
+Element, global: 8 - local: X - shadow: X - domain: X
+Element, global: 9 - local: X - shadow: X - domain: X
+
+Element, local: 0 - global: 3
+Element, local: 1 - global: 4
+Element, local: 2 - global: 5
+
+Element, domain: 0 - global: 3
+Element, domain: 1 - global: 4
+Element, domain: 2 - global: 5
+Element, domain: 3 - global: 1
+Element, domain: 4 - global: 2
+Element, domain: 5 - global: 6
+Element, domain: 6 - global: 7
+
+Node, global: 0 - local: X - shadow: X - domain: X
+Node, global: 1 - local: X - shadow: 0 - domain: 16
+Node, global: 2 - local: X - shadow: 1 - domain: 17
+Node, global: 3 - local: 0 - shadow: X - domain: 0
+Node, global: 4 - local: 1 - shadow: X - domain: 1
+Node, global: 5 - local: 2 - shadow: X - domain: 2
+Node, global: 6 - local: 3 - shadow: X - domain: 3
+Node, global: 7 - local: X - shadow: 2 - domain: 18
+Node, global: 8 - local: X - shadow: 3 - domain: 19
+Node, global: 9 - local: X - shadow: X - domain: X
+Node, global: 10 - local: X - shadow: X - domain: X
+Node, global: 11 - local: X - shadow: X - domain: X
+Node, global: 12 - local: X - shadow: 4 - domain: 20
+Node, global: 13 - local: X - shadow: 5 - domain: 21
+Node, global: 14 - local: 4 - shadow: X - domain: 4
+Node, global: 15 - local: 5 - shadow: X - domain: 5
+Node, global: 16 - local: 6 - shadow: X - domain: 6
+Node, global: 17 - local: 7 - shadow: X - domain: 7
+Node, global: 18 - local: X - shadow: 6 - domain: 22
+Node, global: 19 - local: X - shadow: 7 - domain: 23
+Node, global: 20 - local: X - shadow: X - domain: X
+Node, global: 21 - local: X - shadow: X - domain: X
+Node, global: 22 - local: X - shadow: X - domain: X
+Node, global: 23 - local: X - shadow: 8 - domain: 24
+Node, global: 24 - local: X - shadow: 9 - domain: 25
+Node, global: 25 - local: 8 - shadow: X - domain: 8
+Node, global: 26 - local: 9 - shadow: X - domain: 9
+Node, global: 27 - local: 10 - shadow: X - domain: 10
+Node, global: 28 - local: 11 - shadow: X - domain: 11
+Node, global: 29 - local: X - shadow: 10 - domain: 26
+Node, global: 30 - local: X - shadow: 11 - domain: 27
+Node, global: 31 - local: X - shadow: X - domain: X
+Node, global: 32 - local: X - shadow: X - domain: X
+Node, global: 33 - local: X - shadow: X - domain: X
+Node, global: 34 - local: X - shadow: 12 - domain: 28
+Node, global: 35 - local: X - shadow: 13 - domain: 29
+Node, global: 36 - local: 12 - shadow: X - domain: 12
+Node, global: 37 - local: 13 - shadow: X - domain: 13
+Node, global: 38 - local: 14 - shadow: X - domain: 14
+Node, global: 39 - local: 15 - shadow: X - domain: 15
+Node, global: 40 - local: X - shadow: 14 - domain: 30
+Node, global: 41 - local: X - shadow: 15 - domain: 31
+Node, global: 42 - local: X - shadow: X - domain: X
+Node, global: 43 - local: X - shadow: X - domain: X
+
+Node, local: 0 - global: 3
+Node, local: 1 - global: 4
+Node, local: 2 - global: 5
+Node, local: 3 - global: 6
+Node, local: 4 - global: 14
+Node, local: 5 - global: 15
+Node, local: 6 - global: 16
+Node, local: 7 - global: 17
+Node, local: 8 - global: 25
+Node, local: 9 - global: 26
+Node, local: 10 - global: 27
+Node, local: 11 - global: 28
+Node, local: 12 - global: 36
+Node, local: 13 - global: 37
+Node, local: 14 - global: 38
+Node, local: 15 - global: 39
+
+Node, domain: 0 - global: 3
+Node, domain: 1 - global: 4
+Node, domain: 2 - global: 5
+Node, domain: 3 - global: 6
+Node, domain: 4 - global: 14
+Node, domain: 5 - global: 15
+Node, domain: 6 - global: 16
+Node, domain: 7 - global: 17
+Node, domain: 8 - global: 25
+Node, domain: 9 - global: 26
+Node, domain: 10 - global: 27
+Node, domain: 11 - global: 28
+Node, domain: 12 - global: 36
+Node, domain: 13 - global: 37
+Node, domain: 14 - global: 38
+Node, domain: 15 - global: 39
+Node, domain: 16 - global: 1
+Node, domain: 17 - global: 2
+Node, domain: 18 - global: 7
+Node, domain: 19 - global: 8
+Node, domain: 20 - global: 12
+Node, domain: 21 - global: 13
+Node, domain: 22 - global: 18
+Node, domain: 23 - global: 19
+Node, domain: 24 - global: 23
+Node, domain: 25 - global: 24
+Node, domain: 26 - global: 29
+Node, domain: 27 - global: 30
+Node, domain: 28 - global: 34
+Node, domain: 29 - global: 35
+Node, domain: 30 - global: 40
+Node, domain: 31 - global: 41
+
+
+Body Node Layout
+Checking body node decomp has same element decomp as corner node decomp:
+	Checking general partitions etc
+	Checking the 10 individual items
+	The decomps matched for the given item types
+	Passed.
+Checking body node decomp has same node decomp as it's element decomp:
+	Checking general partitions etc
+	Checking the 10 individual items
+	The decomps matched for the given item types
+	Passed.

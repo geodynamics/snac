@@ -1,0 +1,91 @@
+StGermain Framework revision 3890. Copyright (C) 2003-2005 VPAC.
+StGermain Discretisation Library revision 3890. Copyright (C) 2003-2005 VPAC.
+Snac Framework. Copyright (C) 2003-2005 Caltech, VPAC & University of Texas.
+Watching rank: 0
+"dtType" set by Dictionary to "constant"
+"forceCalcType" set by Dictionary to "complete"
+Constructing context..
+	
+	Creating Stg_Components from the component-list
+	
+	
+	Constructing Stg_Components from the live-component register
+	
+For Material 0:
+	rheology = 1
+	alpha = 0.000000e+00
+	beta = 0.000000e+00
+
+	lambda = 3.000000e+10
+	mu = 3.000000e+10
+
+	maxiterations = 1
+	constitutivetolerance = 1.000000e-03
+	yieldcriterion = 0
+	nsegments = 2
+		seg 0: plstrain = 0.000000e+00
+		seg 0: frictionAngle = 0.000000e+00
+		seg 0: dilationAngle = 0.000000e+00
+		seg 0: cohesion = 0.000000e+00
+		seg 1: plstrain = 0.000000e+00
+		seg 1: frictionAngle = 0.000000e+00
+		seg 1: dilationAngle = 0.000000e+00
+		seg 1: cohesion = 0.000000e+00
+		seg 2: plstrain = 0.000000e+00
+		seg 2: frictionAngle = 0.000000e+00
+		seg 2: dilationAngle = 0.000000e+00
+		seg 2: cohesion = 0.000000e+00
+	ten_off = 0.000000e+00
+	puSeeds = 0
+
+	vis_min = 1.000000e+18
+	vis_max = 3.000000e+27
+	refvisc = 1.000000e+19
+	refsrate = 1.000000e-15
+	reftemp = 1.400000e+03
+	activationE = 5.400000e+03
+	srexponent = 1.000000e+00
+	srexponent1 = 1.000000e+00
+	srexponent2 = 1.000000e+00
+
+	thermal conductivity = 2.000000e+00
+	heat capacity = 1.000000e+03
+	density = 2.700000e+03
+In: Snac_Context_TimeStepZero
+self->timeStep: 0 (update elements only)
+self->currentTime: 0
+Element: 0, Coords: (0 -1 0), (0.5 -1 0), (0 -0.5 0), (0.5 -0.5 0), (0 -1 0.5) (0.5 -1 0.5) (0 -0.5 0.5) (0.5 -0.5 0.5)
+Element: 0, Vel: (0 0 0), (0 0 0), (0 0 0), (0 0 0), (0 0 0) (0 0 0) (0 0 0) (0 0 0)
+Global minLengthScale: 0.096225
+Dt: 1
+Speed of sound: 0.0481125
+Corner   Node   0 (0,0,0): mass: 42.1875
+Edge     Node   1 (1,0,0): mass: 84.375
+Surface  Node   4 (1,1,0): mass: 168.75
+Internal Node  13 (1,1,1): mass: 337.5
+Edge     Node   1: has same values as node {1, 0, 0}.
+Corner   Node   2: has same values as node {0, 0, 0}.
+Edge     Node   3: has same values as node {1, 0, 0}.
+Surface  Node   4: has same values as node {1, 1, 0}.
+Edge     Node   5: has same values as node {1, 0, 0}.
+Corner   Node   6: has same values as node {0, 0, 0}.
+Edge     Node   7: has same values as node {1, 0, 0}.
+Corner   Node   8: has same values as node {0, 0, 0}.
+Edge     Node   9: has same values as node {1, 0, 0}.
+Surface  Node  10: has same values as node {1, 1, 0}.
+Edge     Node  11: has same values as node {1, 0, 0}.
+Surface  Node  12: has same values as node {1, 1, 0}.
+Internal Node  13: has same values as node {1, 1, 1}.
+Surface  Node  14: has same values as node {1, 1, 0}.
+Edge     Node  15: has same values as node {1, 0, 0}.
+Surface  Node  16: has same values as node {1, 1, 0}.
+Edge     Node  17: has same values as node {1, 0, 0}.
+Corner   Node  18: has same values as node {0, 0, 0}.
+Edge     Node  19: has same values as node {1, 0, 0}.
+Corner   Node  20: has same values as node {0, 0, 0}.
+Edge     Node  21: has same values as node {1, 0, 0}.
+Surface  Node  22: has same values as node {1, 1, 0}.
+Edge     Node  23: has same values as node {1, 0, 0}.
+Corner   Node  24: has same values as node {0, 0, 0}.
+Edge     Node  25: has same values as node {1, 0, 0}.
+Corner   Node  26: has same values as node {0, 0, 0}.

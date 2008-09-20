@@ -1,0 +1,74 @@
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##
+## Copyright (C), 2003, Victorian Partnership for Advanced Computing (VPAC) Ltd, 110 Victoria Street, Melbourne, 3053, Australia.
+##
+## Authors:
+##	Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+##	Patrick D. Sunter, Software Engineer, VPAC. (pds@vpac.org)
+##	Luke J. Hodkinson, Computational Engineer, VPAC. (lhodkins@vpac.org)
+##	Siew-Ching Tan, Software Engineer, VPAC. (siew@vpac.org)
+##	Alan H. Lo, Computational Engineer, VPAC. (alan@vpac.org)
+##	Raquibul Hassan, Computational Engineer, VPAC. (raq@vpac.org)
+##
+##  This library is free software; you can redistribute it and/or
+##  modify it under the terms of the GNU Lesser General Public
+##  License as published by the Free Software Foundation; either
+##  version 2.1 of the License, or (at your option) any later version.
+##
+##  This library is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+##  Lesser General Public License for more details.
+##
+##  You should have received a copy of the GNU Lesser General Public
+##  License along with this library; if not, write to the Free Software
+##  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+##
+## $Id: Makefile.def 3760 2006-08-08 23:34:44Z LukeHodkinson $
+##
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def_lib = StGermainBaseFoundation
+def_inc = StGermain/Base/Foundation
+
+def_srcs = \
+	CommonRoutines.c \
+	MemoryField.c \
+	MemoryPointer.c \
+	MemoryReport.c \
+	Memory.c \
+	Class.c \
+	Object.c \
+	ObjectAdaptor.c \
+	PrimitiveObject.c \
+	ObjectList.c \
+	NamedObject_Register.c \
+	TimeMonitor.c \
+	MemMonitor.c \
+	TestSuite.c \
+	Init.c \
+	Finalise.c
+
+def_hdrs = \
+	types.h \
+	shortcuts.h \
+	CommonRoutines.h \
+	Memory.h \
+	MemoryTag.h \
+	MemoryField.h \
+	MemoryPointer.h \
+	MemoryReport.h \
+	Class.h \
+	Object.h \
+	ObjectAdaptor.h \
+	PrimitiveObject.h \
+	ObjectList.h \
+	NamedObject_Register.h \
+	TimeMonitor.h \
+	MemMonitor.h \
+	TestSuite.h \
+	Init.h \
+	Finalise.h \
+	Foundation.h
+
+def_objlists =

@@ -1,0 +1,7 @@
+Watching rank: 0
+entryPoint->hooks->_size: 8
+entryPoint->hooks->count: 0
+entryPoint->hooks->_size: 8
+entryPoint->hooks->count: 1
+entryPoint->hooks->data[0]->name: Test0
+Test0 called on ptr to value: 5

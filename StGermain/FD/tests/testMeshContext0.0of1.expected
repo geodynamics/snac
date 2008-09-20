@@ -1,0 +1,66 @@
+Watching rank: 0
+StGermain Framework revision 3654. Copyright (C) 2003-2005 VPAC.
+StGermain Discretisation Library revision 3654. Copyright (C) 2003-2005 VPAC.
+meshContext->entryPointList->count: 17
+meshContext->entryPointList->_size: 24
+Context: TestContext
+	EP: Context_Construct
+		H: "default" (Context)
+	EP: Context_ConstructExtensions
+	EP: Context_Build
+		H: "BuildAllLiveComponents" (Context)
+		H: "defaultMeshBuild" (MeshContext)
+	EP: Context_Initialise
+		H: "InitialiseAllLiveComponents" (Context)
+		H: "defaultMeshICs" (MeshContext)
+	EP: Context_Execute
+		H: "default" (Context)
+	EP: Context_Destroy
+	EP: Context_DestroyExtensions
+	EP: Context_Dt
+		H: "test" (TestMeshContext)
+	EP: Context_Step
+		H: "default" (Context)
+	EP: Context_Solve
+		H: "test" (TestMeshContext)
+	EP: Context_UpdateClass
+	EP: Context_Sync
+		H: "test" (TestMeshContext)
+	EP: Context_FrequentOutput
+		H: "test" (TestMeshContext)
+	EP: Context_Dump
+	EP: Context_DumpClass
+	EP: Context_Save
+		H: "SaveTimeInfo" (Context)
+	EP: Context_SaveClass
+Run until simulation time passes 10.
+This is Dt, returning 2
+TimeStep = 1, Start time = 0 + 2 prev timeStep dt
+This is SetDt... setting to 2
+This is Solve
+This is Sync
+This is Output
+This is Dt, returning 2
+TimeStep = 2, Start time = 2 + 2 prev timeStep dt
+This is SetDt... setting to 2
+This is Solve
+This is Sync
+This is Output
+This is Dt, returning 2
+TimeStep = 3, Start time = 4 + 2 prev timeStep dt
+This is SetDt... setting to 2
+This is Solve
+This is Sync
+This is Output
+This is Dt, returning 2
+TimeStep = 4, Start time = 6 + 2 prev timeStep dt
+This is SetDt... setting to 2
+This is Solve
+This is Sync
+This is Output
+This is Dt, returning 2
+TimeStep = 5, Start time = 8 + 2 prev timeStep dt
+This is SetDt... setting to 2
+This is Solve
+This is Sync
+This is Output

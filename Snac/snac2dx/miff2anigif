@@ -1,0 +1,96 @@
+#.!/bin/bash
+
+function usage ()
+{
+echo 1>&2
+echo "Usage: miff2anigif [-d delay(1/100 sec)]" 1>&2
+echo "                 [-o outfile.gif]" 1>&2
+echo "                 [-l loop]" 1>&2
+echo "                 file.miff" 1>&2
+echo 1>&2
+echo "  Converts file.miff to file_anim.gif (or outfile.gif if -o is given)" 1>&2
+echo "  using delay as the interval between frames (defaults to 100*(1/100 sec) or 1 sec.)" 1>&2
+echo 1>&2
+echo "  Assumes \"convert\" (ImageMagick) and \"gifsicle\"" 1>&2
+echo "  ( http://www.lcdf.org/gifsicle/ ) are installed." 1>&2
+echo  1>&2
+echo "  file.miff should contain all the frames to be animated. " 1>&2
+echo "  $0 does not accept a file list (e.g. file*.miff) as an argument. " 1>&2
+echo  1>&2
+exit 0
+}
+
+if [ $[$# < 1 ] = 1 ]; then
+    usage
+fi
+if [ "`which convert`x" = "x" ]; then
+    usage
+fi
+
+DOPTION=100;
+OOPTION="";
+LOPTION="forever";
+
+while getopts "d:o:l:" OPTION; do
+    case $OPTION in
+	d) DOPTION=$OPTARG;;
+	o) OOPTION=$OPTARG;;
+	l) LOPTION=$OPTARG;;
+	?) usage;;
+    esac
+done
+shift $[$OPTIND-1]
+
+if [ x"$OOPTION" == "x" ]; then
+    OOPTION=`basename $1 .miff`
+    OOPTION=`basename $OOPTION .MIFF`
+    OOPTION=`dirname $1`/$OOPTION"_anim.gif"
+fi
+
+TMPDIR=`mktemp -d miff2xvid.XXXXXXXXXX`
+mkdir -p $TMPDIR
+
+declare -i FRAMES X Y
+
+echo "######### Analyzing $1"
+IDENTIFY=`identify -format "%n %w %h" $1 | \
+    tail -n 2 | head -n 1`
+FRAMES=`echo $IDENTIFY | gawk '{ print $1 }'`
+X=`echo $IDENTIFY | gawk '{ print $2 }'`
+Y=`echo $IDENTIFY | gawk '{ print $3 }'`
+
+FRAMES=$(( FRAMES-1 ))
+
+
+if [ $(( $Y % 2 )) -eq 1 ]; then
+    JOPTION=1
+else
+    JOPTION=0
+fi;
+
+
+if [ $(( $X % 2 )) -eq 1 ]; then
+    JOPTION=$JOPTION",1,0,0"
+else
+    JOPTION=$JOPTION",0,0,0"
+fi;
+
+
+echo "######### Extracting $(( FRAMES+1 )) frames out of $1"
+convert $1 $TMPDIR/frame.gif
+cd $TMPDIR; gifsicle --explode frame.gif; cd ..
+
+LIMIT=10
+echo "######### Copying lat $LIMIT frames"
+echo
+for ((a=1; a <= LIMIT ; a++))
+do
+cp $TMPDIR/frame.gif.`printf %03d $FRAMES` $TMPDIR/frame.gif.`printf %03d $(( FRAMES+a ))`
+done
+
+echo "######### Combining frames to $OOPTION"
+echo
+
+gifsicle -O -d$DOPTION --loopcount=$LOPTION $TMPDIR/frame.gif.??? > $OOPTION
+
+rm -rf $TMPDIR

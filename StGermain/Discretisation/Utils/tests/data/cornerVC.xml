@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<!-- A StGermain input file -->
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	<struct name="CornerVC_BottomRightFront">
+		<param name="type">CornerVC</param>
+		<param name="corner">bottomRightFront</param>
+		<list name="variables">
+			<struct>
+				<param name="name">vx</param>
+				<param name="type">double</param>
+				<param name="value" type="double">2</param>
+			</struct>
+			<struct>
+				<param name="name">vy</param>
+				<param name="type">double</param>
+				<param name="value" type="double">3</param>
+			</struct>
+			<struct>
+				<param name="name">vz</param>
+				<param name="type">double</param>
+				<param name="value" type="double">1</param>
+			</struct>
+		</list>
+	</struct>
+	
+	<struct name="CornerVC_BottomLeftFront">
+		<param name="type">CornerVC</param>
+		<param name="corner">bottomLeftFront</param>
+		<list name="variables">
+			<struct>
+				<param name="name">vx</param>
+				<param name="type">double</param>
+				<param name="value" type="double">2</param>
+			</struct>
+			<struct>
+				<param name="name">vy</param>
+				<param name="type">double</param>
+				<param name="value" type="double">3</param>
+			</struct>
+			<struct>
+				<param name="name">vz</param>
+				<param name="type">double</param>
+				<param name="value" type="double">1</param>
+			</struct>
+		</list>
+	</struct>
+	
+	<struct name="CornerVC_TopRightFront">
+		<param name="type">CornerVC</param>
+		<param name="corner">topRightFront</param>
+		<list name="variables">
+			<struct>
+				<param name="name">vx</param>
+				<param name="type">double</param>
+				<param name="value" type="double">2</param>
+			</struct>
+			<struct>
+				<param name="name">vy</param>
+				<param name="type">double</param>
+				<param name="value" type="double">3</param>
+			</struct>
+			<struct>
+				<param name="name">vz</param>
+				<param name="type">double</param>
+				<param name="value" type="double">1</param>
+			</struct>
+		</list>
+	</struct>	
+	<struct name="CornerVC_TopLeftFront">
+		<param name="type">CornerVC</param>
+		<param name="corner">topLeftFront</param>
+		<list name="variables">
+			<struct>
+				<param name="name">vx</param>
+				<param name="type">double</param>
+				<param name="value" type="double">2</param>
+			</struct>
+			<struct>
+				<param name="name">vy</param>
+				<param name="type">double</param>
+				<param name="value" type="double">3</param>
+			</struct>
+			<struct>
+				<param name="name">vz</param>
+				<param name="type">double</param>
+				<param name="value" type="double">1</param>
+			</struct>
+		</list>
+	</struct>	
+	
+	<struct name="CornerVC_BottomLeftBack">
+		<param name="type">CornerVC</param>
+		<param name="corner">bottomLeftBack</param>
+		<list name="variables">
+			<struct>
+				<param name="name">temp</param>
+				<param name="type">double</param>
+				<param name="value" type="double">3</param>
+			</struct>
+		</list>
+	</struct>
+
+	<struct name="CornerVC_BottomRightBack">
+		<param name="type">CornerVC</param>
+		<param name="corner">bottomRightBack</param>
+		<list name="variables">
+			<struct>
+				<param name="name">vx</param>
+				<param name="type">double</param>
+				<param name="value" type="double">2</param>
+			</struct>
+			<struct>
+				<param name="name">vy</param>
+				<param name="type">double</param>
+				<param name="value" type="double">3</param>
+			</struct>
+			<struct>
+				<param name="name">vz</param>
+				<param name="type">double</param>
+				<param name="value" type="double">1</param>
+			</struct>
+			<struct>
+				<param name="name">temp</param>
+				<param name="type">double</param>
+				<param name="value" type="double">3</param>
+			</struct>
+		</list>
+	</struct>
+
+	<struct name="CornerVC_TopRightBack">
+		<param name="type">CornerVC</param>
+		<param name="corner">topRightBack</param>
+		<list name="variables">
+			<struct>
+				<param name="name">temp</param>
+				<param name="type">double</param>
+				<param name="value" type="double">3</param>
+			</struct>
+		</list>
+	</struct>
+	<struct name="CornerVC_TopLeftBack">
+		<param name="type">CornerVC</param>
+		<param name="corner">topLeftBack</param>
+		<list name="variables">
+					<struct>
+				<param name="name">vx</param>
+				<param name="type">double</param>
+				<param name="value" type="double">2</param>
+			</struct>
+			<struct>
+				<param name="name">vy</param>
+				<param name="type">double</param>
+				<param name="value" type="double">3</param>
+			</struct>
+			<struct>
+				<param name="name">vz</param>
+				<param name="type">double</param>
+				<param name="value" type="double">1</param>
+			</struct>
+			<struct>
+				<param name="name">temp</param>
+				<param name="type">double</param>
+				<param name="value" type="double">6</param>
+			</struct>
+		</list>
+	</struct>
+
+</StGermainData>

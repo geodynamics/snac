@@ -1,0 +1,72 @@
+Longest case-sensitive matching subsequence length of 'Acrobat' and 'BOAT' is 1.
+Longest case-sensitive matching subsequence length of 'Abracadabra' and 'Yabbadabbadoo' is 6.
+Longest case-insensitive matching subsequence length of 'Abracadabra' and 'Yabbadabbadoo' is 7.
+Longest case-insensitive matching subsequence length of 'Python' and 'PythonShape' is 6.
+Stg_StringIsNumeric( 'nan' ) = False
+Stg_StringIsNumeric( '567' ) = True
+Stg_StringIsNumeric( '1.0e90' ) = True
+Stg_StringIsNumeric( '1e90e80' ) = False
+Stg_StringIsNumeric( '.asdfasdf' ) = False
+Stg_StringIsNumeric( '.0032' ) = True
+Stg_StringIsNumeric( '.0032.00' ) = False
+Stg_StringIsEmpty( '	 
+' ) = True
+Stg_StringIsEmpty( 'asdf' ) = False
+Stg_StringIsEmpty( '    ' ) = True
+Stg_StringIsEmpty( '    
+' ) = True
+Stg_StringIsEmpty( '  sdf  
+' ) = False
+
+Testing rounding to certain number of decimal places:
+Value        0 rounded to 0 dec places was within tolerance of expected value        0.
+Value        0 rounded to 1 dec places was within tolerance of expected value        0.
+Value        0 rounded to 2 dec places was within tolerance of expected value        0.
+Value        0 rounded to 3 dec places was within tolerance of expected value        0.
+Value 3.4562e-30 rounded to 0 dec places was within tolerance of expected value        0.
+Value 3.4562e-30 rounded to 1 dec places was within tolerance of expected value        0.
+Value 3.4562e-30 rounded to 2 dec places was within tolerance of expected value        0.
+Value 3.4562e-30 rounded to 3 dec places was within tolerance of expected value        0.
+Value   9.7324 rounded to 0 dec places was within tolerance of expected value       10.
+Value   9.7324 rounded to 1 dec places was within tolerance of expected value      9.7.
+Value   9.7324 rounded to 2 dec places was within tolerance of expected value     9.73.
+Value   9.7324 rounded to 3 dec places was within tolerance of expected value    9.732.
+Value   97.654 rounded to 0 dec places was within tolerance of expected value       98.
+Value   97.654 rounded to 1 dec places was within tolerance of expected value     97.7.
+Value   97.654 rounded to 2 dec places was within tolerance of expected value    97.65.
+Value   97.654 rounded to 3 dec places was within tolerance of expected value   97.654.
+Value  104.321 rounded to 0 dec places was within tolerance of expected value      104.
+Value  104.321 rounded to 1 dec places was within tolerance of expected value    104.3.
+Value  104.321 rounded to 2 dec places was within tolerance of expected value   104.32.
+Value  104.321 rounded to 3 dec places was within tolerance of expected value  104.321.
+Value -13762.1 rounded to 0 dec places was within tolerance of expected value   -13762.
+Value -13762.1 rounded to 1 dec places was within tolerance of expected value -13762.1.
+Value -13762.1 rounded to 2 dec places was within tolerance of expected value -13762.1.
+Value -13762.1 rounded to 3 dec places was within tolerance of expected value -13762.1.
+Value 0.0043253 rounded to 0 dec places was within tolerance of expected value        0.
+Value 0.0043253 rounded to 1 dec places was within tolerance of expected value        0.
+Value 0.0043253 rounded to 2 dec places was within tolerance of expected value        0.
+Value 0.0043253 rounded to 3 dec places was within tolerance of expected value    0.004.
+
+Testing rounding to certain number of significant figures:
+Value        0 rounded to 1 sig. figures was within tolerance of expected value        0.
+Value        0 rounded to 2 sig. figures was within tolerance of expected value        0.
+Value        0 rounded to 3 sig. figures was within tolerance of expected value        0.
+Value 3.4562e-30 rounded to 1 sig. figures was within tolerance of expected value    3e-30.
+Value 3.4562e-30 rounded to 2 sig. figures was within tolerance of expected value  3.5e-30.
+Value 3.4562e-30 rounded to 3 sig. figures was within tolerance of expected value 3.46e-30.
+Value   9.7324 rounded to 1 sig. figures was within tolerance of expected value       10.
+Value   9.7324 rounded to 2 sig. figures was within tolerance of expected value      9.7.
+Value   9.7324 rounded to 3 sig. figures was within tolerance of expected value     9.73.
+Value   97.654 rounded to 1 sig. figures was within tolerance of expected value      100.
+Value   97.654 rounded to 2 sig. figures was within tolerance of expected value       98.
+Value   97.654 rounded to 3 sig. figures was within tolerance of expected value     97.7.
+Value  104.321 rounded to 1 sig. figures was within tolerance of expected value      100.
+Value  104.321 rounded to 2 sig. figures was within tolerance of expected value      100.
+Value  104.321 rounded to 3 sig. figures was within tolerance of expected value      104.
+Value -13762.1 rounded to 1 sig. figures was within tolerance of expected value   -10000.
+Value -13762.1 rounded to 2 sig. figures was within tolerance of expected value   -14000.
+Value -13762.1 rounded to 3 sig. figures was within tolerance of expected value   -13800.
+Value 0.0043253 rounded to 1 sig. figures was within tolerance of expected value    0.004.
+Value 0.0043253 rounded to 2 sig. figures was within tolerance of expected value   0.0043.
+Value 0.0043253 rounded to 3 sig. figures was within tolerance of expected value  0.00433.

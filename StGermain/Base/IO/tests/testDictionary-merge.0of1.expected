@@ -1,0 +1,60 @@
+Stg_Class (ptr): 0x8068380
+	sizeOfSelf: 56
+	_deleteSelf: Yes
+	type: dictionary
+	_delete (func ptr): 0x804adcb
+	_print (func ptr): 0x804ae38
+	_copy (func ptr): (nil)
+Dictionary:
+	size: 10
+	delta: 5
+	count: 2
+	entryPtr[0-2]: {
+		one: 
+			inside: 
+				name: "bill"
+				value: 1
+			list_one: "bottom", "top"
+		one: 
+			inside: 
+				new_name: "frank"
+				value: 2
+			list_one: "left", "right"
+			}
+Stg_Class (ptr): 0x8068380
+	sizeOfSelf: 56
+	_deleteSelf: Yes
+	type: dictionary
+	_delete (func ptr): 0x804adcb
+	_print (func ptr): 0x804ae38
+	_copy (func ptr): (nil)
+Dictionary:
+	size: 10
+	delta: 5
+	count: 1
+	entryPtr[0-1]: {
+		one: 
+			inside: 
+				name: "bill"
+				value: 2
+				new_name: "frank"
+			list_one: "bottom", "top", "left", "right"
+			}
+Stg_Class (ptr): 0x8068380
+	sizeOfSelf: 56
+	_deleteSelf: Yes
+	type: dictionary
+	_delete (func ptr): 0x804adcb
+	_print (func ptr): 0x804ae38
+	_copy (func ptr): (nil)
+Dictionary:
+	size: 10
+	delta: 5
+	count: 1
+	entryPtr[0-1]: {
+		one: 
+			inside: 
+				new_name: "frank"
+				value: 2
+			list_one: "left", "right"
+			}

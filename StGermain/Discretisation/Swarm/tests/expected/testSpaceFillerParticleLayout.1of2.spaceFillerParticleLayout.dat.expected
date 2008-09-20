@@ -1,0 +1,103 @@
+SpaceFillerParticleLayout (ptr): 0x80638cc:
+	GlobalParticleLayout (ptr): 0x80638cc
+	ParticleLayout (ptr): 0x80638cc
+	Stg_Class (ptr): 0x80638cc
+		sizeOfSelf: 124
+		_deleteSelf: Yes
+		type: SpaceFillerParticleLayout
+		_delete (func ptr): 0xb7f43e68
+		_print (func ptr): 0xb7f43ebe
+		_copy (func ptr): 0xb7f43f4d
+		_setInitialCounts (func ptr): 0xb7f3c3f3
+		_initialiseParticles (func ptr): 0xb7f44151
+		coordSystem: GlobalCoordSystem
+		weightsInitialisedAtStartup : False
+		_initialiseParticle (func ptr): 0xb7f44181
+		totalInitialParticles: 160
+		averageInitialParticlesPerCell: 20
+	self->dim = 3
+Printing coords of all local particles, cell-by-cell:
+	Local Cell   0:
+		part. InCell   0 (local index      5): (    225,    12.5,   43.75)
+		part. InCell   1 (local index      6): (    275,    87.5,    6.25)
+		part. InCell   2 (local index     12): (  262.5,    6.25,  34.375)
+		part. InCell   3 (local index     15): (  212.5,   81.25,  21.875)
+		part. InCell   4 (local index     20): ( 231.25,  59.375,  64.062)
+		part. InCell   5 (local index     23): ( 281.25,  34.375,  76.562)
+		part. InCell   6 (local index     29): ( 268.75,  65.625,  54.688)
+		part. InCell   7 (local index     30): ( 218.75,  40.625,  92.188)
+		part. InCell   8 (local index     33): ( 259.38,  39.062,  5.4688)
+		part. InCell   9 (local index     34): ( 209.38,  64.062,  42.969)
+		part. InCell  10 (local index     40): ( 246.88,  32.812,  14.844)
+		part. InCell  11 (local index     43): ( 296.88,  57.812,  27.344)
+		part. InCell  12 (local index     48): ( 253.12,  85.938,  85.156)
+		part. InCell  13 (local index     51): ( 203.12,  10.938,  72.656)
+		part. InCell  14 (local index     57): ( 240.62,  92.188,  94.531)
+		part. InCell  15 (local index     58): ( 290.62,  17.188,  57.031)
+		part. InCell  16 (local index     68): ( 207.81,  19.531,  75.391)
+		part. InCell  17 (local index     71): ( 257.81,  94.531,  62.891)
+		part. InCell  18 (local index     77): ( 295.31, 0.78125,  91.016)
+		part. InCell  19 (local index     78): ( 245.31,  75.781,  53.516)
+	Local Cell   1:
+		part. InCell   0 (local index      1): (    300,      50,      75)
+		part. InCell   1 (local index      2): (    350,      25,    62.5)
+		part. InCell   2 (local index      8): (  387.5,   68.75,  90.625)
+		part. InCell   3 (local index     11): (  337.5,   43.75,  53.125)
+		part. InCell   4 (local index     16): ( 306.25,  21.875,  7.8125)
+		part. InCell   5 (local index     19): ( 356.25,  96.875,  45.312)
+		part. InCell   6 (local index     25): ( 393.75,   3.125,  23.438)
+		part. InCell   7 (local index     26): ( 343.75,  78.125,  35.938)
+		part. InCell   8 (local index     37): ( 384.38,  76.562,  74.219)
+		part. InCell   9 (local index     38): ( 334.38,  1.5625,  86.719)
+		part. InCell  10 (local index     44): ( 321.88,  95.312,  58.594)
+		part. InCell  11 (local index     47): ( 371.88,  20.312,  96.094)
+		part. InCell  12 (local index     52): ( 378.12,  48.438,  41.406)
+		part. InCell  13 (local index     55): ( 328.12,  73.438,  3.9062)
+		part. InCell  14 (local index     61): ( 315.62,  29.688,  25.781)
+		part. InCell  15 (local index     62): ( 365.62,  54.688,  13.281)
+		part. InCell  16 (local index     64): ( 332.81,  57.031,  44.141)
+		part. InCell  17 (local index     67): ( 382.81,  32.031,  6.6406)
+		part. InCell  18 (local index     73): ( 370.31,  63.281,  34.766)
+		part. InCell  19 (local index     74): ( 320.31,  38.281,  22.266)
+	Local Cell   2:
+		part. InCell   0 (local index      0): (    200,     100,      50)
+		part. InCell   1 (local index      3): (    250,     175,    87.5)
+		part. InCell   2 (local index      9): (  287.5,  118.75,  65.625)
+		part. InCell   3 (local index     10): (  237.5,  193.75,  78.125)
+		part. InCell   4 (local index     17): ( 206.25,  171.88,  32.812)
+		part. InCell   5 (local index     18): ( 256.25,  146.88,  20.312)
+		part. InCell   6 (local index     24): ( 293.75,  153.12,  48.438)
+		part. InCell   7 (local index     27): ( 243.75,  128.12,  10.938)
+		part. InCell   8 (local index     36): ( 284.38,  126.56,  99.219)
+		part. InCell   9 (local index     39): ( 234.38,  151.56,  61.719)
+		part. InCell  10 (local index     45): ( 221.88,  145.31,  83.594)
+		part. InCell  11 (local index     46): ( 271.88,  170.31,  71.094)
+		part. InCell  12 (local index     53): ( 278.12,  198.44,  16.406)
+		part. InCell  13 (local index     54): ( 228.12,  123.44,  28.906)
+		part. InCell  14 (local index     60): ( 215.62,  179.69, 0.78125)
+		part. InCell  15 (local index     63): ( 265.62,  104.69,  38.281)
+		part. InCell  16 (local index     65): ( 232.81,  107.03,  19.141)
+		part. InCell  17 (local index     66): ( 282.81,  182.03,  31.641)
+		part. InCell  18 (local index     72): ( 270.31,  113.28,  9.7656)
+		part. InCell  19 (local index     75): ( 220.31,  188.28,  47.266)
+	Local Cell   3:
+		part. InCell   0 (local index      4): (    325,   162.5,   18.75)
+		part. InCell   1 (local index      7): (    375,   137.5,   31.25)
+		part. InCell   2 (local index     13): (  362.5,  156.25,   9.375)
+		part. InCell   3 (local index     14): (  312.5,  131.25,  46.875)
+		part. InCell   4 (local index     21): ( 331.25,  109.38,  89.062)
+		part. InCell   5 (local index     22): ( 381.25,  184.38,  51.562)
+		part. InCell   6 (local index     28): ( 368.75,  115.62,  79.688)
+		part. InCell   7 (local index     31): ( 318.75,  190.62,  67.188)
+		part. InCell   8 (local index     32): ( 359.38,  189.06,  30.469)
+		part. InCell   9 (local index     35): ( 309.38,  114.06,  17.969)
+		part. InCell  10 (local index     41): ( 346.88,  182.81,  39.844)
+		part. InCell  11 (local index     42): ( 396.88,  107.81,  2.3438)
+		part. InCell  12 (local index     49): ( 353.12,  135.94,  60.156)
+		part. InCell  13 (local index     50): ( 303.12,  160.94,  97.656)
+		part. InCell  14 (local index     56): ( 340.62,  142.19,  69.531)
+		part. InCell  15 (local index     59): ( 390.62,  167.19,  82.031)
+		part. InCell  16 (local index     69): ( 307.81,  169.53,  50.391)
+		part. InCell  17 (local index     70): ( 357.81,  144.53,  87.891)
+		part. InCell  18 (local index     76): ( 395.31,  150.78,  66.016)
+		part. InCell  19 (local index     79): ( 345.31,  125.78,  78.516)

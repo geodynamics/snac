@@ -1,0 +1,47 @@
+Testing memory allocation from the Memory Pool.. Passed
+
+Stg_Class (ptr): 0x8063730
+	sizeOfSelf: 56
+	_deleteSelf: Yes
+	type: MemoryPool
+	_delete (func ptr): 0x4002b6b6
+	_print (func ptr): 0x4002b568
+	_copy (func ptr): (nil)
+MemoryPool (ptr): (0x8063730)
+	ElementSize		 - 32
+	NumElememts		 - 200
+	NumElememtsFree		 - 0
+	NumChunks		 - 1
+	Delta			 - 100
+Testing out of memory.. Passed
+
+Stg_Class (ptr): 0x8063730
+	sizeOfSelf: 56
+	_deleteSelf: Yes
+	type: MemoryPool
+	_delete (func ptr): 0x4002b6b6
+	_print (func ptr): 0x4002b568
+	_copy (func ptr): (nil)
+MemoryPool (ptr): (0x8063730)
+	ElementSize		 - 32
+	NumElememts		 - 20200
+	NumElememtsFree		 - 0
+	NumChunks		 - 201
+	Delta			 - 100
+Testing memory deallocations.. Passed
+
+Testing illegal memory deallocations.. Passed
+
+Stg_Class (ptr): 0x8063730
+	sizeOfSelf: 56
+	_deleteSelf: Yes
+	type: MemoryPool
+	_delete (func ptr): 0x4002b6b6
+	_print (func ptr): 0x4002b568
+	_copy (func ptr): (nil)
+MemoryPool (ptr): (0x8063730)
+	ElementSize		 - 32
+	NumElememts		 - 0
+	NumElememtsFree		 - 0
+	NumChunks		 - 0
+	Delta			 - 100

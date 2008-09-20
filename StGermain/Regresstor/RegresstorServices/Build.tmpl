@@ -1,0 +1,84 @@
+<html>
+	<head><title>Build Table</title></head>
+	<body>
+		<h1>Build Table</h1>
+		<p>
+		Links: <a href=Summary.cgi>Summary</a> | <a href=Machine.cgi>Machine</a> | <a href=Build.cgi>Build</a> | <a href=Run.cgi>Run</a> | <a href=UnitTestCheck.cgi>UnitTestCheck</a> | <a href=FailedUnitSubTest.cgi>FailedUnitSubTest</a>
+		</p>
+		<form action="Build.cgi" method="get">
+		<table>
+		<tr>
+		<td>Project Name:</td><td><input type="text" name="Project.Name" value="" size=20 /></td>
+		</tr>
+		<tr>
+		<td>BuildOptions:</td><td><input type="text" name="BuildOptions" value="" size=20 /></td>
+		</tr>
+		<tr>
+		<td>Compiler:</td><td><input type="text" name="CC" value="" size=10 /></td>
+		</tr>
+		<tr>
+		<td>Revision:</td><td><input type="text" name="Revision" value="" size=10 /></td>
+		</tr>
+		<tr>
+		<td>Machine Name:</td><td><input type="text" name="Machine.Name" value="" size=20 /></td>
+		</tr>
+		<tr>
+		<td>Who:</td><td><input type="text" name="Who" value="" size=20 /></td>
+		</tr>
+		<tr>
+		<td>LocalModification:</td><td><input type="text" name="LocalModification" value="" size=1 /></td>
+		</tr>
+		<tr>
+		<td>Compiled:</td><td><input type="text" name="Compiled" value="" size=1 /></td>
+		</tr> 
+		<tr>
+		<td>Date &gt;=</td><td><input type="text" name="Date>" value="" size=10 /></td>
+		<td>Date &lt;=</td><td><input type="text" name="Date<" value="" size=10 /></td>
+		</tr>
+		<tr>
+		<td>Time &gt;=</td><td><input type="text" name="Time>" value="" size=10 /></td>
+		<td>Time &lt;=</td><td><input type="text" name="Time<" value="" size=10 /></td>
+		</tr>
+		</table>
+		<input type="submit" value="Filter" /> <input type="reset" value="Clear">
+		</form>
+		<p>
+		<TMPL_VAR NAME=queryString>
+		</p>
+		<table border=1>
+		<tr>
+			<td><b>ID</b></td>
+			<td><b>Project</b></td>
+			<td><b>BuildOptions</b></td>
+			<td><b>Compiler (CC)</b></td>
+			<td><b>Revision</b></td>
+			<td><b>Machine</b></td>
+			<td><b>Who</b></td>
+			<td><b>LocalModification</b></td>
+			<td><b>Date</b></td>
+			<td><b>Time</b></td>
+			<td><b>Compiled</b></td>
+			<td><b>Makefile</b></td>
+			<td><b>Log</b></td>
+		</tr>
+		<TMPL_LOOP NAME=data>
+		<tr>
+			
+			<td><a name=<TMPL_VAR NAME=ID>><TMPL_VAR NAME=ID></a></td>
+			<td><TMPL_VAR NAME=Project></td>
+			<td><TMPL_VAR NAME=BuildOptions></td>
+			<td><TMPL_VAR NAME=CC></td>
+			<td><TMPL_VAR NAME=Revision></td>
+			<td><a href=Machine.cgi#<TMPL_VAR NAME=MachineID>><TMPL_VAR NAME=MachineName></a></td>
+			<td><TMPL_VAR NAME=Who></td>
+			<td><TMPL_VAR NAME=LocalModification></td>
+			<td><TMPL_VAR NAME=Date></td>
+			<td><TMPL_VAR NAME=Time></td>
+			<td><TMPL_VAR NAME=Compiled></td>
+			<td><a href=downloadBuildMakefile.cgi?ID=<TMPL_VAR NAME=ID>>Makefile.system</a></td>
+			<td><a href=downloadBuildLog.cgi?ID=<TMPL_VAR NAME=ID>>Compile Log</a></td>
+		</tr>
+		</TMPL_LOOP>
+		</table>
+	</body>
+</html>

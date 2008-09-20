@@ -1,0 +1,49 @@
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+	
+	<list name="plugins" mergeType="merge">
+		<param>lucPlugin</param>
+	</list>
+
+	<struct name="components" mergeType="merge">
+		<struct name="camera" mergeType="merge">
+			<param name="Type">lucCamera</param>
+			<param name="coordX">-0.35531</param>
+			<param name="coordY">0.7451</param> 
+			<param name="coordZ">2.0</param> 
+			<param name="focalPointX">0</param> 
+			<param name="focalPointY">0.0</param>
+			<param name="focalPointZ">0.0</param>
+			<param name="focalLength">0</param>			
+		</struct>
+		<!-- Drawing Objects -->
+		<struct name="particleDots">
+			<param name="Type">lucSwarmViewer</param>
+			<param name="Swarm">swarm</param>
+			<param name="colour">blue</param>
+			<param name="pointSize">2.0</param>
+			<param name="MaskVariable">swarm-OwningCell</param>
+			<param name="maskType">EqualTo</param>
+			<param name="maskValue">1.0</param>
+		</struct>	
+		<struct name="ShapeTestVP">
+			<param name="Type">lucViewport</param>
+			<param name="Camera">camera</param>
+			<list name="DrawingObject">
+				<param>particleDots</param>
+			</list>
+		</struct>		
+		<struct name="renderingEngine">
+			<param name="Type">lucRenderingEngineGL</param>
+		</struct>
+		<struct name="window">
+			<param name="Type">lucDefaultWindow</param>
+			<param name="RenderingEngine">renderingEngine</param>
+			<param name="height">400</param>
+			<param name="width">400</param>
+			<param name="interactive">t</param>
+			<param name="backgroundColour">white</param>
+			<param name="Viewport">ShapeTestVP</param>
+		</struct>
+	</struct>
+
+</StGermainData>

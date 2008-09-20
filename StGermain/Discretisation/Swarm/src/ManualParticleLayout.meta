@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<param name="Name">ManualParticleLayout</param>
+<param name="Author">...</param>
+<param name="Organisation">VPAC</param>
+<param name="Project">StGermain</param>
+<param name="Location">./StGermain/Discretisation/Swarm/src/</param>
+<param name="Project Web">https://csd.vpac.org/twiki/bin/view/Stgermain/WebHome</param>
+<param name="Copyright">StGermain Framework. Copyright (C) 2003-2005 VPAC.</param>
+<param name="License">The Gnu Lesser General Public License http://www.gnu.org/licenses/lgpl.html</param>
+<param name="Parent">GlobalParticleLayout</param>
+<param name="Reference">...</param>
+<param name="Summary">...</param>
+<param name="Description">This lays out a particle in each of the positions manually specified in the dictionary.</param>
+
+<!--Now the interesting stuff-->
+
+
+<list name="Params">
+	<struct>
+		<param name="Name">manualParticlePositions</param>
+		<param name="Type">list</param>
+		<param name="ElementType">Double</param>
+		<param name="ElementHeaders">x, y, z</param>
+		<param name="Description">A list of particle positions.</param>
+	</struct>
+</list>
+
+<list name="Dependencies">
+</list>
+<!-- Add an exmaple XML if possible -->
+<param name="Example">
+	<struct name="particleLayoutExample1">
+		<param name="Type">ManualParticleLayout</param>
+		<list name="manualParticlePositions">
+			<asciidata>		
+				<columnDefinition name = "x" type="double"/>
+				<columnDefinition name = "y" type="double"/>
+				<columnDefinition name = "z" type="double"/> 
+                0.5 0.1 0.0
+                0.1 1.0 0.0
+                0.3 1.0 2.0
+			</asciidata>		
+		</list>		
+	</struct>
+	<struct name="particleLayoutExample2">
+		<param name="Type">ManualParticleLayout</param>
+		<list name="manualParticlePositions">
+			<struct>
+				<param name="x">0.5</param>
+				<param name="y">0.1</param>
+				<param name="z">0.0</param>
+			</struct>
+			<struct>
+				<param name="x">0.1</param>
+				<param name="y">1.0</param>
+				<param name="z">0.0</param>
+			</struct>			
+			<struct>
+				<param name="x">0.3</param>
+				<param name="y">1.0</param>
+				<param name="z">2.0</param>
+			</struct>			
+		</list>		
+	</struct>
+</param>
+
+</StGermainData>

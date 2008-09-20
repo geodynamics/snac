@@ -1,0 +1,53 @@
+StGermain Framework revision 3696. Copyright (C) 2003-2005 VPAC.
+StGermain Discretisation Library revision 3696. Copyright (C) 2003-2005 VPAC.
+"dtType" set by Dictionary to "constant"
+"forceCalcType" set by Dictionary to "quick"
+
+Creating Stg_Components from the component-list
+
+
+Constructing Stg_Components from the live-component register
+
+Constructing SnacElastic..
+For Material 0:
+	rheology = 1
+	alpha = 3.000000e-05
+	beta = 0.000000e+00
+
+	lambda = 3.000000e+10
+	mu = 3.000000e+10
+
+	maxiterations = 1
+	constitutivetolerance = 1.000000e-03
+	yieldcriterion = 0
+	nsegments = 2
+		seg 0: plstrain = 0.000000e+00
+		seg 0: frictionAngle = 3.000000e+01
+		seg 0: dilationAngle = 0.000000e+00
+		seg 0: cohesion = 1.000000e+07
+		seg 1: plstrain = 5.000000e+00
+		seg 1: frictionAngle = 3.000000e+01
+		seg 1: dilationAngle = 0.000000e+00
+		seg 1: cohesion = 1.000000e+06
+		seg 2: plstrain = 1.000000e+03
+		seg 2: frictionAngle = 3.000000e+01
+		seg 2: dilationAngle = 0.000000e+00
+		seg 2: cohesion = 1.000000e+06
+	ten_off = 1.000000e+08
+	puSeeds = 0
+
+	vis_min = 1.000000e+21
+	vis_max = 1.000000e+27
+	refvisc = 1.000000e+19
+	refsrate = 1.000000e-15
+	reftemp = 1.400000e+03
+	activationE = 5.400000e+03
+	srexponent = 1.000000e+00
+	srexponent1 = 1.000000e+00
+	srexponent2 = 1.000000e+00
+
+	density = 2.700000e+03
+In: Snac_Context_TimeStepZero
+self->timeStep: 0 (update elements only)
+self->currentTime: 0
+TimeStep = 0, Start time = 1 + 1 prev timeStep dt
