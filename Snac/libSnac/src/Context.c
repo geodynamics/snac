@@ -348,6 +348,7 @@ void _Snac_Context_Init( Snac_Context* self ) {
 
 	/* Add boundary condition managers */
 	velocityBCsDict = Dictionary_Entry_Value_AsDictionary( Dictionary_Get( self->dictionary, "velocityBCs" ) );
+
 	self->velocityBCs = CompositeVC_New( "velocityBC", self->variable_Register, self->condFunc_Register, velocityBCsDict, self->mesh );
 
 	/* Parallelisation information */
@@ -645,7 +646,10 @@ void _Snac_Context_Build( void* context ) {
 	Build( self->elementICs, 0, False );
 	Journal_Printf( self->verbose, "elementICs:\n" );
 	VariableCondition_PrintConcise( self->elementICs, self->verbose );
+
+	fprintf(stderr,"About to build velocityBCs...\n");
 	Build( self->velocityBCs, 0, False );
+	fprintf(stderr,"velocityBCs has been built: %d\n",self->velocityBCs->indexCount);
 	Journal_Printf( self->verbose, "velocityBCs\n" );
 	VariableCondition_PrintConcise( self->velocityBCs, self->verbose );
 
@@ -684,7 +688,9 @@ void _Snac_Context_InitialConditions( void* context ) {
 	VariableCondition_Apply( self->elementICs, self );
 
 	/* Apply the velocity boundary conditions ... these are considered part of initial conditions */
+	fprintf(stderr,"velocityBCs has been built (2): %d\n",self->velocityBCs->indexCount);
 	VariableCondition_Apply( self->velocityBCs, self );
+	fprintf(stderr,"velocityBCs has been built (3): %d\n",self->velocityBCs->indexCount);
 }
 
 void _Snac_Context_InitializeMaterialProperties( void* context ) {
@@ -955,7 +961,9 @@ void Snac_Context_TimeStepZero( void* context ) {
 
 	_Snac_Context_DumpPhaseIndex( self );
 
-	KeyCall( self, self->syncK, EntryPoint_VoidPtr_CallCast* )( KeyHandle(self,self->syncK), self );
+	fprintf(stderr,"velocityBCs has been built (4): %d\n",self->velocityBCs->indexCount);
+	KeyCall( self, self->syncK, EntryPoint_Class_VoidPtr_CallCast* )( KeyHandle(self,self->syncK), self );
+	/* _Snac_Context_Sync( self ); */
 }
 
 
@@ -1133,6 +1141,8 @@ void _Snac_Context_Sync( void* context ) {
 	    strain_inert=1.0e-5f & vbc_max=3.0e-10f */
 	vmax=0.0f;
 	vlb = 3.0e-11f; /* ~1 mm/yr */
+
+	fprintf(stderr,"velocityBCs has been built (5): %x\n",self);
 	for( index = 0; index < self->velocityBCs->indexCount; index++ ) {
 		Snac_Node* node;
 		node_dI = self->velocityBCs->indexTbl[index];

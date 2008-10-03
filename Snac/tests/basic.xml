@@ -21,6 +21,7 @@
 	<list name="plugins">
 	</list>
 
+	<param name="journal.verbose"> on </param>
 	<param name="journal.debug"> on </param>
 	<param name="journal.debug.Context"> on </param>
 	<param name="journal.debug.Snac_Parallel"> on </param>

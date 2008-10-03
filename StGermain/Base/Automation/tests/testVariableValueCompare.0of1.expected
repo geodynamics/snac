@@ -1,2 +1,0 @@
-Variable_ValueCompare( orig, compare ) = 0.030987
-Variable_ValueCompareWithinTolerance( orig, compare, tolerance ) = True

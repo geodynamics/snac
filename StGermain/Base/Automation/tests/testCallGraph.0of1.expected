@@ -1,7 +1,0 @@
-Passed test Construction: Can we use New()?
-Passed test One push: First push?
-Passed test One pop: Pop first push?
-Passed test New entries: Unique for function-parent-name?
-Passed test Table realloc: Does the table grow when needed?
-Passed test Copy: Copying
-Passed test Destruction: Deleting all allocated memory

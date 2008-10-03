@@ -1,4 +1,0 @@
-Watching rank: 0
-* Test Construction *
-* Test Insertion(Add) over limit *
-Error- IndexSet_Add: index 24 outside current size 24. Aborting.

@@ -1,6 +1,0 @@
-Passed test 1: Construct the Array(s)
-Passed test 2: Do we trust Array_Ptr, Array_Count & Array_ElementSize?
-Passed test 3: Do we trust Array_At?
-Passed test 4: Do we trust Array_Copy (Deep and Shallow)?
-Passed test 5: Do we trust Array_Owner/Array_IOwn?
-Passed test 6: Delete the Array(s)
