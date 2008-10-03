@@ -1,0 +1,835 @@
+StGermain Framework revision 3473. Copyright (C) 2003-2005 VPAC.
+Element with point:
+	Node 0 (0.00,0.00,0.00):
+		Incl    0, Excl    0
+	Test point 0 (0.10,0.10,0.10):
+		Incl    0, Excl    0
+	Node 1 (0.50,0.00,0.00):
+		Incl    1, Excl    1
+	Test point 1 (0.60,0.10,0.10):
+		Incl    1, Excl    1
+	Node 2 (1.00,0.00,0.00):
+		Incl    2, Excl    2
+	Test point 2 (1.10,0.10,0.10):
+		Incl    2, Excl    2
+	Node 3 (1.50,0.00,0.00):
+		Incl    3, Excl    3
+	Test point 3 (1.60,0.10,0.10):
+		Incl    3, Excl    3
+	Node 4 (2.00,0.00,0.00):
+		Incl    4, Excl    4
+	Test point 4 (2.10,0.10,0.10):
+		Incl    4, Excl    4
+	Node 5 (2.50,0.00,0.00):
+		Incl    5, Excl    5
+	Test point 5 (2.60,0.10,0.10):
+		Incl    5, Excl    5
+	Node 6 (3.00,0.00,0.00):
+		Incl    5, Excl   54
+	Test point 6 (3.10,0.10,0.10):
+		Incl   54, Excl   54
+	Node 7 (3.50,0.00,0.00):
+		Incl   54, Excl   72
+	Test point 7 (3.60,0.10,0.10):
+		Incl   72, Excl   72
+	Node 8 (4.00,0.00,0.00):
+		Incl   72, Excl   72
+	Test point 8 (4.10,0.10,0.10):
+		Incl   72, Excl   72
+	Node 9 (4.50,0.00,0.00):
+		Incl   72, Excl   72
+	Test point 9 (4.60,0.10,0.10):
+		Incl   72, Excl   72
+	Node 10 (5.00,0.00,0.00):
+		Incl   72, Excl   72
+	Test point 10 (5.10,0.10,0.10):
+		Incl   72, Excl   72
+	Node 11 (5.50,0.00,0.00):
+		Incl   55, Excl   55
+	Test point 11 (5.60,0.10,0.10):
+		Incl   55, Excl   55
+	Node 12 (6.00,0.00,0.00):
+		Incl   55, Excl   55
+	Test point 12 (6.10,0.10,0.10):
+		Incl   72, Excl   72
+	Node 13 (0.00,0.33,0.00):
+		Incl    6, Excl    6
+	Test point 13 (0.10,0.43,0.10):
+		Incl    6, Excl    6
+	Node 14 (0.50,0.33,0.00):
+		Incl    7, Excl    7
+	Test point 14 (0.60,0.43,0.10):
+		Incl    7, Excl    7
+	Node 15 (1.00,0.33,0.00):
+		Incl    8, Excl    8
+	Test point 15 (1.10,0.43,0.10):
+		Incl    8, Excl    8
+	Node 16 (1.50,0.33,0.00):
+		Incl    9, Excl    9
+	Test point 16 (1.60,0.43,0.10):
+		Incl    9, Excl    9
+	Node 17 (2.00,0.33,0.00):
+		Incl   10, Excl   10
+	Test point 17 (2.10,0.43,0.10):
+		Incl   10, Excl   10
+	Node 18 (2.50,0.33,0.00):
+		Incl   11, Excl   11
+	Test point 18 (2.60,0.43,0.10):
+		Incl   11, Excl   11
+	Node 19 (3.00,0.33,0.00):
+		Incl   11, Excl   56
+	Test point 19 (3.10,0.43,0.10):
+		Incl   56, Excl   56
+	Node 20 (3.50,0.33,0.00):
+		Incl   56, Excl   72
+	Test point 20 (3.60,0.43,0.10):
+		Incl   72, Excl   72
+	Node 21 (4.00,0.33,0.00):
+		Incl   72, Excl   72
+	Test point 21 (4.10,0.43,0.10):
+		Incl   72, Excl   72
+	Node 22 (4.50,0.33,0.00):
+		Incl   72, Excl   72
+	Test point 22 (4.60,0.43,0.10):
+		Incl   72, Excl   72
+	Node 23 (5.00,0.33,0.00):
+		Incl   72, Excl   72
+	Test point 23 (5.10,0.43,0.10):
+		Incl   72, Excl   72
+	Node 24 (5.50,0.33,0.00):
+		Incl   57, Excl   57
+	Test point 24 (5.60,0.43,0.10):
+		Incl   57, Excl   57
+	Node 25 (6.00,0.33,0.00):
+		Incl   57, Excl   57
+	Test point 25 (6.10,0.43,0.10):
+		Incl   72, Excl   72
+	Node 26 (0.00,0.67,0.00):
+		Incl   12, Excl   12
+	Test point 26 (0.10,0.77,0.10):
+		Incl   12, Excl   12
+	Node 27 (0.50,0.67,0.00):
+		Incl   13, Excl   13
+	Test point 27 (0.60,0.77,0.10):
+		Incl   13, Excl   13
+	Node 28 (1.00,0.67,0.00):
+		Incl   14, Excl   14
+	Test point 28 (1.10,0.77,0.10):
+		Incl   14, Excl   14
+	Node 29 (1.50,0.67,0.00):
+		Incl   15, Excl   15
+	Test point 29 (1.60,0.77,0.10):
+		Incl   15, Excl   15
+	Node 30 (2.00,0.67,0.00):
+		Incl   16, Excl   16
+	Test point 30 (2.10,0.77,0.10):
+		Incl   16, Excl   16
+	Node 31 (2.50,0.67,0.00):
+		Incl   17, Excl   17
+	Test point 31 (2.60,0.77,0.10):
+		Incl   17, Excl   17
+	Node 32 (3.00,0.67,0.00):
+		Incl   17, Excl   58
+	Test point 32 (3.10,0.77,0.10):
+		Incl   58, Excl   58
+	Node 33 (3.50,0.67,0.00):
+		Incl   58, Excl   72
+	Test point 33 (3.60,0.77,0.10):
+		Incl   72, Excl   72
+	Node 34 (4.00,0.67,0.00):
+		Incl   72, Excl   72
+	Test point 34 (4.10,0.77,0.10):
+		Incl   72, Excl   72
+	Node 35 (4.50,0.67,0.00):
+		Incl   72, Excl   72
+	Test point 35 (4.60,0.77,0.10):
+		Incl   72, Excl   72
+	Node 36 (5.00,0.67,0.00):
+		Incl   72, Excl   72
+	Test point 36 (5.10,0.77,0.10):
+		Incl   72, Excl   72
+	Node 37 (5.50,0.67,0.00):
+		Incl   59, Excl   59
+	Test point 37 (5.60,0.77,0.10):
+		Incl   59, Excl   59
+	Node 38 (6.00,0.67,0.00):
+		Incl   59, Excl   59
+	Test point 38 (6.10,0.77,0.10):
+		Incl   72, Excl   72
+	Node 39 (0.00,1.00,0.00):
+		Incl   12, Excl   12
+	Test point 39 (0.10,1.10,0.10):
+		Incl   72, Excl   72
+	Node 40 (0.50,1.00,0.00):
+		Incl   13, Excl   13
+	Test point 40 (0.60,1.10,0.10):
+		Incl   72, Excl   72
+	Node 41 (1.00,1.00,0.00):
+		Incl   14, Excl   14
+	Test point 41 (1.10,1.10,0.10):
+		Incl   72, Excl   72
+	Node 42 (1.50,1.00,0.00):
+		Incl   15, Excl   15
+	Test point 42 (1.60,1.10,0.10):
+		Incl   72, Excl   72
+	Node 43 (2.00,1.00,0.00):
+		Incl   16, Excl   16
+	Test point 43 (2.10,1.10,0.10):
+		Incl   72, Excl   72
+	Node 44 (2.50,1.00,0.00):
+		Incl   17, Excl   17
+	Test point 44 (2.60,1.10,0.10):
+		Incl   72, Excl   72
+	Node 45 (3.00,1.00,0.00):
+		Incl   17, Excl   58
+	Test point 45 (3.10,1.10,0.10):
+		Incl   72, Excl   72
+	Node 46 (3.50,1.00,0.00):
+		Incl   58, Excl   72
+	Test point 46 (3.60,1.10,0.10):
+		Incl   72, Excl   72
+	Node 47 (4.00,1.00,0.00):
+		Incl   72, Excl   72
+	Test point 47 (4.10,1.10,0.10):
+		Incl   72, Excl   72
+	Node 48 (4.50,1.00,0.00):
+		Incl   72, Excl   72
+	Test point 48 (4.60,1.10,0.10):
+		Incl   72, Excl   72
+	Node 49 (5.00,1.00,0.00):
+		Incl   72, Excl   72
+	Test point 49 (5.10,1.10,0.10):
+		Incl   72, Excl   72
+	Node 50 (5.50,1.00,0.00):
+		Incl   59, Excl   59
+	Test point 50 (5.60,1.10,0.10):
+		Incl   72, Excl   72
+	Node 51 (6.00,1.00,0.00):
+		Incl   59, Excl   59
+	Test point 51 (6.10,1.10,0.10):
+		Incl   72, Excl   72
+	Node 52 (0.00,0.00,0.33):
+		Incl   18, Excl   18
+	Test point 52 (0.10,0.10,0.43):
+		Incl   18, Excl   18
+	Node 53 (0.50,0.00,0.33):
+		Incl   19, Excl   19
+	Test point 53 (0.60,0.10,0.43):
+		Incl   19, Excl   19
+	Node 54 (1.00,0.00,0.33):
+		Incl   20, Excl   20
+	Test point 54 (1.10,0.10,0.43):
+		Incl   20, Excl   20
+	Node 55 (1.50,0.00,0.33):
+		Incl   21, Excl   21
+	Test point 55 (1.60,0.10,0.43):
+		Incl   21, Excl   21
+	Node 56 (2.00,0.00,0.33):
+		Incl   22, Excl   22
+	Test point 56 (2.10,0.10,0.43):
+		Incl   22, Excl   22
+	Node 57 (2.50,0.00,0.33):
+		Incl   23, Excl   23
+	Test point 57 (2.60,0.10,0.43):
+		Incl   23, Excl   23
+	Node 58 (3.00,0.00,0.33):
+		Incl   23, Excl   60
+	Test point 58 (3.10,0.10,0.43):
+		Incl   60, Excl   60
+	Node 59 (3.50,0.00,0.33):
+		Incl   60, Excl   72
+	Test point 59 (3.60,0.10,0.43):
+		Incl   72, Excl   72
+	Node 60 (4.00,0.00,0.33):
+		Incl   72, Excl   72
+	Test point 60 (4.10,0.10,0.43):
+		Incl   72, Excl   72
+	Node 61 (4.50,0.00,0.33):
+		Incl   72, Excl   72
+	Test point 61 (4.60,0.10,0.43):
+		Incl   72, Excl   72
+	Node 62 (5.00,0.00,0.33):
+		Incl   72, Excl   72
+	Test point 62 (5.10,0.10,0.43):
+		Incl   72, Excl   72
+	Node 63 (5.50,0.00,0.33):
+		Incl   61, Excl   61
+	Test point 63 (5.60,0.10,0.43):
+		Incl   61, Excl   61
+	Node 64 (6.00,0.00,0.33):
+		Incl   61, Excl   61
+	Test point 64 (6.10,0.10,0.43):
+		Incl   72, Excl   72
+	Node 65 (0.00,0.33,0.33):
+		Incl   24, Excl   24
+	Test point 65 (0.10,0.43,0.43):
+		Incl   24, Excl   24
+	Node 66 (0.50,0.33,0.33):
+		Incl   25, Excl   25
+	Test point 66 (0.60,0.43,0.43):
+		Incl   25, Excl   25
+	Node 67 (1.00,0.33,0.33):
+		Incl   26, Excl   26
+	Test point 67 (1.10,0.43,0.43):
+		Incl   26, Excl   26
+	Node 68 (1.50,0.33,0.33):
+		Incl   27, Excl   27
+	Test point 68 (1.60,0.43,0.43):
+		Incl   27, Excl   27
+	Node 69 (2.00,0.33,0.33):
+		Incl   28, Excl   28
+	Test point 69 (2.10,0.43,0.43):
+		Incl   28, Excl   28
+	Node 70 (2.50,0.33,0.33):
+		Incl   29, Excl   29
+	Test point 70 (2.60,0.43,0.43):
+		Incl   29, Excl   29
+	Node 71 (3.00,0.33,0.33):
+		Incl   29, Excl   62
+	Test point 71 (3.10,0.43,0.43):
+		Incl   62, Excl   62
+	Node 72 (3.50,0.33,0.33):
+		Incl   62, Excl   72
+	Test point 72 (3.60,0.43,0.43):
+		Incl   72, Excl   72
+	Node 73 (4.00,0.33,0.33):
+		Incl   72, Excl   72
+	Test point 73 (4.10,0.43,0.43):
+		Incl   72, Excl   72
+	Node 74 (4.50,0.33,0.33):
+		Incl   72, Excl   72
+	Test point 74 (4.60,0.43,0.43):
+		Incl   72, Excl   72
+	Node 75 (5.00,0.33,0.33):
+		Incl   72, Excl   72
+	Test point 75 (5.10,0.43,0.43):
+		Incl   72, Excl   72
+	Node 76 (5.50,0.33,0.33):
+		Incl   63, Excl   63
+	Test point 76 (5.60,0.43,0.43):
+		Incl   63, Excl   63
+	Node 77 (6.00,0.33,0.33):
+		Incl   63, Excl   63
+	Test point 77 (6.10,0.43,0.43):
+		Incl   72, Excl   72
+	Node 78 (0.00,0.67,0.33):
+		Incl   30, Excl   30
+	Test point 78 (0.10,0.77,0.43):
+		Incl   30, Excl   30
+	Node 79 (0.50,0.67,0.33):
+		Incl   31, Excl   31
+	Test point 79 (0.60,0.77,0.43):
+		Incl   31, Excl   31
+	Node 80 (1.00,0.67,0.33):
+		Incl   32, Excl   32
+	Test point 80 (1.10,0.77,0.43):
+		Incl   32, Excl   32
+	Node 81 (1.50,0.67,0.33):
+		Incl   33, Excl   33
+	Test point 81 (1.60,0.77,0.43):
+		Incl   33, Excl   33
+	Node 82 (2.00,0.67,0.33):
+		Incl   34, Excl   34
+	Test point 82 (2.10,0.77,0.43):
+		Incl   34, Excl   34
+	Node 83 (2.50,0.67,0.33):
+		Incl   35, Excl   35
+	Test point 83 (2.60,0.77,0.43):
+		Incl   35, Excl   35
+	Node 84 (3.00,0.67,0.33):
+		Incl   35, Excl   64
+	Test point 84 (3.10,0.77,0.43):
+		Incl   64, Excl   64
+	Node 85 (3.50,0.67,0.33):
+		Incl   64, Excl   72
+	Test point 85 (3.60,0.77,0.43):
+		Incl   72, Excl   72
+	Node 86 (4.00,0.67,0.33):
+		Incl   72, Excl   72
+	Test point 86 (4.10,0.77,0.43):
+		Incl   72, Excl   72
+	Node 87 (4.50,0.67,0.33):
+		Incl   72, Excl   72
+	Test point 87 (4.60,0.77,0.43):
+		Incl   72, Excl   72
+	Node 88 (5.00,0.67,0.33):
+		Incl   72, Excl   72
+	Test point 88 (5.10,0.77,0.43):
+		Incl   72, Excl   72
+	Node 89 (5.50,0.67,0.33):
+		Incl   65, Excl   65
+	Test point 89 (5.60,0.77,0.43):
+		Incl   65, Excl   65
+	Node 90 (6.00,0.67,0.33):
+		Incl   65, Excl   65
+	Test point 90 (6.10,0.77,0.43):
+		Incl   72, Excl   72
+	Node 91 (0.00,1.00,0.33):
+		Incl   30, Excl   30
+	Test point 91 (0.10,1.10,0.43):
+		Incl   72, Excl   72
+	Node 92 (0.50,1.00,0.33):
+		Incl   31, Excl   31
+	Test point 92 (0.60,1.10,0.43):
+		Incl   72, Excl   72
+	Node 93 (1.00,1.00,0.33):
+		Incl   32, Excl   32
+	Test point 93 (1.10,1.10,0.43):
+		Incl   72, Excl   72
+	Node 94 (1.50,1.00,0.33):
+		Incl   33, Excl   33
+	Test point 94 (1.60,1.10,0.43):
+		Incl   72, Excl   72
+	Node 95 (2.00,1.00,0.33):
+		Incl   34, Excl   34
+	Test point 95 (2.10,1.10,0.43):
+		Incl   72, Excl   72
+	Node 96 (2.50,1.00,0.33):
+		Incl   35, Excl   35
+	Test point 96 (2.60,1.10,0.43):
+		Incl   72, Excl   72
+	Node 97 (3.00,1.00,0.33):
+		Incl   35, Excl   64
+	Test point 97 (3.10,1.10,0.43):
+		Incl   72, Excl   72
+	Node 98 (3.50,1.00,0.33):
+		Incl   64, Excl   72
+	Test point 98 (3.60,1.10,0.43):
+		Incl   72, Excl   72
+	Node 99 (4.00,1.00,0.33):
+		Incl   72, Excl   72
+	Test point 99 (4.10,1.10,0.43):
+		Incl   72, Excl   72
+	Node 100 (4.50,1.00,0.33):
+		Incl   72, Excl   72
+	Test point 100 (4.60,1.10,0.43):
+		Incl   72, Excl   72
+	Node 101 (5.00,1.00,0.33):
+		Incl   72, Excl   72
+	Test point 101 (5.10,1.10,0.43):
+		Incl   72, Excl   72
+	Node 102 (5.50,1.00,0.33):
+		Incl   65, Excl   65
+	Test point 102 (5.60,1.10,0.43):
+		Incl   72, Excl   72
+	Node 103 (6.00,1.00,0.33):
+		Incl   65, Excl   65
+	Test point 103 (6.10,1.10,0.43):
+		Incl   72, Excl   72
+	Node 104 (0.00,0.00,0.67):
+		Incl   36, Excl   36
+	Test point 104 (0.10,0.10,0.77):
+		Incl   36, Excl   36
+	Node 105 (0.50,0.00,0.67):
+		Incl   37, Excl   37
+	Test point 105 (0.60,0.10,0.77):
+		Incl   37, Excl   37
+	Node 106 (1.00,0.00,0.67):
+		Incl   38, Excl   38
+	Test point 106 (1.10,0.10,0.77):
+		Incl   38, Excl   38
+	Node 107 (1.50,0.00,0.67):
+		Incl   39, Excl   39
+	Test point 107 (1.60,0.10,0.77):
+		Incl   39, Excl   39
+	Node 108 (2.00,0.00,0.67):
+		Incl   40, Excl   40
+	Test point 108 (2.10,0.10,0.77):
+		Incl   40, Excl   40
+	Node 109 (2.50,0.00,0.67):
+		Incl   41, Excl   41
+	Test point 109 (2.60,0.10,0.77):
+		Incl   41, Excl   41
+	Node 110 (3.00,0.00,0.67):
+		Incl   41, Excl   66
+	Test point 110 (3.10,0.10,0.77):
+		Incl   66, Excl   66
+	Node 111 (3.50,0.00,0.67):
+		Incl   66, Excl   72
+	Test point 111 (3.60,0.10,0.77):
+		Incl   72, Excl   72
+	Node 112 (4.00,0.00,0.67):
+		Incl   72, Excl   72
+	Test point 112 (4.10,0.10,0.77):
+		Incl   72, Excl   72
+	Node 113 (4.50,0.00,0.67):
+		Incl   72, Excl   72
+	Test point 113 (4.60,0.10,0.77):
+		Incl   72, Excl   72
+	Node 114 (5.00,0.00,0.67):
+		Incl   72, Excl   72
+	Test point 114 (5.10,0.10,0.77):
+		Incl   72, Excl   72
+	Node 115 (5.50,0.00,0.67):
+		Incl   67, Excl   67
+	Test point 115 (5.60,0.10,0.77):
+		Incl   67, Excl   67
+	Node 116 (6.00,0.00,0.67):
+		Incl   67, Excl   67
+	Test point 116 (6.10,0.10,0.77):
+		Incl   72, Excl   72
+	Node 117 (0.00,0.33,0.67):
+		Incl   42, Excl   42
+	Test point 117 (0.10,0.43,0.77):
+		Incl   42, Excl   42
+	Node 118 (0.50,0.33,0.67):
+		Incl   43, Excl   43
+	Test point 118 (0.60,0.43,0.77):
+		Incl   43, Excl   43
+	Node 119 (1.00,0.33,0.67):
+		Incl   44, Excl   44
+	Test point 119 (1.10,0.43,0.77):
+		Incl   44, Excl   44
+	Node 120 (1.50,0.33,0.67):
+		Incl   45, Excl   45
+	Test point 120 (1.60,0.43,0.77):
+		Incl   45, Excl   45
+	Node 121 (2.00,0.33,0.67):
+		Incl   46, Excl   46
+	Test point 121 (2.10,0.43,0.77):
+		Incl   46, Excl   46
+	Node 122 (2.50,0.33,0.67):
+		Incl   47, Excl   47
+	Test point 122 (2.60,0.43,0.77):
+		Incl   47, Excl   47
+	Node 123 (3.00,0.33,0.67):
+		Incl   47, Excl   68
+	Test point 123 (3.10,0.43,0.77):
+		Incl   68, Excl   68
+	Node 124 (3.50,0.33,0.67):
+		Incl   68, Excl   72
+	Test point 124 (3.60,0.43,0.77):
+		Incl   72, Excl   72
+	Node 125 (4.00,0.33,0.67):
+		Incl   72, Excl   72
+	Test point 125 (4.10,0.43,0.77):
+		Incl   72, Excl   72
+	Node 126 (4.50,0.33,0.67):
+		Incl   72, Excl   72
+	Test point 126 (4.60,0.43,0.77):
+		Incl   72, Excl   72
+	Node 127 (5.00,0.33,0.67):
+		Incl   72, Excl   72
+	Test point 127 (5.10,0.43,0.77):
+		Incl   72, Excl   72
+	Node 128 (5.50,0.33,0.67):
+		Incl   69, Excl   69
+	Test point 128 (5.60,0.43,0.77):
+		Incl   69, Excl   69
+	Node 129 (6.00,0.33,0.67):
+		Incl   69, Excl   69
+	Test point 129 (6.10,0.43,0.77):
+		Incl   72, Excl   72
+	Node 130 (0.00,0.67,0.67):
+		Incl   48, Excl   48
+	Test point 130 (0.10,0.77,0.77):
+		Incl   48, Excl   48
+	Node 131 (0.50,0.67,0.67):
+		Incl   49, Excl   49
+	Test point 131 (0.60,0.77,0.77):
+		Incl   49, Excl   49
+	Node 132 (1.00,0.67,0.67):
+		Incl   50, Excl   50
+	Test point 132 (1.10,0.77,0.77):
+		Incl   50, Excl   50
+	Node 133 (1.50,0.67,0.67):
+		Incl   51, Excl   51
+	Test point 133 (1.60,0.77,0.77):
+		Incl   51, Excl   51
+	Node 134 (2.00,0.67,0.67):
+		Incl   52, Excl   52
+	Test point 134 (2.10,0.77,0.77):
+		Incl   52, Excl   52
+	Node 135 (2.50,0.67,0.67):
+		Incl   53, Excl   53
+	Test point 135 (2.60,0.77,0.77):
+		Incl   53, Excl   53
+	Node 136 (3.00,0.67,0.67):
+		Incl   53, Excl   70
+	Test point 136 (3.10,0.77,0.77):
+		Incl   70, Excl   70
+	Node 137 (3.50,0.67,0.67):
+		Incl   70, Excl   72
+	Test point 137 (3.60,0.77,0.77):
+		Incl   72, Excl   72
+	Node 138 (4.00,0.67,0.67):
+		Incl   72, Excl   72
+	Test point 138 (4.10,0.77,0.77):
+		Incl   72, Excl   72
+	Node 139 (4.50,0.67,0.67):
+		Incl   72, Excl   72
+	Test point 139 (4.60,0.77,0.77):
+		Incl   72, Excl   72
+	Node 140 (5.00,0.67,0.67):
+		Incl   72, Excl   72
+	Test point 140 (5.10,0.77,0.77):
+		Incl   72, Excl   72
+	Node 141 (5.50,0.67,0.67):
+		Incl   71, Excl   71
+	Test point 141 (5.60,0.77,0.77):
+		Incl   71, Excl   71
+	Node 142 (6.00,0.67,0.67):
+		Incl   71, Excl   71
+	Test point 142 (6.10,0.77,0.77):
+		Incl   72, Excl   72
+	Node 143 (0.00,1.00,0.67):
+		Incl   48, Excl   48
+	Test point 143 (0.10,1.10,0.77):
+		Incl   72, Excl   72
+	Node 144 (0.50,1.00,0.67):
+		Incl   49, Excl   49
+	Test point 144 (0.60,1.10,0.77):
+		Incl   72, Excl   72
+	Node 145 (1.00,1.00,0.67):
+		Incl   50, Excl   50
+	Test point 145 (1.10,1.10,0.77):
+		Incl   72, Excl   72
+	Node 146 (1.50,1.00,0.67):
+		Incl   51, Excl   51
+	Test point 146 (1.60,1.10,0.77):
+		Incl   72, Excl   72
+	Node 147 (2.00,1.00,0.67):
+		Incl   52, Excl   52
+	Test point 147 (2.10,1.10,0.77):
+		Incl   72, Excl   72
+	Node 148 (2.50,1.00,0.67):
+		Incl   53, Excl   53
+	Test point 148 (2.60,1.10,0.77):
+		Incl   72, Excl   72
+	Node 149 (3.00,1.00,0.67):
+		Incl   53, Excl   70
+	Test point 149 (3.10,1.10,0.77):
+		Incl   72, Excl   72
+	Node 150 (3.50,1.00,0.67):
+		Incl   70, Excl   72
+	Test point 150 (3.60,1.10,0.77):
+		Incl   72, Excl   72
+	Node 151 (4.00,1.00,0.67):
+		Incl   72, Excl   72
+	Test point 151 (4.10,1.10,0.77):
+		Incl   72, Excl   72
+	Node 152 (4.50,1.00,0.67):
+		Incl   72, Excl   72
+	Test point 152 (4.60,1.10,0.77):
+		Incl   72, Excl   72
+	Node 153 (5.00,1.00,0.67):
+		Incl   72, Excl   72
+	Test point 153 (5.10,1.10,0.77):
+		Incl   72, Excl   72
+	Node 154 (5.50,1.00,0.67):
+		Incl   71, Excl   71
+	Test point 154 (5.60,1.10,0.77):
+		Incl   72, Excl   72
+	Node 155 (6.00,1.00,0.67):
+		Incl   71, Excl   71
+	Test point 155 (6.10,1.10,0.77):
+		Incl   72, Excl   72
+	Node 156 (0.00,0.00,1.00):
+		Incl   36, Excl   36
+	Test point 156 (0.10,0.10,1.10):
+		Incl   72, Excl   72
+	Node 157 (0.50,0.00,1.00):
+		Incl   37, Excl   37
+	Test point 157 (0.60,0.10,1.10):
+		Incl   72, Excl   72
+	Node 158 (1.00,0.00,1.00):
+		Incl   38, Excl   38
+	Test point 158 (1.10,0.10,1.10):
+		Incl   72, Excl   72
+	Node 159 (1.50,0.00,1.00):
+		Incl   39, Excl   39
+	Test point 159 (1.60,0.10,1.10):
+		Incl   72, Excl   72
+	Node 160 (2.00,0.00,1.00):
+		Incl   40, Excl   40
+	Test point 160 (2.10,0.10,1.10):
+		Incl   72, Excl   72
+	Node 161 (2.50,0.00,1.00):
+		Incl   41, Excl   41
+	Test point 161 (2.60,0.10,1.10):
+		Incl   72, Excl   72
+	Node 162 (3.00,0.00,1.00):
+		Incl   41, Excl   66
+	Test point 162 (3.10,0.10,1.10):
+		Incl   72, Excl   72
+	Node 163 (3.50,0.00,1.00):
+		Incl   66, Excl   72
+	Test point 163 (3.60,0.10,1.10):
+		Incl   72, Excl   72
+	Node 164 (4.00,0.00,1.00):
+		Incl   72, Excl   72
+	Test point 164 (4.10,0.10,1.10):
+		Incl   72, Excl   72
+	Node 165 (4.50,0.00,1.00):
+		Incl   72, Excl   72
+	Test point 165 (4.60,0.10,1.10):
+		Incl   72, Excl   72
+	Node 166 (5.00,0.00,1.00):
+		Incl   72, Excl   72
+	Test point 166 (5.10,0.10,1.10):
+		Incl   72, Excl   72
+	Node 167 (5.50,0.00,1.00):
+		Incl   67, Excl   67
+	Test point 167 (5.60,0.10,1.10):
+		Incl   72, Excl   72
+	Node 168 (6.00,0.00,1.00):
+		Incl   67, Excl   67
+	Test point 168 (6.10,0.10,1.10):
+		Incl   72, Excl   72
+	Node 169 (0.00,0.33,1.00):
+		Incl   42, Excl   42
+	Test point 169 (0.10,0.43,1.10):
+		Incl   72, Excl   72
+	Node 170 (0.50,0.33,1.00):
+		Incl   43, Excl   43
+	Test point 170 (0.60,0.43,1.10):
+		Incl   72, Excl   72
+	Node 171 (1.00,0.33,1.00):
+		Incl   44, Excl   44
+	Test point 171 (1.10,0.43,1.10):
+		Incl   72, Excl   72
+	Node 172 (1.50,0.33,1.00):
+		Incl   45, Excl   45
+	Test point 172 (1.60,0.43,1.10):
+		Incl   72, Excl   72
+	Node 173 (2.00,0.33,1.00):
+		Incl   46, Excl   46
+	Test point 173 (2.10,0.43,1.10):
+		Incl   72, Excl   72
+	Node 174 (2.50,0.33,1.00):
+		Incl   47, Excl   47
+	Test point 174 (2.60,0.43,1.10):
+		Incl   72, Excl   72
+	Node 175 (3.00,0.33,1.00):
+		Incl   47, Excl   68
+	Test point 175 (3.10,0.43,1.10):
+		Incl   72, Excl   72
+	Node 176 (3.50,0.33,1.00):
+		Incl   68, Excl   72
+	Test point 176 (3.60,0.43,1.10):
+		Incl   72, Excl   72
+	Node 177 (4.00,0.33,1.00):
+		Incl   72, Excl   72
+	Test point 177 (4.10,0.43,1.10):
+		Incl   72, Excl   72
+	Node 178 (4.50,0.33,1.00):
+		Incl   72, Excl   72
+	Test point 178 (4.60,0.43,1.10):
+		Incl   72, Excl   72
+	Node 179 (5.00,0.33,1.00):
+		Incl   72, Excl   72
+	Test point 179 (5.10,0.43,1.10):
+		Incl   72, Excl   72
+	Node 180 (5.50,0.33,1.00):
+		Incl   69, Excl   69
+	Test point 180 (5.60,0.43,1.10):
+		Incl   72, Excl   72
+	Node 181 (6.00,0.33,1.00):
+		Incl   69, Excl   69
+	Test point 181 (6.10,0.43,1.10):
+		Incl   72, Excl   72
+	Node 182 (0.00,0.67,1.00):
+		Incl   48, Excl   48
+	Test point 182 (0.10,0.77,1.10):
+		Incl   72, Excl   72
+	Node 183 (0.50,0.67,1.00):
+		Incl   49, Excl   49
+	Test point 183 (0.60,0.77,1.10):
+		Incl   72, Excl   72
+	Node 184 (1.00,0.67,1.00):
+		Incl   50, Excl   50
+	Test point 184 (1.10,0.77,1.10):
+		Incl   72, Excl   72
+	Node 185 (1.50,0.67,1.00):
+		Incl   51, Excl   51
+	Test point 185 (1.60,0.77,1.10):
+		Incl   72, Excl   72
+	Node 186 (2.00,0.67,1.00):
+		Incl   52, Excl   52
+	Test point 186 (2.10,0.77,1.10):
+		Incl   72, Excl   72
+	Node 187 (2.50,0.67,1.00):
+		Incl   53, Excl   53
+	Test point 187 (2.60,0.77,1.10):
+		Incl   72, Excl   72
+	Node 188 (3.00,0.67,1.00):
+		Incl   53, Excl   70
+	Test point 188 (3.10,0.77,1.10):
+		Incl   72, Excl   72
+	Node 189 (3.50,0.67,1.00):
+		Incl   70, Excl   72
+	Test point 189 (3.60,0.77,1.10):
+		Incl   72, Excl   72
+	Node 190 (4.00,0.67,1.00):
+		Incl   72, Excl   72
+	Test point 190 (4.10,0.77,1.10):
+		Incl   72, Excl   72
+	Node 191 (4.50,0.67,1.00):
+		Incl   72, Excl   72
+	Test point 191 (4.60,0.77,1.10):
+		Incl   72, Excl   72
+	Node 192 (5.00,0.67,1.00):
+		Incl   72, Excl   72
+	Test point 192 (5.10,0.77,1.10):
+		Incl   72, Excl   72
+	Node 193 (5.50,0.67,1.00):
+		Incl   71, Excl   71
+	Test point 193 (5.60,0.77,1.10):
+		Incl   72, Excl   72
+	Node 194 (6.00,0.67,1.00):
+		Incl   71, Excl   71
+	Test point 194 (6.10,0.77,1.10):
+		Incl   72, Excl   72
+	Node 195 (0.00,1.00,1.00):
+		Incl   48, Excl   48
+	Test point 195 (0.10,1.10,1.10):
+		Incl   72, Excl   72
+	Node 196 (0.50,1.00,1.00):
+		Incl   49, Excl   49
+	Test point 196 (0.60,1.10,1.10):
+		Incl   72, Excl   72
+	Node 197 (1.00,1.00,1.00):
+		Incl   50, Excl   50
+	Test point 197 (1.10,1.10,1.10):
+		Incl   72, Excl   72
+	Node 198 (1.50,1.00,1.00):
+		Incl   51, Excl   51
+	Test point 198 (1.60,1.10,1.10):
+		Incl   72, Excl   72
+	Node 199 (2.00,1.00,1.00):
+		Incl   52, Excl   52
+	Test point 199 (2.10,1.10,1.10):
+		Incl   72, Excl   72
+	Node 200 (2.50,1.00,1.00):
+		Incl   53, Excl   53
+	Test point 200 (2.60,1.10,1.10):
+		Incl   72, Excl   72
+	Node 201 (3.00,1.00,1.00):
+		Incl   53, Excl   70
+	Test point 201 (3.10,1.10,1.10):
+		Incl   72, Excl   72
+	Node 202 (3.50,1.00,1.00):
+		Incl   70, Excl   72
+	Test point 202 (3.60,1.10,1.10):
+		Incl   72, Excl   72
+	Node 203 (4.00,1.00,1.00):
+		Incl   72, Excl   72
+	Test point 203 (4.10,1.10,1.10):
+		Incl   72, Excl   72
+	Node 204 (4.50,1.00,1.00):
+		Incl   72, Excl   72
+	Test point 204 (4.60,1.10,1.10):
+		Incl   72, Excl   72
+	Node 205 (5.00,1.00,1.00):
+		Incl   72, Excl   72
+	Test point 205 (5.10,1.10,1.10):
+		Incl   72, Excl   72
+	Node 206 (5.50,1.00,1.00):
+		Incl   71, Excl   71
+	Test point 206 (5.60,1.10,1.10):
+		Incl   72, Excl   72
+	Node 207 (6.00,1.00,1.00):
+		Incl   71, Excl   71
+	Test point 207 (6.10,1.10,1.10):
+		Incl   72, Excl   72
+

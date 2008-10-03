@@ -1,0 +1,78 @@
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##
+## Copyright (C), 2003, Victorian Partnership for Advanced Computing (VPAC) Ltd, 110 Victoria Street, Melbourne, 3053, Australia.
+##
+## Authors:
+##	Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+##	Patrick D. Sunter, Software Engineer, VPAC. (pds@vpac.org)
+##	Luke J. Hodkinson, Computational Engineer, VPAC. (lhodkins@vpac.org)
+##	Siew-Ching Tan, Software Engineer, VPAC. (siew@vpac.org)
+##	Alan H. Lo, Computational Engineer, VPAC. (alan@vpac.org)
+##	Raquibul Hassan, Computational Engineer, VPAC. (raq@vpac.org)
+##
+##  This library is free software; you can redistribute it and/or
+##  modify it under the terms of the GNU Lesser General Public
+##  License as published by the Free Software Foundation; either
+##  version 2.1 of the License, or (at your option) any later version.
+##
+##  This library is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+##  Lesser General Public License for more details.
+##
+##  You should have received a copy of the GNU Lesser General Public
+##  License along with this library; if not, write to the Free Software
+##  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+##
+## $Id: Makefile.def 3614 2006-06-01 08:58:48Z SteveQuenette $
+##
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def_tst = libStGermainBaseAutomation
+
+def_srcs = \
+	testComponentCopy.c \
+	testLiveComponentRegister.c \
+	testVariable.c \
+	testVariable-Char.c \
+	testVariable-Short.c \
+	testVariable-Int.c \
+	testVariable-Float.c \
+	testVariable-Double.c \
+	testVariable_Register.c \
+	testVariableDumpStream.c \
+	testVariableValueCompare.c \
+	testVariableCopy.c \
+	testSetVC.c \
+	testConditionFunction.c \
+	testConditionFunction_Register.c \
+	testHierarchyTable.c \
+	testCallGraph.c \
+	testVariableAllVC.c \
+	testComponentMetadata.c
+	
+def_checks = \
+	testComponentCopy.0of1.sh \
+	testLiveComponentRegister.0of1.sh \
+	testVariable.0of1.sh \
+	testVariable-Char.0of1.sh \
+	testVariable-Short.0of1.sh \
+	testVariable-Int.0of1.sh \
+	testVariable-Float.0of1.sh \
+	testVariable-Double.0of1.sh \
+	testVariable_Register.0of1.sh \
+	testVariableDumpStream.0of1.sh \
+	testVariableValueCompare.0of1.sh \
+	testVariableCopy.0of1.sh \
+	testConditionFunction.0of1.sh \
+	testConditionFunction_Register.0of1.sh \
+	testSetVC.0of1.sh \
+	testSetVC.0of2.sh \
+	testSetVC.1of2.sh \
+	testSetVC.0of3.sh \
+	testSetVC.1of3.sh \
+	testSetVC.2of3.sh \
+	testHierarchyTable.0of1.sh \
+	testCallGraph.0of1.sh \
+	testVariableAllVC.0of1.sh \
+	testComponentMetadata.0of1.sh

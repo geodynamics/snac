@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<!-- A StGermain input file -->
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<!--
+	<param name="journal">off</param>
+-->
+
+	<param name="journal.info.test2">off</param>
+	<param name="journal.debug.test1">on</param>
+	<param name="journal.dump.test1">on</param>
+
+	<param name="journal.info.test1.new1">on</param>
+	<param name="journal.info.test1.new2">off</param>
+	
+	<param name="journal-level.info.test1.new1">3</param>
+	
+	<param name="journal-file.newtype">data/testJournal-out1.txt</param>
+	<param name="journal-file.newtype.other">data/testJournal-out2.txt</param>
+
+	<param name="journal-rank.info.propertiestest1">0</param>
+	<param name="journal-rank.info.propertiestest2">-22</param>
+	<param name="journal-autoflush.info.propertiestest1">yes</param>
+	
+</StGermainData>

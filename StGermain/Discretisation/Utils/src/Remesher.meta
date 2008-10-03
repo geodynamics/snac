@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<param name="Name">Remesher</param>
+<param name="Organisation">VPAC</param>
+<param name="Project">StGermain</param>
+<param name="Location">./StGermain/Discretisation/Utils/src/</param>
+<param name="Project Web"></param>
+<param name="Copyright">Copyright (C) 2004-2005 VPAC.</param>
+<param name="License">https://csd.vpac.org/twiki/bin/view/Stgermain/SoftwareLicense</param>
+<param name="Parent"></param>
+<param name="Description">...</param>
+
+<!--Now the interesting stuff-->
+
+
+<list name="Params">
+</list>
+
+<list name="Dependencies">
+
+</list>
+<!-- Add an exmaple XML if possible -->
+<param name="Example">...</param>
+
+</StGermainData>

@@ -1,0 +1,20 @@
+Primitive Object (ptr): 0x805c294
+unsigned char char item = 'a';
+Primitive Object (ptr): 0x805c2e4
+unsigned short short item = 123;
+Primitive Object (ptr): 0x805c334
+unsigned int int item = 456;
+Primitive Object (ptr): 0x805c384
+unsigned long long item = 789;
+Primitive Object (ptr): 0x805c3d4
+char char item = 'a';
+Primitive Object (ptr): 0x805c424
+short short item = -123;
+Primitive Object (ptr): 0x805c474
+int int item = -456;
+Primitive Object (ptr): 0x805c4c4
+long long item = -789;
+Primitive Object (ptr): 0x805c514
+float float item = 1.200000f;
+Primitive Object (ptr): 0x805c5ac
+double double item = 2.400000;

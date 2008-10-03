@@ -1,0 +1,59 @@
+Stg_Class (ptr): 0x8068300
+	sizeOfSelf: 56
+	_deleteSelf: Yes
+	type: dictionary
+	_delete (func ptr): 0x804ad07
+	_print (func ptr): 0x804ad74
+	_copy (func ptr): (nil)
+Dictionary:
+	size: 10
+	delta: 5
+	count: 6
+	entryPtr[0-6]: {
+		test_double: 45.567
+		test_float: 5.5
+		test_uint: 5
+		test_int: -5
+		test_bool: 1
+		test_string: "String"
+			}
+Dictionary_GetDouble_WithDefault( dictionary, "test_double", 2.8 ) = 45.567
+Dictionary_GetDouble_WithDefault( dictionary, "test_doubleDefault", 2.8 ) = 2.8
+Dictionary_GetDouble_WithDefault( dictionary, "test_float", 2.2 ) = 5.5
+Dictionary_GetDouble_WithDefault( dictionary, "test_floatDefault", 2.2 ) = 2.2
+Dictionary_GetUnsignedInt_WithDefault( dictionary, "test_uint", 8 ) = 5
+Dictionary_GetUnsignedInt_WithDefault( dictionary, "test_uintDefault", 8 ) = 8
+Dictionary_GetInt_WithDefault( dictionary, "test_int", -8 ) = -5
+Dictionary_GetInt_WithDefault( dictionary, "test_intDefault", -8 ) = -8
+Dictionary_GetBool_WithDefault( dictionary, "test_bool", False ) = True
+Dictionary_GetBool_WithDefault( dictionary, "test_boolDefault", False ) = False
+Dictionary_GetString_WithDefault( dictionary, "test_string", "StringDefault" ) = String
+Dictionary_GetString_WithDefault( dictionary, "test_stringDefault", "StringDefault" ) = StringDefault
+Dictionary_GetString_WithPrintfDefault( dictionary, "test_stringDefault", "StringDefault%d", 2 ) = StringDefault
+Dictionary_GetString_WithPrintfDefault( dictionary, "test_stringDefault2", "StringDefault%d", 2 ) = StringDefault2
+Stg_Class (ptr): 0x8068300
+	sizeOfSelf: 56
+	_deleteSelf: Yes
+	type: dictionary
+	_delete (func ptr): 0x804ad07
+	_print (func ptr): 0x804ad74
+	_copy (func ptr): (nil)
+Dictionary:
+	size: 15
+	delta: 5
+	count: 13
+	entryPtr[0-13]: {
+		test_double: 45.567
+		test_float: 5.5
+		test_uint: 5
+		test_int: -5
+		test_bool: 1
+		test_string: "String"
+		test_doubleDefault: 2.8
+		test_floatDefault: 2.2
+		test_uintDefault: 8
+		test_intDefault: -8
+		test_boolDefault: false
+		test_stringDefault: "StringDefault"
+		test_stringDefault2: "StringDefault2"
+			}

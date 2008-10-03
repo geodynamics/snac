@@ -1,0 +1,14 @@
+make[1]: Entering directory `/home/echoi/opt/SNAC/StGermain/VMake/Config/OpenGl'
+/usr/bin/cc -pipe  -DVERSION=\"\" -Wall -g  -DCURR_MODULE_NAME=\"conftest\"  -fPIC -c -o /home/echoi/opt/SNAC/StGermain/VMake/Config/OpenGl/bin-conftest/conftest.o -I/home/echoi/opt/SNAC/StGermain/VMake/Config/OpenGl    -I/usr/include/GL/   -I/usr/include/GL -DHAVE_GL -DHAVE_GL -DHAVE_GL    conftest.c
+conftest.c:1:20: 오류: osmesa.h: No such file or directory
+conftest.c: In function ‘main’:
+conftest.c:3: warning: implicit declaration of function ‘OSMesaCreateContext’
+conftest.c:3: error: ‘OSMESA_RGBA’ undeclared (first use in this function)
+conftest.c:3: error: (Each undeclared identifier is reported only once
+conftest.c:3: error: for each function it appears in.)
+conftest.c:3: warning: initialization makes pointer from integer without a cast
+conftest.c:4: warning: implicit declaration of function ‘OSMesaMakeCurrent’
+conftest.c:4: error: ‘GL_UNSIGNED_BYTE’ undeclared (first use in this function)
+conftest.c:5: warning: implicit declaration of function ‘OSMesaDestroyContext’
+make[1]: *** [/home/echoi/opt/SNAC/StGermain/VMake/Config/OpenGl/bin-conftest/conftest.o] 오류 1
+make[1]: Leaving directory `/home/echoi/opt/SNAC/StGermain/VMake/Config/OpenGl'

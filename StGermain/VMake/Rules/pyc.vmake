@@ -1,0 +1,72 @@
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+## Copyright (C), 2003, Victorian Partnership for Advanced Computing (VPAC) Ltd, 110 Victoria Street, Melbourne, 3053, Australia.
+##
+## Authors:
+##      Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+##      Patrick D. Sunter, Software Engineer, VPAC. (pds@vpac.org)
+##      Luke J. Hodkinson, Computational Engineer, VPAC. (lhodkins@vpac.org)
+##      Siew-Ching Tan, Software Engineer, VPAC. (siew@vpac.org)
+##      Alan H. Lo, Computational Engineer, VPAC. (alan@vpac.org)
+##      Raquibul Hassan, Computational Engineer, VPAC. (raq@vpac.org)
+##
+##  This library is free software; you can redistribute it and/or
+##  modify it under the terms of the GNU Lesser General Public
+##  License as published by the Free Software Foundation; either
+##  version 2.1 of the License, or (at your option) any later version.
+##
+##  This library is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+##  Lesser General Public License for more details.
+##
+##  You should have received a copy of the GNU Lesser General Public
+##  License along with this library; if not, write to the Free Software
+##  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+##
+## $Id: pyc.vmake 2586 2005-01-28 00:08:55Z AlanLo $
+##
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# "pyc" specifies python source files to compile into binaries. If specified, this triggers the event.
+ifdef pyc
+
+	ifndef PYTHON_PACKAGE
+		PYTHON_PACKAGE=${pyc}
+	endif
+	PYC = ${addprefix ${PYC_DIR}/${PYTHON_PACKAGE}/, ${addsuffix .pyc, ${basename ${pyc}}}}
+	PYC_TMP = ${addsuffix c, ${pyc}}
+
+	MAKE_DIRECTORIES += ${PYC_DIR}
+	COMPILE_DIRECTORY := ${PYC_DIR}/${PYTHON_PACKAGE}
+
+	RM_LIST_TEMPS += ${PYC_TMP}
+	RM_LIST += ${PYC}
+
+
+### Rules ###
+
+${PYC_DIR}/${PYTHON_PACKAGE}/%.pyc: ${pyc}
+	@${PYTHON_COMPILEALL} -l ${CURRENT_DIR}
+	@for i in ${PYC_TMP}; do echo ${MV_F} $$i ${PYC_DIR}/${PYTHON_PACKAGE}; ${MV_F} $$i ${PYC_DIR}/${PYTHON_PACKAGE}; done
+
+#${TMP_DIR}/pyc-${PYTHON_PACKAGE}/%.pyc.: %.py ${TMP_DIR}/pyc-${PYTHON_PACKAGE}
+#       @${PYTHON_COMPILEALL} -l ${CURRENT_DIR}
+#       @for i in `ls *.pyc`; do ${MV_F} $$i ${TMP_DIR}/pyc-${PYTHON_PACKAGE}/$$i.; done
+
+# NOTE: to use the following i need to invert the regular expression in the compileall line... dont know how
+#
+#${PYC_DIR}/${PYTHON_PACKAGE}/%.pyc: ${TMP_DIR}/pyc-${PYTHON_PACKAGE}/%.pyc.
+#       @if test ! -d ${PYC_DIR}; then ${MKDIR} ${PYC_DIR}; fi
+#       @if test ! -d ${PYC_DIR}/${PYTHON_PACKAGE}; then ${MKDIR} ${PYC_DIR}/${PYTHON_PACKAGE}; fi
+#       @${CP_F} $< $@
+#
+#%.pyc: %.py
+#       @${PYTHON_COMPILEALL} -l -x '($@)' ${CURRENT_DIR}
+#
+#${TMP_DIR}/pyc-${PYTHON_PACKAGE}/%.pyc.: %.pyc ${TMP_DIR}/pyc-${PYTHON_PACKAGE}
+#       @${MV_F} $< $@
+#
+#${TMP_DIR}/pyc-${PYTHON_PACKAGE}: ${TMP_DIR}
+#       @${MKDIR} $@
+
+endif

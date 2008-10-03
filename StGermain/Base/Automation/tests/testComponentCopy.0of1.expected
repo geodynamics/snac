@@ -1,0 +1,74 @@
+
+Creating Stg_Components from the component-list
+
+	Instantiating Stg_ComponentA as a
+	Instantiating Stg_ComponentB as b
+	Instantiating Stg_ComponentC as c
+
+Constructing Stg_Components from the live-component register
+
+	Constructing a..
+		b has not been constructed yet. Constructing now.
+			Constructing b..
+		c has not been constructed yet. Constructing now.
+			Constructing c..
+Passed test Stg_Components creation: Can we create the components from dictionary
+a Stg_ComponentA 1,
+b Stg_ComponentB 3,
+c Stg_ComponentC 2,
+b Stg_ComponentB 3,
+Passed test Stg_Components copy: Can we copy the components and subcomponents correctly
+a_dup Stg_ComponentA 1,
+b_dup Stg_ComponentB 3,
+c_dup Stg_ComponentC 2,
+b_dup Stg_ComponentB 3,
+Passed test Instance counter: Are the instance counters correct
+LiveComponentRegister (ptr): 0x532cd4
+Stg_Class (ptr): 0x532cd4
+	sizeOfSelf: 56
+	_deleteSelf: Yes
+	type: LiveComponentRegister
+	_delete (func ptr): 0x2a9556b3f1
+	_print (func ptr): 0x2a9556b46e
+	_copy (func ptr): (nil)
+componentList (ptr): 0x528324
+Stg_ObjectList (ptr):0x528324
+	Stg_Class (ptr): 0x528324
+		sizeOfSelf: 176
+		_deleteSelf: Yes
+		type: Stg_ObjectList
+		_delete (func ptr): 0x2a958e0928
+		_print (func ptr): 0x2a958e0957
+		_copy (func ptr): 0x2a958e0bd3
+	_append(func ptr): 0x2a958e1859
+	_prepend(func ptr): 0x2a958e1929
+	_replaceAll(func ptr): 0x2a958e19e1
+	_replace(func ptr): 0x2a958e1aaa
+	_insertBefore(func ptr): 0x2a958e1c67
+	_insertAfter(func ptr): 0x2a958e1e1a
+	_remove(func ptr): 0x2a958e1fd1
+	_getIndex(func ptr): 0x2a958e2065
+	_get(func ptr): 0x2a958e2124
+	_allocMoreMemory(func ptr): 0x2a958e2353
+	_insertAtIndex(func ptr): 0x2a958e23e7
+	_removeByIndex(func ptr): 0x2a958e248a
+	_deleteAllObjects(func ptr): 0x2a958e22c5
+	_size: 8
+	_delta: 8
+	_noJournalingInCopy: 0
+	count: 6
+	data[0-6]:
+	a Stg_ComponentA 1,
+	b Stg_ComponentB 3,
+	c Stg_ComponentC 2,
+	b Stg_ComponentB 3,
+	b Stg_ComponentB 3,
+	c Stg_ComponentC 2,
+	b Stg_ComponentB 3,
+	a_dup Stg_ComponentA 1,
+	b_dup Stg_ComponentB 3,
+	c_dup Stg_ComponentC 2,
+	b_dup Stg_ComponentB 3,
+	b_dup Stg_ComponentB 3,
+	c_dup Stg_ComponentC 2,
+	b_dup Stg_ComponentB 3,

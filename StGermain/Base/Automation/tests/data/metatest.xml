@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+	<struct name="components">
+		<struct name="vc">
+			<param name="Type">CompositeVC</param>
+		</struct>
+    	</struct>
+</StGermainData>

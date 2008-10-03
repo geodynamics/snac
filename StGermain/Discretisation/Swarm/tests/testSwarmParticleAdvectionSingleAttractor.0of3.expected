@@ -1,0 +1,738 @@
+StGermain Framework revision 3556. Copyright (C) 2003-2005 VPAC.
+Watching rank: 0
+Run until 5 timeSteps have been run
+TimeStep = 1, Start time = 0 + 2 prev timeStep dt
+Calculated attractor point is at (0.333333,0.333333,0.333333):
+Timestep 1 - Implosive mode
+	Updating Particles positions in local cell 0:
+		Updating particleInCell 0:
+		Changing its coords from (0.020218,0.055930,0.161165) to (0.124590,0.148398,0.218555):
+	Updating Particles positions in local cell 1:
+		Updating particleInCell 0:
+		Changing its coords from (0.142325,0.060967,0.087923) to (0.205995,0.151756,0.169726):
+	Updating Particles positions in local cell 2:
+		Updating particleInCell 0:
+		Changing its coords from (0.226628,0.013305,0.428316) to (0.262196,0.119981,0.396655):
+	Updating Particles positions in local cell 3:
+		Updating particleInCell 0:
+		Changing its coords from (0.308700,0.070846,0.484961) to (0.316911,0.158342,0.434419):
+	Updating Particles positions in local cell 4:
+		Updating particleInCell 0:
+		Changing its coords from (0.062180,0.137637,0.100663) to (0.152564,0.202869,0.178219):
+	Updating Particles positions in local cell 5:
+		Updating particleInCell 0:
+		Changing its coords from (0.152903,0.090950,0.153544) to (0.213046,0.171744,0.213474):
+	Updating Particles positions in local cell 6:
+		Updating particleInCell 0:
+		Changing its coords from (0.217978,0.140818,0.725730) to (0.256430,0.204990,0.594931):
+	Updating Particles positions in local cell 7:
+		Updating particleInCell 0:
+		Changing its coords from (0.278506,0.103240,0.917154) to (0.296782,0.179938,0.722547):
+	Updating Particles positions in local cell 8:
+		Updating particleInCell 0:
+		Changing its coords from (0.050694,0.181355,0.469106) to (0.144907,0.232015,0.423849):
+	Updating Particles positions in local cell 9:
+		Updating particleInCell 0:
+		Changing its coords from (0.105755,0.174408,0.348450) to (0.181614,0.227383,0.343411):
+	Updating Particles positions in local cell 10:
+		Updating particleInCell 0:
+		Changing its coords from (0.200340,0.189833,0.365872) to (0.244671,0.237667,0.355026):
+	Updating Particles positions in local cell 11:
+		Updating particleInCell 0:
+		Changing its coords from (0.267839,0.239764,0.498144) to (0.289671,0.270954,0.443207):
+	Updating Particles positions in local cell 12:
+		Updating particleInCell 0:
+		Changing its coords from (0.025617,0.298560,0.684585) to (0.128189,0.310151,0.567501):
+	Updating Particles positions in local cell 13:
+		Updating particleInCell 0:
+		Changing its coords from (0.151040,0.284883,0.412512) to (0.211805,0.301033,0.386119):
+	Updating Particles positions in local cell 14:
+		Updating particleInCell 0:
+		Changing its coords from (0.173597,0.311481,0.708363) to (0.226842,0.318765,0.583353):
+	Updating Particles positions in local cell 15:
+		Updating particleInCell 0:
+		Changing its coords from (0.288268,0.261021,0.813771) to (0.303290,0.285125,0.653625):
+	Updating Particles positions in local cell 16:
+		Updating particleInCell 0:
+		Changing its coords from (0.003685,0.350727,0.063715) to (0.113568,0.344929,0.153588):
+	Updating Particles positions in local cell 17:
+		Updating particleInCell 0:
+		Changing its coords from (0.154783,0.357236,0.789944) to (0.214300,0.349268,0.637741):
+	Updating Particles positions in local cell 18:
+		Updating particleInCell 0:
+		Changing its coords from (0.216052,0.345745,0.211121) to (0.255146,0.341608,0.251859):
+	Updating Particles positions in local cell 19:
+		Updating particleInCell 0:
+		Changing its coords from (0.276398,0.336098,0.671870) to (0.295376,0.335177,0.559025):
+	Updating Particles positions in local cell 20:
+		Updating particleInCell 0:
+		Changing its coords from (0.010509,0.462240,0.392572) to (0.118117,0.419271,0.372826):
+	Updating Particles positions in local cell 21:
+		Updating particleInCell 0:
+		Changing its coords from (0.162580,0.478277,0.744761) to (0.219498,0.429962,0.607618):
+	Updating Particles positions in local cell 22:
+		Updating particleInCell 0:
+		Changing its coords from (0.182545,0.450390,0.516097) to (0.232808,0.411371,0.455176):
+	Updating Particles positions in local cell 23:
+		Updating particleInCell 0:
+		Changing its coords from (0.254132,0.444893,0.881840) to (0.280532,0.407707,0.699005):
+	Updating Particles positions in local cell 24:
+		Updating particleInCell 0:
+		Changing its coords from (0.007569,0.553570,0.185594) to (0.116157,0.480158,0.234840):
+	Updating Particles positions in local cell 25:
+		Updating particleInCell 0:
+		Changing its coords from (0.106618,0.510247,0.669197) to (0.182190,0.451276,0.557242):
+	Updating Particles positions in local cell 26:
+		Updating particleInCell 0:
+		Changing its coords from (0.182432,0.557329,0.379149) to (0.232733,0.482664,0.363877):
+	Updating Particles positions in local cell 27:
+		Updating particleInCell 0:
+		Changing its coords from (0.279420,0.542579,0.558967) to (0.297391,0.472831,0.483756):
+	Updating Particles positions in local cell 28:
+		Updating particleInCell 0:
+		Changing its coords from (0.047096,0.621442,0.925924) to (0.142508,0.525406,0.728394):
+	Updating Particles positions in local cell 29:
+		Updating particleInCell 0:
+		Changing its coords from (0.083674,0.650402,0.757598) to (0.166894,0.544713,0.616176):
+	Updating Particles positions in local cell 30:
+		Updating particleInCell 0:
+		Changing its coords from (0.245100,0.651245,0.751425) to (0.274511,0.545275,0.612061):
+	Updating Particles positions in local cell 31:
+		Updating particleInCell 0:
+		Changing its coords from (0.266603,0.629707,0.739388) to (0.288846,0.530915,0.604036):
+	Updating Particles positions in local cell 32:
+		Updating particleInCell 0:
+		Changing its coords from (0.074544,0.700583,0.382567) to (0.160807,0.578166,0.366156):
+	Updating Particles positions in local cell 33:
+		Updating particleInCell 0:
+		Changing its coords from (0.150582,0.740369,0.632784) to (0.211499,0.604691,0.532967):
+	Updating Particles positions in local cell 34:
+		Updating particleInCell 0:
+		Changing its coords from (0.183867,0.675532,0.077820) to (0.233689,0.561466,0.162991):
+	Updating Particles positions in local cell 35:
+		Updating particleInCell 0:
+		Changing its coords from (0.326578,0.714135,0.582185) to (0.328830,0.587201,0.499235):
+	Updating Particles positions in local cell 36:
+		Updating particleInCell 0:
+		Changing its coords from (0.065683,0.764829,0.736755) to (0.154900,0.620997,0.602281):
+	Updating Particles positions in local cell 37:
+		Updating particleInCell 0:
+		Changing its coords from (0.136213,0.825754,0.451488) to (0.201920,0.661614,0.412103):
+	Updating Particles positions in local cell 38:
+		Updating particleInCell 0:
+		Changing its coords from (0.179352,0.779855,0.321813) to (0.230679,0.631015,0.325653):
+	Updating Particles positions in local cell 39:
+		Updating particleInCell 0:
+		Changing its coords from (0.308758,0.796891,0.230269) to (0.316950,0.642372,0.264624):
+	Updating Particles positions in local cell 40:
+		Updating particleInCell 0:
+		Changing its coords from (0.011290,0.837327,0.377044) to (0.118638,0.669329,0.362474):
+	Updating Particles positions in local cell 41:
+		Updating particleInCell 0:
+		Changing its coords from (0.165515,0.888729,0.466709) to (0.221454,0.703597,0.422250):
+	Updating Particles positions in local cell 42:
+		Updating particleInCell 0:
+		Changing its coords from (0.247716,0.867379,0.376295) to (0.276255,0.689363,0.361975):
+	Updating Particles positions in local cell 43:
+		Updating particleInCell 0:
+		Changing its coords from (0.282856,0.883054,0.774592) to (0.299682,0.699813,0.627506):
+	Updating Particles positions in local cell 44:
+		Updating particleInCell 0:
+		Changing its coords from (0.047066,0.955908,0.408698) to (0.142488,0.748383,0.383576):
+	Updating Particles positions in local cell 45:
+		Updating particleInCell 0:
+		Changing its coords from (0.165161,0.950135,0.032166) to (0.221219,0.744534,0.132555):
+	Updating Particles positions in local cell 46:
+		Updating particleInCell 0:
+		Changing its coords from (0.218472,0.941159,0.771763) to (0.256759,0.738551,0.625620):
+	Updating Particles positions in local cell 47:
+		Updating particleInCell 0:
+		Changing its coords from (0.251652,0.924249,0.233312) to (0.278879,0.727277,0.266652):
+TimeStep = 2, Start time = 2 + 2 prev timeStep dt
+Calculated attractor point is at (0.333333,0.333333,0.333333):
+Timestep 2 - Implosive mode
+	Updating Particles positions in local cell 0:
+	Updating Particles positions in local cell 1:
+	Updating Particles positions in local cell 2:
+	Updating Particles positions in local cell 3:
+	Updating Particles positions in local cell 4:
+	Updating Particles positions in local cell 5:
+		Updating particleInCell 0:
+		Changing its coords from (0.124590,0.148398,0.218555) to (0.194171,0.210043,0.256814):
+	Updating Particles positions in local cell 6:
+		Updating particleInCell 0:
+		Changing its coords from (0.205995,0.151756,0.169726) to (0.248441,0.212282,0.224262):
+	Updating Particles positions in local cell 7:
+		Updating particleInCell 0:
+		Changing its coords from (0.316911,0.158342,0.434419) to (0.322385,0.216672,0.400724):
+		Updating particleInCell 1:
+		Changing its coords from (0.262196,0.119981,0.396655) to (0.285909,0.191099,0.375548):
+	Updating Particles positions in local cell 8:
+	Updating Particles positions in local cell 9:
+		Updating particleInCell 0:
+		Changing its coords from (0.144907,0.232015,0.423849) to (0.207716,0.265788,0.393677):
+		Updating particleInCell 1:
+		Changing its coords from (0.152564,0.202869,0.178219) to (0.212821,0.246357,0.229924):
+	Updating Particles positions in local cell 10:
+		Updating particleInCell 0:
+		Changing its coords from (0.244671,0.237667,0.355026) to (0.274225,0.269556,0.347795):
+		Updating particleInCell 1:
+		Changing its coords from (0.213046,0.171744,0.213474) to (0.253142,0.225607,0.253427):
+		Updating particleInCell 2:
+		Changing its coords from (0.181614,0.227383,0.343411) to (0.232187,0.262700,0.340052):
+	Updating Particles positions in local cell 11:
+		Updating particleInCell 0:
+		Changing its coords from (0.296782,0.179938,0.722547) to (0.308966,0.231070,0.592809):
+		Updating particleInCell 1:
+		Changing its coords from (0.256430,0.204990,0.594931) to (0.282064,0.247771,0.507732):
+	Updating Particles positions in local cell 12:
+	Updating Particles positions in local cell 13:
+		Updating particleInCell 0:
+		Changing its coords from (0.128189,0.310151,0.567501) to (0.196571,0.317878,0.489445):
+	Updating Particles positions in local cell 14:
+		Updating particleInCell 0:
+		Changing its coords from (0.226842,0.318765,0.583353) to (0.262339,0.323621,0.500013):
+		Updating particleInCell 1:
+		Changing its coords from (0.211805,0.301033,0.386119) to (0.252314,0.311800,0.368524):
+	Updating Particles positions in local cell 15:
+		Updating particleInCell 0:
+		Changing its coords from (0.303290,0.285125,0.653625) to (0.313304,0.301195,0.546861):
+		Updating particleInCell 1:
+		Changing its coords from (0.289671,0.270954,0.443207) to (0.304225,0.291747,0.406583):
+	Updating Particles positions in local cell 16:
+	Updating Particles positions in local cell 17:
+		Updating particleInCell 0:
+		Changing its coords from (0.113568,0.344929,0.153588) to (0.186823,0.341064,0.213503):
+	Updating Particles positions in local cell 18:
+		Updating particleInCell 0:
+		Changing its coords from (0.214300,0.349268,0.637741) to (0.253978,0.343957,0.536272):
+		Updating particleInCell 1:
+		Changing its coords from (0.232808,0.411371,0.455176) to (0.266316,0.385359,0.414562):
+	Updating Particles positions in local cell 19:
+		Updating particleInCell 0:
+		Changing its coords from (0.295376,0.335177,0.559025) to (0.308029,0.334562,0.483794):
+		Updating particleInCell 1:
+		Changing its coords from (0.255146,0.341608,0.251859) to (0.281208,0.338850,0.279017):
+		Updating particleInCell 2:
+		Changing its coords from (0.280532,0.407707,0.699005) to (0.298133,0.382916,0.577114):
+	Updating Particles positions in local cell 20:
+	Updating Particles positions in local cell 21:
+		Updating particleInCell 0:
+		Changing its coords from (0.118117,0.419271,0.372826) to (0.189856,0.390625,0.359661):
+		Updating particleInCell 1:
+		Changing its coords from (0.116157,0.480158,0.234840) to (0.188549,0.431216,0.267671):
+	Updating Particles positions in local cell 22:
+		Updating particleInCell 0:
+		Changing its coords from (0.219498,0.429962,0.607618) to (0.257443,0.397753,0.516190):
+		Updating particleInCell 1:
+		Changing its coords from (0.182190,0.451276,0.557242) to (0.232571,0.411962,0.482606):
+		Updating particleInCell 2:
+		Changing its coords from (0.232733,0.482664,0.363877) to (0.266266,0.432887,0.353696):
+	Updating Particles positions in local cell 23:
+		Updating particleInCell 0:
+		Changing its coords from (0.297391,0.472831,0.483756) to (0.309372,0.426332,0.433615):
+	Updating Particles positions in local cell 24:
+	Updating Particles positions in local cell 25:
+		Updating particleInCell 0:
+		Changing its coords from (0.142508,0.525406,0.728394) to (0.206117,0.461382,0.596707):
+		Updating particleInCell 1:
+		Changing its coords from (0.160807,0.578166,0.366156) to (0.218316,0.496555,0.355215):
+	Updating Particles positions in local cell 26:
+		Updating particleInCell 0:
+		Changing its coords from (0.166894,0.544713,0.616176) to (0.222374,0.474253,0.521895):
+		Updating particleInCell 1:
+		Changing its coords from (0.233689,0.561466,0.162991) to (0.266904,0.485422,0.219772):
+	Updating Particles positions in local cell 27:
+		Updating particleInCell 0:
+		Changing its coords from (0.274511,0.545275,0.612061) to (0.294119,0.474628,0.519152):
+		Updating particleInCell 1:
+		Changing its coords from (0.288846,0.530915,0.604036) to (0.303675,0.465055,0.513802):
+	Updating Particles positions in local cell 28:
+	Updating Particles positions in local cell 29:
+		Updating particleInCell 0:
+		Changing its coords from (0.154900,0.620997,0.602281) to (0.214378,0.525109,0.512632):
+	Updating Particles positions in local cell 30:
+		Updating particleInCell 0:
+		Changing its coords from (0.211499,0.604691,0.532967) to (0.252110,0.514238,0.466423):
+		Updating particleInCell 1:
+		Changing its coords from (0.201920,0.661614,0.412103) to (0.245724,0.552187,0.385846):
+		Updating particleInCell 2:
+		Changing its coords from (0.230679,0.631015,0.325653) to (0.264897,0.531788,0.328213):
+	Updating Particles positions in local cell 31:
+		Updating particleInCell 0:
+		Changing its coords from (0.328830,0.587201,0.499235) to (0.330331,0.502578,0.443934):
+		Updating particleInCell 1:
+		Changing its coords from (0.316950,0.642372,0.264624) to (0.322411,0.539359,0.287527):
+	Updating Particles positions in local cell 32:
+	Updating Particles positions in local cell 33:
+		Updating particleInCell 0:
+		Changing its coords from (0.118638,0.669329,0.362474) to (0.190203,0.557330,0.352760):
+		Updating particleInCell 1:
+		Changing its coords from (0.142488,0.748383,0.383576) to (0.206103,0.610033,0.366829):
+	Updating Particles positions in local cell 34:
+		Updating particleInCell 0:
+		Changing its coords from (0.221454,0.703597,0.422250) to (0.258747,0.580176,0.392611):
+		Updating particleInCell 1:
+		Changing its coords from (0.221219,0.744534,0.132555) to (0.258590,0.607467,0.199481):
+	Updating Particles positions in local cell 35:
+		Updating particleInCell 0:
+		Changing its coords from (0.276255,0.689363,0.361975) to (0.295281,0.570687,0.352428):
+		Updating particleInCell 1:
+		Changing its coords from (0.299682,0.699813,0.627506) to (0.310899,0.577653,0.529448):
+		Updating particleInCell 2:
+		Changing its coords from (0.256759,0.738551,0.625620) to (0.282284,0.603478,0.528191):
+		Updating particleInCell 3:
+		Changing its coords from (0.278879,0.727277,0.266652) to (0.297030,0.595963,0.288879):
+	Updating Particles positions in local cell 36:
+	Updating Particles positions in local cell 37:
+	Updating Particles positions in local cell 38:
+	Updating Particles positions in local cell 39:
+	Updating Particles positions in local cell 40:
+	Updating Particles positions in local cell 41:
+	Updating Particles positions in local cell 42:
+	Updating Particles positions in local cell 43:
+	Updating Particles positions in local cell 44:
+	Updating Particles positions in local cell 45:
+	Updating Particles positions in local cell 46:
+	Updating Particles positions in local cell 47:
+TimeStep = 3, Start time = 4 + 2 prev timeStep dt
+Calculated attractor point is at (0.333333,0.333333,0.333333):
+Timestep 3 - Implosive mode
+	Updating Particles positions in local cell 0:
+	Updating Particles positions in local cell 1:
+	Updating Particles positions in local cell 2:
+	Updating Particles positions in local cell 3:
+	Updating Particles positions in local cell 4:
+	Updating Particles positions in local cell 5:
+	Updating Particles positions in local cell 6:
+	Updating Particles positions in local cell 7:
+	Updating Particles positions in local cell 8:
+	Updating Particles positions in local cell 9:
+	Updating Particles positions in local cell 10:
+		Updating particleInCell 0:
+		Changing its coords from (0.194171,0.210043,0.256814) to (0.240558,0.251140,0.282321):
+		Updating particleInCell 1:
+		Changing its coords from (0.212821,0.246357,0.229924) to (0.252992,0.275349,0.264394):
+		Updating particleInCell 2:
+		Changing its coords from (0.248441,0.212282,0.224262) to (0.276738,0.252632,0.260619):
+	Updating Particles positions in local cell 11:
+		Updating particleInCell 0:
+		Changing its coords from (0.308966,0.231070,0.592809) to (0.317088,0.265158,0.506317):
+		Updating particleInCell 1:
+		Changing its coords from (0.282064,0.247771,0.507732) to (0.299154,0.276292,0.449599):
+		Updating particleInCell 2:
+		Changing its coords from (0.285909,0.191099,0.375548) to (0.301717,0.238510,0.361476):
+		Updating particleInCell 3:
+		Changing its coords from (0.322385,0.216672,0.400724) to (0.326035,0.255559,0.378260):
+		Updating particleInCell 4:
+		Changing its coords from (0.253142,0.225607,0.253427) to (0.279872,0.261516,0.280062):
+	Updating Particles positions in local cell 12:
+	Updating Particles positions in local cell 13:
+	Updating Particles positions in local cell 14:
+		Updating particleInCell 0:
+		Changing its coords from (0.232187,0.262700,0.340052) to (0.265903,0.286244,0.337812):
+		Updating particleInCell 1:
+		Changing its coords from (0.196571,0.317878,0.489445) to (0.242158,0.323030,0.437408):
+		Updating particleInCell 2:
+		Changing its coords from (0.207716,0.265788,0.393677) to (0.249588,0.288303,0.373562):
+	Updating Particles positions in local cell 15:
+		Updating particleInCell 0:
+		Changing its coords from (0.313304,0.301195,0.546861) to (0.319981,0.311908,0.475685):
+		Updating particleInCell 1:
+		Changing its coords from (0.304225,0.291747,0.406583) to (0.313928,0.305609,0.382166):
+		Updating particleInCell 2:
+		Changing its coords from (0.274225,0.269556,0.347795) to (0.293928,0.290815,0.342974):
+		Updating particleInCell 3:
+		Changing its coords from (0.252314,0.311800,0.368524) to (0.279321,0.318978,0.356794):
+		Updating particleInCell 4:
+		Changing its coords from (0.262339,0.323621,0.500013) to (0.286004,0.326859,0.444453):
+	Updating Particles positions in local cell 16:
+	Updating Particles positions in local cell 17:
+	Updating Particles positions in local cell 18:
+		Updating particleInCell 0:
+		Changing its coords from (0.186823,0.341064,0.213503) to (0.235660,0.338487,0.253446):
+		Updating particleInCell 1:
+		Changing its coords from (0.189856,0.390625,0.359661) to (0.237682,0.371528,0.350885):
+		Updating particleInCell 2:
+		Changing its coords from (0.232571,0.411962,0.482606) to (0.266158,0.385752,0.432848):
+	Updating Particles positions in local cell 19:
+		Updating particleInCell 0:
+		Changing its coords from (0.308029,0.334562,0.483794) to (0.316464,0.334153,0.433641):
+		Updating particleInCell 1:
+		Changing its coords from (0.281208,0.338850,0.279017) to (0.298583,0.337011,0.297122):
+		Updating particleInCell 2:
+		Changing its coords from (0.298133,0.382916,0.577114) to (0.309866,0.366388,0.495854):
+		Updating particleInCell 3:
+		Changing its coords from (0.253978,0.343957,0.536272) to (0.280430,0.340416,0.468625):
+		Updating particleInCell 4:
+		Changing its coords from (0.257443,0.397753,0.516190) to (0.282740,0.376279,0.455238):
+		Updating particleInCell 5:
+		Changing its coords from (0.266316,0.385359,0.414562) to (0.288655,0.368017,0.387486):
+	Updating Particles positions in local cell 20:
+	Updating Particles positions in local cell 21:
+	Updating Particles positions in local cell 22:
+		Updating particleInCell 0:
+		Changing its coords from (0.188549,0.431216,0.267671) to (0.236811,0.398589,0.289559):
+		Updating particleInCell 1:
+		Changing its coords from (0.206117,0.461382,0.596707) to (0.248522,0.418699,0.508916):
+		Updating particleInCell 2:
+		Changing its coords from (0.222374,0.474253,0.521895) to (0.259360,0.427280,0.459041):
+		Updating particleInCell 3:
+		Changing its coords from (0.218316,0.496555,0.355215) to (0.256655,0.442148,0.347921):
+	Updating Particles positions in local cell 23:
+		Updating particleInCell 0:
+		Changing its coords from (0.309372,0.426332,0.433615) to (0.317359,0.395332,0.400188):
+		Updating particleInCell 1:
+		Changing its coords from (0.266266,0.432887,0.353696) to (0.288622,0.399702,0.346908):
+		Updating particleInCell 2:
+		Changing its coords from (0.294119,0.474628,0.519152) to (0.307190,0.427529,0.457212):
+		Updating particleInCell 3:
+		Changing its coords from (0.303675,0.465055,0.513802) to (0.313561,0.421148,0.453646):
+		Updating particleInCell 4:
+		Changing its coords from (0.266904,0.485422,0.219772) to (0.289047,0.434726,0.257626):
+	Updating Particles positions in local cell 24:
+	Updating Particles positions in local cell 25:
+	Updating Particles positions in local cell 26:
+		Updating particleInCell 0:
+		Changing its coords from (0.214378,0.525109,0.512632) to (0.254029,0.461184,0.452866):
+		Updating particleInCell 1:
+		Changing its coords from (0.245724,0.552187,0.385846) to (0.274927,0.479236,0.368342):
+		Updating particleInCell 2:
+		Changing its coords from (0.190203,0.557330,0.352760) to (0.237913,0.482665,0.346285):
+	Updating Particles positions in local cell 27:
+		Updating particleInCell 0:
+		Changing its coords from (0.252110,0.514238,0.466423) to (0.279185,0.453937,0.422060):
+		Updating particleInCell 1:
+		Changing its coords from (0.330331,0.502578,0.443934) to (0.331332,0.446163,0.407067):
+		Updating particleInCell 2:
+		Changing its coords from (0.264897,0.531788,0.328213) to (0.287709,0.465636,0.329920):
+		Updating particleInCell 3:
+		Changing its coords from (0.322411,0.539359,0.287527) to (0.326052,0.470684,0.302796):
+		Updating particleInCell 4:
+		Changing its coords from (0.258747,0.580176,0.392611) to (0.283609,0.497895,0.372852):
+		Updating particleInCell 5:
+		Changing its coords from (0.295281,0.570687,0.352428) to (0.307965,0.491569,0.346063):
+		Updating particleInCell 6:
+		Changing its coords from (0.310899,0.577653,0.529448) to (0.318377,0.496213,0.464077):
+	Updating Particles positions in local cell 28:
+	Updating Particles positions in local cell 29:
+	Updating Particles positions in local cell 30:
+		Updating particleInCell 0:
+		Changing its coords from (0.206103,0.610033,0.366829) to (0.248513,0.517800,0.355664):
+	Updating Particles positions in local cell 31:
+		Updating particleInCell 0:
+		Changing its coords from (0.258590,0.607467,0.199481) to (0.283505,0.516089,0.244099):
+		Updating particleInCell 1:
+		Changing its coords from (0.282284,0.603478,0.528191) to (0.299300,0.513430,0.463238):
+		Updating particleInCell 2:
+		Changing its coords from (0.297030,0.595963,0.288879) to (0.309131,0.508419,0.303697):
+	Updating Particles positions in local cell 32:
+	Updating Particles positions in local cell 33:
+	Updating Particles positions in local cell 34:
+	Updating Particles positions in local cell 35:
+	Updating Particles positions in local cell 36:
+	Updating Particles positions in local cell 37:
+	Updating Particles positions in local cell 38:
+	Updating Particles positions in local cell 39:
+	Updating Particles positions in local cell 40:
+	Updating Particles positions in local cell 41:
+	Updating Particles positions in local cell 42:
+	Updating Particles positions in local cell 43:
+	Updating Particles positions in local cell 44:
+	Updating Particles positions in local cell 45:
+	Updating Particles positions in local cell 46:
+	Updating Particles positions in local cell 47:
+TimeStep = 4, Start time = 6 + 2 prev timeStep dt
+Calculated attractor point is at (0.333333,0.333333,0.333333):
+Timestep 4 - Implosive mode
+	Updating Particles positions in local cell 0:
+	Updating Particles positions in local cell 1:
+	Updating Particles positions in local cell 2:
+	Updating Particles positions in local cell 3:
+	Updating Particles positions in local cell 4:
+	Updating Particles positions in local cell 5:
+	Updating Particles positions in local cell 6:
+	Updating Particles positions in local cell 7:
+	Updating Particles positions in local cell 8:
+	Updating Particles positions in local cell 9:
+	Updating Particles positions in local cell 10:
+	Updating Particles positions in local cell 11:
+		Updating particleInCell 0:
+		Changing its coords from (0.301717,0.238510,0.361476) to (0.312256,0.270118,0.352095):
+	Updating Particles positions in local cell 12:
+	Updating Particles positions in local cell 13:
+	Updating Particles positions in local cell 14:
+		Updating particleInCell 0:
+		Changing its coords from (0.240558,0.251140,0.282321) to (0.271483,0.278538,0.299325):
+		Updating particleInCell 1:
+		Changing its coords from (0.242158,0.323030,0.437408) to (0.272550,0.326464,0.402716):
+		Updating particleInCell 2:
+		Changing its coords from (0.249588,0.288303,0.373562) to (0.277503,0.303313,0.360153):
+	Updating Particles positions in local cell 15:
+		Updating particleInCell 0:
+		Changing its coords from (0.319981,0.311908,0.475685) to (0.324432,0.319049,0.428235):
+		Updating particleInCell 1:
+		Changing its coords from (0.313928,0.305609,0.382166) to (0.320396,0.314850,0.365889):
+		Updating particleInCell 2:
+		Changing its coords from (0.293928,0.290815,0.342974) to (0.307063,0.304988,0.339761):
+		Updating particleInCell 3:
+		Changing its coords from (0.279321,0.318978,0.356794) to (0.297325,0.323763,0.348973):
+		Updating particleInCell 4:
+		Changing its coords from (0.286004,0.326859,0.444453) to (0.301780,0.329017,0.407413):
+		Updating particleInCell 5:
+		Changing its coords from (0.276738,0.252632,0.260619) to (0.295603,0.279533,0.284857):
+		Updating particleInCell 6:
+		Changing its coords from (0.326035,0.255559,0.378260) to (0.328467,0.281484,0.363285):
+		Updating particleInCell 7:
+		Changing its coords from (0.252992,0.275349,0.264394) to (0.279772,0.294677,0.287374):
+		Updating particleInCell 8:
+		Changing its coords from (0.279872,0.261516,0.280062) to (0.297693,0.285455,0.297819):
+		Updating particleInCell 9:
+		Changing its coords from (0.299154,0.276292,0.449599) to (0.310547,0.295306,0.410844):
+		Updating particleInCell 10:
+		Changing its coords from (0.317088,0.265158,0.506317) to (0.322503,0.287883,0.448656):
+		Updating particleInCell 11:
+		Changing its coords from (0.265903,0.286244,0.337812) to (0.288380,0.301941,0.336319):
+	Updating Particles positions in local cell 16:
+	Updating Particles positions in local cell 17:
+	Updating Particles positions in local cell 18:
+		Updating particleInCell 0:
+		Changing its coords from (0.235660,0.338487,0.253446) to (0.268218,0.336769,0.280075):
+		Updating particleInCell 1:
+		Changing its coords from (0.237682,0.371528,0.350885) to (0.269566,0.358796,0.345035):
+		Updating particleInCell 2:
+		Changing its coords from (0.236811,0.398589,0.289559) to (0.268985,0.376837,0.304150):
+	Updating Particles positions in local cell 19:
+		Updating particleInCell 0:
+		Changing its coords from (0.316464,0.334153,0.433641) to (0.322087,0.333880,0.400205):
+		Updating particleInCell 1:
+		Changing its coords from (0.298583,0.337011,0.297122) to (0.310167,0.335785,0.309193):
+		Updating particleInCell 2:
+		Changing its coords from (0.309866,0.366388,0.495854) to (0.317689,0.355370,0.441680):
+		Updating particleInCell 3:
+		Changing its coords from (0.280430,0.340416,0.468625) to (0.298064,0.338055,0.423528):
+		Updating particleInCell 4:
+		Changing its coords from (0.282740,0.376279,0.455238) to (0.299604,0.361964,0.414603):
+		Updating particleInCell 5:
+		Changing its coords from (0.288655,0.368017,0.387486) to (0.303548,0.356456,0.369435):
+		Updating particleInCell 6:
+		Changing its coords from (0.266158,0.385752,0.432848) to (0.288550,0.368279,0.399677):
+		Updating particleInCell 7:
+		Changing its coords from (0.288622,0.399702,0.346908) to (0.303526,0.377579,0.342383):
+		Updating particleInCell 8:
+		Changing its coords from (0.317359,0.395332,0.400188) to (0.322684,0.374666,0.377903):
+	Updating Particles positions in local cell 20:
+	Updating Particles positions in local cell 21:
+	Updating Particles positions in local cell 22:
+		Updating particleInCell 0:
+		Changing its coords from (0.248522,0.418699,0.508916) to (0.276793,0.390244,0.450388):
+		Updating particleInCell 1:
+		Changing its coords from (0.237913,0.482665,0.346285) to (0.269720,0.432888,0.341968):
+	Updating Particles positions in local cell 23:
+		Updating particleInCell 0:
+		Changing its coords from (0.313561,0.421148,0.453646) to (0.320152,0.391876,0.413542):
+		Updating particleInCell 1:
+		Changing its coords from (0.289047,0.434726,0.257626) to (0.303809,0.400928,0.282862):
+		Updating particleInCell 2:
+		Changing its coords from (0.307190,0.427529,0.457212) to (0.315905,0.396131,0.415919):
+		Updating particleInCell 3:
+		Changing its coords from (0.259360,0.427280,0.459041) to (0.284018,0.395964,0.417139):
+		Updating particleInCell 4:
+		Changing its coords from (0.256655,0.442148,0.347921) to (0.282215,0.405876,0.343059):
+		Updating particleInCell 5:
+		Changing its coords from (0.279185,0.453937,0.422060) to (0.297234,0.413735,0.392484):
+		Updating particleInCell 6:
+		Changing its coords from (0.331332,0.446163,0.407067) to (0.331999,0.408553,0.382489):
+		Updating particleInCell 7:
+		Changing its coords from (0.254029,0.461184,0.452866) to (0.280464,0.418567,0.413021):
+		Updating particleInCell 8:
+		Changing its coords from (0.274927,0.479236,0.368342) to (0.294396,0.430602,0.356672):
+		Updating particleInCell 9:
+		Changing its coords from (0.287709,0.465636,0.329920) to (0.302917,0.421535,0.331058):
+		Updating particleInCell 10:
+		Changing its coords from (0.326052,0.470684,0.302796) to (0.328479,0.424900,0.312975):
+		Updating particleInCell 11:
+		Changing its coords from (0.283609,0.497895,0.372852) to (0.300184,0.443041,0.359679):
+		Updating particleInCell 12:
+		Changing its coords from (0.307965,0.491569,0.346063) to (0.316421,0.438824,0.341820):
+		Updating particleInCell 13:
+		Changing its coords from (0.318377,0.496213,0.464077) to (0.323363,0.441920,0.420496):
+	Updating Particles positions in local cell 24:
+	Updating Particles positions in local cell 25:
+	Updating Particles positions in local cell 26:
+		Updating particleInCell 0:
+		Changing its coords from (0.248513,0.517800,0.355664) to (0.276787,0.456311,0.348220):
+	Updating Particles positions in local cell 27:
+		Updating particleInCell 0:
+		Changing its coords from (0.283505,0.516089,0.244099) to (0.300114,0.455171,0.273844):
+		Updating particleInCell 1:
+		Changing its coords from (0.299300,0.513430,0.463238) to (0.310645,0.453398,0.419937):
+		Updating particleInCell 2:
+		Changing its coords from (0.309131,0.508419,0.303697) to (0.317199,0.450057,0.313576):
+	Updating Particles positions in local cell 28:
+	Updating Particles positions in local cell 29:
+	Updating Particles positions in local cell 30:
+	Updating Particles positions in local cell 31:
+	Updating Particles positions in local cell 32:
+	Updating Particles positions in local cell 33:
+	Updating Particles positions in local cell 34:
+	Updating Particles positions in local cell 35:
+	Updating Particles positions in local cell 36:
+	Updating Particles positions in local cell 37:
+	Updating Particles positions in local cell 38:
+	Updating Particles positions in local cell 39:
+	Updating Particles positions in local cell 40:
+	Updating Particles positions in local cell 41:
+	Updating Particles positions in local cell 42:
+	Updating Particles positions in local cell 43:
+	Updating Particles positions in local cell 44:
+	Updating Particles positions in local cell 45:
+	Updating Particles positions in local cell 46:
+	Updating Particles positions in local cell 47:
+TimeStep = 5, Start time = 8 + 2 prev timeStep dt
+Calculated attractor point is at (0.333333,0.333333,0.333333):
+Timestep 5 - Implosive mode
+	Updating Particles positions in local cell 0:
+	Updating Particles positions in local cell 1:
+	Updating Particles positions in local cell 2:
+	Updating Particles positions in local cell 3:
+	Updating Particles positions in local cell 4:
+	Updating Particles positions in local cell 5:
+	Updating Particles positions in local cell 6:
+	Updating Particles positions in local cell 7:
+	Updating Particles positions in local cell 8:
+	Updating Particles positions in local cell 9:
+	Updating Particles positions in local cell 10:
+	Updating Particles positions in local cell 11:
+	Updating Particles positions in local cell 12:
+	Updating Particles positions in local cell 13:
+	Updating Particles positions in local cell 14:
+	Updating Particles positions in local cell 15:
+		Updating particleInCell 0:
+		Changing its coords from (0.324432,0.319049,0.428235) to (0.327399,0.323811,0.396601):
+		Updating particleInCell 1:
+		Changing its coords from (0.320396,0.314850,0.365889) to (0.324709,0.321011,0.355037):
+		Updating particleInCell 2:
+		Changing its coords from (0.307063,0.304988,0.339761) to (0.315820,0.314436,0.337618):
+		Updating particleInCell 3:
+		Changing its coords from (0.297325,0.323763,0.348973) to (0.309328,0.326953,0.343760):
+		Updating particleInCell 4:
+		Changing its coords from (0.301780,0.329017,0.407413) to (0.312298,0.330456,0.382720):
+		Updating particleInCell 5:
+		Changing its coords from (0.295603,0.279533,0.284857) to (0.308180,0.297466,0.301016):
+		Updating particleInCell 6:
+		Changing its coords from (0.328467,0.281484,0.363285) to (0.330089,0.298767,0.353301):
+		Updating particleInCell 7:
+		Changing its coords from (0.279772,0.294677,0.287374) to (0.297626,0.307563,0.302694):
+		Updating particleInCell 8:
+		Changing its coords from (0.297693,0.285455,0.297819) to (0.309573,0.301415,0.309657):
+		Updating particleInCell 9:
+		Changing its coords from (0.310547,0.295306,0.410844) to (0.318143,0.307982,0.385007):
+		Updating particleInCell 10:
+		Changing its coords from (0.322503,0.287883,0.448656) to (0.326113,0.303033,0.410215):
+		Updating particleInCell 11:
+		Changing its coords from (0.288380,0.301941,0.336319) to (0.303364,0.312405,0.335324):
+		Updating particleInCell 12:
+		Changing its coords from (0.271483,0.278538,0.299325) to (0.292100,0.296803,0.310661):
+		Updating particleInCell 13:
+		Changing its coords from (0.312256,0.270118,0.352095) to (0.319282,0.291190,0.345841):
+		Updating particleInCell 14:
+		Changing its coords from (0.277503,0.303313,0.360153) to (0.296113,0.313320,0.351213):
+		Updating particleInCell 15:
+		Changing its coords from (0.272550,0.326464,0.402716) to (0.292811,0.328754,0.379589):
+	Updating Particles positions in local cell 16:
+	Updating Particles positions in local cell 17:
+	Updating Particles positions in local cell 18:
+	Updating Particles positions in local cell 19:
+		Updating particleInCell 0:
+		Changing its coords from (0.322087,0.333880,0.400205) to (0.325836,0.333697,0.377914):
+		Updating particleInCell 1:
+		Changing its coords from (0.310167,0.335785,0.309193) to (0.317889,0.334968,0.317240):
+		Updating particleInCell 2:
+		Changing its coords from (0.317689,0.355370,0.441680) to (0.322904,0.348024,0.405565):
+		Updating particleInCell 3:
+		Changing its coords from (0.298064,0.338055,0.423528) to (0.309821,0.336481,0.393463):
+		Updating particleInCell 4:
+		Changing its coords from (0.299604,0.361964,0.414603) to (0.310847,0.352421,0.387513):
+		Updating particleInCell 5:
+		Changing its coords from (0.303548,0.356456,0.369435) to (0.313476,0.348748,0.357401):
+		Updating particleInCell 6:
+		Changing its coords from (0.288550,0.368279,0.399677) to (0.303478,0.356631,0.377562):
+		Updating particleInCell 7:
+		Changing its coords from (0.303526,0.377579,0.342383) to (0.313462,0.362831,0.339367):
+		Updating particleInCell 8:
+		Changing its coords from (0.322684,0.374666,0.377903) to (0.326234,0.360888,0.363046):
+		Updating particleInCell 9:
+		Changing its coords from (0.268218,0.336769,0.280075) to (0.289923,0.335624,0.297828):
+		Updating particleInCell 10:
+		Changing its coords from (0.269566,0.358796,0.345035) to (0.290822,0.350309,0.341134):
+		Updating particleInCell 11:
+		Changing its coords from (0.268985,0.376837,0.304150) to (0.290434,0.362336,0.313878):
+		Updating particleInCell 12:
+		Changing its coords from (0.276793,0.390244,0.450388) to (0.295639,0.371274,0.411370):
+		Updating particleInCell 13:
+		Changing its coords from (0.284018,0.395964,0.417139) to (0.300456,0.375087,0.389204):
+		Updating particleInCell 14:
+		Changing its coords from (0.315905,0.396131,0.415919) to (0.321714,0.375198,0.388391):
+		Updating particleInCell 15:
+		Changing its coords from (0.320152,0.391876,0.413542) to (0.324546,0.372362,0.386806):
+		Updating particleInCell 16:
+		Changing its coords from (0.282215,0.405876,0.343059) to (0.299254,0.381695,0.339817):
+		Updating particleInCell 17:
+		Changing its coords from (0.297234,0.413735,0.392484) to (0.309267,0.386935,0.372767):
+		Updating particleInCell 18:
+		Changing its coords from (0.303809,0.400928,0.282862) to (0.313651,0.378397,0.299685):
+		Updating particleInCell 19:
+		Changing its coords from (0.331999,0.408553,0.382489) to (0.332444,0.383480,0.366104):
+	Updating Particles positions in local cell 20:
+	Updating Particles positions in local cell 21:
+	Updating Particles positions in local cell 22:
+	Updating Particles positions in local cell 23:
+		Updating particleInCell 0:
+		Changing its coords from (0.300184,0.443041,0.359679) to (0.311234,0.406472,0.350897):
+		Updating particleInCell 1:
+		Changing its coords from (0.294396,0.430602,0.356672) to (0.307375,0.398179,0.348893):
+		Updating particleInCell 2:
+		Changing its coords from (0.316421,0.438824,0.341820) to (0.322059,0.403660,0.338991):
+		Updating particleInCell 3:
+		Changing its coords from (0.323363,0.441920,0.420496) to (0.326686,0.405724,0.391441):
+		Updating particleInCell 4:
+		Changing its coords from (0.328479,0.424900,0.312975) to (0.330097,0.394378,0.319761):
+		Updating particleInCell 5:
+		Changing its coords from (0.302917,0.421535,0.331058) to (0.313056,0.392135,0.331816):
+		Updating particleInCell 6:
+		Changing its coords from (0.280464,0.418567,0.413021) to (0.298087,0.390156,0.386459):
+		Updating particleInCell 7:
+		Changing its coords from (0.269720,0.432888,0.341968) to (0.290924,0.399703,0.339090):
+		Updating particleInCell 8:
+		Changing its coords from (0.276787,0.456311,0.348220) to (0.295636,0.415319,0.343258):
+		Updating particleInCell 9:
+		Changing its coords from (0.300114,0.455171,0.273844) to (0.311187,0.414558,0.293673):
+		Updating particleInCell 10:
+		Changing its coords from (0.310645,0.453398,0.419937) to (0.318208,0.413376,0.391069):
+		Updating particleInCell 11:
+		Changing its coords from (0.317199,0.450057,0.313576) to (0.322577,0.411149,0.320162):
+	Updating Particles positions in local cell 24:
+	Updating Particles positions in local cell 25:
+	Updating Particles positions in local cell 26:
+	Updating Particles positions in local cell 27:
+	Updating Particles positions in local cell 28:
+	Updating Particles positions in local cell 29:
+	Updating Particles positions in local cell 30:
+	Updating Particles positions in local cell 31:
+	Updating Particles positions in local cell 32:
+	Updating Particles positions in local cell 33:
+	Updating Particles positions in local cell 34:
+	Updating Particles positions in local cell 35:
+	Updating Particles positions in local cell 36:
+	Updating Particles positions in local cell 37:
+	Updating Particles positions in local cell 38:
+	Updating Particles positions in local cell 39:
+	Updating Particles positions in local cell 40:
+	Updating Particles positions in local cell 41:
+	Updating Particles positions in local cell 42:
+	Updating Particles positions in local cell 43:
+	Updating Particles positions in local cell 44:
+	Updating Particles positions in local cell 45:
+	Updating Particles positions in local cell 46:
+	Updating Particles positions in local cell 47:

@@ -1,0 +1,35 @@
+Dictionary:
+	size: 10
+	delta: 5
+	count: 8
+	entryPtr[0-8]: {
+		test_cstring: "hello"
+		test_double: 45.567
+		test_uint: 5
+		test_int: -5
+		test_unsignedlong: 52342423
+		test_bool: 1
+		test_struct: 	
+	height: 37
+	anisotropic: true
+	person: "Patrick"
+	geom: 
+		startx: 45
+		starty: 60
+		startz: 70
+		test_list: 37, 65, 32, 42, 92
+	}
+getting out dictionary from a struct:
+yvalue = 60
+changing first 2 list elements:
+list now contains:
+34.3, 38.9, 32, 42, 92
+turning the starty value into a list using add element:
+test_struct now contains:
+	height: 37
+	anisotropic: true
+	person: "Patrick"
+	geom: 
+		startx: 45
+		starty: 60, -45
+		startz: 70

@@ -1,0 +1,98 @@
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##
+## Copyright (C), 2003, Victorian Partnership for Advanced Computing (VPAC) Ltd, 110 Victoria Street, Melbourne, 3053, Australia.
+##
+## Authors:
+##	Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+##	Patrick D. Sunter, Software Engineer, VPAC. (pds@vpac.org)
+##	Luke J. Hodkinson, Computational Engineer, VPAC. (lhodkins@vpac.org)
+##	Siew-Ching Tan, Software Engineer, VPAC. (siew@vpac.org)
+##	Alan H. Lo, Computational Engineer, VPAC. (alan@vpac.org)
+##	Raquibul Hassan, Computational Engineer, VPAC. (raq@vpac.org)
+##
+##  This library is free software; you can redistribute it and/or
+##  modify it under the terms of the GNU Lesser General Public
+##  License as published by the Free Software Foundation; either
+##  version 2.1 of the License, or (at your option) any later version.
+##
+##  This library is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+##  Lesser General Public License for more details.
+##
+##  You should have received a copy of the GNU Lesser General Public
+##  License along with this library; if not, write to the Free Software
+##  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+##
+## $Id: Makefile.def 3860 2006-10-14 18:12:14Z LukeHodkinson $
+##
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def_lib = StGermainDiscretisationMesh
+def_inc = StGermain/Discretisation/Mesh
+
+def_srcs = \
+	Grid.c \
+	CommTopology.c \
+	Decomp.c \
+	Decomp_Sync.c \
+	Decomp_Sync_Claim.c \
+	Decomp_Sync_Negotiate.c \
+	DecompTransfer.c \
+	MeshTopology.c \
+	MeshGenerator.c \
+	CartesianGenerator.c \
+	MeshAdaptor.c \
+	SurfaceAdaptor.c \
+	MeshDecomp.c \
+	ElementLayout.c \
+	HexaEL.c \
+	ParallelPipedHexaEL.c \
+	IrregEL.c \
+	NodeLayout.c \
+	CornerNL.c \
+	BodyNL.c \
+	HexaMD.c \
+	DummyMD.c \
+	MeshGeometry.c \
+	MeshLayout.c \
+	MeshClass.c \
+	Init.c \
+	Finalise.c \
+	# StencilMD.c \
+
+def_hdrs = \
+	types.h \
+	shortcuts.h \
+	Grid.h \
+	CommTopology.h \
+	Decomp.h \
+	Decomp_Sync.h \
+	Decomp_Sync_Claim.h \
+	Decomp_Sync_Negotiate.h \
+	DecompTransfer.h \
+	MeshTopology.h \
+	MeshGenerator.h \
+	CartesianGenerator.h \
+	MeshAdaptor.h \
+	SurfaceAdaptor.h \
+	ShadowInfo.h \
+	ElementLayout.h \
+	HexaEL.h \
+	ParallelPipedHexaEL.h \
+	IrregEL.h \
+	NodeLayout.h \
+	CornerNL.h \
+	BodyNL.h \
+	MeshDecomp.h \
+	HexaMD.h \
+	DummyMD.h \
+	MeshGeometry.h \
+	MeshLayout.h \
+	MeshClass.h \
+	Init.h \
+	Finalise.h \
+	Mesh.h \
+	# StencilMD.h \
+
+def_objlists = 

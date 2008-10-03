@@ -1,0 +1,848 @@
+StGermain Framework revision 3819. Copyright (C) 2003-2005 VPAC.
+Testing for CornerVC_BottomLeftFront
+CornerVC (ptr): 0x8065288
+	dictionary (ptr): 0x805e990
+	_dictionaryEntryName (ptr): 0x8049d18
+		_dictionaryEntryName: CornerVC_BottomLeftFront
+	_corner: BottomLeftFront
+	_entryCount: 3
+	_entryTbl (ptr): 0x8071088
+		_entryTbl[0]:
+			varName (ptr): 0x8068618
+				varName: vx
+			value:
+				type: VC_ValueType_Double
+				asDouble: 2
+		_entryTbl[1]:
+			varName (ptr): 0x8068648
+				varName: vy
+			value:
+				type: VC_ValueType_Double
+				asDouble: 3
+		_entryTbl[2]:
+			varName (ptr): 0x80687d0
+				varName: vz
+			value:
+				type: VC_ValueType_Double
+				asDouble: 1
+	_mesh (ptr): 0x8062718
+VariableCondition (ptr): 0x8065288
+Stg_Component (ptr): 0x8065288
+Stg_Object (ptr): 0x8065288
+	Stg_Class (ptr): 0x8065288
+		sizeOfSelf: 192
+		_deleteSelf: Yes
+		type: CornerVC
+		_delete (func ptr): 0xb7f0bbed
+		_print (func ptr): 0xb7f0bc33
+		_copy (func ptr): 0xb7f0c228
+	name: CornerVC_BottomLeftFrontName
+	nameAllocationType: NON_GLOBAL
+	_defaultConstructor (func ptr): 0xb7f0ae38
+	_construct (func ptr): 0xb7f0c43d
+	_build (func ptr): 0xb7f0c3fb
+	_initialise (func ptr): 0xb7e0a502
+	_execute (func ptr): 0xb7e0a5c9
+	_destroy (func ptr): 0xb7e0a5f9
+	isConstructed: True
+	isBuilt: True
+	isInitialised: False
+	hasExecuted: False
+	isDestroyed: False
+	constructor function name: CornerVC_BottomLeftFrontName-Construct
+	build function name: CornerVC_BottomLeftFrontName-Build
+	initialise function name: CornerVC_BottomLeftFrontName-Initialise
+	execute function name: CornerVC_BottomLeftFrontName-Execute
+	destroy function name: CornerVC_BottomLeftFrontName-Destroy
+	_getSet (func ptr): 0xb7f0c48c
+	_getVariableCount (func ptr): 0xb7f0caaf
+	_getVariableIndex (func ptr): 0xb7f0cac6
+	_getValueIndex (func ptr): 0xb7f0cba1
+	_getValueCount (func ptr): 0xb7f0cba9
+	_getValue (func ptr): 0xb7f0cbc0
+	variable_Register (ptr): 0x8071040
+	conFunc_Register (ptr): 0x805b658
+	_set (ptr): 0x8070eb8
+	indexCount: 0
+	indexTbl (ptr): (nil)
+	vcVarCountTbl (ptr): (nil)
+	vcTbl (ptr): (nil)
+	valueCount: 3
+	valueTbl (ptr): 0x80704d8
+		valueTbl[0]:
+			type: VC_ValueType_Double
+			asDouble: 2
+		valueTbl[1]:
+			type: VC_ValueType_Double
+			asDouble: 3
+		valueTbl[2]:
+			type: VC_ValueType_Double
+			asDouble: 1
+
+
+var[0]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[1]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[2]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[3]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[4]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[5]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[6]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+
+Testing for CornerVC_BottomRightFront
+CornerVC (ptr): 0x806b1c8
+	dictionary (ptr): 0x805e990
+	_dictionaryEntryName (ptr): 0x8049d31
+		_dictionaryEntryName: CornerVC_BottomRightFront
+	_corner: BottomRightFront
+	_entryCount: 3
+	_entryTbl (ptr): 0x8071088
+		_entryTbl[0]:
+			varName (ptr): 0x8068558
+				varName: vx
+			value:
+				type: VC_ValueType_Double
+				asDouble: 2
+		_entryTbl[1]:
+			varName (ptr): 0x805f198
+				varName: vy
+			value:
+				type: VC_ValueType_Double
+				asDouble: 3
+		_entryTbl[2]:
+			varName (ptr): 0x805f1a8
+				varName: vz
+			value:
+				type: VC_ValueType_Double
+				asDouble: 1
+	_mesh (ptr): 0x8062718
+VariableCondition (ptr): 0x806b1c8
+Stg_Component (ptr): 0x806b1c8
+Stg_Object (ptr): 0x806b1c8
+	Stg_Class (ptr): 0x806b1c8
+		sizeOfSelf: 192
+		_deleteSelf: Yes
+		type: CornerVC
+		_delete (func ptr): 0xb7f0bbed
+		_print (func ptr): 0xb7f0bc33
+		_copy (func ptr): 0xb7f0c228
+	name: CornerVC_BottomRightFrontName
+	nameAllocationType: NON_GLOBAL
+	_defaultConstructor (func ptr): 0xb7f0ae38
+	_construct (func ptr): 0xb7f0c43d
+	_build (func ptr): 0xb7f0c3fb
+	_initialise (func ptr): 0xb7e0a502
+	_execute (func ptr): 0xb7e0a5c9
+	_destroy (func ptr): 0xb7e0a5f9
+	isConstructed: True
+	isBuilt: True
+	isInitialised: False
+	hasExecuted: False
+	isDestroyed: False
+	constructor function name: CornerVC_BottomRightFrontName-Construct
+	build function name: CornerVC_BottomRightFrontName-Build
+	initialise function name: CornerVC_BottomRightFrontName-Initialise
+	execute function name: CornerVC_BottomRightFrontName-Execute
+	destroy function name: CornerVC_BottomRightFrontName-Destroy
+	_getSet (func ptr): 0xb7f0c48c
+	_getVariableCount (func ptr): 0xb7f0caaf
+	_getVariableIndex (func ptr): 0xb7f0cac6
+	_getValueIndex (func ptr): 0xb7f0cba1
+	_getValueCount (func ptr): 0xb7f0cba9
+	_getValue (func ptr): 0xb7f0cbc0
+	variable_Register (ptr): 0x8071040
+	conFunc_Register (ptr): 0x805b658
+	_set (ptr): 0x8070fa0
+	indexCount: 1
+	indexTbl (ptr): 0x8068370
+		indexTbl[0]: 25
+	vcVarCountTbl (ptr): 0x8066ee0
+		vcVarCountTbl[0]: 3
+	vcTbl (ptr): 0x806c4b0
+		vcTbl[0][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[0][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[0][2]:
+			varIndex: 5
+			valIndex: 2
+	valueCount: 3
+	valueTbl (ptr): 0x80704d8
+		valueTbl[0]:
+			type: VC_ValueType_Double
+			asDouble: 2
+		valueTbl[1]:
+			type: VC_ValueType_Double
+			asDouble: 3
+		valueTbl[2]:
+			type: VC_ValueType_Double
+			asDouble: 1
+
+
+var[0]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[1]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[2]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[3]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[4]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 3.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[5]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[6]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False True  False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False True  False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False True  False False False False False False 
+
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 000 XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 001 XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 002 XXX XXX XXX XXX XXX XXX 
+
+Testing for CornerVC_TopLeftFront
+CornerVC (ptr): 0x806b1c8
+	dictionary (ptr): 0x805e990
+	_dictionaryEntryName (ptr): 0x8049d4b
+		_dictionaryEntryName: CornerVC_TopLeftFront
+	_corner: TopLeftFront
+	_entryCount: 3
+	_entryTbl (ptr): 0x8071088
+		_entryTbl[0]:
+			varName (ptr): 0x8066380
+				varName: vx
+			value:
+				type: VC_ValueType_Double
+				asDouble: 2
+		_entryTbl[1]:
+			varName (ptr): 0x8066770
+				varName: vy
+			value:
+				type: VC_ValueType_Double
+				asDouble: 3
+		_entryTbl[2]:
+			varName (ptr): 0x8066930
+				varName: vz
+			value:
+				type: VC_ValueType_Double
+				asDouble: 1
+	_mesh (ptr): 0x8062718
+VariableCondition (ptr): 0x806b1c8
+Stg_Component (ptr): 0x806b1c8
+Stg_Object (ptr): 0x806b1c8
+	Stg_Class (ptr): 0x806b1c8
+		sizeOfSelf: 192
+		_deleteSelf: Yes
+		type: CornerVC
+		_delete (func ptr): 0xb7f0bbed
+		_print (func ptr): 0xb7f0bc33
+		_copy (func ptr): 0xb7f0c228
+	name: CornerVC_TopLeftFrontName
+	nameAllocationType: NON_GLOBAL
+	_defaultConstructor (func ptr): 0xb7f0ae38
+	_construct (func ptr): 0xb7f0c43d
+	_build (func ptr): 0xb7f0c3fb
+	_initialise (func ptr): 0xb7e0a502
+	_execute (func ptr): 0xb7e0a5c9
+	_destroy (func ptr): 0xb7e0a5f9
+	isConstructed: True
+	isBuilt: True
+	isInitialised: False
+	hasExecuted: False
+	isDestroyed: False
+	constructor function name: CornerVC_TopLeftFrontName-Construct
+	build function name: CornerVC_TopLeftFrontName-Build
+	initialise function name: CornerVC_TopLeftFrontName-Initialise
+	execute function name: CornerVC_TopLeftFrontName-Execute
+	destroy function name: CornerVC_TopLeftFrontName-Destroy
+	_getSet (func ptr): 0xb7f0c48c
+	_getVariableCount (func ptr): 0xb7f0caaf
+	_getVariableIndex (func ptr): 0xb7f0cac6
+	_getValueIndex (func ptr): 0xb7f0cba1
+	_getValueCount (func ptr): 0xb7f0cba9
+	_getValue (func ptr): 0xb7f0cbc0
+	variable_Register (ptr): 0x8071040
+	conFunc_Register (ptr): 0x805b658
+	_set (ptr): 0x80709d8
+	indexCount: 0
+	indexTbl (ptr): (nil)
+	vcVarCountTbl (ptr): (nil)
+	vcTbl (ptr): (nil)
+	valueCount: 3
+	valueTbl (ptr): 0x8068c00
+		valueTbl[0]:
+			type: VC_ValueType_Double
+			asDouble: 2
+		valueTbl[1]:
+			type: VC_ValueType_Double
+			asDouble: 3
+		valueTbl[2]:
+			type: VC_ValueType_Double
+			asDouble: 1
+
+
+var[0]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[1]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[2]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[3]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[4]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[5]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[6]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+
+Testing for CornerVC_TopRightFront
+CornerVC (ptr): 0x806b1c8
+	dictionary (ptr): 0x805e990
+	_dictionaryEntryName (ptr): 0x8049d61
+		_dictionaryEntryName: CornerVC_TopRightFront
+	_corner: TopRightFront
+	_entryCount: 3
+	_entryTbl (ptr): 0x8071088
+		_entryTbl[0]:
+			varName (ptr): 0x805f418
+				varName: vx
+			value:
+				type: VC_ValueType_Double
+				asDouble: 2
+		_entryTbl[1]:
+			varName (ptr): 0x805f808
+				varName: vy
+			value:
+				type: VC_ValueType_Double
+				asDouble: 3
+		_entryTbl[2]:
+			varName (ptr): 0x805f9c8
+				varName: vz
+			value:
+				type: VC_ValueType_Double
+				asDouble: 1
+	_mesh (ptr): 0x8062718
+VariableCondition (ptr): 0x806b1c8
+Stg_Component (ptr): 0x806b1c8
+Stg_Object (ptr): 0x806b1c8
+	Stg_Class (ptr): 0x806b1c8
+		sizeOfSelf: 192
+		_deleteSelf: Yes
+		type: CornerVC
+		_delete (func ptr): 0xb7f0bbed
+		_print (func ptr): 0xb7f0bc33
+		_copy (func ptr): 0xb7f0c228
+	name: CornerVC_TopRightFrontName
+	nameAllocationType: NON_GLOBAL
+	_defaultConstructor (func ptr): 0xb7f0ae38
+	_construct (func ptr): 0xb7f0c43d
+	_build (func ptr): 0xb7f0c3fb
+	_initialise (func ptr): 0xb7e0a502
+	_execute (func ptr): 0xb7e0a5c9
+	_destroy (func ptr): 0xb7e0a5f9
+	isConstructed: True
+	isBuilt: True
+	isInitialised: False
+	hasExecuted: False
+	isDestroyed: False
+	constructor function name: CornerVC_TopRightFrontName-Construct
+	build function name: CornerVC_TopRightFrontName-Build
+	initialise function name: CornerVC_TopRightFrontName-Initialise
+	execute function name: CornerVC_TopRightFrontName-Execute
+	destroy function name: CornerVC_TopRightFrontName-Destroy
+	_getSet (func ptr): 0xb7f0c48c
+	_getVariableCount (func ptr): 0xb7f0caaf
+	_getVariableIndex (func ptr): 0xb7f0cac6
+	_getValueIndex (func ptr): 0xb7f0cba1
+	_getValueCount (func ptr): 0xb7f0cba9
+	_getValue (func ptr): 0xb7f0cbc0
+	variable_Register (ptr): 0x8071040
+	conFunc_Register (ptr): 0x805b658
+	_set (ptr): 0x8070c98
+	indexCount: 1
+	indexTbl (ptr): 0x8068370
+		indexTbl[0]: 31
+	vcVarCountTbl (ptr): 0x80683a0
+		vcVarCountTbl[0]: 3
+	vcTbl (ptr): 0x80708f0
+		vcTbl[0][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[0][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[0][2]:
+			varIndex: 5
+			valIndex: 2
+	valueCount: 3
+	valueTbl (ptr): 0x8068c00
+		valueTbl[0]:
+			type: VC_ValueType_Double
+			asDouble: 2
+		valueTbl[1]:
+			type: VC_ValueType_Double
+			asDouble: 3
+		valueTbl[2]:
+			type: VC_ValueType_Double
+			asDouble: 1
+
+
+var[0]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[1]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[2]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[3]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.00
+var[4]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 3.00
+var[5]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1.00
+var[6]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False True  
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False True  
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False True  
+
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 000 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 001 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 002 
+
+Testing for CornerVC_BottomLeftBack
+CornerVC (ptr): 0x806b1c8
+	dictionary (ptr): 0x805e990
+	_dictionaryEntryName (ptr): 0x8049d78
+		_dictionaryEntryName: CornerVC_BottomLeftBack
+	_corner: BottomLeftBack
+	_entryCount: 1
+	_entryTbl (ptr): 0x80705e8
+		_entryTbl[0]:
+			varName (ptr): 0x8067598
+				varName: temp
+			value:
+				type: VC_ValueType_Double
+				asDouble: 3
+	_mesh (ptr): 0x8062718
+VariableCondition (ptr): 0x806b1c8
+Stg_Component (ptr): 0x806b1c8
+Stg_Object (ptr): 0x806b1c8
+	Stg_Class (ptr): 0x806b1c8
+		sizeOfSelf: 192
+		_deleteSelf: Yes
+		type: CornerVC
+		_delete (func ptr): 0xb7f0bbed
+		_print (func ptr): 0xb7f0bc33
+		_copy (func ptr): 0xb7f0c228
+	name: CornerVC_BottomLeftBackName
+	nameAllocationType: NON_GLOBAL
+	_defaultConstructor (func ptr): 0xb7f0ae38
+	_construct (func ptr): 0xb7f0c43d
+	_build (func ptr): 0xb7f0c3fb
+	_initialise (func ptr): 0xb7e0a502
+	_execute (func ptr): 0xb7e0a5c9
+	_destroy (func ptr): 0xb7e0a5f9
+	isConstructed: True
+	isBuilt: True
+	isInitialised: False
+	hasExecuted: False
+	isDestroyed: False
+	constructor function name: CornerVC_BottomLeftBackName-Construct
+	build function name: CornerVC_BottomLeftBackName-Build
+	initialise function name: CornerVC_BottomLeftBackName-Initialise
+	execute function name: CornerVC_BottomLeftBackName-Execute
+	destroy function name: CornerVC_BottomLeftBackName-Destroy
+	_getSet (func ptr): 0xb7f0c48c
+	_getVariableCount (func ptr): 0xb7f0caaf
+	_getVariableIndex (func ptr): 0xb7f0cac6
+	_getValueIndex (func ptr): 0xb7f0cba1
+	_getValueCount (func ptr): 0xb7f0cba9
+	_getValue (func ptr): 0xb7f0cbc0
+	variable_Register (ptr): 0x8071040
+	conFunc_Register (ptr): 0x805b658
+	_set (ptr): 0x8070c98
+	indexCount: 0
+	indexTbl (ptr): (nil)
+	vcVarCountTbl (ptr): (nil)
+	vcTbl (ptr): (nil)
+	valueCount: 1
+	valueTbl (ptr): 0x8063a50
+		valueTbl[0]:
+			type: VC_ValueType_Double
+			asDouble: 3
+
+
+var[0]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[1]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[2]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[3]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[4]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[5]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[6]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+
+Testing for CornerVC_BottomRightBack
+CornerVC (ptr): 0x806b1c8
+	dictionary (ptr): 0x805e990
+	_dictionaryEntryName (ptr): 0x8049d90
+		_dictionaryEntryName: CornerVC_BottomRightBack
+	_corner: BottomRightBack
+	_entryCount: 4
+	_entryTbl (ptr): 0x806c500
+		_entryTbl[0]:
+			varName (ptr): 0x80670a0
+				varName: vx
+			value:
+				type: VC_ValueType_Double
+				asDouble: 2
+		_entryTbl[1]:
+			varName (ptr): 0x8068548
+				varName: vy
+			value:
+				type: VC_ValueType_Double
+				asDouble: 3
+		_entryTbl[2]:
+			varName (ptr): 0x8066af0
+				varName: vz
+			value:
+				type: VC_ValueType_Double
+				asDouble: 1
+		_entryTbl[3]:
+			varName (ptr): 0x8067ed0
+				varName: temp
+			value:
+				type: VC_ValueType_Double
+				asDouble: 3
+	_mesh (ptr): 0x8062718
+VariableCondition (ptr): 0x806b1c8
+Stg_Component (ptr): 0x806b1c8
+Stg_Object (ptr): 0x806b1c8
+	Stg_Class (ptr): 0x806b1c8
+		sizeOfSelf: 192
+		_deleteSelf: Yes
+		type: CornerVC
+		_delete (func ptr): 0xb7f0bbed
+		_print (func ptr): 0xb7f0bc33
+		_copy (func ptr): 0xb7f0c228
+	name: CornerVC_BottomRightBackName
+	nameAllocationType: NON_GLOBAL
+	_defaultConstructor (func ptr): 0xb7f0ae38
+	_construct (func ptr): 0xb7f0c43d
+	_build (func ptr): 0xb7f0c3fb
+	_initialise (func ptr): 0xb7e0a502
+	_execute (func ptr): 0xb7e0a5c9
+	_destroy (func ptr): 0xb7e0a5f9
+	isConstructed: True
+	isBuilt: True
+	isInitialised: False
+	hasExecuted: False
+	isDestroyed: False
+	constructor function name: CornerVC_BottomRightBackName-Construct
+	build function name: CornerVC_BottomRightBackName-Build
+	initialise function name: CornerVC_BottomRightBackName-Initialise
+	execute function name: CornerVC_BottomRightBackName-Execute
+	destroy function name: CornerVC_BottomRightBackName-Destroy
+	_getSet (func ptr): 0xb7f0c48c
+	_getVariableCount (func ptr): 0xb7f0caaf
+	_getVariableIndex (func ptr): 0xb7f0cac6
+	_getValueIndex (func ptr): 0xb7f0cba1
+	_getValueCount (func ptr): 0xb7f0cba9
+	_getValue (func ptr): 0xb7f0cbc0
+	variable_Register (ptr): 0x8071040
+	conFunc_Register (ptr): 0x805b658
+	_set (ptr): 0x8070c98
+	indexCount: 1
+	indexTbl (ptr): 0x8068370
+		indexTbl[0]: 1
+	vcVarCountTbl (ptr): 0x8066ee0
+		vcVarCountTbl[0]: 4
+	vcTbl (ptr): 0x80704d8
+		vcTbl[0][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[0][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[0][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[0][3]:
+			varIndex: 6
+			valIndex: 3
+	valueCount: 4
+	valueTbl (ptr): 0x8071088
+		valueTbl[0]:
+			type: VC_ValueType_Double
+			asDouble: 2
+		valueTbl[1]:
+			type: VC_ValueType_Double
+			asDouble: 3
+		valueTbl[2]:
+			type: VC_ValueType_Double
+			asDouble: 1
+		valueTbl[3]:
+			type: VC_ValueType_Double
+			asDouble: 3
+
+
+var[0]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[1]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[2]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[3]: 0.00, 2.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[4]: 0.00, 3.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[5]: 0.00, 1.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[6]: 0.00, 3.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False True  False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False True  False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False True  False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX 000 XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX 001 XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX 002 XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+
+Testing for CornerVC_TopLeftBack
+CornerVC (ptr): 0x806b1c8
+	dictionary (ptr): 0x805e990
+	_dictionaryEntryName (ptr): 0x8049da9
+		_dictionaryEntryName: CornerVC_TopLeftBack
+	_corner: TopLeftBack
+	_entryCount: 4
+	_entryTbl (ptr): 0x806b308
+		_entryTbl[0]:
+			varName (ptr): 0x8067260
+				varName: vx
+			value:
+				type: VC_ValueType_Double
+				asDouble: 2
+		_entryTbl[1]:
+			varName (ptr): 0x8067a48
+				varName: vy
+			value:
+				type: VC_ValueType_Double
+				asDouble: 3
+		_entryTbl[2]:
+			varName (ptr): 0x8067c08
+				varName: vz
+			value:
+				type: VC_ValueType_Double
+				asDouble: 1
+		_entryTbl[3]:
+			varName (ptr): 0x8060490
+				varName: temp
+			value:
+				type: VC_ValueType_Double
+				asDouble: 6
+	_mesh (ptr): 0x8062718
+VariableCondition (ptr): 0x806b1c8
+Stg_Component (ptr): 0x806b1c8
+Stg_Object (ptr): 0x806b1c8
+	Stg_Class (ptr): 0x806b1c8
+		sizeOfSelf: 192
+		_deleteSelf: Yes
+		type: CornerVC
+		_delete (func ptr): 0xb7f0bbed
+		_print (func ptr): 0xb7f0bc33
+		_copy (func ptr): 0xb7f0c228
+	name: CornerVC_TopLeftBackName
+	nameAllocationType: NON_GLOBAL
+	_defaultConstructor (func ptr): 0xb7f0ae38
+	_construct (func ptr): 0xb7f0c43d
+	_build (func ptr): 0xb7f0c3fb
+	_initialise (func ptr): 0xb7e0a502
+	_execute (func ptr): 0xb7e0a5c9
+	_destroy (func ptr): 0xb7e0a5f9
+	isConstructed: True
+	isBuilt: True
+	isInitialised: False
+	hasExecuted: False
+	isDestroyed: False
+	constructor function name: CornerVC_TopLeftBackName-Construct
+	build function name: CornerVC_TopLeftBackName-Build
+	initialise function name: CornerVC_TopLeftBackName-Initialise
+	execute function name: CornerVC_TopLeftBackName-Execute
+	destroy function name: CornerVC_TopLeftBackName-Destroy
+	_getSet (func ptr): 0xb7f0c48c
+	_getVariableCount (func ptr): 0xb7f0caaf
+	_getVariableIndex (func ptr): 0xb7f0cac6
+	_getValueIndex (func ptr): 0xb7f0cba1
+	_getValueCount (func ptr): 0xb7f0cba9
+	_getValue (func ptr): 0xb7f0cbc0
+	variable_Register (ptr): 0x8071040
+	conFunc_Register (ptr): 0x805b658
+	_set (ptr): 0x8071088
+	indexCount: 0
+	indexTbl (ptr): (nil)
+	vcVarCountTbl (ptr): (nil)
+	vcTbl (ptr): (nil)
+	valueCount: 4
+	valueTbl (ptr): 0x8070c98
+		valueTbl[0]:
+			type: VC_ValueType_Double
+			asDouble: 2
+		valueTbl[1]:
+			type: VC_ValueType_Double
+			asDouble: 3
+		valueTbl[2]:
+			type: VC_ValueType_Double
+			asDouble: 1
+		valueTbl[3]:
+			type: VC_ValueType_Double
+			asDouble: 6
+
+
+var[0]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[1]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[2]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[3]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[4]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[5]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[6]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+
+Testing for CornerVC_TopRightBack
+CornerVC (ptr): 0x806b1c8
+	dictionary (ptr): 0x805e990
+	_dictionaryEntryName (ptr): 0x8049dbe
+		_dictionaryEntryName: CornerVC_TopRightBack
+	_corner: TopRightBack
+	_entryCount: 1
+	_entryTbl (ptr): 0x8070dc8
+		_entryTbl[0]:
+			varName (ptr): 0x80682c8
+				varName: temp
+			value:
+				type: VC_ValueType_Double
+				asDouble: 3
+	_mesh (ptr): 0x8062718
+VariableCondition (ptr): 0x806b1c8
+Stg_Component (ptr): 0x806b1c8
+Stg_Object (ptr): 0x806b1c8
+	Stg_Class (ptr): 0x806b1c8
+		sizeOfSelf: 192
+		_deleteSelf: Yes
+		type: CornerVC
+		_delete (func ptr): 0xb7f0bbed
+		_print (func ptr): 0xb7f0bc33
+		_copy (func ptr): 0xb7f0c228
+	name: CornerVC_TopRightBackName
+	nameAllocationType: NON_GLOBAL
+	_defaultConstructor (func ptr): 0xb7f0ae38
+	_construct (func ptr): 0xb7f0c43d
+	_build (func ptr): 0xb7f0c3fb
+	_initialise (func ptr): 0xb7e0a502
+	_execute (func ptr): 0xb7e0a5c9
+	_destroy (func ptr): 0xb7e0a5f9
+	isConstructed: True
+	isBuilt: True
+	isInitialised: False
+	hasExecuted: False
+	isDestroyed: False
+	constructor function name: CornerVC_TopRightBackName-Construct
+	build function name: CornerVC_TopRightBackName-Build
+	initialise function name: CornerVC_TopRightBackName-Initialise
+	execute function name: CornerVC_TopRightBackName-Execute
+	destroy function name: CornerVC_TopRightBackName-Destroy
+	_getSet (func ptr): 0xb7f0c48c
+	_getVariableCount (func ptr): 0xb7f0caaf
+	_getVariableIndex (func ptr): 0xb7f0cac6
+	_getValueIndex (func ptr): 0xb7f0cba1
+	_getValueCount (func ptr): 0xb7f0cba9
+	_getValue (func ptr): 0xb7f0cbc0
+	variable_Register (ptr): 0x8071040
+	conFunc_Register (ptr): 0x805b658
+	_set (ptr): 0x8070c98
+	indexCount: 1
+	indexTbl (ptr): 0x8068370
+		indexTbl[0]: 7
+	vcVarCountTbl (ptr): 0x80683a0
+		vcVarCountTbl[0]: 1
+	vcTbl (ptr): 0x8063a50
+		vcTbl[0][0]:
+			varIndex: 6
+			valIndex: 0
+	valueCount: 1
+	valueTbl (ptr): 0x8068f40
+		valueTbl[0]:
+			type: VC_ValueType_Double
+			asDouble: 3
+
+
+var[0]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[1]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[2]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[3]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[4]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[5]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[6]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 3.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+

@@ -1,0 +1,4 @@
+conftest.c:3: error: ‘OSMESA_RGBA’ undeclared (first use in this function)
+conftest.c:3: error: (Each undeclared identifier is reported only once
+conftest.c:3: error: for each function it appears in.)
+conftest.c:4: error: ‘GL_UNSIGNED_BYTE’ undeclared (first use in this function)

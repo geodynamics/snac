@@ -1,0 +1,451 @@
+Testing hash table with string keys..
+
+Inserting data into the hash table
+
+Incurred 2 collisions while inserting anyplace
+Incurred 2 collisions while inserting electronic
+Incurred 2 collisions while inserting drawl
+Incurred 2 collisions while inserting buggy
+Successfully inserted 100 items into the table
+
+Printing the hash table
+
+Stg_Class (ptr): 0x80cc3cc
+	sizeOfSelf: 72
+	_deleteSelf: Yes
+	type: HashTable
+	_delete (func ptr): 0x805c0a6
+	_print (func ptr): 0x805bf61
+	_copy (func ptr): (nil)
+HashTable (ptr): (0x80cc3cc)
+	EntryCount		 - 100
+	HashTable KeyType	 - STRING
+	HashTable data	 - 
+		cabinet
+		univariate
+		antarctic
+		anatomy
+		exogamy
+		escheat
+		cardioid
+		solidus
+		embolden
+		memoir
+		piteous
+		felt
+		frown
+		fanout
+		kibitz
+		anyplace
+		cavort
+		clipboard
+		divorcee
+		allowance
+		melodic
+		grillwork
+		magnitude
+		fiduciary
+		up
+		semester
+		threat
+		electronic
+		plunge
+		infantrymen
+		wildlife
+		head
+		excrescent
+		steepen
+		sepal
+		exhale
+		insuppressible
+		gumbo
+		heal
+		drawl
+		presentation
+		whinny
+		textile
+		slugging
+		free
+		involve
+		controller
+		orchestrate
+		amoeba
+		blurt
+		eerie
+		thanksgiving
+		loin
+		jiggle
+		biology
+		apace
+		fairy
+		pattern
+		stance
+		buggy
+		circumspect
+		buret
+		sudden
+		sequent
+		monitor
+		diabase
+		ephemerides
+		bandstand
+		nitride
+		arhat
+		clothesmen
+		conscript
+		assassin
+		firemen
+		us
+		depression
+		bastard
+		climatology
+		nether
+		posthumous
+		virile
+		caulk
+		etude
+		germinate
+		licensor
+		potlatch
+		stanch
+		crucifixion
+		millions
+		misshapen
+		lottery
+		worth
+		chert
+		observe
+		fidelity
+		precaution
+		intelligentsia
+		bleed
+		kennel
+		town
+Searching for items in the table:
+
+Looking for antarctic, ...found
+Looking for escheat, ...found
+Looking for cardioid, ...found
+Looking for solidus, ...found
+Looking for memoir, ...found
+Looking for piteous, ...found
+Looking for felt, ...found
+Looking for frown, ...found
+Looking for fanout, ...found
+Looking for allowance, ...found
+Looking for up, ...found
+Looking for semester, ...found
+Looking for threat, ...found
+Looking for plunge, ...found
+Looking for head, ...found
+Looking for sepal, ...found
+Looking for gumbo, ...found
+Looking for textile, ...found
+Looking for slugging, ...found
+Looking for blurt, ...found
+Looking for thanksgiving, ...found
+Looking for apace, ...found
+Looking for pattern, ...found
+Looking for stance, ...found
+Looking for circumspect, ...found
+Looking for buret, ...found
+Looking for sudden, ...found
+Looking for sequent, ...found
+Looking for monitor, ...found
+Looking for diabase, ...found
+Looking for bandstand, ...found
+Looking for nitride, ...found
+Looking for clothesmen, ...found
+Looking for assassin, ...found
+Looking for firemen, ...found
+Looking for us, ...found
+Looking for depression, ...found
+Looking for bastard, ...found
+Looking for climatology, ...found
+Looking for nether, ...found
+Looking for posthumous, ...found
+Looking for virile, ...found
+Looking for caulk, ...found
+Looking for etude, ...found
+Looking for germinate, ...found
+Looking for licensor, ...found
+Looking for potlatch, ...found
+Looking for stanch, ...found
+Looking for crucifixion, ...found
+Looking for millions, ...found
+Looking for misshapen, ...found
+Looking for lottery, ...found
+Looking for worth, ...found
+Looking for chert, ...found
+Looking for observe, ...found
+Looking for fidelity, ...found
+Looking for precaution, ...found
+Looking for intelligentsia, ...found
+Looking for bleed, ...found
+Looking for kennel, ...found
+Looking for town, ...found
+Looking for cabinet, ...found
+Looking for univariate, ...found
+Looking for anatomy, ...found
+Looking for exogamy, ...found
+Looking for embolden, ...found
+Looking for kibitz, ...found
+Looking for anyplace, ...found
+Looking for cavort, ...found
+Looking for clipboard, ...found
+Looking for divorcee, ...found
+Looking for melodic, ...found
+Looking for grillwork, ...found
+Looking for magnitude, ...found
+Looking for fiduciary, ...found
+Looking for electronic, ...found
+Looking for infantrymen, ...found
+Looking for wildlife, ...found
+Looking for excrescent, ...found
+Looking for steepen, ...found
+Looking for exhale, ...found
+Looking for insuppressible, ...found
+Looking for heal, ...found
+Looking for drawl, ...found
+Looking for presentation, ...found
+Looking for whinny, ...found
+Looking for free, ...found
+Looking for involve, ...found
+Looking for controller, ...found
+Looking for orchestrate, ...found
+Looking for amoeba, ...found
+Looking for eerie, ...found
+Looking for loin, ...found
+Looking for jiggle, ...found
+Looking for biology, ...found
+Looking for fairy, ...found
+Looking for buggy, ...found
+Looking for ephemerides, ...found
+Looking for arhat, ...found
+Looking for conscript, ...found
+
+Deleting the Table
+
+Testing hash table with pointer keys..
+
+Inserting data into the hash table
+
+Successfully inserted 100 items into the table
+
+Printing the hash table
+
+Stg_Class (ptr): 0x80ce714
+	sizeOfSelf: 72
+	_deleteSelf: Yes
+	type: HashTable
+	_delete (func ptr): 0x805c0a6
+	_print (func ptr): 0x805bf61
+	_copy (func ptr): (nil)
+HashTable (ptr): (0x80ce714)
+	EntryCount		 - 100
+	HashTable KeyType	 - INTEGER
+	HashTable data	 - 
+		(ptr)0x80cca78
+		(ptr)0x80ce7e8
+		(ptr)0x80cf8b0
+		(ptr)0x80cfa48
+		(ptr)0x80cfa78
+		(ptr)0x80cfac8
+		(ptr)0x80ccfa0
+		(ptr)0x80cf678
+		(ptr)0x80cfb70
+		(ptr)0x80cd698
+		(ptr)0x80cd708
+		(ptr)0x80cddb0
+		(ptr)0x80cf928
+		(ptr)0x80cf6a8
+		(ptr)0x80cdfb8
+		(ptr)0x80cd128
+		(ptr)0x80cfc18
+		(ptr)0x80cd288
+		(ptr)0x80cf9f8
+		(ptr)0x80cd930
+		(ptr)0x80ccae8
+		(ptr)0x80cf650
+		(ptr)0x80cf9d0
+		(ptr)0x80cfbc8
+		(ptr)0x80ccb58
+		(ptr)0x80cf7e8
+		(ptr)0x80ccca8
+		(ptr)0x80cf8d8
+		(ptr)0x80cf9a8
+		(ptr)0x80cf798
+		(ptr)0x80cdba0
+		(ptr)0x80ccb90
+		(ptr)0x80cfc68
+		(ptr)0x80cd890
+		(ptr)0x80cf888
+		(ptr)0x80ce810
+		(ptr)0x80cd198
+		(ptr)0x80cd5a8
+		(ptr)0x80cfa20
+		(ptr)0x80cdaf0
+		(ptr)0x80cdd40
+		(ptr)0x80cd2f8
+		(ptr)0x80cf810
+		(ptr)0x80ce0a0
+		(ptr)0x80cdc90
+		(ptr)0x80cda48
+		(ptr)0x80cfaa0
+		(ptr)0x80cd3d8
+		(ptr)0x80cd9d8
+		(ptr)0x80cd538
+		(ptr)0x80cdf10
+		(ptr)0x80cca40
+		(ptr)0x80cfbf0
+		(ptr)0x80cce40
+		(ptr)0x80cce78
+		(ptr)0x80cf900
+		(ptr)0x80cf7c0
+		(ptr)0x80cd010
+		(ptr)0x80cd778
+		(ptr)0x80cc810
+		(ptr)0x80cd4c8
+		(ptr)0x80cfaf8
+		(ptr)0x80ce7c0
+		(ptr)0x80cf6d0
+		(ptr)0x80cf950
+		(ptr)0x80cfb48
+		(ptr)0x80ccd88
+		(ptr)0x80cf770
+		(ptr)0x80cc800
+		(ptr)0x80cf860
+		(ptr)0x80cf748
+		(ptr)0x80cd210
+		(ptr)0x80cfcb8
+		(ptr)0x80ccd18
+		(ptr)0x80cf838
+		(ptr)0x80ce068
+		(ptr)0x80cf720
+		(ptr)0x80cd7b0
+		(ptr)0x80ccc00
+		(ptr)0x80cd450
+		(ptr)0x80cf6f8
+		(ptr)0x80ce838
+		(ptr)0x80cd368
+		(ptr)0x80cfd10
+		(ptr)0x80ccf30
+		(ptr)0x80cfd38
+		(ptr)0x80cde28
+		(ptr)0x80cfc40
+		(ptr)0x80cfce0
+		(ptr)0x80cda80
+		(ptr)0x80cfb98
+		(ptr)0x80cc9d0
+		(ptr)0x80cfb20
+		(ptr)0x80cd618
+		(ptr)0x80ccdc0
+		(ptr)0x80cfc90
+		(ptr)0x80cce00
+		(ptr)0x80cf978
+		(ptr)0x80cd048
+		(ptr)0x80cdbd8
+Searching for items in the table:
+
+Looking for (ptr)0x80cd708, ...found
+Looking for (ptr)0x80cd698, ...found
+Looking for (ptr)0x80cd618, ...found
+Looking for (ptr)0x80cd5a8, ...found
+Looking for (ptr)0x80cd538, ...found
+Looking for (ptr)0x80cd4c8, ...found
+Looking for (ptr)0x80cd450, ...found
+Looking for (ptr)0x80cd3d8, ...found
+Looking for (ptr)0x80cd368, ...found
+Looking for (ptr)0x80cd2f8, ...found
+Looking for (ptr)0x80cd288, ...found
+Looking for (ptr)0x80cd210, ...found
+Looking for (ptr)0x80cd198, ...found
+Looking for (ptr)0x80cd128, ...found
+Looking for (ptr)0x80ce0a0, ...found
+Looking for (ptr)0x80ce068, ...found
+Looking for (ptr)0x80cd048, ...found
+Looking for (ptr)0x80cd010, ...found
+Looking for (ptr)0x80ccfa0, ...found
+Looking for (ptr)0x80ccf30, ...found
+Looking for (ptr)0x80cdfb8, ...found
+Looking for (ptr)0x80cce78, ...found
+Looking for (ptr)0x80cce40, ...found
+Looking for (ptr)0x80cdf10, ...found
+Looking for (ptr)0x80cce00, ...found
+Looking for (ptr)0x80ccdc0, ...found
+Looking for (ptr)0x80cde28, ...found
+Looking for (ptr)0x80cddb0, ...found
+Looking for (ptr)0x80ccd88, ...found
+Looking for (ptr)0x80cdd40, ...found
+Looking for (ptr)0x80cdc90, ...found
+Looking for (ptr)0x80ccd18, ...found
+Looking for (ptr)0x80cdbd8, ...found
+Looking for (ptr)0x80cdba0, ...found
+Looking for (ptr)0x80ccca8, ...found
+Looking for (ptr)0x80cdaf0, ...found
+Looking for (ptr)0x80cda80, ...found
+Looking for (ptr)0x80ccc00, ...found
+Looking for (ptr)0x80cda48, ...found
+Looking for (ptr)0x80cd9d8, ...found
+Looking for (ptr)0x80ccb90, ...found
+Looking for (ptr)0x80cd930, ...found
+Looking for (ptr)0x80cd890, ...found
+Looking for (ptr)0x80ccb58, ...found
+Looking for (ptr)0x80ccae8, ...found
+Looking for (ptr)0x80cca78, ...found
+Looking for (ptr)0x80cca40, ...found
+Looking for (ptr)0x80cc9d0, ...found
+Looking for (ptr)0x80cd7b0, ...found
+Looking for (ptr)0x80cd778, ...found
+Looking for (ptr)0x80cc800, ...found
+Looking for (ptr)0x80cc810, ...found
+Looking for (ptr)0x80ce7c0, ...found
+Looking for (ptr)0x80ce7e8, ...found
+Looking for (ptr)0x80ce810, ...found
+Looking for (ptr)0x80ce838, ...found
+Looking for (ptr)0x80cf650, ...found
+Looking for (ptr)0x80cf678, ...found
+Looking for (ptr)0x80cf6a8, ...found
+Looking for (ptr)0x80cf6d0, ...found
+Looking for (ptr)0x80cf6f8, ...found
+Looking for (ptr)0x80cf720, ...found
+Looking for (ptr)0x80cf748, ...found
+Looking for (ptr)0x80cf770, ...found
+Looking for (ptr)0x80cf798, ...found
+Looking for (ptr)0x80cf7c0, ...found
+Looking for (ptr)0x80cf7e8, ...found
+Looking for (ptr)0x80cf810, ...found
+Looking for (ptr)0x80cf838, ...found
+Looking for (ptr)0x80cf860, ...found
+Looking for (ptr)0x80cf888, ...found
+Looking for (ptr)0x80cf8b0, ...found
+Looking for (ptr)0x80cf8d8, ...found
+Looking for (ptr)0x80cf900, ...found
+Looking for (ptr)0x80cf928, ...found
+Looking for (ptr)0x80cf950, ...found
+Looking for (ptr)0x80cf978, ...found
+Looking for (ptr)0x80cf9a8, ...found
+Looking for (ptr)0x80cf9d0, ...found
+Looking for (ptr)0x80cf9f8, ...found
+Looking for (ptr)0x80cfa20, ...found
+Looking for (ptr)0x80cfa48, ...found
+Looking for (ptr)0x80cfa78, ...found
+Looking for (ptr)0x80cfaa0, ...found
+Looking for (ptr)0x80cfac8, ...found
+Looking for (ptr)0x80cfaf8, ...found
+Looking for (ptr)0x80cfb20, ...found
+Looking for (ptr)0x80cfb48, ...found
+Looking for (ptr)0x80cfb70, ...found
+Looking for (ptr)0x80cfb98, ...found
+Looking for (ptr)0x80cfbc8, ...found
+Looking for (ptr)0x80cfbf0, ...found
+Looking for (ptr)0x80cfc18, ...found
+Looking for (ptr)0x80cfc40, ...found
+Looking for (ptr)0x80cfc68, ...found
+Looking for (ptr)0x80cfc90, ...found
+Looking for (ptr)0x80cfcb8, ...found
+Looking for (ptr)0x80cfce0, ...found
+Looking for (ptr)0x80cfd10, ...found
+Looking for (ptr)0x80cfd38, ...found
+
+Deleting the Table

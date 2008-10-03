@@ -1,0 +1,158 @@
+Passed test Variable creation: Can we make the test variables properly
+Stg_Class (ptr): 0x80f586c
+	sizeOfSelf: 56
+	_deleteSelf: Yes
+	type: MockContext
+	_delete (func ptr): 0x804d226
+	_print (func ptr): 0x804d2b3
+	_copy (func ptr): 0x804d74f
+self->scalars (ptr): 0x80f58ac
+0.000000
+1.000000
+2.000000
+3.000000
+4.000000
+5.000000
+6.000000
+7.000000
+8.000000
+9.000000
+self->vectors (ptr): 0x80f58dc
+0.000000 0.000000 0.000000
+1.000000 1.000000 1.000000
+2.000000 2.000000 2.000000
+3.000000 3.000000 3.000000
+4.000000 4.000000 4.000000
+5.000000 5.000000 5.000000
+6.000000 6.000000 6.000000
+7.000000 7.000000 7.000000
+8.000000 8.000000 8.000000
+9.000000 9.000000 9.000000
+self->stuff (ptr): 0x80f59d4
+0.000000 0
+1.000000 1
+2.000000 2
+3.000000 3
+4.000000 4
+5.000000 5
+6.000000 6
+7.000000 7
+8.000000 8
+9.000000 9
+Variable Scalar: arrayptr (ptr) 0x80f58ac
+Variable Vector: arrayptr (ptr) 0x80f58dc
+Variable x: arrayptr (ptr) 0x80f58dc
+Variable y: arrayptr (ptr) 0x80f58dc
+Variable z: arrayptr (ptr) 0x80f58dc
+Variable Complex: arrayptr (ptr) 0x80f59d4
+Variable complexY: arrayptr (ptr) 0x80f59d4
+Variable complexZ: arrayptr (ptr) 0x80f59d4
+scalar[0]: 0.000000
+scalar[1]: 1.000000
+scalar[2]: 2.000000
+scalar[3]: 3.000000
+scalar[4]: 4.000000
+scalar[5]: 5.000000
+scalar[6]: 6.000000
+scalar[7]: 7.000000
+scalar[8]: 8.000000
+scalar[9]: 9.000000
+vector[0]: 0.000000 0.000000 0.000000
+vector[1]: 1.000000 1.000000 1.000000
+vector[2]: 2.000000 2.000000 2.000000
+vector[3]: 3.000000 3.000000 3.000000
+vector[4]: 4.000000 4.000000 4.000000
+vector[5]: 5.000000 5.000000 5.000000
+vector[6]: 6.000000 6.000000 6.000000
+vector[7]: 7.000000 7.000000 7.000000
+vector[8]: 8.000000 8.000000 8.000000
+vector[9]: 9.000000 9.000000 9.000000
+complex[0]: 0.000000 0
+complex[1]: 1.000000 1
+complex[2]: 2.000000 2
+complex[3]: 3.000000 3
+complex[4]: 4.000000 4
+complex[5]: 5.000000 5
+complex[6]: 6.000000 6
+complex[7]: 7.000000 7
+complex[8]: 8.000000 8
+complex[9]: 9.000000 9
+Passed test Variable Copying: Can the variable register and variables be copied
+Stg_Class (ptr): 0x80f6a5c
+	sizeOfSelf: 56
+	_deleteSelf: Yes
+	type: MockContext
+	_delete (func ptr): 0x804d226
+	_print (func ptr): 0x804d2b3
+	_copy (func ptr): 0x804d74f
+self->scalars (ptr): 0x80f6b0c
+0.000000
+1.000000
+2.000000
+3.000000
+4.000000
+5.000000
+6.000000
+7.000000
+8.000000
+9.000000
+self->vectors (ptr): 0x80f6c4c
+0.000000 0.000000 0.000000
+1.000000 1.000000 1.000000
+2.000000 2.000000 2.000000
+3.000000 3.000000 3.000000
+4.000000 4.000000 4.000000
+5.000000 5.000000 5.000000
+6.000000 6.000000 6.000000
+7.000000 7.000000 7.000000
+8.000000 8.000000 8.000000
+9.000000 9.000000 9.000000
+self->stuff (ptr): 0x80f6d9c
+0.000000 0
+1.000000 1
+2.000000 2
+3.000000 3
+4.000000 4
+5.000000 5
+6.000000 6
+7.000000 7
+8.000000 8
+9.000000 9
+Variable Scalar: arrayptr (ptr) 0x80f6b0c
+Variable Vector: arrayptr (ptr) 0x80f6c4c
+Variable x: arrayptr (ptr) 0x80f6c4c
+Variable y: arrayptr (ptr) 0x80f6c4c
+Variable z: arrayptr (ptr) 0x80f6c4c
+Variable Complex: arrayptr (ptr) 0x80f6d9c
+Variable complexY: arrayptr (ptr) 0x80f6d9c
+Variable complexZ: arrayptr (ptr) 0x80f6d9c
+scalar[0]: 0.000000
+scalar[1]: 1.000000
+scalar[2]: 2.000000
+scalar[3]: 3.000000
+scalar[4]: 4.000000
+scalar[5]: 5.000000
+scalar[6]: 6.000000
+scalar[7]: 7.000000
+scalar[8]: 8.000000
+scalar[9]: 9.000000
+vector[0]: 0.000000 0.000000 0.000000
+vector[1]: 1.000000 1.000000 1.000000
+vector[2]: 2.000000 2.000000 2.000000
+vector[3]: 3.000000 3.000000 3.000000
+vector[4]: 4.000000 4.000000 4.000000
+vector[5]: 5.000000 5.000000 5.000000
+vector[6]: 6.000000 6.000000 6.000000
+vector[7]: 7.000000 7.000000 7.000000
+vector[8]: 8.000000 8.000000 8.000000
+vector[9]: 9.000000 9.000000 9.000000
+complex[0]: 0.000000 0
+complex[1]: 1.000000 1
+complex[2]: 2.000000 2
+complex[3]: 3.000000 3
+complex[4]: 4.000000 4
+complex[5]: 5.000000 5
+complex[6]: 6.000000 6
+complex[7]: 7.000000 7
+complex[8]: 8.000000 8
+complex[9]: 9.000000 9

@@ -1,0 +1,412 @@
+StGermain Framework revision 3570. Copyright (C) 2003-2005 VPAC.
+Corner Node Layout
+Current processor is 2 of 4 in use (4 total).
+allowUnusedCPUs: True
+allowPartitionOnNode: True
+allowPartitionOnElement: False
+allowUnbalancing: False
+shadowDepth: 1
+procTopology:
+	IJKTopology (ptr): (0x8060c58)
+		size : (2,2,1)
+		isPeriodic : (False,False,False)
+		dynamicSizes : True
+partitionedAxis: { True, True, False }
+partitionCounts: { 2, 2, 1 }
+elementGlobalCounts: { 4, 4, 4 }
+elementGlobalCount: 64
+	elementLocalCounts[0]: { 2, 2, 4 }
+	elementLocalCounts[1]: { 2, 2, 4 }
+	elementLocalCounts[2]: { 2, 2, 4 }
+	elementLocalCounts[3]: { 2, 2, 4 }
+elementDomainCounts: { 3, 3, 4 }
+nodeGlobalCounts: { 5, 5, 5 }
+nodeGlobalCount: 125
+	nodeLocalCounts[0]: { 3, 3, 5 }
+	nodeLocalCounts[1]: { 3, 3, 5 }
+	nodeLocalCounts[2]: { 3, 3, 5 }
+	nodeLocalCounts[3]: { 3, 3, 5 }
+Element, global: 0 - local: X - shadow: X - domain: X
+Element, global: 1 - local: X - shadow: X - domain: X
+Element, global: 2 - local: X - shadow: X - domain: X
+Element, global: 3 - local: X - shadow: X - domain: X
+Element, global: 4 - local: X - shadow: 0 - domain: 16
+Element, global: 5 - local: X - shadow: 1 - domain: 17
+Element, global: 6 - local: X - shadow: 2 - domain: 18
+Element, global: 7 - local: X - shadow: X - domain: X
+Element, global: 8 - local: 0 - shadow: X - domain: 0
+Element, global: 9 - local: 1 - shadow: X - domain: 1
+Element, global: 10 - local: X - shadow: 3 - domain: 19
+Element, global: 11 - local: X - shadow: X - domain: X
+Element, global: 12 - local: 2 - shadow: X - domain: 2
+Element, global: 13 - local: 3 - shadow: X - domain: 3
+Element, global: 14 - local: X - shadow: 4 - domain: 20
+Element, global: 15 - local: X - shadow: X - domain: X
+Element, global: 16 - local: X - shadow: X - domain: X
+Element, global: 17 - local: X - shadow: X - domain: X
+Element, global: 18 - local: X - shadow: X - domain: X
+Element, global: 19 - local: X - shadow: X - domain: X
+Element, global: 20 - local: X - shadow: 5 - domain: 21
+Element, global: 21 - local: X - shadow: 6 - domain: 22
+Element, global: 22 - local: X - shadow: 7 - domain: 23
+Element, global: 23 - local: X - shadow: X - domain: X
+Element, global: 24 - local: 4 - shadow: X - domain: 4
+Element, global: 25 - local: 5 - shadow: X - domain: 5
+Element, global: 26 - local: X - shadow: 8 - domain: 24
+Element, global: 27 - local: X - shadow: X - domain: X
+Element, global: 28 - local: 6 - shadow: X - domain: 6
+Element, global: 29 - local: 7 - shadow: X - domain: 7
+Element, global: 30 - local: X - shadow: 9 - domain: 25
+Element, global: 31 - local: X - shadow: X - domain: X
+Element, global: 32 - local: X - shadow: X - domain: X
+Element, global: 33 - local: X - shadow: X - domain: X
+Element, global: 34 - local: X - shadow: X - domain: X
+Element, global: 35 - local: X - shadow: X - domain: X
+Element, global: 36 - local: X - shadow: 10 - domain: 26
+Element, global: 37 - local: X - shadow: 11 - domain: 27
+Element, global: 38 - local: X - shadow: 12 - domain: 28
+Element, global: 39 - local: X - shadow: X - domain: X
+Element, global: 40 - local: 8 - shadow: X - domain: 8
+Element, global: 41 - local: 9 - shadow: X - domain: 9
+Element, global: 42 - local: X - shadow: 13 - domain: 29
+Element, global: 43 - local: X - shadow: X - domain: X
+Element, global: 44 - local: 10 - shadow: X - domain: 10
+Element, global: 45 - local: 11 - shadow: X - domain: 11
+Element, global: 46 - local: X - shadow: 14 - domain: 30
+Element, global: 47 - local: X - shadow: X - domain: X
+Element, global: 48 - local: X - shadow: X - domain: X
+Element, global: 49 - local: X - shadow: X - domain: X
+Element, global: 50 - local: X - shadow: X - domain: X
+Element, global: 51 - local: X - shadow: X - domain: X
+Element, global: 52 - local: X - shadow: 15 - domain: 31
+Element, global: 53 - local: X - shadow: 16 - domain: 32
+Element, global: 54 - local: X - shadow: 17 - domain: 33
+Element, global: 55 - local: X - shadow: X - domain: X
+Element, global: 56 - local: 12 - shadow: X - domain: 12
+Element, global: 57 - local: 13 - shadow: X - domain: 13
+Element, global: 58 - local: X - shadow: 18 - domain: 34
+Element, global: 59 - local: X - shadow: X - domain: X
+Element, global: 60 - local: 14 - shadow: X - domain: 14
+Element, global: 61 - local: 15 - shadow: X - domain: 15
+Element, global: 62 - local: X - shadow: 19 - domain: 35
+Element, global: 63 - local: X - shadow: X - domain: X
+
+Element, local: 0 - global: 8
+Element, local: 1 - global: 9
+Element, local: 2 - global: 12
+Element, local: 3 - global: 13
+Element, local: 4 - global: 24
+Element, local: 5 - global: 25
+Element, local: 6 - global: 28
+Element, local: 7 - global: 29
+Element, local: 8 - global: 40
+Element, local: 9 - global: 41
+Element, local: 10 - global: 44
+Element, local: 11 - global: 45
+Element, local: 12 - global: 56
+Element, local: 13 - global: 57
+Element, local: 14 - global: 60
+Element, local: 15 - global: 61
+
+Element, domain: 0 - global: 8
+Element, domain: 1 - global: 9
+Element, domain: 2 - global: 12
+Element, domain: 3 - global: 13
+Element, domain: 4 - global: 24
+Element, domain: 5 - global: 25
+Element, domain: 6 - global: 28
+Element, domain: 7 - global: 29
+Element, domain: 8 - global: 40
+Element, domain: 9 - global: 41
+Element, domain: 10 - global: 44
+Element, domain: 11 - global: 45
+Element, domain: 12 - global: 56
+Element, domain: 13 - global: 57
+Element, domain: 14 - global: 60
+Element, domain: 15 - global: 61
+Element, domain: 16 - global: 4
+Element, domain: 17 - global: 5
+Element, domain: 18 - global: 6
+Element, domain: 19 - global: 10
+Element, domain: 20 - global: 14
+Element, domain: 21 - global: 20
+Element, domain: 22 - global: 21
+Element, domain: 23 - global: 22
+Element, domain: 24 - global: 26
+Element, domain: 25 - global: 30
+Element, domain: 26 - global: 36
+Element, domain: 27 - global: 37
+Element, domain: 28 - global: 38
+Element, domain: 29 - global: 42
+Element, domain: 30 - global: 46
+Element, domain: 31 - global: 52
+Element, domain: 32 - global: 53
+Element, domain: 33 - global: 54
+Element, domain: 34 - global: 58
+Element, domain: 35 - global: 62
+
+Node, global: 0 - local: X - shadow: X - domain: X
+Node, global: 1 - local: X - shadow: X - domain: X
+Node, global: 2 - local: X - shadow: X - domain: X
+Node, global: 3 - local: X - shadow: X - domain: X
+Node, global: 4 - local: X - shadow: X - domain: X
+Node, global: 5 - local: X - shadow: 0 - domain: 45
+Node, global: 6 - local: X - shadow: 1 - domain: 46
+Node, global: 7 - local: X - shadow: 2 - domain: 47
+Node, global: 8 - local: X - shadow: 3 - domain: 48
+Node, global: 9 - local: X - shadow: X - domain: X
+Node, global: 10 - local: 0 - shadow: X - domain: 0
+Node, global: 11 - local: 1 - shadow: X - domain: 1
+Node, global: 12 - local: 2 - shadow: X - domain: 2
+Node, global: 13 - local: X - shadow: 4 - domain: 49
+Node, global: 14 - local: X - shadow: X - domain: X
+Node, global: 15 - local: 3 - shadow: X - domain: 3
+Node, global: 16 - local: 4 - shadow: X - domain: 4
+Node, global: 17 - local: 5 - shadow: X - domain: 5
+Node, global: 18 - local: X - shadow: 5 - domain: 50
+Node, global: 19 - local: X - shadow: X - domain: X
+Node, global: 20 - local: 6 - shadow: X - domain: 6
+Node, global: 21 - local: 7 - shadow: X - domain: 7
+Node, global: 22 - local: 8 - shadow: X - domain: 8
+Node, global: 23 - local: X - shadow: 6 - domain: 51
+Node, global: 24 - local: X - shadow: X - domain: X
+Node, global: 25 - local: X - shadow: X - domain: X
+Node, global: 26 - local: X - shadow: X - domain: X
+Node, global: 27 - local: X - shadow: X - domain: X
+Node, global: 28 - local: X - shadow: X - domain: X
+Node, global: 29 - local: X - shadow: X - domain: X
+Node, global: 30 - local: X - shadow: 7 - domain: 52
+Node, global: 31 - local: X - shadow: 8 - domain: 53
+Node, global: 32 - local: X - shadow: 9 - domain: 54
+Node, global: 33 - local: X - shadow: 10 - domain: 55
+Node, global: 34 - local: X - shadow: X - domain: X
+Node, global: 35 - local: 9 - shadow: X - domain: 9
+Node, global: 36 - local: 10 - shadow: X - domain: 10
+Node, global: 37 - local: 11 - shadow: X - domain: 11
+Node, global: 38 - local: X - shadow: 11 - domain: 56
+Node, global: 39 - local: X - shadow: X - domain: X
+Node, global: 40 - local: 12 - shadow: X - domain: 12
+Node, global: 41 - local: 13 - shadow: X - domain: 13
+Node, global: 42 - local: 14 - shadow: X - domain: 14
+Node, global: 43 - local: X - shadow: 12 - domain: 57
+Node, global: 44 - local: X - shadow: X - domain: X
+Node, global: 45 - local: 15 - shadow: X - domain: 15
+Node, global: 46 - local: 16 - shadow: X - domain: 16
+Node, global: 47 - local: 17 - shadow: X - domain: 17
+Node, global: 48 - local: X - shadow: 13 - domain: 58
+Node, global: 49 - local: X - shadow: X - domain: X
+Node, global: 50 - local: X - shadow: X - domain: X
+Node, global: 51 - local: X - shadow: X - domain: X
+Node, global: 52 - local: X - shadow: X - domain: X
+Node, global: 53 - local: X - shadow: X - domain: X
+Node, global: 54 - local: X - shadow: X - domain: X
+Node, global: 55 - local: X - shadow: 14 - domain: 59
+Node, global: 56 - local: X - shadow: 15 - domain: 60
+Node, global: 57 - local: X - shadow: 16 - domain: 61
+Node, global: 58 - local: X - shadow: 17 - domain: 62
+Node, global: 59 - local: X - shadow: X - domain: X
+Node, global: 60 - local: 18 - shadow: X - domain: 18
+Node, global: 61 - local: 19 - shadow: X - domain: 19
+Node, global: 62 - local: 20 - shadow: X - domain: 20
+Node, global: 63 - local: X - shadow: 18 - domain: 63
+Node, global: 64 - local: X - shadow: X - domain: X
+Node, global: 65 - local: 21 - shadow: X - domain: 21
+Node, global: 66 - local: 22 - shadow: X - domain: 22
+Node, global: 67 - local: 23 - shadow: X - domain: 23
+Node, global: 68 - local: X - shadow: 19 - domain: 64
+Node, global: 69 - local: X - shadow: X - domain: X
+Node, global: 70 - local: 24 - shadow: X - domain: 24
+Node, global: 71 - local: 25 - shadow: X - domain: 25
+Node, global: 72 - local: 26 - shadow: X - domain: 26
+Node, global: 73 - local: X - shadow: 20 - domain: 65
+Node, global: 74 - local: X - shadow: X - domain: X
+Node, global: 75 - local: X - shadow: X - domain: X
+Node, global: 76 - local: X - shadow: X - domain: X
+Node, global: 77 - local: X - shadow: X - domain: X
+Node, global: 78 - local: X - shadow: X - domain: X
+Node, global: 79 - local: X - shadow: X - domain: X
+Node, global: 80 - local: X - shadow: 21 - domain: 66
+Node, global: 81 - local: X - shadow: 22 - domain: 67
+Node, global: 82 - local: X - shadow: 23 - domain: 68
+Node, global: 83 - local: X - shadow: 24 - domain: 69
+Node, global: 84 - local: X - shadow: X - domain: X
+Node, global: 85 - local: 27 - shadow: X - domain: 27
+Node, global: 86 - local: 28 - shadow: X - domain: 28
+Node, global: 87 - local: 29 - shadow: X - domain: 29
+Node, global: 88 - local: X - shadow: 25 - domain: 70
+Node, global: 89 - local: X - shadow: X - domain: X
+Node, global: 90 - local: 30 - shadow: X - domain: 30
+Node, global: 91 - local: 31 - shadow: X - domain: 31
+Node, global: 92 - local: 32 - shadow: X - domain: 32
+Node, global: 93 - local: X - shadow: 26 - domain: 71
+Node, global: 94 - local: X - shadow: X - domain: X
+Node, global: 95 - local: 33 - shadow: X - domain: 33
+Node, global: 96 - local: 34 - shadow: X - domain: 34
+Node, global: 97 - local: 35 - shadow: X - domain: 35
+Node, global: 98 - local: X - shadow: 27 - domain: 72
+Node, global: 99 - local: X - shadow: X - domain: X
+Node, global: 100 - local: X - shadow: X - domain: X
+Node, global: 101 - local: X - shadow: X - domain: X
+Node, global: 102 - local: X - shadow: X - domain: X
+Node, global: 103 - local: X - shadow: X - domain: X
+Node, global: 104 - local: X - shadow: X - domain: X
+Node, global: 105 - local: X - shadow: 28 - domain: 73
+Node, global: 106 - local: X - shadow: 29 - domain: 74
+Node, global: 107 - local: X - shadow: 30 - domain: 75
+Node, global: 108 - local: X - shadow: 31 - domain: 76
+Node, global: 109 - local: X - shadow: X - domain: X
+Node, global: 110 - local: 36 - shadow: X - domain: 36
+Node, global: 111 - local: 37 - shadow: X - domain: 37
+Node, global: 112 - local: 38 - shadow: X - domain: 38
+Node, global: 113 - local: X - shadow: 32 - domain: 77
+Node, global: 114 - local: X - shadow: X - domain: X
+Node, global: 115 - local: 39 - shadow: X - domain: 39
+Node, global: 116 - local: 40 - shadow: X - domain: 40
+Node, global: 117 - local: 41 - shadow: X - domain: 41
+Node, global: 118 - local: X - shadow: 33 - domain: 78
+Node, global: 119 - local: X - shadow: X - domain: X
+Node, global: 120 - local: 42 - shadow: X - domain: 42
+Node, global: 121 - local: 43 - shadow: X - domain: 43
+Node, global: 122 - local: 44 - shadow: X - domain: 44
+Node, global: 123 - local: X - shadow: 34 - domain: 79
+Node, global: 124 - local: X - shadow: X - domain: X
+
+Node, local: 0 - global: 10
+Node, local: 1 - global: 11
+Node, local: 2 - global: 12
+Node, local: 3 - global: 15
+Node, local: 4 - global: 16
+Node, local: 5 - global: 17
+Node, local: 6 - global: 20
+Node, local: 7 - global: 21
+Node, local: 8 - global: 22
+Node, local: 9 - global: 35
+Node, local: 10 - global: 36
+Node, local: 11 - global: 37
+Node, local: 12 - global: 40
+Node, local: 13 - global: 41
+Node, local: 14 - global: 42
+Node, local: 15 - global: 45
+Node, local: 16 - global: 46
+Node, local: 17 - global: 47
+Node, local: 18 - global: 60
+Node, local: 19 - global: 61
+Node, local: 20 - global: 62
+Node, local: 21 - global: 65
+Node, local: 22 - global: 66
+Node, local: 23 - global: 67
+Node, local: 24 - global: 70
+Node, local: 25 - global: 71
+Node, local: 26 - global: 72
+Node, local: 27 - global: 85
+Node, local: 28 - global: 86
+Node, local: 29 - global: 87
+Node, local: 30 - global: 90
+Node, local: 31 - global: 91
+Node, local: 32 - global: 92
+Node, local: 33 - global: 95
+Node, local: 34 - global: 96
+Node, local: 35 - global: 97
+Node, local: 36 - global: 110
+Node, local: 37 - global: 111
+Node, local: 38 - global: 112
+Node, local: 39 - global: 115
+Node, local: 40 - global: 116
+Node, local: 41 - global: 117
+Node, local: 42 - global: 120
+Node, local: 43 - global: 121
+Node, local: 44 - global: 122
+
+Node, domain: 0 - global: 10
+Node, domain: 1 - global: 11
+Node, domain: 2 - global: 12
+Node, domain: 3 - global: 15
+Node, domain: 4 - global: 16
+Node, domain: 5 - global: 17
+Node, domain: 6 - global: 20
+Node, domain: 7 - global: 21
+Node, domain: 8 - global: 22
+Node, domain: 9 - global: 35
+Node, domain: 10 - global: 36
+Node, domain: 11 - global: 37
+Node, domain: 12 - global: 40
+Node, domain: 13 - global: 41
+Node, domain: 14 - global: 42
+Node, domain: 15 - global: 45
+Node, domain: 16 - global: 46
+Node, domain: 17 - global: 47
+Node, domain: 18 - global: 60
+Node, domain: 19 - global: 61
+Node, domain: 20 - global: 62
+Node, domain: 21 - global: 65
+Node, domain: 22 - global: 66
+Node, domain: 23 - global: 67
+Node, domain: 24 - global: 70
+Node, domain: 25 - global: 71
+Node, domain: 26 - global: 72
+Node, domain: 27 - global: 85
+Node, domain: 28 - global: 86
+Node, domain: 29 - global: 87
+Node, domain: 30 - global: 90
+Node, domain: 31 - global: 91
+Node, domain: 32 - global: 92
+Node, domain: 33 - global: 95
+Node, domain: 34 - global: 96
+Node, domain: 35 - global: 97
+Node, domain: 36 - global: 110
+Node, domain: 37 - global: 111
+Node, domain: 38 - global: 112
+Node, domain: 39 - global: 115
+Node, domain: 40 - global: 116
+Node, domain: 41 - global: 117
+Node, domain: 42 - global: 120
+Node, domain: 43 - global: 121
+Node, domain: 44 - global: 122
+Node, domain: 45 - global: 5
+Node, domain: 46 - global: 6
+Node, domain: 47 - global: 7
+Node, domain: 48 - global: 8
+Node, domain: 49 - global: 13
+Node, domain: 50 - global: 18
+Node, domain: 51 - global: 23
+Node, domain: 52 - global: 30
+Node, domain: 53 - global: 31
+Node, domain: 54 - global: 32
+Node, domain: 55 - global: 33
+Node, domain: 56 - global: 38
+Node, domain: 57 - global: 43
+Node, domain: 58 - global: 48
+Node, domain: 59 - global: 55
+Node, domain: 60 - global: 56
+Node, domain: 61 - global: 57
+Node, domain: 62 - global: 58
+Node, domain: 63 - global: 63
+Node, domain: 64 - global: 68
+Node, domain: 65 - global: 73
+Node, domain: 66 - global: 80
+Node, domain: 67 - global: 81
+Node, domain: 68 - global: 82
+Node, domain: 69 - global: 83
+Node, domain: 70 - global: 88
+Node, domain: 71 - global: 93
+Node, domain: 72 - global: 98
+Node, domain: 73 - global: 105
+Node, domain: 74 - global: 106
+Node, domain: 75 - global: 107
+Node, domain: 76 - global: 108
+Node, domain: 77 - global: 113
+Node, domain: 78 - global: 118
+Node, domain: 79 - global: 123
+
+
+Body Node Layout
+Checking body node decomp has same element decomp as corner node decomp:
+	Checking general partitions etc
+	Checking the 64 individual items
+	The decomps matched for the given item types
+	Passed.
+Checking body node decomp has same node decomp as it's element decomp:
+	Checking general partitions etc
+	Checking the 64 individual items
+	The decomps matched for the given item types
+	Passed.

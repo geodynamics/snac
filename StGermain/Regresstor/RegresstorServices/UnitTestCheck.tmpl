@@ -1,0 +1,52 @@
+<html>
+	<head><title>UnitTestCheck Table</title></head>
+	<body>
+		<h1>UnitTestCheck Table</h1>
+		<p>
+		Links: <a href=Summary.cgi>Summary</a> | <a href=Machine.cgi>Machine</a> | <a href=Build.cgi>Build</a> | <a href=Run.cgi>Run</a> | <a href=UnitTestCheck.cgi>UnitTestCheck</a> | <a href=FailedUnitSubTest.cgi>FailedUnitSubTest</a>
+		</p>
+		<form action="UnitTestCheck.cgi" method="get">
+		<table>
+		<tr>
+		<td>RunID:</td><td><input type="text" name="RunID" value="" size=5 /></td>
+		</tr>
+		<tr>
+		<td>Project Name:</td><td><input type="text" name="Project.Name" value="" size=20 /></td>
+		</tr>
+		<tr>
+		<td>UnitName:</td><td><input type="text" name="UnitName" value="" size=20 /></td>
+		</tr>
+		<tr>
+		<td>TestName:</td><td><input type="text" name="TestName" value="" size=20 /></td>
+		</tr>
+		<tr>
+		<td>Passed:</td><td><input type="text" name="Passed" value="" size=1 /></td>
+		</tr>
+		</table>
+		<input type="submit" value="Filter" /> <input type="reset" value="Clear">
+		</form>
+		<p>
+		<TMPL_VAR NAME=queryString>
+		</p>
+		<table border=1>
+		<tr>
+			<td><b>ID</b></td>
+			<td><b>RunID</b></td>
+			<td><b>Project/Build</b></td>
+			<td><b>UnitName</b></td>
+			<td><b>TestName</b></td>
+			<td><b>Passed</b></td>
+		</tr>
+		<TMPL_LOOP NAME=data>
+		<tr>
+			<td><a name=<TMPL_VAR NAME=ID>><TMPL_VAR NAME=ID></a></td>
+			<td><a href=Run.cgi#<TMPL_VAR NAME=RunID>><TMPL_VAR NAME=RunID></a></td>
+			<td><a href=Build.cgi#<TMPL_VAR NAME=BuildID>><TMPL_VAR NAME=ProjName></a></td>
+			<td><TMPL_VAR NAME=UnitName></td>
+			<td><TMPL_VAR NAME=TestName></td>
+			<td><a href=FailedUnitSubTest.cgi?UnitTestCheckID=<TMPL_VAR NAME=ID>><TMPL_VAR NAME=Passed></a></td>
+		</tr>
+		</TMPL_LOOP>
+		</table>
+	</body>
+</html>

@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+	<struct name="components">
+		<struct name="cornerNodeTopology">
+			<param name="Type">IJK6Topology</param>
+			<param name="sizeI">elementResI</param>
+			<param name="sizeJ">elementResJ</param>
+			<param name="sizeK">elementResK</param>
+			<param name="sizeShift">1</param>
+		</struct>
+		<struct name="cornerNodeLayout">
+			<param name="Type">CornerNL</param>
+			<param name="ElementLayout">elementLayout</param>
+			<param name="Topology">cornerNodeTopology</param>
+		</struct>
+		<struct name="decomp-linear">
+			<param name="Type">HexaMD</param>
+			<param name="ElementLayout">elementLayout</param>
+			<param name="NodeLayout">cornerNodeLayout</param>
+		</struct>
+		<struct name="meshLayout-linear">
+			<param name="Type">MeshLayout</param>
+			<param name="ElementLayout">elementLayout</param>
+			<param name="NodeLayout">cornerNodeLayout</param>
+			<param name="MeshDecomp">decomp-linear</param>
+		</struct>
+		<struct name="mesh-linear">
+			<param name="Type">Mesh</param>
+			<param name="MeshLayout">meshLayout-linear</param>
+			<param name="ElementSize">8</param>
+			<param name="NodeSize">0</param>
+		</struct>
+		<struct name="geometry">
+			<param name="Type">BlockGeometry</param>
+			<param name="sizeI">elementResI</param>
+			<param name="sizeJ">elementResJ</param>
+			<param name="sizeK">elementResK</param>
+			<param name="sizeShift">+1</param>
+		</struct>
+			<struct name="elementTopology">
+			<param name="Type">IJK26Topology</param>
+			<param name="sizeI">elementResI</param>
+			<param name="sizeJ">elementResJ</param>
+			<param name="sizeK">elementResK</param>
+		</struct>
+		<struct name="elementLayout">
+			<param name="Type">ParallelPipedHexaEL</param>
+			<param name="Topology">elementTopology</param>
+			<param name="Geometry">geometry</param>
+		</struct>
+ 
+		<struct name="elementCellLayout"> 
+			<param name="Type">ElementCellLayout</param>
+			<param name="Mesh">mesh-linear</param>
+		</struct>
+		<struct name="swarm">
+			<param name="Type">Swarm</param>
+			<param name="CellLayout">elementCellLayout</param>
+			<param name="ParticleLayout">particleLayout</param>
+		</struct>
+	</struct>
+ 
+	<param name="journal.info.lucInfo">true</param>
+	<param name="journal-level.info.lucInfo">2</param>
+	<param name="maxTimeSteps">1</param> 
+	<param name="dumpEvery">1</param>
+
+	<param name="outputPath">./output</param> 
+	<param name="dim">2</param>
+	<param name="elementResI">10</param>
+	<param name="elementResJ">10</param> 
+	<param name="elementResK">1</param> 
+	<param name="shadowDepth">1</param>
+	<param name="minX">0.0</param> 
+	<param name="minY">0.0</param> 
+	<param name="minZ">0.0</param>
+	<param name="maxX">100.0</param> 
+	<param name="maxY">100.0</param>
+	<param name="maxZ">100.0</param>
+	<param name="allowUnbalancing">True</param> 
+	<param name="buildElementNodeTbl">True</param> 
+	
+</StGermainData>

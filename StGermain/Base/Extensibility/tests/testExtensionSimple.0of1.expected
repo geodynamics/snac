@@ -1,0 +1,59 @@
+Watching rank: 0
+OfObject Final size 84
+OfObject Type0 size 4, value   a
+OfObject Temp0 size 80, value   0   1   2   3   4   5   6   7   8   9 
+OfStruct Final size 108
+OfStruct Type0 size 4
+OfStruct Temp0 size 80
+OfArray Type0 value   a
+OfArray Temp0 value   0   1   2   3   4   5   6   7   8   9 
+OfArray Vel0 value 0.000000
+OfArray Type0 value   a
+OfArray Temp0 value  10  11  12  13  14  15  16  17  18  19 
+OfArray Vel0 value 1.000000
+OfArray Type0 value   a
+OfArray Temp0 value  20  21  22  23  24  25  26  27  28  29 
+OfArray Vel0 value 2.000000
+OfArray Type0 value   a
+OfArray Temp0 value  30  31  32  33  34  35  36  37  38  39 
+OfArray Vel0 value 3.000000
+OfArray Type0 value   a
+OfArray Temp0 value  40  41  42  43  44  45  46  47  48  49 
+OfArray Vel0 value 4.000000
+OfArray Type0 value   a
+OfArray Temp0 value  50  51  52  53  54  55  56  57  58  59 
+OfArray Vel0 value 5.000000
+OfArray Type0 value   a
+OfArray Temp0 value  60  61  62  63  64  65  66  67  68  69 
+OfArray Vel0 value 6.000000
+OfArray Type0 value   a
+OfArray Temp0 value  70  71  72  73  74  75  76  77  78  79 
+OfArray Vel0 value 7.000000
+Sucessfully copied baseObject properly
+OfObject Copy Type0 size 4, value   a
+OfObject Copy Temp0 size 80, value   0   1   2   3   4   5   6   7   8   9 
+Array extension copy success
+OfArray Copy Type0 value   a
+OfArray Copy Temp0 value   0   1   2   3   4   5   6   7   8   9 
+OfArray Copy Vel0 value 0.000000
+OfArray Copy Type0 value   a
+OfArray Copy Temp0 value  10  11  12  13  14  15  16  17  18  19 
+OfArray Copy Vel0 value 1.000000
+OfArray Copy Type0 value   a
+OfArray Copy Temp0 value  20  21  22  23  24  25  26  27  28  29 
+OfArray Copy Vel0 value 2.000000
+OfArray Copy Type0 value   a
+OfArray Copy Temp0 value  30  31  32  33  34  35  36  37  38  39 
+OfArray Copy Vel0 value 3.000000
+OfArray Copy Type0 value   a
+OfArray Copy Temp0 value  40  41  42  43  44  45  46  47  48  49 
+OfArray Copy Vel0 value 4.000000
+OfArray Copy Type0 value   a
+OfArray Copy Temp0 value  50  51  52  53  54  55  56  57  58  59 
+OfArray Copy Vel0 value 5.000000
+OfArray Copy Type0 value   a
+OfArray Copy Temp0 value  60  61  62  63  64  65  66  67  68  69 
+OfArray Copy Vel0 value 6.000000
+OfArray Copy Type0 value   a
+OfArray Copy Temp0 value  70  71  72  73  74  75  76  77  78  79 
+OfArray Copy Vel0 value 7.000000

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<!-- A StGermain input file -->
+<!-- DTD to validate against -->
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+	<param name="journal-file.MPIStream.one">test-mpi1.txt</param>
+	<param name="journal-mpi-offset.MPIStream.one"> 100 </param>
+	<param name="journal-file.MPIStream.two">test-mpi2.txt</param>
+</StGermainData>

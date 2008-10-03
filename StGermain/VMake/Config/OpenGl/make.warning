@@ -1,0 +1,4 @@
+conftest.c:3: warning: implicit declaration of function ‘OSMesaCreateContext’
+conftest.c:3: warning: initialization makes pointer from integer without a cast
+conftest.c:4: warning: implicit declaration of function ‘OSMesaMakeCurrent’
+conftest.c:5: warning: implicit declaration of function ‘OSMesaDestroyContext’

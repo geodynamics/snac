@@ -1,0 +1,624 @@
+ifndef WHICH
+	WHICH=/usr/bin/which
+endif
+ifndef UNAME
+	UNAME=/bin/uname
+endif
+ifndef UNAME_M
+	UNAME_M=/bin/uname -m
+endif
+ifndef UNAME_R
+	UNAME_R=/bin/uname -r
+endif
+ifndef MACHINE
+	MACHINE=i686
+endif
+ifndef KERNEL_RELEASE
+	KERNEL_RELEASE=2.6.24-19-generic
+endif
+ifndef UNAME_S
+	UNAME_S=/bin/uname -s
+endif
+ifndef SYSTEM
+	SYSTEM=Linux
+endif
+ifndef MAKE
+	MAKE=/usr/bin/make
+endif
+ifndef SH
+	SH=/bin/sh
+endif
+ifeq (default,$(origin RM))
+	RM=/bin/rm
+endif
+ifndef RM
+	RM=/bin/rm
+endif
+ifndef RM_F
+	RM_F=/bin/rm -rf
+endif
+ifndef CD
+	CD=cd
+endif
+ifndef CP
+	CP=/bin/cp
+endif
+ifndef CP_F
+	CP_F=/bin/cp -f
+endif
+ifndef MV
+	MV=/bin/mv
+endif
+ifndef MV_F
+	MV_F=/bin/mv -f
+endif
+ifndef MKDIR
+	MKDIR=mkdir -p
+endif
+ifndef SED
+	SED=/bin/sed
+endif
+ifndef FIND
+	FIND=/usr/bin/find
+endif
+ifndef LN
+	LN=/bin/ln
+endif
+ifndef LN_S
+	LN_S=/bin/ln -fs
+endif
+ifndef TEE
+	TEE=/usr/bin/tee
+endif
+ifndef NM
+	NM=/usr/bin/nm
+endif
+ifndef LS
+	LS=/bin/ls
+endif
+ifndef GREP
+	GREP=/bin/grep
+endif
+ifndef AR
+	AR=/usr/bin/ar
+endif
+ifndef AR_C
+	AR_C=${AR} -cru
+endif
+ifndef RANLIB
+	RANLIB=/usr/bin/ranlib
+endif
+ifeq (default,$(origin CC))
+	CC=/usr/bin/cc
+endif
+ifndef CC
+	CC=/usr/bin/cc
+endif
+ifndef CC_TYPE
+	CC_TYPE=gnu
+endif
+ifeq (default,$(origin CXX))
+	CXX=g++
+endif
+ifndef CC_PIPE
+	CC_PIPE=-pipe
+endif
+ifndef CC_64
+	CC_64=-m64
+endif
+ifndef SYSTEM_SIZEOF_LONG
+	SYSTEM_SIZEOF_LONG=4
+endif
+ifndef SYSTEM_64
+	SYSTEM_64=0
+endif
+ifndef SYSTEM_BIG_ENDIAN
+	SYSTEM_BIG_ENDIAN=0
+endif
+ifndef OBJCC
+	OBJCC=/usr/bin/cc -x objective-c
+endif
+ifndef OBJECTIVEC_LIBS
+	OBJECTIVEC_LIBS=-lobjc
+endif
+ifndef CXX_EXT
+	CXX_EXT=cxx
+endif
+ifndef CXX
+	CXX=g++
+endif
+ifndef CXX_TYPE
+	CXX_TYPE=gnu
+endif
+ifndef CXX_PIPE
+	CXX_PIPE=-pipe
+endif
+ifeq (default,$(origin F77))
+	F77=/usr/bin/f77
+endif
+ifndef F77
+	F77=/usr/bin/f77
+endif
+ifndef F77_TYPE
+	F77_TYPE=gnu
+endif
+ifndef LINKER
+	LINKER=/usr/bin/cc
+endif
+ifndef SO_EXT
+	SO_EXT=so
+endif
+ifndef MODULE_EXT
+	MODULE_EXT=${SO_EXT}
+endif
+ifndef SO_CFLAGS
+	SO_CFLAGS=-fPIC
+endif
+ifndef SO_LFLAGS
+	SO_LFLAGS=-shared
+endif
+ifndef MODULE_LFLAGS
+	MODULE_LFLAGS=${SO_LFLAGS}
+endif
+ifndef RPATH_FLAG
+	RPATH_FLAG=-Xlinker -rpath -Xlinker 
+endif
+ifndef RPATH
+	RPATH=
+endif
+ifndef RPATH_LFLAGS
+	RPATH_LFLAGS=${RPATH_FLAG}${LIB_DIR}
+endif
+ifndef EXPORT_DYNAMIC_LFLAGS
+	EXPORT_DYNAMIC_LFLAGS=-Xlinker -export-dynamic
+endif
+ifndef CC_CXX_LFLAGS
+	CC_CXX_LFLAGS=-lstdc++
+endif
+ifndef FORTRAN_COMPILER_LIBDIR
+	FORTRAN_COMPILER_LIBDIR=/usr/lib
+endif
+ifndef EXTRA_FORTRAN_LIBS
+	EXTRA_FORTRAN_LIBS=-lg2c
+endif
+ifndef CC_FORTRAN_LFLAGS
+	CC_FORTRAN_LFLAGS=-L${FORTRAN_COMPILER_LIBDIR} ${EXTRA_FORTRAN_LIBS}
+endif
+ifndef F77_LIBS
+	F77_LIBS=
+endif
+ifndef F77_SYMBOL_TRANSLATION
+	F77_SYMBOL_TRANSLATION=-DFORTRAN_SINGLE_TRAILINGBAR
+endif
+ifndef CC_WARNINGLEVEL
+	CC_WARNINGLEVEL=-Wall
+endif
+ifndef CC_SYMBOLLEVEL
+	CC_SYMBOLLEVEL=-g
+endif
+ifndef CC_OPTIMISATIONLEVEL
+	CC_OPTIMISATIONLEVEL=
+endif
+ifndef NOSHARED
+	NOSHARED=
+endif
+ifndef DL_DIR
+	DL_DIR=/usr
+endif
+ifndef DL_LIBDIR
+	DL_LIBDIR=/usr/lib
+endif
+ifndef DL_LIBFILES
+	DL_LIBFILES=-ldl
+endif
+ifndef DL_LIBS
+	DL_LIBS=-L${DL_LIBDIR} ${DL_LIBFILES}
+endif
+ifndef DL_INCDIR
+	DL_INCDIR=/usr/include
+endif
+ifndef DL_INCLUDES
+	DL_INCLUDES=-I/usr/include
+endif
+ifndef NOPYTHON
+	NOPYTHON=
+endif
+ifndef DOXYGEN
+	DOXYGEN=/usr/bin/doxygen
+endif
+ifndef SVN
+	SVN=/usr/bin/svn
+endif
+ifndef HAVE_SVN
+	HAVE_SVN=1
+endif
+ifndef CSOAP_DIR
+	CSOAP_DIR=/usr/lib/libcsoap
+endif
+ifndef CSOAP_INCDIR
+	CSOAP_INCDIR=${CSOAP_DIR}/include/libcsoap-1.0
+endif
+ifndef CSOAP_INCLUDES
+	CSOAP_INCLUDES=-I${CSOAP_INCDIR}
+endif
+ifndef CSOAP_LIBDIR
+	CSOAP_LIBDIR=${CSOAP_DIR}/lib
+endif
+ifndef CSOAP_LIBFILES
+	CSOAP_LIBFILES=-lcsoap-1.0
+endif
+ifndef CSOAP_LIBS
+	CSOAP_LIBS=-L${CSOAP_LIBDIR} ${CSOAP_LIBFILES}
+endif
+ifndef NANOHTTP_DIR
+	NANOHTTP_DIR=${CSOAP_DIR}
+endif
+ifndef NANOHTTP_INCDIR
+	NANOHTTP_INCDIR=${NANOHTTP_DIR}/include/nanohttp-1.0
+endif
+ifndef NANOHTTP_INCLUDES
+	NANOHTTP_INCLUDES=-I${NANOHTTP_INCDIR}
+endif
+ifndef NANOHTTP_LIBDIR
+	NANOHTTP_LIBDIR=${NANOHTTP_DIR}/lib
+endif
+ifndef NANOHTTP_LIBFILES
+	NANOHTTP_LIBFILES=-lnanohttp-1.0
+endif
+ifndef NANOHTTP_LIBS
+	NANOHTTP_LIBS=-L${NANOHTTP_LIBDIR} ${NANOHTTP_LIBFILES}
+endif
+ifndef HAVE_SOAP
+	HAVE_SOAP=
+endif
+ifndef REGRESSTOR_URL
+	REGRESSTOR_URL=http://localhost/~alan/cgi-bin/RegresstorServices/Regresstor.cgi
+endif
+ifndef OPTIONS
+	OPTIONS=
+endif
+ifndef USE_RUN_LONG_TESTS
+	USE_RUN_LONG_TESTS=
+endif
+ifndef PROJ_ROOT
+	PROJ_ROOT=/home/echoi/opt/SNAC/StGermain
+endif
+ifndef BLD_DIR
+	BLD_DIR=/home/echoi/opt/SNAC/build
+endif
+ifndef EXPORT_DIR
+	EXPORT_DIR=/home/echoi/opt/SNAC/build
+endif
+ifndef TMP_DIR
+	TMP_DIR=/home/echoi/opt/SNAC/build/tmp
+endif
+ifndef BIN_DIR
+	BIN_DIR=/home/echoi/opt/SNAC/build/bin
+endif
+ifndef LIB_DIR
+	LIB_DIR=/home/echoi/opt/SNAC/build/lib
+endif
+ifndef INC_DIR
+	INC_DIR=/home/echoi/opt/SNAC/build/include
+endif
+ifndef TST_DIR
+	TST_DIR=/home/echoi/opt/SNAC/build/tests
+endif
+ifndef PYB_DIR
+	PYB_DIR=/home/echoi/opt/SNAC/build/Python
+endif
+ifndef PYC_DIR
+	PYC_DIR=/home/echoi/opt/SNAC/build/Python
+endif
+ifndef SHARE_DIR
+	SHARE_DIR=/home/echoi/opt/SNAC/build/share
+endif
+PROJECT=StGermain
+ifndef FIND_SUBDIRS
+	FIND_SUBDIRS=${FIND} * -type d -follow -prune ! -name .svn
+endif
+ifndef MAKEFILE_FIND_SUBDIRS
+	MAKEFILE_FIND_SUBDIRS=$(shell ${FIND_SUBDIRS})
+endif
+ifndef GET_MODNAME
+	GET_MODNAME=basename `pwd | ${SED} s/src//g | ${SED} s/tests//g`
+endif
+ifndef MAKEFILE_GET_MODNAME
+	MAKEFILE_GET_MODNAME=$(shell ${GET_MODNAME})
+endif
+ifndef MAKEFILE_CHECK_DEPENDENCIES
+	MAKEFILE_CHECK_DEPENDENCIES=$(foreach DEP,${DEPENDS},$(shell cd ${LIB_DIR} && if test -z `find . -name ${PROJECT}${DEP}*` ; then echo Compiling dependency: ${DEP} 1>&2 && cd ${PROJ_ROOT}/src && if test ! -z `find . -type d -name ${DEP}` ; then cd `find . -type d -name ${DEP}` && make 1>&2 ; else echo Cannot find dependency: ${DEP} 1>&2 ; fi ; fi ) )
+endif
+ifndef CC_SYMBOLLEVEL
+	CC_SYMBOLLEVEL=-g
+endif
+ifndef CC_WARNINGLEVEL
+	CC_WARNINGLEVEL=-Wall
+endif
+ifndef CC_DEBUGLEVEL
+	CC_DEBUGLEVEL=-DDEBUG -DQUERY_FP
+endif
+ifndef MATH_DIR
+	MATH_DIR=/usr
+endif
+ifndef MATH_INCDIR
+	MATH_INCDIR=${MATH_DIR}/include
+endif
+ifndef MATH_INCLUDES
+	MATH_INCLUDES=-I${MATH_INCDIR}
+endif
+ifndef MATH_LIBDIR
+	MATH_LIBDIR=${MATH_DIR}/lib
+endif
+ifndef MATH_LIBS
+	MATH_LIBS=-L${MATH_LIBDIR} -lm
+endif
+ifndef XML2_CONFIG
+	XML2_CONFIG=/usr/bin/xml2-config
+endif
+ifndef XML_DIR
+	XML_DIR=/usr
+endif
+ifndef XML_CFLAGS
+	XML_CFLAGS=-I/usr/include/libxml2
+endif
+ifndef XML_INCLUDES
+	XML_INCLUDES=-I/usr/include/libxml2
+endif
+ifndef XML_LIBS
+	XML_LIBS=-lxml2
+endif
+ifndef PETSC_DIR
+	PETSC_DIR=/home/echoi/opt/petsc-2.3.2-p10
+endif
+ifndef BOPT
+	BOPT=O
+endif
+ifndef PETSC_INCDIR
+	PETSC_INCDIR=${PETSC_DIR}/include
+endif
+ifndef PETSC_VERSION_RELEASE
+	PETSC_VERSION_RELEASE=1
+endif
+ifndef PETSC_BINDIR
+	PETSC_BINDIR=${PETSC_DIR}/bin
+endif
+ifndef PETSC_LIBDIR
+	PETSC_LIBDIR=${PETSC_DIR}/lib/${PETSC_ARCH}
+endif
+ifndef PETSC_BMAKEDIR
+	PETSC_BMAKEDIR=${PETSC_DIR}/bmake/${PETSC_ARCH}
+endif
+ifndef PETSC_CONFIG_FILE
+	PETSC_CONFIG_FILE=${PETSC_BMAKEDIR}/petscconf
+endif
+ifndef PETSC_VARIABLES_FILE
+	PETSC_VARIABLES_FILE=${PETSC_BMAKEDIR}/petscconf
+endif
+ifndef PETSC_INCLUDES
+	PETSC_INCLUDES=-I${PETSC_INCDIR} -I${PETSC_BMAKEDIR}
+endif
+ifndef BLAS_LIB
+	BLAS_LIB=
+endif
+ifndef LAPACK_LIB
+	LAPACK_LIB=
+endif
+ifndef LAPACK_BLAS_LIBS
+	LAPACK_BLAS_LIBS= -Wl,-rpath,/home/echoi/opt/petsc-2.3.2-p10/externalpackages/f2cblaslapack/linux-gnu-c-debug -L/home/echoi/opt/petsc-2.3.2-p10/externalpackages/f2cblaslapack/linux-gnu-c-debug -lf2clapack -Wl,-rpath,/home/echoi/opt/petsc-2.3.2-p10/externalpackages/f2cblaslapack/linux-gnu-c-debug -L/home/echoi/opt/petsc-2.3.2-p10/externalpackages/f2cblaslapack/linux-gnu-c-debug -lf2cblas -lm
+endif
+ifndef PETSC_X11_LIBS
+	PETSC_X11_LIBS= -lX11
+endif
+ifndef CLINKER_SLFLAG
+	CLINKER_SLFLAG=
+endif
+ifndef MATLAB_LIB
+	MATLAB_LIB=
+endif
+ifndef PETSC_SOLVER_LIB
+	PETSC_SOLVER_LIB=petscksp
+endif
+ifndef PETSC_LIBFILES
+	PETSC_LIBFILES=-l${PETSC_SOLVER_LIB} -lpetscdm -lpetscmat -lpetscvec -lpetsc -lpetscsnes ${MUMPS_LIB} ${LAPACK_BLAS_LIBS} ${MATLAB_LIB} ${PETSC_X11_LIBS} ${CC_FORTRAN_LFLAGS}
+endif
+ifndef PETSC_LIBS
+	PETSC_LIBS=-L${PETSC_LIBDIR} ${PETSC_LIBFILES}
+endif
+ifndef PETSC_RPATH
+	PETSC_RPATH=-Xlinker -rpath -Xlinker ${PETSC_LIBDIR}
+endif
+ifndef MPI_DIR
+	MPI_DIR=/home/echoi/opt/mpich-1.2.7p1
+endif
+ifndef MPI_BINDIR
+	MPI_BINDIR=/home/echoi/opt/mpich-1.2.7p1/bin
+endif
+ifndef MPI_LIBDIR
+	MPI_LIBDIR=/home/echoi/opt/mpich-1.2.7p1/lib
+endif
+ifndef MPI_INCDIR
+	MPI_INCDIR=/home/echoi/opt/mpich-1.2.7p1/include
+endif
+ifndef MPI_INCLUDES
+	MPI_INCLUDES=-I${MPI_INCDIR}
+endif
+ifndef MPI_IMPLEMENTATION
+	MPI_IMPLEMENTATION=mpich
+endif
+ifndef MPI_LIBRARY
+	MPI_LIBRARY=mpich
+endif
+ifndef MPI_LIBFILES
+	MPI_LIBFILES=-lmpich -lpmpich    -lpthread  -lrt 
+endif
+ifndef MPI_RPATH
+	MPI_RPATH=-Xlinker -rpath -Xlinker ${MPI_LIBDIR}
+endif
+ifndef MPI_LIBS
+	MPI_LIBS=-L${MPI_LIBDIR} ${MPI_LIBFILES}
+endif
+ifndef MPI_RUN_COMMAND
+	MPI_RUN_COMMAND=mpirun
+endif
+ifndef MPI_RUN
+	MPI_RUN=${MPI_BINDIR}/${MPI_RUN_COMMAND}
+endif
+ifndef MPI_NPROC
+	MPI_NPROC=-np
+endif
+HAVE_MPI=1
+HAVE_PETSC=1
+ifndef MPI_DIR
+	MPI_DIR=/home/echoi/opt/mpich-1.2.7p1
+endif
+ifndef MPI_BINDIR
+	MPI_BINDIR=/home/echoi/opt/mpich-1.2.7p1/bin
+endif
+ifndef MPI_LIBDIR
+	MPI_LIBDIR=/home/echoi/opt/mpich-1.2.7p1/lib
+endif
+ifndef MPI_INCDIR
+	MPI_INCDIR=/home/echoi/opt/mpich-1.2.7p1/include
+endif
+ifndef MPI_INCLUDES
+	MPI_INCLUDES=-I/home/echoi/opt/mpich-1.2.7p1/include
+endif
+ifndef MPI_IMPLEMENTATION
+	MPI_IMPLEMENTATION=mpich
+endif
+ifndef MPI_LIBFILES
+	MPI_LIBFILES=-lmpich -lpmpich    -lpthread  -lrt 
+endif
+ifndef MPI_RPATH
+	MPI_RPATH=-Xlinker -rpath -Xlinker /home/echoi/opt/mpich-1.2.7p1/lib
+endif
+ifndef MPI_LIBS
+	MPI_LIBS=-L/home/echoi/opt/mpich-1.2.7p1/lib -lmpich -lpmpich    -lpthread  -lrt 
+endif
+ifndef MPI_RUN_COMMAND
+	MPI_RUN_COMMAND=mpirun
+endif
+ifndef MPI_RUN
+	MPI_RUN=/home/echoi/opt/mpich-1.2.7p1/bin/mpirun
+endif
+ifndef MPI_NPROC
+	MPI_NPROC=-np
+endif
+HAVE_MPI=1
+ifndef PYTHON_DIR
+	PYTHON_DIR=/usr/
+endif
+ifndef PYTHON_VERSION
+	PYTHON_VERSION=2.5
+endif
+ifndef PYTHON_INCDIR
+	PYTHON_INCDIR=${PYTHON_DIR}/include/python${PYTHON_VERSION}
+endif
+ifndef PYTHON_INCLUDES
+	PYTHON_INCLUDES=-I${PYTHON_INCDIR} -DHAVE_PYTHON
+endif
+ifndef PYTHON_BINDIR
+	PYTHON_BINDIR=${PYTHON_DIR}/bin
+endif
+ifndef PYTHON
+	PYTHON=${PYTHON_BINDIR}/python
+endif
+ifndef PYTHON_LIB
+	PYTHON_LIB=python${PYTHON_VERSION}
+endif
+ifndef PYTHON_LIBDIR
+	PYTHON_LIBDIR=${PYTHON_DIR}/lib/python${PYTHON_VERSION}
+endif
+ifndef PYTHON_MODDIR
+	PYTHON_MODDIR=${PYTHON_DIR}/lib/python${PYTHON_VERSION}
+endif
+ifndef PYTHON_COMPILEALL
+	PYTHON_COMPILEALL=${PYTHON} ${PYTHON_MODDIR}/compileall.py
+endif
+ifndef PYTHON_EXTERNAL_LIBS
+	PYTHON_EXTERNAL_LIBS=-lpthread -ldl -lutil
+endif
+ifndef PYTHON_LIBS
+	PYTHON_LIBS=-L${PYTHON_LIBDIR} -l${PYTHON_LIB} ${PYTHON_EXTERNAL_LIBS}
+endif
+ifndef PYTHON_STATIC_LIB
+	PYTHON_STATIC_LIB=${PYTHON_LIBDIR}/config/libpython${PYTHON_VERSION}.a
+endif
+ifndef HAVE_PYTHON
+	HAVE_PYTHON=1
+endif
+ifndef GL_DIR
+	GL_DIR=/usr
+endif
+ifndef GL_INCDIR
+	GL_INCDIR=${GL_DIR}/include
+endif
+ifndef GL_LIBDIR
+	GL_LIBDIR=${GL_DIR}/lib
+endif
+ifndef GL_RPATH
+	GL_RPATH=${RPATH_FLAG}${GL_LIBDIR}
+endif
+ifndef GL_INCLUDES
+	GL_INCLUDES=-I${GL_INCDIR} -I${GL_INCDIR}/GL
+endif
+GL_INCLUDES+=-DHAVE_GL
+ifndef HAVE_GL
+	HAVE_GL=1
+endif
+ifndef GL_LIBFILES
+	GL_LIBFILES=-lGL -lGLU
+endif
+ifndef GL_LIBS
+	GL_LIBS=-L${GL_LIBDIR} ${GL_LIBFILES}
+endif
+ifndef OSMESA_DIR
+	OSMESA_DIR=${GL_DIR}
+endif
+ifndef OSMESA_INCDIR
+	OSMESA_INCDIR=${OSMESA_DIR}/include
+endif
+ifndef OSMESA_INCLUDES
+	OSMESA_INCLUDES=-I${OSMESA_INCDIR} -I${OSMESA_INCDIR}/GL/
+endif
+ifndef OSMESA_LIBDIR
+	OSMESA_LIBDIR=${OSMESA_DIR}/lib
+endif
+ifndef OSMESA_LIBFILES
+	OSMESA_LIBFILES=-lOSMesa
+endif
+ifndef OSMESA_LIBS
+	OSMESA_LIBS=-L${OSMESA_LIBDIR} ${OSMESA_LIBFILES}
+endif
+ifndef SDL_DIR
+	SDL_DIR=/usr
+endif
+ifndef SDL_INCDIR
+	SDL_INCDIR=${SDL_DIR}/include
+endif
+ifndef HDF5_DIR
+	HDF5_DIR=/usr
+endif
+ifndef HDF5_INCDIR
+	HDF5_INCDIR=${HDF5_DIR}/include
+endif
+ifndef HDF5_INCLUDES
+	HDF5_INCLUDES=-I${HDF5_INCLUDES}
+endif
+ifndef HDF5_LIBDIR
+	HDF5_LIBDIR=${HDF5_LIBDIR}/lib
+endif
+ifndef HDF5_LIBFILES
+	HDF5_LIBFILES=-lhdf5
+endif
+ifndef HDF5_LIBS
+	HDF5_LIBS=-L${HDF5_LIBDIR} ${HDF5_LIBFILES}
+endif
+ifndef APPS_XML_DIR
+	APPS_XML_DIR=/home/echoi/opt/SNAC/build/lib/STGERMAIN
+endif
+	EXPORT_INCLUDE_DIR=/StGermain
+	EXAMPLES_DIR=/home/echoi/opt/SNAC/build/share/StGermain
+	STG_INCLUDE_PATH=/home/echoi/opt/SNAC/build/lib/StGermain
+	EXPORT_INCLUDE_DIR=/home/echoi/opt/SNAC/build/lib/StGermain/StGermain

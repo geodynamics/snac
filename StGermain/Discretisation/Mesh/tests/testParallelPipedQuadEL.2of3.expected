@@ -1,0 +1,211 @@
+StGermain Framework revision 3473. Copyright (C) 2003-2005 VPAC.
+Element with point:
+	Node 0 (0.00,0.00):
+		Incl   12, Excl   12
+	Test Point 0 (0.10,0.10):
+		Incl   12, Excl   12
+	Node 1 (0.50,0.00):
+		Incl   12, Excl   18
+	Test Point 1 (0.60,0.10):
+		Incl   18, Excl   18
+	Node 2 (1.00,0.00):
+		Incl   18, Excl   18
+	Test Point 2 (1.10,0.10):
+		Incl   18, Excl   18
+	Node 3 (1.50,0.00):
+		Incl   18, Excl   18
+	Test Point 3 (1.60,0.10):
+		Incl   18, Excl   18
+	Node 4 (2.00,0.00):
+		Incl   18, Excl   18
+	Test Point 4 (2.10,0.10):
+		Incl   18, Excl   18
+	Node 5 (2.50,0.00):
+		Incl   18, Excl   18
+	Test Point 5 (2.60,0.10):
+		Incl   18, Excl   18
+	Node 6 (3.00,0.00):
+		Incl   18, Excl   18
+	Test Point 6 (3.10,0.10):
+		Incl   18, Excl   18
+	Node 7 (3.50,0.00):
+		Incl   13, Excl   13
+	Test Point 7 (3.60,0.10):
+		Incl   13, Excl   13
+	Node 8 (4.00,0.00):
+		Incl    0, Excl    0
+	Test Point 8 (4.10,0.10):
+		Incl    0, Excl    0
+	Node 9 (4.50,0.00):
+		Incl    1, Excl    1
+	Test Point 9 (4.60,0.10):
+		Incl    1, Excl    1
+	Node 10 (5.00,0.00):
+		Incl    2, Excl    2
+	Test Point 10 (5.10,0.10):
+		Incl    2, Excl    2
+	Node 11 (5.50,0.00):
+		Incl    3, Excl    3
+	Test Point 11 (5.60,0.10):
+		Incl    3, Excl    3
+	Node 12 (6.00,0.00):
+		Incl    3, Excl    3
+	Test Point 12 (6.10,0.10):
+		Incl   18, Excl   18
+	Node 13 (0.00,0.33):
+		Incl   14, Excl   14
+	Test Point 13 (0.10,0.43):
+		Incl   14, Excl   14
+	Node 14 (0.50,0.33):
+		Incl   14, Excl   18
+	Test Point 14 (0.60,0.43):
+		Incl   18, Excl   18
+	Node 15 (1.00,0.33):
+		Incl   18, Excl   18
+	Test Point 15 (1.10,0.43):
+		Incl   18, Excl   18
+	Node 16 (1.50,0.33):
+		Incl   18, Excl   18
+	Test Point 16 (1.60,0.43):
+		Incl   18, Excl   18
+	Node 17 (2.00,0.33):
+		Incl   18, Excl   18
+	Test Point 17 (2.10,0.43):
+		Incl   18, Excl   18
+	Node 18 (2.50,0.33):
+		Incl   18, Excl   18
+	Test Point 18 (2.60,0.43):
+		Incl   18, Excl   18
+	Node 19 (3.00,0.33):
+		Incl   18, Excl   18
+	Test Point 19 (3.10,0.43):
+		Incl   18, Excl   18
+	Node 20 (3.50,0.33):
+		Incl   15, Excl   15
+	Test Point 20 (3.60,0.43):
+		Incl   15, Excl   15
+	Node 21 (4.00,0.33):
+		Incl    4, Excl    4
+	Test Point 21 (4.10,0.43):
+		Incl    4, Excl    4
+	Node 22 (4.50,0.33):
+		Incl    5, Excl    5
+	Test Point 22 (4.60,0.43):
+		Incl    5, Excl    5
+	Node 23 (5.00,0.33):
+		Incl    6, Excl    6
+	Test Point 23 (5.10,0.43):
+		Incl    6, Excl    6
+	Node 24 (5.50,0.33):
+		Incl    7, Excl    7
+	Test Point 24 (5.60,0.43):
+		Incl    7, Excl    7
+	Node 25 (6.00,0.33):
+		Incl    7, Excl    7
+	Test Point 25 (6.10,0.43):
+		Incl   18, Excl   18
+	Node 26 (0.00,0.67):
+		Incl   16, Excl   16
+	Test Point 26 (0.10,0.77):
+		Incl   16, Excl   16
+	Node 27 (0.50,0.67):
+		Incl   16, Excl   18
+	Test Point 27 (0.60,0.77):
+		Incl   18, Excl   18
+	Node 28 (1.00,0.67):
+		Incl   18, Excl   18
+	Test Point 28 (1.10,0.77):
+		Incl   18, Excl   18
+	Node 29 (1.50,0.67):
+		Incl   18, Excl   18
+	Test Point 29 (1.60,0.77):
+		Incl   18, Excl   18
+	Node 30 (2.00,0.67):
+		Incl   18, Excl   18
+	Test Point 30 (2.10,0.77):
+		Incl   18, Excl   18
+	Node 31 (2.50,0.67):
+		Incl   18, Excl   18
+	Test Point 31 (2.60,0.77):
+		Incl   18, Excl   18
+	Node 32 (3.00,0.67):
+		Incl   18, Excl   18
+	Test Point 32 (3.10,0.77):
+		Incl   18, Excl   18
+	Node 33 (3.50,0.67):
+		Incl   17, Excl   17
+	Test Point 33 (3.60,0.77):
+		Incl   17, Excl   17
+	Node 34 (4.00,0.67):
+		Incl    8, Excl    8
+	Test Point 34 (4.10,0.77):
+		Incl    8, Excl    8
+	Node 35 (4.50,0.67):
+		Incl    9, Excl    9
+	Test Point 35 (4.60,0.77):
+		Incl    9, Excl    9
+	Node 36 (5.00,0.67):
+		Incl   10, Excl   10
+	Test Point 36 (5.10,0.77):
+		Incl   10, Excl   10
+	Node 37 (5.50,0.67):
+		Incl   11, Excl   11
+	Test Point 37 (5.60,0.77):
+		Incl   11, Excl   11
+	Node 38 (6.00,0.67):
+		Incl   11, Excl   11
+	Test Point 38 (6.10,0.77):
+		Incl   18, Excl   18
+	Node 39 (0.00,1.00):
+		Incl   16, Excl   16
+	Test Point 39 (0.10,1.10):
+		Incl   18, Excl   18
+	Node 40 (0.50,1.00):
+		Incl   16, Excl   18
+	Test Point 40 (0.60,1.10):
+		Incl   18, Excl   18
+	Node 41 (1.00,1.00):
+		Incl   18, Excl   18
+	Test Point 41 (1.10,1.10):
+		Incl   18, Excl   18
+	Node 42 (1.50,1.00):
+		Incl   18, Excl   18
+	Test Point 42 (1.60,1.10):
+		Incl   18, Excl   18
+	Node 43 (2.00,1.00):
+		Incl   18, Excl   18
+	Test Point 43 (2.10,1.10):
+		Incl   18, Excl   18
+	Node 44 (2.50,1.00):
+		Incl   18, Excl   18
+	Test Point 44 (2.60,1.10):
+		Incl   18, Excl   18
+	Node 45 (3.00,1.00):
+		Incl   18, Excl   18
+	Test Point 45 (3.10,1.10):
+		Incl   18, Excl   18
+	Node 46 (3.50,1.00):
+		Incl   17, Excl   17
+	Test Point 46 (3.60,1.10):
+		Incl   18, Excl   18
+	Node 47 (4.00,1.00):
+		Incl    8, Excl    8
+	Test Point 47 (4.10,1.10):
+		Incl   18, Excl   18
+	Node 48 (4.50,1.00):
+		Incl    9, Excl    9
+	Test Point 48 (4.60,1.10):
+		Incl   18, Excl   18
+	Node 49 (5.00,1.00):
+		Incl   10, Excl   10
+	Test Point 49 (5.10,1.10):
+		Incl   18, Excl   18
+	Node 50 (5.50,1.00):
+		Incl   11, Excl   11
+	Test Point 50 (5.60,1.10):
+		Incl   18, Excl   18
+	Node 51 (6.00,1.00):
+		Incl   11, Excl   11
+	Test Point 51 (6.10,1.10):
+		Incl   18, Excl   18
+

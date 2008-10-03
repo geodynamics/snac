@@ -1,0 +1,250 @@
+Inserting data into the List
+
+Printing the list
+Stg_Class (ptr): 0x806b498
+	sizeOfSelf: 52
+	_deleteSelf: Yes
+	type: LinkedList
+	_delete (func ptr): 0x8058ff5
+	_print (func ptr): 0x8058eb0
+	_copy (func ptr): (nil)
+LinkedList (ptr): (0x806b498)
+	NodeCount		 - 100
+	LinkedList Order	 - UNSORTED
+	LinkedList data	 - 
+	1
+	2
+	3
+	4
+	5
+	6
+	7
+	8
+	9
+	10
+	11
+	12
+	13
+	14
+	15
+	16
+	17
+	18
+	19
+	20
+	21
+	22
+	23
+	24
+	25
+	26
+	27
+	28
+	29
+	30
+	31
+	32
+	33
+	34
+	35
+	36
+	37
+	38
+	39
+	40
+	41
+	42
+	43
+	44
+	45
+	46
+	47
+	48
+	49
+	50
+	51
+	52
+	53
+	54
+	55
+	56
+	57
+	58
+	59
+	60
+	61
+	62
+	63
+	64
+	65
+	66
+	67
+	68
+	69
+	70
+	71
+	72
+	73
+	74
+	75
+	76
+	77
+	78
+	79
+	80
+	81
+	82
+	83
+	84
+	85
+	86
+	87
+	88
+	89
+	90
+	91
+	92
+	93
+	94
+	95
+	96
+	97
+	98
+	99
+	100
+
+Deleting half the nodes previously inserted into the list
+
+Printing the list
+Stg_Class (ptr): 0x806b498
+	sizeOfSelf: 52
+	_deleteSelf: Yes
+	type: LinkedList
+	_delete (func ptr): 0x8058ff5
+	_print (func ptr): 0x8058eb0
+	_copy (func ptr): (nil)
+LinkedList (ptr): (0x806b498)
+	NodeCount		 - 50
+	LinkedList Order	 - UNSORTED
+	LinkedList data	 - 
+	1
+	2
+	3
+	4
+	5
+	6
+	7
+	8
+	9
+	10
+	11
+	12
+	13
+	14
+	15
+	16
+	17
+	18
+	19
+	20
+	21
+	22
+	23
+	24
+	25
+	26
+	27
+	28
+	29
+	30
+	31
+	32
+	33
+	34
+	35
+	36
+	37
+	38
+	39
+	40
+	41
+	42
+	43
+	44
+	45
+	46
+	47
+	48
+	49
+	50
+
+Retrieving the data held in the list as an array
+
+Printing the array just retrieved
+arrayData - 1
+arrayData - 2
+arrayData - 3
+arrayData - 4
+arrayData - 5
+arrayData - 6
+arrayData - 7
+arrayData - 8
+arrayData - 9
+arrayData - 10
+arrayData - 11
+arrayData - 12
+arrayData - 13
+arrayData - 14
+arrayData - 15
+arrayData - 16
+arrayData - 17
+arrayData - 18
+arrayData - 19
+arrayData - 20
+arrayData - 21
+arrayData - 22
+arrayData - 23
+arrayData - 24
+arrayData - 25
+arrayData - 26
+arrayData - 27
+arrayData - 28
+arrayData - 29
+arrayData - 30
+arrayData - 31
+arrayData - 32
+arrayData - 33
+arrayData - 34
+arrayData - 35
+arrayData - 36
+arrayData - 37
+arrayData - 38
+arrayData - 39
+arrayData - 40
+arrayData - 41
+arrayData - 42
+arrayData - 43
+arrayData - 44
+arrayData - 45
+arrayData - 46
+arrayData - 47
+arrayData - 48
+arrayData - 49
+arrayData - 50
+
+Searching for Node data in the list
+Looking for - 1, Found..
+Looking for - 3, Found..
+Looking for - 5, Found..
+Looking for - 7, Found..
+Looking for - 9, Found..
+Looking for - 11, Found..
+Looking for - 13, Found..
+Looking for - 15, Found..
+Looking for - 17, Found..
+Looking for - 19, Found..
+Looking for - 21, Found..
+Looking for - 23, Found..
+Looking for - 25, Found..
+
+Deleting the List

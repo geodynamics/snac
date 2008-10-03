@@ -1,0 +1,27 @@
+
+Creating Stg_Components from the component-list
+
+
+Constructing Stg_Components from the live-component register
+
+Constructing LocalPlugin2..
+	context has not been constructed yet. Constructing now.
+		Constructing context..
+Constructing LocalPlugin1..
+LocalPlugin2_Function
+LocalPlugin1_Function()
+LocalPlugin2 value: 2
+Plugins (ptr): 0x8067ea4
+Stg_Class (ptr): 0x8067ea4
+	sizeOfSelf: 40
+	_deleteSelf: Yes
+	type: PluginsManager
+	_delete (func ptr): 0xb7f84d87
+	_print (func ptr): 0xb7f84dda
+	_copy (func ptr): (nil)
+Search Path:
+	(path) /home/alan/Codes/ChapelStreet/plugins-rework/build/lib
+Loaded plugins:
+	LocalPlugin2
+	LocalPlugin1
+		(version) 19

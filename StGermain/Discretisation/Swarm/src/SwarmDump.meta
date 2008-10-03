@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<param name="Name">SwarmDump</param>
+<param name="Organisation">VPAC</param>
+<param name="Project">StGermain</param>
+<param name="Location">./StGermain/Discretisation/Swarm/src/</param>
+<param name="Project Web">https://csd.vpac.org/twiki/bin/view/Stgermain/WebHome</param>
+<param name="Copyright">StGermain Framework. Copyright (C) 2003-2005 VPAC.</param>
+<param name="License">The Gnu Lesser General Public License http://www.gnu.org/licenses/lgpl.html</param>
+<param name="Parent">Stg_Component</param>
+<param name="Description">...</param>
+
+<!--Now the interesting stuff-->
+
+
+<list name="Params">
+	<struct>
+		<param name="Name">newFileEachTime</param>
+		<param name="Type">Bool</param>
+		<param name="Default">True</param>
+		<param name="Description">...</param>
+	</struct>
+
+</list>
+
+<list name="Dependencies">
+	<struct>
+		<param name="Essential">True</param>
+		<param name="Name">context</param>
+		<param name="Type">AbstractContext</param>
+		<param name="Description">...</param>
+	</struct>
+
+<!-- PLEASE, check the above struct information is accurate, in line number 181 of the c file and then remove this comment afterwards -->
+
+
+<!-- PLEASE, check line number 182 for a dependency and add its information and then remove this comment afterwards -->
+
+
+</list>
+<!-- Add an exmaple XML if possible -->
+<param name="Example">...</param>
+
+</StGermainData>

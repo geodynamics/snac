@@ -1,0 +1,261 @@
+
+/*******************    Test Eigenvector 1   ************************/
+Symmetric 2D Case from Kresig, p. 371f
+
+Matrix to solve for eigenvectors is:
+tensorArray - 
+     -5           2     
+      2          -2     
+
+Eigenvalues within tolerance, 1e-06 of:
+eigenvectorListCompare[0].eigenvalue = -1 + 0 i
+eigenvectorListCompare[1].eigenvalue = -6 + 0 i
+
+Eigenvectors within tolerance, 1e-06 of:
+eigenvectorListCompare[0].vector - {-0.447214 + i 0, -0.894427 + i 0}
+eigenvectorListCompare[1].vector - {-0.894427 + i 0, 0.447214 + i 0}
+
+/*******************    Test Eigenvector 2   ************************/
+Symmetric 3D Case - tested against:
+http://www.arndt-bruenner.de/mathe/scripts/engl_eigenwert.htm - 3/11/04.
+Matrix to solve for eigenvectors is:
+tensorArray - 
+      2           7          11     
+      7           3          13     
+     11          13           5     
+
+Eigenvalues within tolerance, 1e-06 of:
+eigenvectorListCompare[0].eigenvalue = -4.4597 + 0 i
+eigenvectorListCompare[1].eigenvalue = -9.9685 + 0 i
+eigenvectorListCompare[2].eigenvalue = 24.428 + 0 i
+
+Eigenvectors within tolerance, 1e-06 of:
+eigenvectorListCompare[0].vector - {-0.786471 + i 0, 0.61348 + i 0, 0.0714557 + i 0}
+eigenvectorListCompare[1].vector - {-0.364102 + i 0, -0.553977 + i 0, 0.748692 + i 0}
+eigenvectorListCompare[2].vector - {-0.498892 + i 0, -0.562807 + i 0, -0.659056 + i 0}
+
+/*******************    Test Eigenvector 3   ************************/
+Non-Symmetric test for 2-D
+
+tensorArray - 
+      4           4     
+      3           5     
+
+Eigenvalues within tolerance, 1e-06 of:
+eigenvectorListCompare[0].eigenvalue = 1 + 0 i
+eigenvectorListCompare[1].eigenvalue = 8 + 0 i
+
+Eigenvectors within tolerance, 1e-06 of:
+eigenvectorListCompare[0].vector - {-0.8 + i 0, 0.6 + i 0}
+eigenvectorListCompare[1].vector - {-0.707107 + i 0, -0.707107 + i 0}
+
+
+/*******************    Test Eigenvector 4   ************************/
+Non-Symmetric Test for 3-D
+
+tensorArray - 
+      4           0           3     
+      0           5           0     
+      2           5           6     
+
+Eigenvalues within tolerance, 1e-06 of:
+eigenvectorListCompare[0].eigenvalue = 2.3542 + 0 i
+eigenvectorListCompare[1].eigenvalue = 5 + 0 i
+eigenvectorListCompare[2].eigenvalue = 7.6458 + 0 i
+
+Eigenvectors within tolerance, 1e-06 of:
+eigenvectorListCompare[0].vector - {-0.87674 + i 0, 0 + i 0, 0.480965 + i 0}
+eigenvectorListCompare[1].vector - {-0.867472 + i 0, 0.40482 + i 0, -0.289157 + i 0}
+eigenvectorListCompare[2].vector - {-0.635406 + i 0, 0 + i 0, -0.772178 + i 0}
+
+
+/*******************    Test Eigenvector 5   ************************/
+Non-Symmetric test with zero entries for 2-D
+
+tensorArray - 
+      4           0     
+      1           5     
+
+Eigenvalues within tolerance, 1e-06 of:
+eigenvectorListCompare[0].eigenvalue = 4 + 0 i
+eigenvectorListCompare[1].eigenvalue = 5 + 0 i
+
+Eigenvectors within tolerance, 1e-06 of:
+eigenvectorListCompare[0].vector - {0.707107 + i 0, -0.707107 + i 0}
+eigenvectorListCompare[1].vector - {0 + i 0, 1 + i 0}
+
+
+/*******************    Test Eigenvector 6   ************************/
+Non-Symmetric test with complex eigenvalues for 2-D
+
+Tested against Soluions in:
+Elementary Differential Equations and Boundary Value Problems, 6th Ed
+By William E. Boyce and Richard C. DiPrima
+Problem: ch 7.3, question 16
+
+tensorArray - 
+      3          -2     
+      4          -1     
+
+Eigenvalues within tolerance, 1e-06 of:
+eigenvectorListCompare[0].eigenvalue = 1 + 2 i
+eigenvectorListCompare[1].eigenvalue = 1 - 2 i
+
+Eigenvectors within tolerance, 1e-06 of:
+eigenvectorListCompare[0].vector - {0.408248 + i 0.408248, 0.816497 + i 0}
+eigenvectorListCompare[1].vector - {0.408248 + i -0.408248, 0.816497 + i 0}
+
+/*******************    Test Eigenvector 7   ************************/
+Non-Symmetric test with complex eigenvalues for 3-D
+Tested against Soluions in:
+Elementary Differential Equations and Boundary Value Problems, 6th Ed
+By William E. Boyce and Richard C. DiPrima
+Problem: ch 7.3, question 21
+
+tensorArray - 
+      1           0           0     
+      2           1          -2     
+      3           2           1     
+
+Eigenvalues within tolerance, 1e-06 of:
+eigenvectorListCompare[0].eigenvalue = 1 + 0 i
+eigenvectorListCompare[1].eigenvalue = 1 + 2 i
+eigenvectorListCompare[2].eigenvalue = 1 - 2 i
+
+Eigenvectors within tolerance, 1e-06 of:
+eigenvectorListCompare[0].vector - {0.485071 + i 0, -0.727607 + i 0, 0.485071 + i 0}
+eigenvectorListCompare[1].vector - {0 + i 0, 0.707107 + i 0, 0 + i -0.707107}
+eigenvectorListCompare[2].vector - {0 + i 0, 0.707107 + i 0, 0 + i 0.707107}
+
+
+/*******************    Eigenvector Test  8  ************************/
+Test Calc eigenvectors function with repeated roots
+
+Tested against Solutions in:
+Elementary Differential Equations and Boundary Value Problems, 6th Ed
+By William E. Boyce and Richard C. DiPrima
+Problem: ch 7.3, question 24
+
+tensorArray - 
+      3           2           4     
+      2           0           2     
+      4           2           3     
+
+Eigenvalues within tolerance, 1e-06 of:
+eigenvectorListCompare[0].eigenvalue = -1 + 0 i
+eigenvectorListCompare[1].eigenvalue = -1 + 0 i
+eigenvectorListCompare[2].eigenvalue = 8 + 0 i
+
+Non-repeated Eigenvector within tolerance, 1e-06,
+And Repeated Eigenvectors follow pattern:
+2 * x_1 + x_2 + 2 * x_3 = 0 to within tolerance, 1e-06 of:
+One set of correct eigenvectors: 
+eigenvectorListCompare[0].vector - {0 + i 0, -0.894427 + i 0, 0.447214 + i 0}
+eigenvectorListCompare[1].vector - {-0.719905 + i 0, 0.519697 + i 0, 0.460056 + i 0}
+eigenvectorListCompare[2].vector - {0.666667 + i 0, 0.333333 + i 0, 0.666667 + i 0}
+
+For repeated eigenvalues with non-degenerate eigenvectors, 
+eigenvectors have to be in same plane as solution vectors 
+rather than exactly the same, as eigenvectors can be arbitrarily set
+based on the specific tensor array equation.
+For this problem, solution for repeated eigenvectors collapses to:
+2 * x_1 + x_2 + 2 * x_3 = 0
+Eigenvectors are then set based on what x_1, x_2 and x_3 are set to equal.
+
+/*******************    Test  10  ************************/
+Test print ComplexTensorArray function
+
+2-D
+complexTensorArray - 
+      4 +       0 i      4 +       1 i
+      3 +    0.33 i      5 +     100 i
+3-D
+complexTensorArray - 
+      1 +     0.5 i      2 +       0 i      3 +       0 i
+      4 +       0 i      5 +       1 i      6 +       2 i
+      7 +       0 i      8 +       0 i      9 +      30 i
+
+/*******************    Test  11  ************************/
+Test print ComplexMatrix function
+
+2-D
+complexMatrix - 
+      1 +       0 i      2 +       1 i
+      3 +    0.33 i      5 +     100 i
+3-D
+complexMatrix - 
+      1 +       0 i      2 +       1 i      4 +       1 i
+      3 +    0.33 i      5 +     100 i      5 +    10.5 i
+     30 +    0.33 i    0.5 +     100 i    5.5 +    10.5 i
+
+/*******************    Test  12  ************************/
+Test TensorArray to ComplexTensorArray conversion function
+
+2-D conversion
+tensorArray - 
+      1           3     
+      4           5     
+complexTensorArray - 
+      1 +       0 i      3 +       0 i
+      4 +       0 i      5 +       0 i
+3-D conversion
+tensorArray - 
+      1           3           4     
+      5           7           8     
+      9          11          12     
+complexTensorArray - 
+      1 +       0 i      3 +       0 i      4 +       0 i
+      5 +       0 i      7 +       0 i      8 +       0 i
+      9 +       0 i     11 +       0 i     12 +       0 i
+
+/*******************    Test  13  ************************/
+Test ComplexTensorArray to ComplexMatrix conversion function
+
+2-D conversion
+complexTensorArray - 
+      1 +     0.5 i      2 +       0 i
+      3 +       0 i      4 +       0 i
+complexMatrix - 
+      1 +     0.5 i      2 +       0 i
+      3 +       0 i      4 +       0 i
+3-D conversion
+complexTensorArray - 
+      1 +     0.5 i      2 +       0 i      3 +       0 i
+      4 +       0 i      5 +       1 i      6 +       2 i
+      7 +       0 i      8 +       0 i      9 +      30 i
+complexMatrix - 
+      1 +     0.5 i      2 +       0 i      3 +       0 i
+      4 +       0 i      5 +       1 i      6 +       2 i
+      7 +       0 i      8 +       0 i      9 +      30 i
+
+/*******************    Test  14  ************************/
+Test ComplexTensorArray to TensorArray conversion function
+
+2-D conversion
+complexTensorArray - 
+      1 +       0 i      2 +       0 i
+      3 +       0 i      4 +       0 i
+tensorArray - 
+      1           2     
+      3           4     
+3-D conversion
+complexTensorArray - 
+      1 +       0 i      2 +       0 i      3 +       0 i
+      4 +       0 i      5 +       0 i      6 +       0 i
+      7 +       0 i     88 +       0 i    9.5 +       0 i
+tensorArray - 
+      1           2           3     
+      4           5           6     
+      7          88         9.5     
+Failing conversion
+complexTensorArray - 
+      1 +       1 i      2 +       0 i      3 +       0 i
+      4 +       0 i      5 +       0 i      6 +       0 i
+      7 +       0 i     88 +       0 i    9.5 +       0 i
+Cannot convert to real matrix:
+Indicee 0 in complexTensorArray is complex value.
+complexTensorArray - 
+      1 +       1 i      2 +       0 i      3 +       0 i
+      4 +       0 i      5 +       0 i      6 +       0 i
+      7 +       0 i     88 +       0 i    9.5 +       0 i
+In func 'ComplexTensorArray_ToTensorArray'. Cannot convert ComplexTensor to Real Tensor 

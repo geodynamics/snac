@@ -1,0 +1,9 @@
+StGermain Framework revision 3470. Copyright (C) 2003-2005 VPAC.
+Testing triangulation of a regular mesh:
+Regular mesh triangulation test passed..
+
+Testing triangulation of irregular point-sets:
+Irregular point-set triangulation test passed..
+
+Testing triangulation of regular polygons:
+Regular polygon triangulation test passed..

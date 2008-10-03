@@ -1,0 +1,82 @@
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+## Copyright (C), 2003, Victorian Partnership for Advanced Computing (VPAC) Ltd, 110 Victoria Street, Melbourne, 3053, Australia.
+##
+## Authors:
+##      Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+##      Patrick D. Sunter, Software Engineer, VPAC. (pds@vpac.org)
+##      Luke J. Hodkinson, Computational Engineer, VPAC. (lhodkins@vpac.org)
+##      Siew-Ching Tan, Software Engineer, VPAC. (siew@vpac.org)
+##      Alan H. Lo, Computational Engineer, VPAC. (alan@vpac.org)
+##      Raquibul Hassan, Computational Engineer, VPAC. (raq@vpac.org)
+##
+##  This library is free software; you can redistribute it and/or
+##  modify it under the terms of the GNU Lesser General Public
+##  License as published by the Free Software Foundation; either
+##  version 2.1 of the License, or (at your option) any later version.
+##
+##  This library is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+##  Lesser General Public License for more details.
+##
+##  You should have received a copy of the GNU Lesser General Public
+##  License along with this library; if not, write to the Free Software
+##  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+##
+## $Id: clean.vmake 2586 2005-01-28 00:08:55Z AlanLo $
+##
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+RM_LIST += ${RM_LIST_TEMPS}
+
+MAKELOGS += $(shell find . -name "make*\.log")
+MAKELOGS += $(shell find . -name "make*\.warning")
+MAKELOGS += $(shell find . -name "make*\.error")
+RM_LIST += ${MAKELOGS}
+
+.PHONY: clean distclean distcleansub cleantemp 
+
+clean: ${PRE_MAKE_clean} ${SUBDIRS} cleanThisDir ${POST_MAKE_clean}
+
+distclean: ${PRE_MAKE_distclean} ${SUBDIRS} distCleanThisDir ${POST_MAKE_clean}
+	@${RM_F} ${TMP_DIR} ${BLD_DIR}
+
+cleantemp: ${SUBDIRS} cleanTempThisDir
+
+distcleansub: ${SUBDIRS} distCleanThisDir
+
+
+cleanThisDir:
+	@if test `echo ${RM_LIST} | wc -w` -gt 0; then \
+		echo "${RM_F} ${RM_LIST}"; \
+		${RM_F} ${RM_LIST}; \
+	fi
+
+distCleanThisDir: cleanThisDir
+	@(if test -h makefile; then ${RM_F} makefile; fi)
+	@${RM_F} Makefile.system
+
+cleanTempThisDir:
+	@if test `echo ${RM_LIST_TEMPS} | wc -w` -gt 0; then \
+		echo "${RM_F} ${RM_LIST_TEMPS}"; \
+		${RM_F} ${RM_LIST_TEMPS}; \
+	fi
+
+clean-logs:
+	@${RM_F} ${MAKELOGS}
+
+remove-meta:
+	@${RM_F} ${MOD_META_C} ${PLUGINS_META_C} ${META_C}
+
+clean-help: help-title clean-command-header
+	@echo "Recursively cleans subdirectories of targets, and temporary files."
+	@echo "Directories will remain."
+
+dist-clean-help: help-title dist-clean-command-header
+	@echo "Recursively cleans subdirectories of targets, temporary files and directories."
+	@echo "WARNING:"
+	@echo "This command removies directories and is unsafe if prefix or blddir is set to"
+	@echo "a shared location."
+
+COMMAND_HELP += clean-help dist-clean-help
+

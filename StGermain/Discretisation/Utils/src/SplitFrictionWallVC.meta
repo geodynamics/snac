@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<param name="Name">SplitFrictionWallVC</param>
+<param name="Organisation">CIG</param>
+<param name="Project">Gale</param>
+<param name="Location">./Gale/BoundaryConditions/src/</param>
+<param name="Project Web">http://geodynamics.org</param>
+<param name="Copyright">StGermain Framework. Copyright (C) 2003-2005 VPAC. Copyright (c) 2006 California Institute of Technology</param>
+<param name="License">https://csd.vpac.org/twiki/bin/view/Stgermain/SoftwareLicense</param>
+<param name="Parent">VariableCondition</param>
+<param name="Description">...</param>
+
+<!--Now the interesting stuff-->
+
+
+<list name="Params">
+<!-- 	<struct> -->
+<!-- 		<param name="Essential">True</param> -->
+<!-- 		<param name="Name">vx_left</param> -->
+<!-- 		<param name="Type">double</param> -->
+<!-- 		<param name="Description">Velocity of the the left part</param> -->
+<!-- 	</struct> -->
+<!-- 	<struct> -->
+<!-- 		<param name="Essential">True</param> -->
+<!-- 		<param name="Name">vx_right</param> -->
+<!-- 		<param name="Type"></param> -->
+<!-- 		<param name="Description">Velocity of the right part</param> -->
+<!-- 	</struct> -->
+<!-- 	<struct> -->
+<!-- 		<param name="Essential">True</param> -->
+<!-- 		<param name="Name">middle</param> -->
+<!-- 		<param name="Type">double</param> -->
+<!-- 		<param name="Description">Where the two parts join.</param> -->
+<!-- 	</struct> -->
+
+</list>
+
+<!-- <list name="Dependencies"> -->
+<!-- 	<struct> -->
+<!-- 		<param name="Essential">True</param> -->
+<!-- 		<param name="Type">RheologyMaterial</param> -->
+<!-- 		<param name="Description">Determines the frictional parameters of the wall.</param> -->
+<!-- 	</struct> -->
+
+	<!--/list-->
+<!-- Add an exmaple XML if possible -->
+<param name="Example">...</param>
+

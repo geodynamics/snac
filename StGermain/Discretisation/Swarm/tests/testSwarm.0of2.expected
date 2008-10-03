@@ -1,0 +1,237 @@
+StGermain Framework revision 3623. Copyright (C) 2003-2005 VPAC.
+Watching rank: 0
+Swarm (ptr): 0x80683c0
+Stg_Component (ptr): 0x80683c0
+Stg_Object (ptr): 0x80683c0
+	Stg_Class (ptr): 0x80683c0
+		sizeOfSelf: 220
+		_deleteSelf: Yes
+		type: Swarm
+		_delete (func ptr): 0x4002cbb0
+		_print (func ptr): 0x4002ccc4
+		_copy (func ptr): 0x4002d2d9
+	name: testSwarm
+	nameAllocationType: NON_GLOBAL
+	_defaultConstructor (func ptr): 0x4002dbd4
+	_construct (func ptr): 0x4002dcb7
+	_build (func ptr): 0x4002def7
+	_initialise (func ptr): 0x4002e21e
+	_execute (func ptr): 0x4002e2f7
+	_destroy (func ptr): 0x4002e2fc
+	isConstructed: True
+	isBuilt: True
+	isInitialised: True
+	hasExecuted: False
+	isDestroyed: False
+	constructor function name: testSwarm-Construct
+	build function name: testSwarm-Build
+	initialise function name: testSwarm-Initialise
+	execute function name: testSwarm-Execute
+	destroy function name: testSwarm-Destroy
+ElementCellLayout (ptr): 0x80679b8
+CellLayout (ptr): 0x80679b8
+Stg_Component (ptr): 0x80679b8
+Stg_Object (ptr): 0x80679b8
+	Stg_Class (ptr): 0x80679b8
+		sizeOfSelf: 132
+		_deleteSelf: Yes
+		type: ElementCellLayout
+		_delete (func ptr): 0x400214dc
+		_print (func ptr): 0x40021505
+		_copy (func ptr): 0x40021579
+	name: elementCellLayout
+	nameAllocationType: NON_GLOBAL
+	_defaultConstructor (func ptr): 0x40021010
+	_construct (func ptr): 0x40021651
+	_build (func ptr): 0x400216c5
+	_initialise (func ptr): 0x400216ca
+	_execute (func ptr): 0x400216cf
+	_destroy (func ptr): 0x400216d4
+	isConstructed: True
+	isBuilt: False
+	isInitialised: False
+	hasExecuted: False
+	isDestroyed: False
+	constructor function name: elementCellLayout-Construct
+	build function name: elementCellLayout-Build
+	initialise function name: elementCellLayout-Initialise
+	execute function name: elementCellLayout-Execute
+	destroy function name: elementCellLayout-Destroy
+	_cellLocalCount (func ptr): 0x400216d9
+	_cellShadowCount (func ptr): 0x400216f6
+	_pointCount (func ptr): 0x40021713
+	_initialisePoints (func ptr): 0x4002173d
+	_mapElementIdToCellId (func ptr): 0x400217c7
+	_isInCell (func ptr): 0x4002185a
+	_cellOf (func ptr): 0x40021a5d
+	_getShadowInfo (func ptr): 0x40021c50
+	mesh (ptr): 0x8066688
+RandomParticleLayout (ptr): 0x8067df0:
+PerCellParticleLayout (ptr): 0x8067df0
+ParticleLayout (ptr): 0x8067df0
+Stg_Class (ptr): 0x8067df0
+	sizeOfSelf: 132
+	_deleteSelf: Yes
+	type: RandomParticleLayout
+	_delete (func ptr): 0x4002aed3
+	_print (func ptr): 0x4002aefc
+	_copy (func ptr): 0x4002af8f
+	_setInitialCounts (func ptr): 0x4002a335
+	_initialiseParticles (func ptr): 0x4002a4d2
+	coordSystem: GlobalCoordSystem
+	weightsInitialisedAtStartup : False
+	_initialCount (func ptr): 0x4002b168
+	_initialiseParticlesOfCell (func ptr): 0x4002b17c
+	cellParticleCount: 4
+	seed: 13
+	cellLocalCount: 8
+	cellDomainCount: 8
+	cellShadowCount: 0
+	cellPointCountTbl (ptr): 0x8069078
+	cellPointCountTbl[0-8]: 008 008 008 008 008 008 008 008 
+	cellPointTbl (ptr): 0x80698a0
+	cellPointTbl[0-8]: {
+	cellPointTbl[0][0-8]: {0 0 0} {150 0 0} {150 4 0} {0 4 0} {0 0 150} {150 0 150} {150 4 150} {0 4 150} 
+	cellPointTbl[1][0-8]: {150 0 0} {300 0 0} {300 4 0} {150 4 0} {150 0 150} {300 0 150} {300 4 150} {150 4 150} 
+	cellPointTbl[2][0-8]: {0 4 0} {150 4 0} {150 8 0} {0 8 0} {0 4 150} {150 4 150} {150 8 150} {0 8 150} 
+	cellPointTbl[3][0-8]: {150 4 0} {300 4 0} {300 8 0} {150 8 0} {150 4 150} {300 4 150} {300 8 150} {150 8 150} 
+	cellPointTbl[4][0-8]: {0 0 150} {150 0 150} {150 4 150} {0 4 150} {0 0 300} {150 0 300} {150 4 300} {0 4 300} 
+	cellPointTbl[5][0-8]: {150 0 150} {300 0 150} {300 4 150} {150 4 150} {150 0 300} {300 0 300} {300 4 300} {150 4 300} 
+	cellPointTbl[6][0-8]: {0 4 150} {150 4 150} {150 8 150} {0 8 150} {0 4 300} {150 4 300} {150 8 300} {0 8 300} 
+	cellPointTbl[7][0-8]: {150 4 150} {300 4 150} {300 8 150} {150 8 150} {150 4 300} {300 4 300} {300 8 300} {150 8 300} 
+}
+
+	cellParticleCountTbl (ptr): 0x80699d0
+	cellParticleCountTbl[0-8]: 004 004 004 004 004 004 004 004 
+	cellParticleSizeTbl (ptr): 0x8069a00
+	cellParticleSizeTbl[0-8]: 004 004 004 004 004 004 004 004 
+	cellParticleTbl (ptr): 0x8069a30
+	cellParticleTbl [0-8]: {
+		cellParticleTbl[0][0-4]:
+			(part. index) 0
+			(part. index) 1
+			(part. index) 2
+			(part. index) 3
+
+		cellParticleTbl[1][0-4]:
+			(part. index) 4
+			(part. index) 5
+			(part. index) 6
+			(part. index) 7
+
+		cellParticleTbl[2][0-4]:
+			(part. index) 8
+			(part. index) 9
+			(part. index) 10
+			(part. index) 11
+
+		cellParticleTbl[3][0-4]:
+			(part. index) 12
+			(part. index) 13
+			(part. index) 14
+			(part. index) 15
+
+		cellParticleTbl[4][0-4]:
+			(part. index) 16
+			(part. index) 17
+			(part. index) 18
+			(part. index) 19
+
+		cellParticleTbl[5][0-4]:
+			(part. index) 20
+			(part. index) 21
+			(part. index) 22
+			(part. index) 23
+
+		cellParticleTbl[6][0-4]:
+			(part. index) 24
+			(part. index) 25
+			(part. index) 26
+			(part. index) 27
+
+		cellParticleTbl[7][0-4]:
+			(part. index) 28
+			(part. index) 29
+			(part. index) 30
+			(part. index) 31
+
+	}
+	particlesArraySize: 33
+	particlesArrayDelta: 1
+	extraParticlesFactor: 0.05
+
+Printing coords of all local processor particles:
+	local particle      0: ( 36.393,  2.6846,  24.175)
+	local particle      1: ( 106.19,  2.9264,  13.188)
+	local particle      2: ( 107.93, 0.63865,  64.247)
+	local particle      3: ( 105.66,  3.4006,  72.744)
+	local particle      4: ( 261.92,  2.6066,  15.099)
+	local particle      5: ( 275.23,  0.3656,  23.032)
+	local particle      6: ( 242.36,  2.7593,  108.86)
+	local particle      7: ( 201.31, 0.95553,  137.57)
+	local particle      8: ( 91.249,  4.7051,  70.366)
+	local particle      9: ( 40.359,  4.3716,  52.268)
+	local particle     10: ( 60.611,   5.112,  54.881)
+	local particle     11: ( 32.111,  7.5087,  74.722)
+	local particle     12: ( 196.11,  6.3309,  102.69)
+	local particle     13: ( 271.87,  5.6744,  61.877)
+	local particle     14: ( 162.47,  6.9511,  106.25)
+	local particle     15: ( 218.88,   4.529,  122.07)
+	local particle     16: (  6.633, 0.83491,  159.56)
+	local particle     17: ( 128.61,  1.1473,  268.49)
+	local particle     18: ( 88.893, 0.59575,  181.67)
+	local particle     19: ( 47.516, 0.13272,  250.78)
+	local particle     20: ( 168.92,  2.1875,  208.89)
+	local particle     21: ( 292.64,  2.9573,  261.71)
+	local particle     22: ( 178.58,  1.6187,  227.41)
+	local particle     23: ( 157.44,  1.3549,  282.28)
+	local particle     24: ( 13.625,  6.5714,  177.84)
+	local particle     25: ( 41.912,  4.4919,  250.38)
+	local particle     26: ( 28.378,  6.7518,  206.87)
+	local particle     27: ( 52.956,  6.0438,  233.85)
+	local particle     28: ( 234.77,  5.8292,  288.89)
+	local particle     29: ( 150.61,  7.2193,  263.64)
+	local particle     30: ( 291.18,  7.2598,  262.71)
+	local particle     31: ( 179.89,  6.2259,  260.91)
+
+Printing coords of all local particles, cell-by-cell:
+	Local Cell   0:
+		part. InCell   0 (local index      0): ( 36.393,  2.6846,  24.175)
+		part. InCell   1 (local index      1): ( 106.19,  2.9264,  13.188)
+		part. InCell   2 (local index      2): ( 107.93, 0.63865,  64.247)
+		part. InCell   3 (local index      3): ( 105.66,  3.4006,  72.744)
+	Local Cell   1:
+		part. InCell   0 (local index      4): ( 261.92,  2.6066,  15.099)
+		part. InCell   1 (local index      5): ( 275.23,  0.3656,  23.032)
+		part. InCell   2 (local index      6): ( 242.36,  2.7593,  108.86)
+		part. InCell   3 (local index      7): ( 201.31, 0.95553,  137.57)
+	Local Cell   2:
+		part. InCell   0 (local index      8): ( 91.249,  4.7051,  70.366)
+		part. InCell   1 (local index      9): ( 40.359,  4.3716,  52.268)
+		part. InCell   2 (local index     10): ( 60.611,   5.112,  54.881)
+		part. InCell   3 (local index     11): ( 32.111,  7.5087,  74.722)
+	Local Cell   3:
+		part. InCell   0 (local index     12): ( 196.11,  6.3309,  102.69)
+		part. InCell   1 (local index     13): ( 271.87,  5.6744,  61.877)
+		part. InCell   2 (local index     14): ( 162.47,  6.9511,  106.25)
+		part. InCell   3 (local index     15): ( 218.88,   4.529,  122.07)
+	Local Cell   4:
+		part. InCell   0 (local index     16): (  6.633, 0.83491,  159.56)
+		part. InCell   1 (local index     17): ( 128.61,  1.1473,  268.49)
+		part. InCell   2 (local index     18): ( 88.893, 0.59575,  181.67)
+		part. InCell   3 (local index     19): ( 47.516, 0.13272,  250.78)
+	Local Cell   5:
+		part. InCell   0 (local index     20): ( 168.92,  2.1875,  208.89)
+		part. InCell   1 (local index     21): ( 292.64,  2.9573,  261.71)
+		part. InCell   2 (local index     22): ( 178.58,  1.6187,  227.41)
+		part. InCell   3 (local index     23): ( 157.44,  1.3549,  282.28)
+	Local Cell   6:
+		part. InCell   0 (local index     24): ( 13.625,  6.5714,  177.84)
+		part. InCell   1 (local index     25): ( 41.912,  4.4919,  250.38)
+		part. InCell   2 (local index     26): ( 28.378,  6.7518,  206.87)
+		part. InCell   3 (local index     27): ( 52.956,  6.0438,  233.85)
+	Local Cell   7:
+		part. InCell   0 (local index     28): ( 234.77,  5.8292,  288.89)
+		part. InCell   1 (local index     29): ( 150.61,  7.2193,  263.64)
+		part. InCell   2 (local index     30): ( 291.18,  7.2598,  262.71)
+		part. InCell   3 (local index     31): ( 179.89,  6.2259,  260.91)

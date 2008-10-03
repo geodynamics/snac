@@ -1,0 +1,37 @@
+StGermain Framework. Copyright (C) 2003-2005 VPAC.
+
+****************************
+Test angle conversion macros
+39 degrees in radians = 0.698
+2.468 radians in degrees = 141.406
+
+****************************
+Test domain finding function
+Angle 1.500000 is equivalent to 1.500000
+Sine test: 0.997495 = 0.997495
+Angle -1.200000 is equivalent to 5.083185
+Sine test: -0.932039 = -0.932039
+Angle 20.000000 is equivalent to 1.150444
+Sine test: 0.912945 = 0.912945
+
+****************************
+Test quadrant finding function
+Angle 45.000000 degrees is in quadrant 0
+Angle 120.000000 degrees is in quadrant 1
+Angle 195.000000 degrees is in quadrant 2
+Angle 340.000000 degrees is in quadrant 3
+Angle 730.000000 degrees is in quadrant 0
+Angle -135.000000 degrees is in quadrant 2
+
+****************************
+Test coordinate conversion functions 2D
+rectOriginal - {2.400000, 5.000000}
+spherical - {5.546170, 1.123276}
+rectangular - {2.400000, 5.000000}
+
+****************************
+Test coordinate conversion functions 3D
+rectOriginal - {2.400000, 5.000000, -10.000000}
+spherical - {11.435034, 1.123276, 2.635212}
+rectangular - {2.400000, 5.000000, -10.000000}
+

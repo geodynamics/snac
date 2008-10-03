@@ -1,0 +1,10 @@
+Passed test Construction: Can we use New()?
+Passed test Append: Can we append the first entry?
+Passed test Prepend: Can we prepend the second entry?
+Passed test Insert Before: Can we insert before "a" the third entry
+Passed test Insert After: Can we insert after "c" the fourth entry?
+Passed test Replace: Can we replace "d" with the fifth entry?
+Passed test Remove: Can we remove the "c" entry?
+Passed test ReplaceAll: Can we replace all with the sixth entry?
+Passed test Copy: Copying
+Passed test Destruction: Deleting all allocated memory

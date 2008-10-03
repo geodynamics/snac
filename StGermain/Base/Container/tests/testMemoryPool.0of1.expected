@@ -1,0 +1,8 @@
+Testing memory allocation from the Memory Pool.. Passed
+
+Testing out of memory.. Passed
+
+Testing memory deallocations.. Passed
+
+Testing illegal memory deallocations.. Passed
+

@@ -1,0 +1,10 @@
+StGermain Framework revision 3585. Copyright (C) 2003-2005 VPAC.
+Watching rank: 0
+Calculated attractor point is at (0.333333,0.333333,0.333333):
+
+Starting timestep 1:
+
+Starting timestep 2:
+
+Comparing the 32768 local Particles between old and new swarms:
+	Passed: swarms are identical.

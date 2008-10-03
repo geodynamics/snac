@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<param name="Name">CompositeVC</param>
+<param name="Organisation">VPAC</param>
+<param name="Project">StGermain</param>
+<param name="Location">./StGermain/Base/Automation/src/</param>
+<param name="Project Web">https://csd.vpac.org/twiki/bin/view/Stgermain/WebHome</param>
+<param name="Copyright">StGermain Framework. Copyright (C) 2003-2005 VPAC.</param>
+<param name="License">The Gnu Lesser General Public License http://www.gnu.org/licenses/lgpl.html</param>
+<param name="Parent">VariableCondition</param>
+<param name="Description">...</param>
+
+<!--Now the interesting stuff-->
+
+
+<list name="Params">
+	<struct>
+		<param name="Name">vcName</param>
+		<param name="Type">String</param>
+		<param name="Default">self->name</param>
+		<param name="Description">...</param>
+	</struct>
+
+</list>
+
+<list name="Dependencies">
+	<struct>
+		<param name="Essential">No</param>
+		<param name="Name">Data</param>
+		<param name="Type">Stg_Component</param>
+		<param name="Description">...</param>
+	</struct>
+
+<!-- PLEASE, check the above struct information is accurate, in line number 319 of the c file and then remove this comment afterwards -->
+
+
+</list>
+<!-- Add an exmaple XML if possible -->
+<param name="Example">...</param>
+
+</StGermainData>

@@ -1,0 +1,556 @@
+StGermain Framework revision 3605. Copyright (C) 2003-2005 VPAC.
+CompositeVC (ptr): 0x806da70
+	dictionary (ptr): 0x805e578
+	itemCount: 6
+	itemTbl (ptr): 0x806deb8
+		itemTbl[0] (ptr): 0x806bc78
+		itemTbl[1] (ptr): 0x806cb00
+		itemTbl[2] (ptr): 0x806cf30
+		itemTbl[3] (ptr): 0x806d4b8
+		itemTbl[4] (ptr): 0x8063980
+		itemTbl[5] (ptr): 0x8063dc8
+	iOwnTbl (ptr): 0x806d900
+		iOwnTbl[0]: True
+		iOwnTbl[1]: True
+		iOwnTbl[2]: True
+		iOwnTbl[3]: True
+		iOwnTbl[4]: True
+		iOwnTbl[5]: True
+	_size: 8
+	_delta: 8
+VariableCondition (ptr): 0x806da70
+Stg_Component (ptr): 0x806da70
+Stg_Object (ptr): 0x806da70
+	Stg_Class (ptr): 0x806da70
+		sizeOfSelf: 204
+		_deleteSelf: Yes
+		type: CompositeVC
+		_delete (func ptr): 0xb7f0ef88
+		_print (func ptr): 0xb7f0f057
+		_copy (func ptr): 0xb7f0f244
+	name: CompositeVC
+	nameAllocationType: NON_GLOBAL
+	_defaultConstructor (func ptr): 0xb7f0e81d
+	_construct (func ptr): 0xb7f0ede9
+	_build (func ptr): 0xb7f0f615
+	_initialise (func ptr): 0xb7f0cde2
+	_execute (func ptr): 0xb7f0cea6
+	_destroy (func ptr): 0xb7f0ced6
+	isConstructed: True
+	isBuilt: True
+	isInitialised: False
+	hasExecuted: False
+	isDestroyed: False
+	constructor function name: CompositeVC-Construct
+	build function name: CompositeVC-Build
+	initialise function name: CompositeVC-Initialise
+	execute function name: CompositeVC-Execute
+	destroy function name: CompositeVC-Destroy
+	_getSet (func ptr): 0xb7f0f783
+	_getVariableCount (func ptr): 0xb7f0f88a
+	_getVariableIndex (func ptr): 0xb7f0fa1e
+	_getValueIndex (func ptr): 0xb7f0fbda
+	_getValueCount (func ptr): 0xb7f0fde4
+	_getValue (func ptr): 0xb7f0fe58
+	variable_Register (ptr): 0x806e2b0
+	conFunc_Register (ptr): 0x805ba18
+	_set (ptr): 0x8064310
+	indexCount: 40
+	indexTbl (ptr): 0x8064520
+		indexTbl[0]: 0
+		indexTbl[1]: 1
+		indexTbl[2]: 2
+		indexTbl[3]: 3
+		indexTbl[4]: 4
+		indexTbl[5]: 5
+		indexTbl[6]: 6
+		indexTbl[7]: 7
+		indexTbl[8]: 8
+		indexTbl[9]: 9
+		indexTbl[10]: 10
+		indexTbl[11]: 11
+		indexTbl[12]: 12
+		indexTbl[13]: 13
+		indexTbl[14]: 14
+		indexTbl[15]: 15
+		indexTbl[16]: 18
+		indexTbl[17]: 21
+		indexTbl[18]: 22
+		indexTbl[19]: 23
+		indexTbl[20]: 24
+		indexTbl[21]: 25
+		indexTbl[22]: 26
+		indexTbl[23]: 27
+		indexTbl[24]: 30
+		indexTbl[25]: 33
+		indexTbl[26]: 34
+		indexTbl[27]: 35
+		indexTbl[28]: 36
+		indexTbl[29]: 37
+		indexTbl[30]: 38
+		indexTbl[31]: 39
+		indexTbl[32]: 40
+		indexTbl[33]: 41
+		indexTbl[34]: 42
+		indexTbl[35]: 43
+		indexTbl[36]: 44
+		indexTbl[37]: 45
+		indexTbl[38]: 46
+		indexTbl[39]: 47
+	vcVarCountTbl (ptr): 0x80645d0
+		vcVarCountTbl[0]: 4
+		vcVarCountTbl[1]: 4
+		vcVarCountTbl[2]: 4
+		vcVarCountTbl[3]: 4
+		vcVarCountTbl[4]: 1
+		vcVarCountTbl[5]: 1
+		vcVarCountTbl[6]: 4
+		vcVarCountTbl[7]: 1
+		vcVarCountTbl[8]: 1
+		vcVarCountTbl[9]: 4
+		vcVarCountTbl[10]: 1
+		vcVarCountTbl[11]: 1
+		vcVarCountTbl[12]: 3
+		vcVarCountTbl[13]: 3
+		vcVarCountTbl[14]: 3
+		vcVarCountTbl[15]: 3
+		vcVarCountTbl[16]: 3
+		vcVarCountTbl[17]: 4
+		vcVarCountTbl[18]: 1
+		vcVarCountTbl[19]: 1
+		vcVarCountTbl[20]: 3
+		vcVarCountTbl[21]: 3
+		vcVarCountTbl[22]: 3
+		vcVarCountTbl[23]: 3
+		vcVarCountTbl[24]: 3
+		vcVarCountTbl[25]: 4
+		vcVarCountTbl[26]: 1
+		vcVarCountTbl[27]: 1
+		vcVarCountTbl[28]: 3
+		vcVarCountTbl[29]: 3
+		vcVarCountTbl[30]: 3
+		vcVarCountTbl[31]: 3
+		vcVarCountTbl[32]: 3
+		vcVarCountTbl[33]: 3
+		vcVarCountTbl[34]: 3
+		vcVarCountTbl[35]: 3
+		vcVarCountTbl[36]: 3
+		vcVarCountTbl[37]: 4
+		vcVarCountTbl[38]: 4
+		vcVarCountTbl[39]: 4
+	vcTbl (ptr): 0x8064680
+		vcTbl[0][0]:
+			varIndex: 6
+			valIndex: 3
+		vcTbl[0][1]:
+			varIndex: 3
+			valIndex: 11
+		vcTbl[0][2]:
+			varIndex: 4
+			valIndex: 12
+		vcTbl[0][3]:
+			varIndex: 5
+			valIndex: 13
+		vcTbl[1][0]:
+			varIndex: 6
+			valIndex: 3
+		vcTbl[1][1]:
+			varIndex: 3
+			valIndex: 11
+		vcTbl[1][2]:
+			varIndex: 4
+			valIndex: 12
+		vcTbl[1][3]:
+			varIndex: 5
+			valIndex: 13
+		vcTbl[2][0]:
+			varIndex: 6
+			valIndex: 3
+		vcTbl[2][1]:
+			varIndex: 3
+			valIndex: 11
+		vcTbl[2][2]:
+			varIndex: 4
+			valIndex: 12
+		vcTbl[2][3]:
+			varIndex: 5
+			valIndex: 13
+		vcTbl[3][0]:
+			varIndex: 6
+			valIndex: 3
+		vcTbl[3][1]:
+			varIndex: 3
+			valIndex: 4
+		vcTbl[3][2]:
+			varIndex: 4
+			valIndex: 5
+		vcTbl[3][3]:
+			varIndex: 5
+			valIndex: 6
+		vcTbl[4][0]:
+			varIndex: 6
+			valIndex: 3
+		vcTbl[5][0]:
+			varIndex: 6
+			valIndex: 3
+		vcTbl[6][0]:
+			varIndex: 6
+			valIndex: 3
+		vcTbl[6][1]:
+			varIndex: 3
+			valIndex: 4
+		vcTbl[6][2]:
+			varIndex: 4
+			valIndex: 5
+		vcTbl[6][3]:
+			varIndex: 5
+			valIndex: 6
+		vcTbl[7][0]:
+			varIndex: 6
+			valIndex: 3
+		vcTbl[8][0]:
+			varIndex: 6
+			valIndex: 3
+		vcTbl[9][0]:
+			varIndex: 6
+			valIndex: 10
+		vcTbl[9][1]:
+			varIndex: 3
+			valIndex: 4
+		vcTbl[9][2]:
+			varIndex: 4
+			valIndex: 5
+		vcTbl[9][3]:
+			varIndex: 5
+			valIndex: 6
+		vcTbl[10][0]:
+			varIndex: 6
+			valIndex: 10
+		vcTbl[11][0]:
+			varIndex: 6
+			valIndex: 10
+		vcTbl[12][0]:
+			varIndex: 3
+			valIndex: 11
+		vcTbl[12][1]:
+			varIndex: 4
+			valIndex: 12
+		vcTbl[12][2]:
+			varIndex: 5
+			valIndex: 13
+		vcTbl[13][0]:
+			varIndex: 3
+			valIndex: 11
+		vcTbl[13][1]:
+			varIndex: 4
+			valIndex: 12
+		vcTbl[13][2]:
+			varIndex: 5
+			valIndex: 13
+		vcTbl[14][0]:
+			varIndex: 3
+			valIndex: 11
+		vcTbl[14][1]:
+			varIndex: 4
+			valIndex: 12
+		vcTbl[14][2]:
+			varIndex: 5
+			valIndex: 13
+		vcTbl[15][0]:
+			varIndex: 3
+			valIndex: 4
+		vcTbl[15][1]:
+			varIndex: 4
+			valIndex: 5
+		vcTbl[15][2]:
+			varIndex: 5
+			valIndex: 6
+		vcTbl[16][0]:
+			varIndex: 3
+			valIndex: 4
+		vcTbl[16][1]:
+			varIndex: 4
+			valIndex: 5
+		vcTbl[16][2]:
+			varIndex: 5
+			valIndex: 6
+		vcTbl[17][0]:
+			varIndex: 3
+			valIndex: 4
+		vcTbl[17][1]:
+			varIndex: 4
+			valIndex: 5
+		vcTbl[17][2]:
+			varIndex: 5
+			valIndex: 6
+		vcTbl[17][3]:
+			varIndex: 6
+			valIndex: 10
+		vcTbl[18][0]:
+			varIndex: 6
+			valIndex: 10
+		vcTbl[19][0]:
+			varIndex: 6
+			valIndex: 10
+		vcTbl[20][0]:
+			varIndex: 3
+			valIndex: 11
+		vcTbl[20][1]:
+			varIndex: 4
+			valIndex: 12
+		vcTbl[20][2]:
+			varIndex: 5
+			valIndex: 13
+		vcTbl[21][0]:
+			varIndex: 3
+			valIndex: 11
+		vcTbl[21][1]:
+			varIndex: 4
+			valIndex: 12
+		vcTbl[21][2]:
+			varIndex: 5
+			valIndex: 13
+		vcTbl[22][0]:
+			varIndex: 3
+			valIndex: 11
+		vcTbl[22][1]:
+			varIndex: 4
+			valIndex: 12
+		vcTbl[22][2]:
+			varIndex: 5
+			valIndex: 13
+		vcTbl[23][0]:
+			varIndex: 3
+			valIndex: 4
+		vcTbl[23][1]:
+			varIndex: 4
+			valIndex: 5
+		vcTbl[23][2]:
+			varIndex: 5
+			valIndex: 6
+		vcTbl[24][0]:
+			varIndex: 3
+			valIndex: 4
+		vcTbl[24][1]:
+			varIndex: 4
+			valIndex: 5
+		vcTbl[24][2]:
+			varIndex: 5
+			valIndex: 6
+		vcTbl[25][0]:
+			varIndex: 3
+			valIndex: 4
+		vcTbl[25][1]:
+			varIndex: 4
+			valIndex: 5
+		vcTbl[25][2]:
+			varIndex: 5
+			valIndex: 6
+		vcTbl[25][3]:
+			varIndex: 6
+			valIndex: 10
+		vcTbl[26][0]:
+			varIndex: 6
+			valIndex: 10
+		vcTbl[27][0]:
+			varIndex: 6
+			valIndex: 10
+		vcTbl[28][0]:
+			varIndex: 3
+			valIndex: 11
+		vcTbl[28][1]:
+			varIndex: 4
+			valIndex: 12
+		vcTbl[28][2]:
+			varIndex: 5
+			valIndex: 13
+		vcTbl[29][0]:
+			varIndex: 3
+			valIndex: 11
+		vcTbl[29][1]:
+			varIndex: 4
+			valIndex: 12
+		vcTbl[29][2]:
+			varIndex: 5
+			valIndex: 13
+		vcTbl[30][0]:
+			varIndex: 3
+			valIndex: 11
+		vcTbl[30][1]:
+			varIndex: 4
+			valIndex: 12
+		vcTbl[30][2]:
+			varIndex: 5
+			valIndex: 13
+		vcTbl[31][0]:
+			varIndex: 3
+			valIndex: 4
+		vcTbl[31][1]:
+			varIndex: 4
+			valIndex: 5
+		vcTbl[31][2]:
+			varIndex: 5
+			valIndex: 6
+		vcTbl[32][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[32][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[32][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[33][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[33][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[33][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[34][0]:
+			varIndex: 3
+			valIndex: 4
+		vcTbl[34][1]:
+			varIndex: 4
+			valIndex: 5
+		vcTbl[34][2]:
+			varIndex: 5
+			valIndex: 6
+		vcTbl[35][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[35][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[35][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[36][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[36][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[36][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[37][0]:
+			varIndex: 3
+			valIndex: 4
+		vcTbl[37][1]:
+			varIndex: 4
+			valIndex: 5
+		vcTbl[37][2]:
+			varIndex: 5
+			valIndex: 6
+		vcTbl[37][3]:
+			varIndex: 6
+			valIndex: 10
+		vcTbl[38][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[38][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[38][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[38][3]:
+			varIndex: 6
+			valIndex: 10
+		vcTbl[39][0]:
+			varIndex: 3
+			valIndex: 0
+		vcTbl[39][1]:
+			varIndex: 4
+			valIndex: 1
+		vcTbl[39][2]:
+			varIndex: 5
+			valIndex: 2
+		vcTbl[39][3]:
+			varIndex: 6
+			valIndex: 10
+	valueCount: 14
+	valueTbl (ptr): 0x8064aa8
+		valueTbl[0]:
+			type: VC_ValueType_Double
+			asDouble: 2
+		valueTbl[1]:
+			type: VC_ValueType_Double
+			asDouble: 3
+		valueTbl[2]:
+			type: VC_ValueType_Double
+			asDouble: 1
+		valueTbl[3]:
+			type: VC_ValueType_DoubleArray
+			arraySize: 5
+			asDoubleArray (ptr): 0x806c7f8
+				asDoubleArray[0]: 5
+				asDoubleArray[1]: 6
+				asDoubleArray[2]: 7
+				asDoubleArray[3]: 8
+				asDoubleArray[4]: 9
+		valueTbl[4]:
+			type: VC_ValueType_CFIndex
+			asCFIndex: 0
+		valueTbl[5]:
+			type: VC_ValueType_CFIndex
+			asCFIndex: 0
+		valueTbl[6]:
+			type: VC_ValueType_CFIndex
+			asCFIndex: 0
+		valueTbl[7]:
+			type: VC_ValueType_CFIndex
+			asCFIndex: 1
+		valueTbl[8]:
+			type: VC_ValueType_CFIndex
+			asCFIndex: 1
+		valueTbl[9]:
+			type: VC_ValueType_CFIndex
+			asCFIndex: 1
+		valueTbl[10]:
+			type: VC_ValueType_DoubleArray
+			arraySize: 5
+			asDoubleArray (ptr): 0x8063cc0
+				asDoubleArray[0]: 5
+				asDoubleArray[1]: 6
+				asDoubleArray[2]: 7
+				asDoubleArray[3]: 8
+				asDoubleArray[4]: 9
+		valueTbl[11]:
+			type: VC_ValueType_Double
+			asDouble: 2
+		valueTbl[12]:
+			type: VC_ValueType_Double
+			asDouble: 3
+		valueTbl[13]:
+			type: VC_ValueType_Double
+			asDouble: 1
+
+
+var[0]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[1]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[2]: 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+var[3]: 2.00, 2.00, 2.00, 20.00, 0.00, 0.00, 20.00, 0.00, 0.00, 20.00, 0.00, 0.00, 2.00, 2.00, 2.00, 20.00, 0.00, 0.00, 20.00, 0.00, 0.00, 20.00, 0.00, 0.00, 2.00, 2.00, 2.00, 20.00, 0.00, 0.00, 20.00, 0.00, 0.00, 20.00, 0.00, 0.00, 2.00, 2.00, 2.00, 20.00, 2.00, 2.00, 20.00, 2.00, 2.00, 20.00, 2.00, 2.00
+var[4]: 3.00, 3.00, 3.00, 20.00, 0.00, 0.00, 20.00, 0.00, 0.00, 20.00, 0.00, 0.00, 3.00, 3.00, 3.00, 20.00, 0.00, 0.00, 20.00, 0.00, 0.00, 20.00, 0.00, 0.00, 3.00, 3.00, 3.00, 20.00, 0.00, 0.00, 20.00, 0.00, 0.00, 20.00, 0.00, 0.00, 3.00, 3.00, 3.00, 20.00, 3.00, 3.00, 20.00, 3.00, 3.00, 20.00, 3.00, 3.00
+var[5]: 1.00, 1.00, 1.00, 20.00, 0.00, 0.00, 20.00, 0.00, 0.00, 20.00, 0.00, 0.00, 1.00, 1.00, 1.00, 20.00, 0.00, 0.00, 20.00, 0.00, 0.00, 20.00, 0.00, 0.00, 1.00, 1.00, 1.00, 20.00, 0.00, 0.00, 20.00, 0.00, 0.00, 20.00, 0.00, 0.00, 1.00, 1.00, 1.00, 20.00, 1.00, 1.00, 20.00, 1.00, 1.00, 20.00, 1.00, 1.00
+var[7]: 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00, 5.00, 6.00, 7.00, 8.00, 9.00
+
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False False 
+True  True  True  True  False False True  False False True  False False True  True  True  True  False False True  False False True  False False True  True  True  True  False False True  False False True  False False True  True  True  True  True  True  True  True  True  True  True  True  
+True  True  True  True  False False True  False False True  False False True  True  True  True  False False True  False False True  False False True  True  True  True  False False True  False False True  False False True  True  True  True  True  True  True  True  True  True  True  True  
+True  True  True  True  False False True  False False True  False False True  True  True  True  False False True  False False True  False False True  True  True  True  False False True  False False True  False False True  True  True  True  True  True  True  True  True  True  True  True  
+True  True  True  True  True  True  True  True  True  True  True  True  False False False False False False False False False True  True  True  False False False False False False False False False True  True  True  False False False False False False False False False True  True  True  
+
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX XXX 
+011 011 011 004 XXX XXX 004 XXX XXX 004 XXX XXX 011 011 011 004 XXX XXX 004 XXX XXX 004 XXX XXX 011 011 011 004 XXX XXX 004 XXX XXX 004 XXX XXX 011 011 011 004 000 000 004 000 000 004 000 000 
+012 012 012 005 XXX XXX 005 XXX XXX 005 XXX XXX 012 012 012 005 XXX XXX 005 XXX XXX 005 XXX XXX 012 012 012 005 XXX XXX 005 XXX XXX 005 XXX XXX 012 012 012 005 001 001 005 001 001 005 001 001 
+013 013 013 006 XXX XXX 006 XXX XXX 006 XXX XXX 013 013 013 006 XXX XXX 006 XXX XXX 006 XXX XXX 013 013 013 006 XXX XXX 006 XXX XXX 006 XXX XXX 013 013 013 006 002 002 006 002 002 006 002 002 
+003 003 003 003 003 003 003 003 003 010 010 010 XXX XXX XXX XXX XXX XXX XXX XXX XXX 010 010 010 XXX XXX XXX XXX XXX XXX XXX XXX XXX 010 010 010 XXX XXX XXX XXX XXX XXX XXX XXX XXX 010 010 010 
+

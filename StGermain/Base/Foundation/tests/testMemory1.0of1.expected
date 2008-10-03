@@ -1,0 +1,120 @@
+Watching rank: 0
+Before Freeing memory
+Memory Statistics
+Times Allocated Times Free Current bytes Peak bytes Total bytes 
+             13          0          3527       3527        3527
+Type                 Times Allocated Times Free Current bytes Peak bytes Total bytes 
+Bytes                              2          0            35         35          35
+Index                              1          0            16         16          16
+StructA                            4          0           552        552         552
+StructB                            3          0          2284       2284        2284
+StructC                            3          0           640        640         640
+
+Bytes
+Times Allocated Times Free Current bytes Peak bytes Total bytes 
+              2          0            35         35          35
+Name                 Times Allocated Times Free Current bytes Peak bytes Total bytes 
+Test1                              2          0            35         35          35
+
+Index
+Times Allocated Times Free Current bytes Peak bytes Total bytes 
+              1          0            16         16          16
+Name                 Times Allocated Times Free Current bytes Peak bytes Total bytes 
+MEMORY_SETUP                       1          0            16         16          16
+
+StructA
+Times Allocated Times Free Current bytes Peak bytes Total bytes 
+              4          0           552        552         552
+Name                 Times Allocated Times Free Current bytes Peak bytes Total bytes 
+(null)                             1          0           144        144         144
+Test1                              2          0            88         88          88
+Test2                              1          0           320        320         320
+
+StructB
+Times Allocated Times Free Current bytes Peak bytes Total bytes 
+              3          0          2284       2284        2284
+Name                 Times Allocated Times Free Current bytes Peak bytes Total bytes 
+(null)                             1          0          1300       1300        1300
+Test1                              1          0           960        960         960
+Test2                              1          0            24         24          24
+
+StructC
+Times Allocated Times Free Current bytes Peak bytes Total bytes 
+              3          0           640        640         640
+Name                 Times Allocated Times Free Current bytes Peak bytes Total bytes 
+(null)                             1          0           128        128         128
+Test1                              1          0           176        176         176
+Test2                              1          0           336        336         336
+
+Test search pointer function
+Object,     (ptr)0x809fac8, Bytes, Test1, testMemory1.c, main(), Line:105, Item:5, Total:5, N/A
+1D Array,   (ptr)0x809ff60, StructB, Test2, testMemory1.c, main(), Line:109, Item:8, Total:24, 3
+3D as 1D,   (ptr)0x80a0ad0, StructA, (null), testMemory1.c, main(), Line:114, Item:12, Total:144, 2 x 2 x 3
+2D Complex, (ptr)0x80a1038, StructC, Test1, testMemory1.c, main(), Line:117, Item:16, Total:176, 4 by { 1, 2, 3, 4 }
+
+After Memory Free
+Memory Statistics
+Times Allocated Times Free Current bytes Peak bytes Total bytes 
+             13         12             5       3527           5
+Type                 Times Allocated Times Free Current bytes Peak bytes Total bytes 
+Bytes                              2          1             5         35           5
+Index                              1          1             0         16           0
+StructA                            4          4             0        552           0
+StructB                            3          3             0       2284           0
+StructC                            3          3             0        640           0
+
+Bytes
+Times Allocated Times Free Current bytes Peak bytes Total bytes 
+              2          1             5         35           5
+Name                 Times Allocated Times Free Current bytes Peak bytes Total bytes 
+Test1                              2          1             5         35           5
+
+Index
+Times Allocated Times Free Current bytes Peak bytes Total bytes 
+              1          1             0         16           0
+Name                 Times Allocated Times Free Current bytes Peak bytes Total bytes 
+MEMORY_SETUP                       1          1             0         16           0
+
+StructA
+Times Allocated Times Free Current bytes Peak bytes Total bytes 
+              4          4             0        552           0
+Name                 Times Allocated Times Free Current bytes Peak bytes Total bytes 
+(null)                             1          1             0        144           0
+Test1                              2          2             0         88           0
+Test2                              1          1             0        320           0
+
+StructB
+Times Allocated Times Free Current bytes Peak bytes Total bytes 
+              3          3             0       2284           0
+Name                 Times Allocated Times Free Current bytes Peak bytes Total bytes 
+(null)                             1          1             0       1300           0
+Test1                              1          1             0        960           0
+Test2                              1          1             0         24           0
+
+StructC
+Times Allocated Times Free Current bytes Peak bytes Total bytes 
+              3          3             0        640           0
+Name                 Times Allocated Times Free Current bytes Peak bytes Total bytes 
+(null)                             1          1             0        128           0
+Test1                              1          1             0        176           0
+Test2                              1          1             0        336           0
+
+Test search/print functions
+Type: StructB
+Name                 Times Allocated Times Free Current bytes Peak bytes Total bytes 
+Name_Test2                         0          0             0          0           0
+
+StructC
+Times Allocated Times Free Current bytes Peak bytes Total bytes 
+              3          3             0        640           0
+Name                 Times Allocated Times Free Current bytes Peak bytes Total bytes 
+(null)                             1          1             0        128           0
+Test1                              1          1             0        176           0
+Test2                              1          1             0        336           0
+
+Test Memory Leak print.
+Warning. Possible memory leak:
+Object,     (ptr)0x809fac8, Bytes, Test1, testMemory1.c, main(), Line:105, Item:5, Total:5, N/A
+
+Possible leaks detected: 1
+

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+
+<param name="Name">TimeIntegratee</param>
+<param name="Organisation">VPAC</param>
+<param name="Project">StGermain</param>
+<param name="Location">./StGermain/Discretisation/Utils/src/</param>
+<param name="Project Web">https://csd.vpac.org/twiki/bin/view/Stgermain/WebHome</param>
+<param name="Copyright">StGermain Framework. Copyright (C) 2003-2005 VPAC.</param>
+<param name="License">The Gnu Lesser General Public License http://www.gnu.org/licenses/lgpl.html</param>
+<param name="Parent">Stg_Component</param>
+<param name="Description">A general class which integrates each element in a Variable through time. It does this through a TimeDerivative method which it calls for each element in the Variable. This happens every time the TimeIntegrator that this object is attached to executes (This should happen on the AbstractContext_EP_Step EntryPoint.</param>
+
+<list name="Params">
+</list>
+
+<list name="Dependencies">
+	<struct>
+		<param name="Essential">No</param>
+		<param name="Name">Variable</param>
+		<param name="Type">Variable</param>
+		<param name="Description">This is a variable containing all the elements that the TimeIntegrator is integrating through time.</param>
+	</struct>
+
+	<struct>
+		<param name="Essential">True</param>
+		<param name="Name">TimeIntegrator</param>
+		<param name="Type">TimeIntegrator</param>
+		<param name="Description">This is the TimeIntegrator that this object will attach itself to. When this TimeIntegrator gets run, it will integrate this object through time.</param>
+	</struct>
+
+	<struct>
+		<param name="Essential">True</param>
+		<param name="Name">dataName</param>
+		<param name="Type">Stg_Component</param>
+		<param name="Description">This is a list of Components that this class stores pointers to. This is so that you can get extra information in the TimeDerivative function if the user wants to.</param>
+	</struct>
+
+
+</list>
+<!-- Add an exmaple XML if possible -->
+<param name="Example">...</param>
+
+</StGermainData>

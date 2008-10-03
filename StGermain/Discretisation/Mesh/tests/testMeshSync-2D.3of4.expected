@@ -1,0 +1,414 @@
+StGermain Framework revision 3605. Copyright (C) 2003-2005 VPAC.
+Mesh (ptr): (0x805f728)
+Stg_Component (ptr): 0x805f728
+Stg_Object (ptr): 0x805f728
+	Stg_Class (ptr): 0x805f728
+		sizeOfSelf: 400
+		_deleteSelf: Yes
+		type: Mesh
+		_delete (func ptr): 0xb7f811dd
+		_print (func ptr): 0xb7f81a6a
+		_copy (func ptr): 0xb7f82c4e
+	name: Mesh
+	nameAllocationType: NON_GLOBAL
+	_defaultConstructor (func ptr): 0xb7f8051c
+	_construct (func ptr): 0xb7f8100e
+	_build (func ptr): 0xb7f83322
+	_initialise (func ptr): 0xb7f84214
+	_execute (func ptr): 0xb7f84219
+	_destroy (func ptr): 0xb7f811d8
+	isConstructed: True
+	isBuilt: True
+	isInitialised: True
+	hasExecuted: False
+	isDestroyed: False
+	constructor function name: Mesh-Construct
+	build function name: Mesh-Build
+	initialise function name: Mesh-Initialise
+	execute function name: Mesh-Execute
+	destroy function name: Mesh-Destroy
+	dictionary (ptr): 0x805c560
+	layout (ptr): 0x805f478
+Extension (ptr):0x805faf8
+Stg_Object (ptr): 0x805faf8
+	Stg_Class (ptr): 0x805faf8
+		sizeOfSelf: 80
+		_deleteSelf: Yes
+		type: Extension
+		_delete (func ptr): 0xb7ef9018
+		_print (func ptr): 0xb7ef9066
+		_copy (func ptr): 0xb7ef9200
+	name: node
+	nameAllocationType: NON_GLOBAL
+	initialSize 8
+	finalSize 8
+	count: 0
+	extInfos (ptr): 0x805fb58
+Stg_ObjectList (ptr):0x805fb58
+	Stg_Class (ptr): 0x805fb58
+		sizeOfSelf: 96
+		_deleteSelf: Yes
+		type: Stg_ObjectList
+		_delete (func ptr): 0xb7f2af3e
+		_print (func ptr): 0xb7f2af75
+		_copy (func ptr): 0xb7f2b217
+	_append(func ptr): 0xb7f2be7b
+	_prepend(func ptr): 0xb7f2bf41
+	_replaceAll(func ptr): 0xb7f2c005
+	_replace(func ptr): 0xb7f2c0be
+	_insertBefore(func ptr): 0xb7f2c25b
+	_insertAfter(func ptr): 0xb7f2c416
+	_remove(func ptr): 0xb7f2c5d3
+	_getIndex(func ptr): 0xb7f2c679
+	_get(func ptr): 0xb7f2c727
+	_allocMoreMemory(func ptr): 0xb7f2c8fa
+	_insertAtIndex(func ptr): 0xb7f2c980
+	_removeByIndex(func ptr): 0xb7f2c9fe
+	_deleteAllObjects(func ptr): 0xb7f2c87b
+	_size: 8
+	_delta: 8
+	_noJournalingInCopy: 0
+	count: 0
+	data[0-0]:
+	_extensionsToExisting (ptr): (nil)
+	_existingObject (ptr): (nil)
+	_array (ptr): (nil)
+	itemSize 0
+	em (ptr) (nil)
+	count 0
+Extension (ptr):0x805fbc8
+Stg_Object (ptr): 0x805fbc8
+	Stg_Class (ptr): 0x805fbc8
+		sizeOfSelf: 80
+		_deleteSelf: Yes
+		type: Extension
+		_delete (func ptr): 0xb7ef9018
+		_print (func ptr): 0xb7ef9066
+		_copy (func ptr): 0xb7ef9200
+	name: element
+	nameAllocationType: NON_GLOBAL
+	initialSize 8
+	finalSize 8
+	count: 0
+	extInfos (ptr): 0x805fc28
+Stg_ObjectList (ptr):0x805fc28
+	Stg_Class (ptr): 0x805fc28
+		sizeOfSelf: 96
+		_deleteSelf: Yes
+		type: Stg_ObjectList
+		_delete (func ptr): 0xb7f2af3e
+		_print (func ptr): 0xb7f2af75
+		_copy (func ptr): 0xb7f2b217
+	_append(func ptr): 0xb7f2be7b
+	_prepend(func ptr): 0xb7f2bf41
+	_replaceAll(func ptr): 0xb7f2c005
+	_replace(func ptr): 0xb7f2c0be
+	_insertBefore(func ptr): 0xb7f2c25b
+	_insertAfter(func ptr): 0xb7f2c416
+	_remove(func ptr): 0xb7f2c5d3
+	_getIndex(func ptr): 0xb7f2c679
+	_get(func ptr): 0xb7f2c727
+	_allocMoreMemory(func ptr): 0xb7f2c8fa
+	_insertAtIndex(func ptr): 0xb7f2c980
+	_removeByIndex(func ptr): 0xb7f2c9fe
+	_deleteAllObjects(func ptr): 0xb7f2c87b
+	_size: 8
+	_delta: 8
+	_noJournalingInCopy: 0
+	count: 0
+	data[0-0]:
+	_extensionsToExisting (ptr): (nil)
+	_existingObject (ptr): (nil)
+	_array (ptr): (nil)
+	itemSize 0
+	em (ptr) (nil)
+	count 0
+	node (ptr): 0x8060458
+	nodeLocalCount: 12
+	nodeDomainCount: 27
+	nodeShadowCount: 15
+	nodeGlobalCount: 27
+	nodeCoord (ptr): 0x8060540
+	nodeCoord[0-27]:   (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), (3.00,3.00,3.00), 
+	ownsNodeLocalToGlobalMap: 1
+	nodeL2G (ptr): 0x8060238
+	nodeL2G[0-12]:   004 005 007 008 013 014 016 017 022 023 025 026 
+	ownsNodeDomainToGlobalMap: 1
+	nodeD2G (ptr): 0x8060238
+	nodeD2G[0-27]:   004 005 007 008 013 014 016 017 022 023 025 026 000 001 002 003 006 009 010 011 012 015 018 019 020 021 024 
+	ownsNodeGlobalToLocalMap: 1
+	nodeG2L (ptr): 0x8060850
+	nodeG2L[0-27]:   027 027 027 027 000 001 027 002 003 027 027 027 027 004 005 027 006 007 027 027 027 027 008 009 027 010 011 
+	ownsNodeGlobalToDomainMap: 1
+	nodeG2D (ptr): 0x80607d8
+	nodeG2D[0-27]:   012 013 014 015 000 001 016 002 003 017 018 019 020 004 005 021 006 007 022 023 024 025 008 009 026 010 011 
+	ownsNodeNeighbourCountTbl: 1
+	nodeNeighbourCountTbl (ptr): 0x80608c8
+	ownsNodeNeighbourTbl: 1
+	nodeNeighbourTbl (ptr): 0x8060940
+	nodeNeighbourTbl[0-27]:
+		nodeNeighbourTbl[0][0-6]: 001 002 004 015 013 027 
+		nodeNeighbourTbl[1][0-6]: 027 003 005 000 014 027 
+		nodeNeighbourTbl[2][0-6]: 003 027 006 016 000 027 
+		nodeNeighbourTbl[3][0-6]: 027 027 007 002 001 027 
+		nodeNeighbourTbl[4][0-6]: 005 006 008 020 018 000 
+		nodeNeighbourTbl[5][0-6]: 027 007 009 004 019 001 
+		nodeNeighbourTbl[6][0-6]: 007 027 010 021 004 002 
+		nodeNeighbourTbl[7][0-6]: 027 027 011 006 005 003 
+		nodeNeighbourTbl[8][0-6]: 009 010 027 025 023 004 
+		nodeNeighbourTbl[9][0-6]: 027 011 027 008 024 005 
+		nodeNeighbourTbl[10][0-6]: 011 027 027 026 008 006 
+		nodeNeighbourTbl[11][0-6]: 027 027 027 010 009 007 
+		nodeNeighbourTbl[12][0-6]: 013 015 017 027 027 027 
+		nodeNeighbourTbl[13][0-6]: 014 000 018 012 027 027 
+		nodeNeighbourTbl[14][0-6]: 027 001 019 013 027 027 
+		nodeNeighbourTbl[15][0-6]: 000 016 020 027 012 027 
+		nodeNeighbourTbl[16][0-6]: 002 027 021 027 015 027 
+		nodeNeighbourTbl[17][0-6]: 018 020 022 027 027 012 
+		nodeNeighbourTbl[18][0-6]: 019 004 023 017 027 013 
+		nodeNeighbourTbl[19][0-6]: 027 005 024 018 027 014 
+		nodeNeighbourTbl[20][0-6]: 004 021 025 027 017 015 
+		nodeNeighbourTbl[21][0-6]: 006 027 026 027 020 016 
+		nodeNeighbourTbl[22][0-6]: 023 025 027 027 027 017 
+		nodeNeighbourTbl[23][0-6]: 024 008 027 022 027 018 
+		nodeNeighbourTbl[24][0-6]: 027 009 027 023 027 019 
+		nodeNeighbourTbl[25][0-6]: 008 026 027 027 022 020 
+		nodeNeighbourTbl[26][0-6]: 010 027 027 027 025 021 
+	ownsNodeElementCountTbl: 1
+	nodeElementCountTbl (ptr): 0x8060c40
+	ownsNodeElementTbl: 1
+	nodeElementTbl (ptr): 0x8060cb8
+	nodeElementTbl[0-27]:
+		nodeElementTbl[0][0-8]: 008 008 008 008 002 003 004 000 
+		nodeElementTbl[1][0-8]: 008 008 008 008 003 008 000 008 
+		nodeElementTbl[2][0-8]: 008 008 008 008 004 000 008 008 
+		nodeElementTbl[3][0-8]: 008 008 008 008 000 008 008 008 
+		nodeElementTbl[4][0-8]: 002 003 004 000 005 006 007 001 
+		nodeElementTbl[5][0-8]: 003 008 000 008 006 008 001 008 
+		nodeElementTbl[6][0-8]: 004 000 008 008 007 001 008 008 
+		nodeElementTbl[7][0-8]: 000 008 008 008 001 008 008 008 
+		nodeElementTbl[8][0-8]: 005 006 007 001 008 008 008 008 
+		nodeElementTbl[9][0-8]: 006 008 001 008 008 008 008 008 
+		nodeElementTbl[10][0-8]: 007 001 008 008 008 008 008 008 
+		nodeElementTbl[11][0-8]: 001 008 008 008 008 008 008 008 
+		nodeElementTbl[12][0-8]: 008 008 008 008 008 008 008 002 
+		nodeElementTbl[13][0-8]: 008 008 008 008 008 008 002 003 
+		nodeElementTbl[14][0-8]: 008 008 008 008 008 008 003 008 
+		nodeElementTbl[15][0-8]: 008 008 008 008 008 002 008 004 
+		nodeElementTbl[16][0-8]: 008 008 008 008 008 004 008 008 
+		nodeElementTbl[17][0-8]: 008 008 008 002 008 008 008 005 
+		nodeElementTbl[18][0-8]: 008 008 002 003 008 008 005 006 
+		nodeElementTbl[19][0-8]: 008 008 003 008 008 008 006 008 
+		nodeElementTbl[20][0-8]: 008 002 008 004 008 005 008 007 
+		nodeElementTbl[21][0-8]: 008 004 008 008 008 007 008 008 
+		nodeElementTbl[22][0-8]: 008 008 008 005 008 008 008 008 
+		nodeElementTbl[23][0-8]: 008 008 005 006 008 008 008 008 
+		nodeElementTbl[24][0-8]: 008 008 006 008 008 008 008 008 
+		nodeElementTbl[25][0-8]: 008 005 008 007 008 008 008 008 
+		nodeElementTbl[26][0-8]: 008 007 008 008 008 008 008 008 
+	element (ptr): 0x8061090
+	elementLocalCount: 2
+	elementDomainCount: 8
+	elementShadowCount: 6
+	elementGlobalCount: 8
+	ownsElementLocalToGlobalMap: 1
+	elementL2G (ptr): 0x805d000
+	elementL2G[0-2]:   003 007 
+	ownsElementDomainToGlobalMap: 1
+	elementD2G (ptr): 0x805d000
+	elementD2G[0-8]:   003 007 000 001 002 004 005 006 
+	ownsElementGlobalToLocalMap: 1
+	elementG2L (ptr): 0x8061110
+	elementG2L[0-8]:   008 008 008 000 008 008 008 001 
+	ownsElementGlobalToDomainMap: 1
+	elementG2D (ptr): 0x80610e0
+	elementG2D[0-8]:   002 003 004 000 005 006 007 001 
+	ownsElementNeighbourCountTbl: 1
+	elementNeighbourCountTbl (ptr): 0x8061140
+	ownsElementNeighbourTbl: 1
+	elementNeighbourTbl (ptr): 0x8061170
+	elementNeighbourTbl[0-8]:
+		elementNeighbourTbl[0][0-26]: 008 008 008 008 008 008 008 008 008 002 003 008 004 008 008 008 008 005 006 008 007 001 008 008 008 008 
+		elementNeighbourTbl[1][0-26]: 002 003 008 004 000 008 008 008 008 005 006 008 007 008 008 008 008 008 008 008 008 008 008 008 008 008 
+		elementNeighbourTbl[2][0-26]: 008 008 008 008 008 008 008 008 008 008 008 008 008 003 008 004 000 008 008 008 008 005 006 008 007 001 
+		elementNeighbourTbl[3][0-26]: 008 008 008 008 008 008 008 008 008 008 008 008 002 008 004 000 008 008 008 008 005 006 008 007 001 008 
+		elementNeighbourTbl[4][0-26]: 008 008 008 008 008 008 008 008 008 008 002 003 008 000 008 008 008 008 005 006 008 007 001 008 008 008 
+		elementNeighbourTbl[5][0-26]: 008 008 008 008 002 003 008 004 000 008 008 008 008 006 008 007 001 008 008 008 008 008 008 008 008 008 
+		elementNeighbourTbl[6][0-26]: 008 008 008 002 003 008 004 000 008 008 008 008 005 008 007 001 008 008 008 008 008 008 008 008 008 008 
+		elementNeighbourTbl[7][0-26]: 008 002 003 008 004 000 008 008 008 008 005 006 008 001 008 008 008 008 008 008 008 008 008 008 008 008 
+	ownsElementNodeCountTbl: 1
+	elementNodeCountTbl (ptr): 0x805aa18
+	ownsElementNodeTbl: 1
+	elementNodeTbl (ptr): 0x80614e0
+	elementNodeTbl[0-8]:
+		elementNodeTbl[0][0-8]: 000 001 003 002 004 005 007 006 
+		elementNodeTbl[1][0-8]: 004 005 007 006 008 009 011 010 
+		elementNodeTbl[2][0-8]: 012 013 000 015 017 018 004 020 
+		elementNodeTbl[3][0-8]: 013 014 001 000 018 019 005 004 
+		elementNodeTbl[4][0-8]: 015 000 002 016 020 004 006 021 
+		elementNodeTbl[5][0-8]: 017 018 004 020 022 023 008 025 
+		elementNodeTbl[6][0-8]: 018 019 005 004 023 024 009 008 
+		elementNodeTbl[7][0-8]: 020 004 006 021 025 008 010 026 
+	procNbrCnt: 3
+	procNbrTbl (ptr): 0x80602b0
+		procNbrTbl[0]: 0
+		procNbrTbl[1]: 1
+		procNbrTbl[2]: 2
+	elementShadowInfo->procShadowedCnt (ptr): 0x8060420
+		elementShadowInfo->procShadowedCnt[0]: 2
+		elementShadowInfo->procShadowedCnt[1]: 2
+		elementShadowInfo->procShadowedCnt[2]: 2
+	elementShadowInfo->procShadowedTbl (ptr): 0x805d030
+		elementShadowInfo->procShadowedTbl[0] (ptr): 0x8060340
+			elementShadowInfo->procShadowedTbl[0][0]: 0
+			elementShadowInfo->procShadowedTbl[0][1]: 1
+		elementShadowInfo->procShadowedTbl[1] (ptr): 0x8061708
+			elementShadowInfo->procShadowedTbl[1][0]: 0
+			elementShadowInfo->procShadowedTbl[1][1]: 1
+		elementShadowInfo->procShadowedTbl[2] (ptr): 0x8061770
+			elementShadowInfo->procShadowedTbl[2][0]: 0
+			elementShadowInfo->procShadowedTbl[2][1]: 1
+	elementShadowInfo->procShadowCnt (ptr): 0x8061788
+		elementShadowInfo->procShadowCnt[0]: 2
+		elementShadowInfo->procShadowCnt[1]: 2
+		elementShadowInfo->procShadowCnt[2]: 2
+	elementShadowInfo->procShadowTbl (ptr): 0x80617a0
+		elementShadowInfo->procShadowTbl[0] (ptr): 0x80617b8
+			elementShadowInfo->procShadowTbl[0][0]: 2
+			elementShadowInfo->procShadowTbl[0][1]: 5
+		elementShadowInfo->procShadowTbl[1] (ptr): 0x80617d0
+			elementShadowInfo->procShadowTbl[1][0]: 3
+			elementShadowInfo->procShadowTbl[1][1]: 6
+		elementShadowInfo->procShadowTbl[2] (ptr): 0x80617e8
+			elementShadowInfo->procShadowTbl[2][0]: 4
+			elementShadowInfo->procShadowTbl[2][1]: 7
+	nodeShadowInfo->procShadowedCnt (ptr): 0x8061840
+		nodeShadowInfo->procShadowedCnt[0]: 9
+		nodeShadowInfo->procShadowedCnt[1]: 6
+		nodeShadowInfo->procShadowedCnt[2]: 6
+	nodeShadowInfo->procShadowedTbl (ptr): 0x8061858
+		nodeShadowInfo->procShadowedTbl[0] (ptr): 0x8061998
+			nodeShadowInfo->procShadowedTbl[0][0]: 1
+			nodeShadowInfo->procShadowedTbl[0][1]: 2
+			nodeShadowInfo->procShadowedTbl[0][2]: 3
+			nodeShadowInfo->procShadowedTbl[0][3]: 5
+			nodeShadowInfo->procShadowedTbl[0][4]: 6
+			nodeShadowInfo->procShadowedTbl[0][5]: 7
+			nodeShadowInfo->procShadowedTbl[0][6]: 9
+			nodeShadowInfo->procShadowedTbl[0][7]: 10
+			nodeShadowInfo->procShadowedTbl[0][8]: 11
+		nodeShadowInfo->procShadowedTbl[1] (ptr): 0x8061660
+			nodeShadowInfo->procShadowedTbl[1][0]: 2
+			nodeShadowInfo->procShadowedTbl[1][1]: 3
+			nodeShadowInfo->procShadowedTbl[1][2]: 6
+			nodeShadowInfo->procShadowedTbl[1][3]: 7
+			nodeShadowInfo->procShadowedTbl[1][4]: 10
+			nodeShadowInfo->procShadowedTbl[1][5]: 11
+		nodeShadowInfo->procShadowedTbl[2] (ptr): 0x8061638
+			nodeShadowInfo->procShadowedTbl[2][0]: 1
+			nodeShadowInfo->procShadowedTbl[2][1]: 3
+			nodeShadowInfo->procShadowedTbl[2][2]: 5
+			nodeShadowInfo->procShadowedTbl[2][3]: 7
+			nodeShadowInfo->procShadowedTbl[2][4]: 9
+			nodeShadowInfo->procShadowedTbl[2][5]: 11
+	nodeShadowInfo->procShadowCnt (ptr): 0x8061a68
+		nodeShadowInfo->procShadowCnt[0]: 9
+		nodeShadowInfo->procShadowCnt[1]: 6
+		nodeShadowInfo->procShadowCnt[2]: 6
+	nodeShadowInfo->procShadowTbl (ptr): 0x8061a80
+		nodeShadowInfo->procShadowTbl[0] (ptr): 0x8061a98
+			nodeShadowInfo->procShadowTbl[0][0]: 12
+			nodeShadowInfo->procShadowTbl[0][1]: 13
+			nodeShadowInfo->procShadowTbl[0][2]: 15
+			nodeShadowInfo->procShadowTbl[0][3]: 17
+			nodeShadowInfo->procShadowTbl[0][4]: 18
+			nodeShadowInfo->procShadowTbl[0][5]: 20
+			nodeShadowInfo->procShadowTbl[0][6]: 22
+			nodeShadowInfo->procShadowTbl[0][7]: 23
+			nodeShadowInfo->procShadowTbl[0][8]: 25
+		nodeShadowInfo->procShadowTbl[1] (ptr): 0x8061610
+			nodeShadowInfo->procShadowTbl[1][0]: 13
+			nodeShadowInfo->procShadowTbl[1][1]: 14
+			nodeShadowInfo->procShadowTbl[1][2]: 18
+			nodeShadowInfo->procShadowTbl[1][3]: 19
+			nodeShadowInfo->procShadowTbl[1][4]: 23
+			nodeShadowInfo->procShadowTbl[1][5]: 24
+		nodeShadowInfo->procShadowTbl[2] (ptr): 0x8061ac8
+			nodeShadowInfo->procShadowTbl[2][0]: 15
+			nodeShadowInfo->procShadowTbl[2][1]: 16
+			nodeShadowInfo->procShadowTbl[2][2]: 20
+			nodeShadowInfo->procShadowTbl[2][3]: 21
+			nodeShadowInfo->procShadowTbl[2][4]: 25
+			nodeShadowInfo->procShadowTbl[2][5]: 26
+Pre-sync:
+	nodeCoord[0]: { 3, 3, 3 } - temp: 13
+	nodeCoord[1]: { 3, 3, 3 } - temp: 13
+	nodeCoord[2]: { 3, 3, 3 } - temp: 13
+	nodeCoord[3]: { 3, 3, 3 } - temp: 13
+	nodeCoord[4]: { 3, 3, 3 } - temp: 13
+	nodeCoord[5]: { 3, 3, 3 } - temp: 13
+	nodeCoord[6]: { 3, 3, 3 } - temp: 13
+	nodeCoord[7]: { 3, 3, 3 } - temp: 13
+	nodeCoord[8]: { 3, 3, 3 } - temp: 13
+	nodeCoord[9]: { 3, 3, 3 } - temp: 13
+	nodeCoord[10]: { 3, 3, 3 } - temp: 13
+	nodeCoord[11]: { 3, 3, 3 } - temp: 13
+	nodeCoord[12]: { 3, 3, 3 } - temp: 13
+	nodeCoord[13]: { 3, 3, 3 } - temp: 13
+	nodeCoord[14]: { 3, 3, 3 } - temp: 13
+	nodeCoord[15]: { 3, 3, 3 } - temp: 13
+	nodeCoord[16]: { 3, 3, 3 } - temp: 13
+	nodeCoord[17]: { 3, 3, 3 } - temp: 13
+	nodeCoord[18]: { 3, 3, 3 } - temp: 13
+	nodeCoord[19]: { 3, 3, 3 } - temp: 13
+	nodeCoord[20]: { 3, 3, 3 } - temp: 13
+	nodeCoord[21]: { 3, 3, 3 } - temp: 13
+	nodeCoord[22]: { 3, 3, 3 } - temp: 13
+	nodeCoord[23]: { 3, 3, 3 } - temp: 13
+	nodeCoord[24]: { 3, 3, 3 } - temp: 13
+	nodeCoord[25]: { 3, 3, 3 } - temp: 13
+	nodeCoord[26]: { 3, 3, 3 } - temp: 13
+	element[0]: temp: 23
+	element[1]: temp: 23
+	element[2]: temp: 23
+	element[3]: temp: 23
+	element[4]: temp: 23
+	element[5]: temp: 23
+	element[6]: temp: 23
+	element[7]: temp: 23
+Post-sync:
+	nodeCoord[0]: { 3, 3, 3 } - temp: 13
+	nodeCoord[1]: { 3, 3, 3 } - temp: 13
+	nodeCoord[2]: { 3, 3, 3 } - temp: 13
+	nodeCoord[3]: { 3, 3, 3 } - temp: 13
+	nodeCoord[4]: { 3, 3, 3 } - temp: 13
+	nodeCoord[5]: { 3, 3, 3 } - temp: 13
+	nodeCoord[6]: { 3, 3, 3 } - temp: 13
+	nodeCoord[7]: { 3, 3, 3 } - temp: 13
+	nodeCoord[8]: { 3, 3, 3 } - temp: 13
+	nodeCoord[9]: { 3, 3, 3 } - temp: 13
+	nodeCoord[10]: { 3, 3, 3 } - temp: 13
+	nodeCoord[11]: { 3, 3, 3 } - temp: 13
+	nodeCoord[12]: { 0, 0, 0 } - temp: 10
+	nodeCoord[13]: { 1, 1, 1 } - temp: 11
+	nodeCoord[14]: { 1, 1, 1 } - temp: 11
+	nodeCoord[15]: { 2, 2, 2 } - temp: 12
+	nodeCoord[16]: { 2, 2, 2 } - temp: 12
+	nodeCoord[17]: { 0, 0, 0 } - temp: 10
+	nodeCoord[18]: { 1, 1, 1 } - temp: 11
+	nodeCoord[19]: { 1, 1, 1 } - temp: 11
+	nodeCoord[20]: { 2, 2, 2 } - temp: 12
+	nodeCoord[21]: { 2, 2, 2 } - temp: 12
+	nodeCoord[22]: { 0, 0, 0 } - temp: 10
+	nodeCoord[23]: { 1, 1, 1 } - temp: 11
+	nodeCoord[24]: { 1, 1, 1 } - temp: 11
+	nodeCoord[25]: { 2, 2, 2 } - temp: 12
+	nodeCoord[26]: { 2, 2, 2 } - temp: 12
+	element[0]: temp: 23
+	element[1]: temp: 23
+	element[2]: temp: 20
+	element[3]: temp: 21
+	element[4]: temp: 22
+	element[5]: temp: 20
+	element[6]: temp: 21
+	element[7]: temp: 22

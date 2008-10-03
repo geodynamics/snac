@@ -1,0 +1,14 @@
+ConditionFunction (ptr): 0x8076578
+	apply (func ptr): 0x804b484
+	name (ptr): 0x8063691
+		name: quadratic
+Stg_Class (ptr): 0x8076578
+	sizeOfSelf: 36
+	_deleteSelf: Yes
+	type: ConditionFunction
+	_delete (func ptr): 0x804b793
+	_print (func ptr): 0x804b7bc
+	_copy (func ptr): (nil)
+Apply:
+	index: 4
+	var_I: 2

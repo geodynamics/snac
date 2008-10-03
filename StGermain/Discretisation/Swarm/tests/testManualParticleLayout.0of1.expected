@@ -1,0 +1,32 @@
+StGermain Framework revision 3378. Copyright (C) 2003-2005 VPAC.
+Watching rank: 0
+ManualParticleLayout (ptr): 0x8063e3c:
+	GlobalParticleLayout (ptr): 0x8063e3c
+	ParticleLayout (ptr): 0x8063e3c
+	Stg_Class (ptr): 0x8063e3c
+		sizeOfSelf: 112
+		_deleteSelf: Yes
+		type: ManualParticleLayout
+		_delete (func ptr): 0xb7ef495a
+		_print (func ptr): 0xb7ef4983
+		_copy (func ptr): 0xb7ef49e5
+		_setInitialCounts (func ptr): 0xb7ef33f3
+		_initialiseParticles (func ptr): 0xb7ef362d
+		coordSystem: GlobalCoordSystem
+		weightsInitialisedAtStartup : False
+		_initialiseParticle (func ptr): 0xb7ef4b56
+		totalInitialParticles: 4
+		averageInitialParticlesPerCell: 0.5
+Printing coords of all local particles, cell-by-cell:
+	Local Cell   0:
+	Local Cell   1:
+		part. InCell   0 (local index      0): (    0.4,     0.3,     0.2)
+	Local Cell   2:
+	Local Cell   3:
+		part. InCell   0 (local index      2): (    0.8,     0.1,     0.3)
+		part. InCell   1 (local index      3): (    0.9,     0.4,     0.1)
+	Local Cell   4:
+	Local Cell   5:
+	Local Cell   6:
+		part. InCell   0 (local index      1): (    0.7,     0.6,     0.5)
+	Local Cell   7:

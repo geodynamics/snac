@@ -1,0 +1,68 @@
+IsChild( A_Type, A_Type ) = True
+IsChild( A_Type, B_Type ) = False
+IsChild( A_Type, C_Type ) = False
+IsChild( A_Type, D_Type ) = False
+IsChild( A_Type, AA_Type ) = False
+IsChild( A_Type, BB_Type ) = False
+
+IsChild( B_Type, A_Type ) = True
+IsChild( B_Type, B_Type ) = True
+IsChild( B_Type, C_Type ) = False
+IsChild( B_Type, D_Type ) = False
+IsChild( B_Type, AA_Type ) = False
+IsChild( B_Type, BB_Type ) = False
+
+IsChild( C_Type, A_Type ) = True
+IsChild( C_Type, B_Type ) = True
+IsChild( C_Type, C_Type ) = True
+IsChild( C_Type, D_Type ) = False
+IsChild( C_Type, AA_Type ) = False
+IsChild( C_Type, BB_Type ) = False
+
+IsChild( D_Type, A_Type ) = True
+IsChild( D_Type, B_Type ) = True
+IsChild( D_Type, C_Type ) = True
+IsChild( D_Type, D_Type ) = True
+IsChild( D_Type, AA_Type ) = False
+IsChild( D_Type, BB_Type ) = False
+
+IsChild( AA_Type, A_Type ) = False
+IsChild( AA_Type, B_Type ) = False
+IsChild( AA_Type, C_Type ) = False
+IsChild( AA_Type, D_Type ) = False
+IsChild( AA_Type, AA_Type ) = True
+IsChild( AA_Type, BB_Type ) = False
+
+IsChild( BB_Type, A_Type ) = False
+IsChild( BB_Type, B_Type ) = False
+IsChild( BB_Type, C_Type ) = False
+IsChild( BB_Type, D_Type ) = False
+IsChild( BB_Type, AA_Type ) = True
+IsChild( BB_Type, BB_Type ) = True
+
+Type 'A' inherits from:
+Type 'B' inherits from:
+	A
+Type 'C' inherits from:
+	B
+	A
+Type 'D' inherits from:
+	C
+	B
+	A
+Type 'AA' inherits from:
+Type 'BB' inherits from:
+	AA
+A 			 (Abstract Class)
+	B 			 (Abstract Class)
+		C 			 (Abstract Class)
+			D 			 (Abstract Class)
+B 			 (Abstract Class)
+	C 			 (Abstract Class)
+		D 			 (Abstract Class)
+C 			 (Abstract Class)
+	D 			 (Abstract Class)
+D 			 (Abstract Class)
+AA 			 (Abstract Class)
+	BB 			 (Abstract Class)
+BB 			 (Abstract Class)

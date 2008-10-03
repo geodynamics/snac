@@ -1,0 +1,64 @@
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~##
+## Copyright (C), 2003, Victorian Partnership for Advanced Computing (VPAC) Ltd, 110 Victoria Street, Melbourne, 3053, Australia.
+##
+## Authors:
+##      Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+##      Patrick D. Sunter, Software Engineer, VPAC. (pds@vpac.org)
+##      Luke J. Hodkinson, Computational Engineer, VPAC. (lhodkins@vpac.org)
+##      Siew-Ching Tan, Software Engineer, VPAC. (siew@vpac.org)
+##      Alan H. Lo, Computational Engineer, VPAC. (alan@vpac.org)
+##      Raquibul Hassan, Computational Engineer, VPAC. (raq@vpac.org)
+##
+##  This library is free software; you can redistribute it and/or
+##  modify it under the terms of the GNU Lesser General Public
+##  License as published by the Free Software Foundation; either
+##  version 2.1 of the License, or (at your option) any later version.
+##
+##  This library is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+##  Lesser General Public License for more details.
+##
+##  You should have received a copy of the GNU Lesser General Public
+##  License along with this library; if not, write to the Free Software
+##  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+##
+## $Id: pyb.vmake 2586 2005-01-28 00:08:55Z AlanLo $
+##
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+# "pyb" specifies the python-bindings module to create (i.e. the dynamic library linked against the python development library).
+#   If specified, this triggers the event. You can only specify one module to create and it must be unique. "SRCS" specifies the
+#   input files.
+ifdef pyb
+	PROJ_CFLAGS += ${CC_WARNINGLEVEL} ${CC_SYMBOLLEVEL} ${CC_OPTIMISATIONLEVEL}
+	PROJ_LFLAGS += -L${LIB_DIR}
+	
+	ifndef PYTHON_PACKAGE
+		PYTHON_PACKAGE=${pyb}
+	endif
+
+	PYB = ${PYB_DIR}/${PYTHON_PACKAGE}/${pyb}module.${MODULE_EXT}
+	PYB_OBJS =  ${addprefix ${TMP_DIR}/${PYTHON_PACKAGE}/pyb-${pyb}module.${MODULE_EXT}/, ${addsuffix .o,      ${basename ${SRCS}}}}
+	PYB_TMP = ${TMP_DIR}/${PYTHON_PACKAGE}/pyb-${pyb}module.${MODULE_EXT}/${pyb}module.${MODULE_EXT}
+	EXTERNAL_INCLUDES += -I${PYTHON_INCDIR}
+	EXTERNAL_LIBS += -L${PYTHON_LIBDIR}/config -L${PYTHON_LIBDIR} ${PYTHON_LIBS}
+
+	RM_LIST_TEMPS += ${PYB_OBJS} ${PYB_TMP}
+	RM_LIST += ${PYB}
+
+
+	MAKE_DIRECTORIES += ${PYB_DIR} ${PYB_DIR}/${PYTHON_PACKAGE}
+	COMPILE_DIRECTORY := ${TMP_DIR}/${PYTHON_PACKAGE}/pyb-${pyb}module.${MODULE_EXT}
+
+
+${PYB_DIR}/${PYTHON_PACKAGE}/${pyb}module.${MODULE_EXT}: ${PYB_TMP}
+	${CP_F} $< $@
+
+${PYB_TMP}: ${PYB_OBJS} ${EXTERNAL_OBJS}
+	@echo ${PYTHON_LIBS}
+	${CC} ${CC_PIPE} ${CFLAGS} -o $@ ${PYB_OBJS} ${EXTERNAL_OBJS} ${MODULE_LFLAGS} ${RPATH_LFLAGS} ${LFLAGS} ${LIBS} ${EXTERNAL_LIBS}
+
+
+endif
