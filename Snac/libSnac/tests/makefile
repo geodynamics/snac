@@ -46,7 +46,7 @@ SRCS = ${def_srcs}
 TEST_SUPPORT_SRCS = ${def_test_support_srcs}
 
 EXTERNAL_INCLUDES = -I${STGERMAIN_INCDIR}/StGermain -I${STGERMAIN_INCDIR} -DMODULE_EXT=\"${MODULE_EXT}\"
-EXTERNAL_LIBS = -lSnac -L${STGERMAIN_LIBDIR} -lStGermainFD
+EXTERNAL_LIBS = -lSnac -L${STGERMAIN_LIBDIR} -lStGermainFD -lStGermainBase
 
 packages = STGERMAIN MPI MATH XML DL
 
