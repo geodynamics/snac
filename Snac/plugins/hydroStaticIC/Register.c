@@ -25,7 +25,7 @@
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 **
-** $Id: Register.c 3243 2006-10-12 09:04:00Z SteveQuenette $
+** $Id: Register.c 3140 2005-08-30 18:35:09Z EunseoChoi $
 **
 **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -49,14 +49,12 @@ static char MESH_STR[] = "mesh";
 static double MIN[] = { -45.0f, -45.0f, 0.5f };
 static double MAX[] = { 45.0f, 45.0f, 1.0f };
 
-
 Index _SnacHydroStaticIC_Register( PluginsManager* pluginsMgr ) {
 	return PluginsManager_Submit( pluginsMgr,
 				      SnacHydroStaticIC_Type,
 				      "0",
 				      _SnacHydroStaticIC_DefaultNew );
 }
-
 
 void* _SnacHydroStaticIC_DefaultNew( Name name ) {
 	return _Codelet_New( sizeof(Codelet),
@@ -73,11 +71,10 @@ void* _SnacHydroStaticIC_DefaultNew( Name name ) {
 			     name );
 }
 
-
 void _SnacHydroStaticIC_Construct( void* component, Stg_ComponentFactory* cf, void* data ) {
-	Snac_Context*		context;
-	Dictionary*		meshDict;
-	int			Spherical = 0;
+	Snac_Context*				context;
+	Dictionary*			meshDict;
+	int Spherical = 0;
 	Dictionary_Entry_Value* extensionsList;
 	Dictionary_Entry_Value* extension;
 

@@ -25,7 +25,7 @@
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 **
-** $Id: ConstructExtensions.c 3275 2007-03-28 20:07:08Z EunseoChoi $
+** $Id: ConstructExtensions.c 3140 2005-08-30 18:35:09Z EunseoChoi $
 **
 **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -48,11 +48,12 @@ void _SnacHydroStaticIC_ConstructExtensions( void* _context, void* data ) {
 	Snac_Element				tmpElement;
 
 	/* The hydro static stress variable purposely covers many variables... its more of a convenience thing. */
-	#define					hydroStaticComponentCount	23
+	#define					hydroStaticComponentCount	24
 	Index					hydroStaticOffsetCount = hydroStaticComponentCount;
 	SizeT					hydroStaticOffsets[hydroStaticComponentCount] = {
 							GetOffsetOfMember( tmpElement, strainRate ),
 							GetOffsetOfMember( tmpElement, stress ),
+							GetOffsetOfMember( tmpElement, rzbo ),
 							GetOffsetOfMember( tmpElement, hydroPressure ),
 							GetOffsetOfMember( tmpElement, tetra[0].strainRate ),
 							GetOffsetOfMember( tmpElement, tetra[0].stress ),
@@ -97,8 +98,10 @@ void _SnacHydroStaticIC_ConstructExtensions( void* _context, void* data ) {
 							Variable_DataType_Double,
 							Variable_DataType_Double,
 							Variable_DataType_Double,
+							Variable_DataType_Double,
 							Variable_DataType_Double };
 	Index					hydroStaticDataTypeCounts[hydroStaticComponentCount] = {
+							1,
 							1,
 							1,
 							1,

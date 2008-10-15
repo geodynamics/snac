@@ -25,7 +25,7 @@
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 **
-** $Id: VariableConditions.c 3275 2007-03-28 20:07:08Z EunseoChoi $
+** $Id: VariableConditions.c 3166 2005-10-17 20:46:42Z EunseoChoi $
 **
 **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -100,7 +100,7 @@ void _SnacHydroStaticIC_IC( void* _context ) {
 						/* Initialize tetrahedral arrays and get the average T-dependent density */
 						for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
 							densT += phsDensity * ( 1.0 - alpha * (element->tetra[tetra_I].avgTemp-material->reftemp) ) / Tetrahedra_Count;
-/* 							memset( element->tetra[tetra_I].stress, 0, sizeof(Snac_TetraStressTensor) ); */
+/* 							memset( element->tetra[tetra_I].stress, 0, sizeof(element->tetra[tetra_I].stress) ); */
 							memset( element->tetra[tetra_I].strainRate, 0, sizeof(element->tetra[tetra_I].strainRate));
 						}
 						/* Compute the average height of the element */
@@ -114,6 +114,7 @@ void _SnacHydroStaticIC_IC( void* _context ) {
 						element->stress=0.0;
 						element->strainRate=0.0;
 						element->hydroPressure = 0.0f;
+						element->rzbo = geometry->min[1];
 
 						dPT = densT * context->gravity * dh;
 						dP = dPT * ( 1.0 - beta*rogh ) / ( 1.0f + beta / 2.0f * dPT );
@@ -127,8 +128,13 @@ void _SnacHydroStaticIC_IC( void* _context ) {
 
 						element->hydroPressure = P;
 						rogh += dP;
-						if( elJ == 0 )
-							bottomP[elI][elK] = rogh + PfromAbove[elI][elK];
+						element->bottomPressure = rogh;
+						if( elJ == 0 ) {
+							bottomP[elI][elK] = element->bottomPressure + PfromAbove[elI][elK];
+							if( elI==0 && elK==0 ) {
+								context->pisos = bottomP[elI][elK];
+							}
+						}
 					}
 				}
 			/* Send bottomP to the proc below if the r-axis is partitioned and this proc is not on the bottom. */
@@ -203,7 +209,7 @@ void _SnacHydroStaticIC_IC_Spherical( void* _context ) {
 						/* Initialize tetrahedral arrays and get the average T-dependent density */
 						for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
 							densT += phsDensity * (1.0 - alpha * element->tetra[tetra_I].avgTemp) / Tetrahedra_Count;
-/* 							memset( element->tetra[tetra_I].stress, 0, sizeof(Snac_TetraStressTensor) ); */
+/* 							memset( element->tetraStress[tetra_I], 0, sizeof(Snac_TetraStressTensor) ); */
 							memset( element->tetra[tetra_I].strainRate, 0, sizeof(element->tetra[tetra_I].strainRate));
 						}
 						/* Compute the average height of the element */
@@ -225,6 +231,7 @@ void _SnacHydroStaticIC_IC_Spherical( void* _context ) {
 						element->stress=0.0;
 						element->strainRate=0.0;
 						element->hydroPressure = 0.0f;
+						element->rzbo = geometry->min[1];
 						for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
 							element->tetra[tetra_I].stress[0][0] = P;
 							element->tetra[tetra_I].stress[1][1] = P;
@@ -232,8 +239,12 @@ void _SnacHydroStaticIC_IC_Spherical( void* _context ) {
 						}
 						element->hydroPressure = P;
 						rogh += dP;
-						if( elJ == 0 )
-							bottomP[elI][elK] = rogh + PfromAbove[elI][elK];
+						element->bottomPressure = rogh;
+						if( elJ == 0 ) {
+							bottomP[elI][elK] = element->bottomPressure + PfromAbove[elI][elK];
+							if( elI==0 && elK==0 )
+								context->pisos = bottomP[elI][elK];
+						}
 					}
 				}
 			/* Send bottomP to the proc below if the r-axis is partitioned and this proc is not on the bottom. */
