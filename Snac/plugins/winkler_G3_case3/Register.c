@@ -51,7 +51,6 @@ static char MESH_STR[] = "mesh";
 static double MIN[] = { -45.0f, -45.0f, 0.5f };
 static double MAX[] = { 45.0f, 45.0f, 1.0f };
 
-
 Index _SnacWinklerG3Force_Register( PluginsManager* pluginsMgr ) {
 	return PluginsManager_Submit( pluginsMgr, 
 				      SnacWinklerG3Force_Type, 
@@ -75,9 +74,8 @@ void* _SnacWinklerG3Force_DefaultNew( Name name ) {
 			     name );
 }
 
-
 void _SnacWinklerG3Force_Construct( void* component, Stg_ComponentFactory* cf, void* data ) {
-	Snac_Context*	context;
+	Snac_Context*		context;
 	Dictionary*			meshDict;
 	int Spherical = 0;
 	Dictionary_Entry_Value* extensionsList;

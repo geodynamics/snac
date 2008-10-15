@@ -64,7 +64,6 @@ void _SnacWinklerG3Force_Apply(
 {
 	Snac_Context*			context = (Snac_Context*)_context;
 	MeshLayout*			meshLayout = (MeshLayout*)context->meshLayout;
-	BlockGeometry*			geometry = (BlockGeometry*)meshLayout->elementLayout->geometry;
 	double                          normal[3];
 	Node_ElementIndex		nodeElement_I, nodeElementCount;
 	const double			factor4 = 1.0f / 4.0f;
@@ -91,10 +90,13 @@ void _SnacWinklerG3Force_Apply(
 					Material_Index          material_I = element->material_I;
 					Snac_Material*          material = &context->materialProperty[material_I];
 					Density                 phsDensity = material->phsDensity; /* node->density */
+					Density                 mantleDensity = 3300.0f;
 					double          alpha = material->alpha;
 					double          beta = material->beta;
-					double          drosubg = 500.0 * context->gravity;
+					double          drosub = 0.0f;
 
+					double p_est = context->pisos + 0.5f * ( phsDensity + drosub ) * context->gravity * ( (*coord)[1] - element->rzbo );
+					double rosubg = context->gravity * ( phsDensity + drosub ) * ( 1.0 - alpha * (nodeT-material->reftemp) + beta * p_est );
 					double press_norm = 0.0f;
 					double area=0.0f, dhE=0.0f;
 					Normal* normal1;
@@ -141,7 +143,7 @@ void _SnacWinklerG3Force_Apply(
 					/* Adjust all the signs to be consistent with this principle. */
 					/* Let's make isostatic pressure positive and normals to point to the direction of action, +y. */
 					/* dP should then have the same sign with dh. */
-					press_norm = (float) ( drosubg * ( geometry->min[1] - dhE ) );
+					press_norm = context->pisos + rosubg * ( element->rzbo - dhE );
 					(*force)[0] += factor4 * ( press_norm * area * normal[0] );
 					(*force)[1] += factor4 * ( press_norm * area * normal[1] );
 					(*force)[2] += factor4 * ( press_norm * area * normal[2] );
@@ -503,10 +505,13 @@ void _SnacWinklerG3Force_Apply_Spherical(
 					Material_Index          material_I = element->material_I;
 					Snac_Material*          material = &context->materialProperty[material_I];
 					Density                 phsDensity = material->phsDensity; /* node->density */
+					Density                 mantleDensity = 3300.0f;
 					double          alpha = material->alpha;
 					double          beta = material->beta;
-					double          drosubg = 500.0 * context->gravity;
+					double          drosub = 0.0f;
 
+					double p_est = context->pisos + 0.5f * ( phsDensity + drosub ) * context->gravity * ( radius - Spherical_RMin );
+					double rosubg = context->gravity * ( phsDensity + drosub ) * ( 1.0 - alpha * (nodeT-material->reftemp) + beta * p_est );
 					double press_norm = 0.0f;
 					float normal[3];
 					Normal* normal1;
@@ -550,7 +555,7 @@ void _SnacWinklerG3Force_Apply_Spherical(
 					mag_normal = sqrt( normal[0]*normal[0] + normal[1]*normal[1] + normal[2]*normal[2] );
 					area *= 0.5f;
 
-					press_norm = drosubg * ( Spherical_RMin - dhE );
+					press_norm = context->pisos + rosubg * ( Spherical_RMin - dhE );
 					(*force)[0] += factor4 * ( press_norm * area * normal[0] );
 					(*force)[1] += factor4 * ( press_norm * area * normal[1] );
 					(*force)[2] += factor4 * ( press_norm * area * normal[2] );

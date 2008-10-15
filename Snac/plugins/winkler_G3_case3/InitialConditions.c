@@ -46,24 +46,30 @@ void _SnacWinklerG3Force_InitialConditions( void* _context, void* data ) {
 
 	Snac_Context*		context = (Snac_Context*)_context;
 
-	if( context->restartStep > 0 ) {
+	if( context->restartStep > 0 && (context->timeStep - context->restartStep == 1) ) {
 
 		FILE* fp;
 		char path[PATH_MAX];
 		Node_LocalIndex       node_lI;
-		Element_LocalIndex       element_lI;
 
 		Journal_Printf( context->snacInfo, "In: %s\n", __func__ );
 
 		sprintf( path, "%s/snac.isoForce.%d.restart", context->outputPath, context->rank );
 		fprintf(stderr,"%d: reading %s\n",context->rank,path);
-		Journal_Firewall( ( ( fp = fopen( path, "r") ) != NULL ), context->snacError, "Failed to open %s!!\n", path );
+		Journal_Firewall( ( ( fp = fopen( path, "r") ) == NULL ), context->snacError, "Failed to open %s!!\n", path );
 
 		for( node_lI = 0; node_lI < context->mesh->nodeLocalCount; node_lI++ ) {
 			Snac_Node*			node = Snac_Node_At( context, node_lI );
 			fscanf( fp, "%le", &(node->residualFr) );
 		}
 		fclose( fp );
+
+		sprintf( path, "%s/pisos.restart", context->outputPath );
+		fprintf(stderr,"%d: reading %s\n",context->rank,path);
+		Journal_Firewall( ( ( fp = fopen( path, "r") ) == NULL ), context->snacError, "Failed to open %s!!\n", path );
+		fscanf( fp, "%le", &(context->pisos) );
+		fclose( fp );
+
 	}
 }
 
