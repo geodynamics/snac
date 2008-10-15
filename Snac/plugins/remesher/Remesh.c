@@ -91,16 +91,18 @@ void _SnacRemesher_Remesh( void* _context, void* data ) {
 								context->meshExtensionMgr,
 								mesh,
 								SnacRemesher_MeshHandle );
+		Node_LocalIndex		newNode_i;
 
 		Journal_Printf( context->snacInfo, "Remeshing!\n" );
 		
 		/*
-		** If spherical coordinates are being used, then we'll need to convert the current mesh's cartesian coordinates 
+		** If spherical coordinates are being used, 
+		** then we'll need to convert the current mesh's cartesian coordinates 
 		** to spherical coordinates first.
 		*/
 		
 		if( meshExt->meshType == SnacRemesher_Spherical ) {
-			unsigned	lNode_i;
+			Node_LocalIndex	lNode_i;
 			
 			for( lNode_i = 0; lNode_i < mesh->nodeLocalCount; lNode_i++ ) {
 				double	x = mesh->nodeCoord[lNode_i][0];
@@ -124,11 +126,26 @@ void _SnacRemesher_Remesh( void* _context, void* data ) {
 		/* Interpolate current nodal values onto new coordinates. */
 		meshExt->newNodes = (Snac_Node*)ExtensionManager_Malloc( mesh->nodeExtensionMgr, mesh->nodeLocalCount );
 		_SnacRemesher_InterpolateNodes( context );
+
+		/* Don't forget the residualFr/Ft: This simple copy works because bottoms nodes are always bottom and remeshing doesn't change the node number. */
+		for( newNode_i = 0; newNode_i < mesh->nodeLocalCount; newNode_i++ ) {
+			Snac_Node* dstNode = 
+				(Snac_Node*)ExtensionManager_At( context->mesh->nodeExtensionMgr,
+												 meshExt->newNodes,
+												 newNode_i );
+
+			Snac_Node* srcNode = 
+				Snac_Node_At( context, newNode_i );
+
+			dstNode->residualFr = srcNode->residualFr;
+			dstNode->residualFt = srcNode->residualFt;
+		}
 		
 		/* Interpolate current elemental values onto new coordinates. */
 		meshExt->newElements = (Snac_Element*)ExtensionManager_Malloc( mesh->elementExtensionMgr, mesh->elementLocalCount );
 		_SnacRemesher_InterpolateElements( context );
 		
+
 		/* Copy accross the new coord, node & element information to the current arrays. */
 		memcpy( mesh->nodeCoord, meshExt->newNodeCoords, mesh->nodeLocalCount * sizeof(Coord) );
 		memcpy( mesh->node, meshExt->newNodes, mesh->nodeExtensionMgr->finalSize * mesh->nodeLocalCount );
@@ -169,7 +186,6 @@ void _SnacRemesher_Remesh( void* _context, void* data ) {
 		_SnacRemesher_DumpInfo( context );
 	}
 }
-
 
 #if 0
 void _SnacRemesher_Sync( void* _context ) {
