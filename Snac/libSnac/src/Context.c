@@ -636,8 +636,6 @@ void _Snac_Context_Build( void* context ) {
 		self->materialProperty = (Snac_Material*)malloc( sizeof(Snac_Material) * numPhase );
 	}
 
-
-
 	if( self->rank == 0 ) Journal_Printf( self->debug, "In: %s\n", __func__ );
 
 	Build( self->nodeICs, 0, False );
@@ -646,10 +644,7 @@ void _Snac_Context_Build( void* context ) {
 	Build( self->elementICs, 0, False );
 	Journal_Printf( self->verbose, "elementICs:\n" );
 	VariableCondition_PrintConcise( self->elementICs, self->verbose );
-
-	fprintf(stderr,"About to build velocityBCs...\n");
 	Build( self->velocityBCs, 0, False );
-	fprintf(stderr,"velocityBCs has been built: %d\n",self->velocityBCs->indexCount);
 	Journal_Printf( self->verbose, "velocityBCs\n" );
 	VariableCondition_PrintConcise( self->velocityBCs, self->verbose );
 
@@ -688,9 +683,7 @@ void _Snac_Context_InitialConditions( void* context ) {
 	VariableCondition_Apply( self->elementICs, self );
 
 	/* Apply the velocity boundary conditions ... these are considered part of initial conditions */
-	fprintf(stderr,"velocityBCs has been built (2): %d\n",self->velocityBCs->indexCount);
 	VariableCondition_Apply( self->velocityBCs, self );
-	fprintf(stderr,"velocityBCs has been built (3): %d\n",self->velocityBCs->indexCount);
 }
 
 void _Snac_Context_InitializeMaterialProperties( void* context ) {
@@ -961,7 +954,6 @@ void Snac_Context_TimeStepZero( void* context ) {
 
 	_Snac_Context_DumpPhaseIndex( self );
 
-	fprintf(stderr,"velocityBCs has been built (4): %d\n",self->velocityBCs->indexCount);
 	KeyCall( self, self->syncK, EntryPoint_Class_VoidPtr_CallCast* )( KeyHandle(self,self->syncK), self );
 	/* _Snac_Context_Sync( self ); */
 }
@@ -1142,7 +1134,6 @@ void _Snac_Context_Sync( void* context ) {
 	vmax=0.0f;
 	vlb = 3.0e-11f; /* ~1 mm/yr */
 
-	fprintf(stderr,"velocityBCs has been built (5): %x\n",self);
 	for( index = 0; index < self->velocityBCs->indexCount; index++ ) {
 		Snac_Node* node;
 		node_dI = self->velocityBCs->indexTbl[index];

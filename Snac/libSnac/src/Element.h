@@ -64,11 +64,14 @@
 
 	/* Element Information */
 	#define __Snac_Element \
-		Material_Index			material_I; \
+		Material_Index		material_I; \
 		Volume				volume; \
 		StrainRate			strainRate; \
 		Stress				stress; \
 		double				hydroPressure; \
+		double              rzbo; \
+		double              bottomPressure; \
+		int                 irheology; \
 		\
 		Snac_Element_Tetrahedra		tetra[Tetrahedra_Count]; 
 	struct _Snac_Element { __Snac_Element };
