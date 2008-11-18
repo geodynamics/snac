@@ -57,8 +57,8 @@ def_srcs = \
 	Init.c \
 	Finalise.c \
 	ComplexVectorMath.c \
-	FullTensorMath.c \
 	TensorMultMath.c
+#	FullTensorMath.c \
 
 
 def_hdrs = \
@@ -92,7 +92,7 @@ def_hdrs = \
 	Geometry.h \
 	ComplexVectorMath.h \
 	stg_lapack.h \
-	FullTensorMath.h \
 	TensorMultMath.h	
+#	FullTensorMath.h \
 
 def_objlists =
