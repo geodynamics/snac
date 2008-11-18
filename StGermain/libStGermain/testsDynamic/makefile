@@ -44,7 +44,8 @@ SRCS = ${def_srcs}
 EXTERNAL_INCLUDES = -I${INC_DIR}/StGermain 
 EXTERNAL_LIBS = -lStGermain ${RPATH_LFLAGS}
 
-packages = PETSC MPI XML MATH DL
+#packages = PETSC MPI XML MATH DL
+packages = MPI XML MATH DL
 
 
 # obtain defaults for required variables according to system and project location, and then run the build.

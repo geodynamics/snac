@@ -49,8 +49,8 @@ def_srcs = \
 	testDelaunay.c \
 	testParallelDelaunay.c \
 	testComplexVectorMath.c \
-	testFullTensorMath.c \
 	testTensorMultMath.c
+#	testFullTensorMath.c \
 	
 def_checks = \
 	testDimensionMacros.0of1.sh \
@@ -71,5 +71,5 @@ def_checks = \
 	testParallelDelaunay.0of1.sh \
 	testParallelDelaunay.0of2.sh \
 	testComplexVectorMath.0of1.sh \
-	testFullTensorMath.0of1.sh \
 	testTensorMultMath.0of1.sh \
+#	testFullTensorMath.0of1.sh \

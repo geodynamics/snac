@@ -40,7 +40,8 @@ PROJ_LIBS = ${def_libs}
 EXTERNAL_INCLUDES = -I${INC_DIR}/StGermain
 EXTERNAL_LIBS = -L${LIB_DIR} -lStGermainFD -lStGermain -lStGermainDiscretisation -lStGermainBase ${RPATH_LFLAGS}
 
-packages = PETSC MPI XML MATH DL
+#packages = PETSC MPI XML MATH DL
+packages = MPI XML MATH DL
 
 # obtain defaults for required variables according to system and project location, and then run the build.
 ifndef PROJ_ROOT

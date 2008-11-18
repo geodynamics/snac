@@ -22,7 +22,8 @@ EXTERNAL_LIBS =  -lStGermain -lStGermainDiscretisation -lStGermainBase ${EXPORT_
 
 EXTERNAL_INCLUDES = -DMODULE_EXT=\"${MODULE_EXT}\"
 
-packages = PETSC MPI XML MATH DL HYPRE
+#packages = PETSC MPI XML MATH DL HYPRE
+packages = MPI XML MATH DL HYPRE
 		
 ifdef HAVE_PYTHON
 	packages += PYTHON

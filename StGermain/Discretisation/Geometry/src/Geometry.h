@@ -69,9 +69,9 @@
 	#include "ParallelDelaunay.h"
 	#include "ComplexVectorMath.h"
 	#include "stg_lapack.h"
-	#include "FullTensorMath.h"
 	#include "TensorMultMath.h"
 	#include "Init.h"
 	#include "Finalise.h"
+/*	#include "FullTensorMath.h" */
 
 #endif /* __Discretisation_Geometry_h__ */
