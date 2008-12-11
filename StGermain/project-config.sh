@@ -49,11 +49,11 @@ export STGERMAIN_VERSION=${VERSION}
 . ./VMake/Config/math-config.sh
 . ./VMake/Config/xml-config.sh
 . ./VMake/Config/mpi-config.sh
-. ./VMake/Config/python-config.sh --optional
-#. ./VMake/Config/PETSc-config.sh --optional
-#. ./VMake/Config/OpenGl-config.sh
-#. ./VMake/Config/sdl-config.sh
-#. ./VMake/Config/hdf5-config.sh
-#. ./VMake/Config/neon-config.sh
+##. ./VMake/Config/python-config.sh --optional
+##. ./VMake/Config/PETSc-config.sh --optional
+##. ./VMake/Config/OpenGl-config.sh
+##. ./VMake/Config/sdl-config.sh
+##. ./VMake/Config/hdf5-config.sh
+##. ./VMake/Config/neon-config.sh
 
 dumpPkgConfigFile ${BLD_DIR}/lib/pkgconfig
