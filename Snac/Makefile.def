@@ -33,7 +33,7 @@ ifeq (true,$(shell if test -d StGermain; then echo true; fi))
 	def_sub = StGermain
 endif
 
-def_sub += libSnac plugins src tests snac2gmv snac2vtk snac2dx snac2restart Python pyre 
+def_sub += libSnac plugins src tests snac2vtk snac2dx snac2restart Python pyre 
 
 ifeq (true,$(shell if test -x $(DOXYGEN); then echo true; fi ))
 	def_sub += doc
