@@ -8,9 +8,9 @@
 #
 
 '''
-Combine the pasted Citcom Data
+Combine the converted Snac Data
 
-usage: combine.py modelname timestep nodex nodey nodez nprocx nprocy nprocz
+usage: snac_combine.py modelname timestep nodex nodey nodez nprocx nprocy nprocz
 '''
 
 class Combine(object):
@@ -63,9 +63,9 @@ class Combine(object):
 				elif ids[2] == "stress":
 					self.data["stress"] = lines[m+1:m+items+1]
 					m = m+items+1
-                                elif ids[2] == "pressure":
-                                        self.data["pressure"] = lines[m+1:m+items+1]
-                                        m = m+items+1
+				elif ids[2] == "pressure":
+					self.data["pressure"] = lines[m+1:m+items+1]
+					m = m+items+1
 				elif ids[2] == "force":
 					self.data["force"] = lines[m+1:m+items+1]
 					m = m+items+1
@@ -216,18 +216,17 @@ component "connections" value 2
 component "data" value %d
 ''' % (count)
 			return count + 1
-                elif type == "pressure":
-                        print >> fp, "\n# the pressure array"
-                        print >> fp, "object %d class array type float rank 0 items %d data follows" % (count, (grid['nox']-1)*(grid['noy']-1)*(grid['noz']-1))
-                        fp.writelines(data["pressure"])
-                        print >> fp, 'attribute "dep" string "connections"'
-                        self.struct[type] = '''object "pressure" class field
+		elif type == "pressure":
+			print >> fp, "\n# the pressure array"
+			print >> fp, "object %d class array type float rank 0 items %d data follows" % (count, (grid['nox']-1)*(grid['noy']-1)*(grid['noz']-1))
+			fp.writelines(data["pressure"])
+			print >> fp, 'attribute "dep" string "connections"'
+			self.struct[type] = '''object "pressure" class field
 component "positions" value 1
 component "connections" value 2
 component "data" value %d
 ''' % (count)
-                        return count + 1
-
+			return count + 1
 		elif type == "force":
 			print >> fp, "\n# the force array"
 			print >> fp, "object %d class array type float rank 1 shape 3 items %d data follows" % (count, grid['nox']*grid['noy']*grid['noz'])
