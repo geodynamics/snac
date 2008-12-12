@@ -25,8 +25,43 @@
 ## along with this program; if not, write to the Free Software
 ## Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ##
-## $Id: Makefile.def 3276 2007-03-28 22:59:47Z EunseoChoi $
+## $Id: Make.mm 1095 2004-03-28 00:51:42Z SteveQuenette $
 ##
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def_sub = temperature elastic plastic maxwell maxwelldruckerprager maxwellmohrcoulomb creepmohrcoulomb viscoplastic spherical exchanger remesher hydroStaticIC cylindrical cylinder_quadrant customCartesianMesh plSeeds vpSeeds winkler restarter heterogeneities
+include Makefile.def
+
+PROJECT = Snac
+PACKAGE = ${def_mod}module
+
+PROJ_LIB = $(BLD_LIBDIR)/$(PACKAGE).a
+PROJ_DLL = $(BLD_LIBDIR)/$(PACKAGE).$(EXT_SO)
+PROJ_TMPDIR = $(BLD_TMPDIR)/$(PROJECT)/$(PACKAGE)
+PROJ_CLEAN += $(PROJ_LIB) $(PROJ_DLL)
+PROJ_INCDIR = $(BLD_INCDIR)/${def_inc}
+
+PROJ_SRCS = ${def_srcs}
+PROJ_CC_FLAGS += -I$(BLD_INCDIR)/$(PROJECT) -I$(BLD_INCDIR)/Snac -I$(BLD_INCDIR)/StGermain `xml2-config --cflags`
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lSnac -lStGermain `xml2-config --libs` $(MPI_LIBPATH) $(MPI_LIBS)
+LCCFLAGS = 
+
+# I keep file lists to build a monolith .so from a set of .a's
+PROJ_OBJS_IN_TMP = ${addprefix $(PROJECT)/$(PACKAGE)/, ${addsuffix .o, ${basename $(PROJ_SRCS)}}}
+PROJ_OBJLIST = $(BLD_TMPDIR)/$(PROJECT).$(PACKAGE).objlist
+
+all: $(PROJ_LIB) DLL createObjList export
+
+DLL: product_dirs $(PROJ_OBJS)
+	$(CC) -o $(PROJ_DLL) $(PROJ_OBJS) $(COMPILER_LCC_SOFLAGS) $(LCCFLAGS) $(PROJ_LIBRARIES) $(EXTERNAL_LIBPATH) $(EXTERNAL_LIBS)
+
+
+
+createObjList:: 
+	@echo ${PROJ_OBJS_IN_TMP} | cat > ${PROJ_OBJLIST}
+
+#export:: export-headers
+export:: export-headers export-libraries
+EXPORT_HEADERS = ${def_hdrs}
+EXPORT_LIBS = $(PROJ_LIB) $(PROJ_DLL)
+
+check::
