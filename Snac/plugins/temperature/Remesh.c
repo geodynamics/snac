@@ -84,7 +84,7 @@ void _SnacTemperature_InterpolateNode( void* _context,
 	}
 
 	/* Zero out on first addition */
-	fprintf(stderr,"before T=%e \t",dstNodeExt->temperature);
+/* 	fprintf(stderr,"before T=%e \t",dstNodeExt->temperature); */
 	dstNodeExt->temperature = 0;
 
 	for( tetNode_i = 0; tetNode_i < 4; tetNode_i++ ) {
@@ -95,7 +95,7 @@ void _SnacTemperature_InterpolateNode( void* _context,
 
 		dstNodeExt->temperature += srcNodeExt->temperature * weights[tetNode_i];
 	}
-	fprintf(stderr,"%e (%e %e %e %e)\t",srcNodeExt->temperature,
-		weights[0],weights[1],weights[2],weights[3]);
-	fprintf(stderr,"after T=%e \n",dstNodeExt->temperature);
+/* 	fprintf(stderr,"%e (%e %e %e %e)\t",srcNodeExt->temperature, */
+/* 		weights[0],weights[1],weights[2],weights[3]); */
+/* 	fprintf(stderr,"after T=%e \n",dstNodeExt->temperature); */
 }

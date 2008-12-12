@@ -65,13 +65,7 @@ void _SnacTemperature_Top2BottomSweep( Node_LocalIndex node_lI, Variable_Index v
 	node_gI = context->mesh->nodeL2G[node_lI];
 	RegularMeshUtils_Node_1DTo3D( decomp, node_gI, &ijk[0], &ijk[1], &ijk[2] );
 
-	if( ijk[1] == decomp->nodeGlobal3DCounts[1]-1)
-		(*temperature) = contextExt->topTemp;
-	else
-		(*temperature) = contextExt->bottomTemp;
-
-/*  	*temperature = contextExt->bottomTemp + (contextExt->topTemp - contextExt->bottomTemp) / (jCount - 1) * ijk[1]; */
-/*	if( (*temperature) > 700.0f ) (*temperature) = 700.0f; */
+  	*temperature = contextExt->bottomTemp + (contextExt->topTemp - contextExt->bottomTemp) / (jCount - 1) * ijk[1];
 
 	#if 0
 		printf( "Top: %8g, Bottom: %8g, node_I: %3u, node_gI: %3u, iijk: { %3u, %3u, %3u, }, *temperature: %g\n", contextExt->topTemp, contextExt->bottomTemp, node_lI, node_gI, ijk[0], ijk[1], ijk[2], *temperature );
