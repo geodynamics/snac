@@ -202,8 +202,25 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 					avgTemp += 0.25 * temperatureNodeExt->temperature;
 					assert( !isnan(avgTemp) && !isinf(avgTemp) );
 				}
+				// Hall et. al., 2004, G3
+				(*viscosity)= rviscosity*pow((srJ2/rstrainrate),(1./srexponent-1.))
+					*exp(H/R*(1./(avgTemp+273.15)-1./(rTemp+273.15)));
+				if((*viscosity) < material->vis_min) (*viscosity) = material->vis_min;
+				if((*viscosity) > material->vis_max) (*viscosity) = material->vis_max;
+				Journal_Firewall(
+						!isnan((*viscosity)) && !isinf((*viscosity)),
+						context->snacError,
+						"rvisc=%e Erattio=%e pow(E)=%e, dT=%e exp=%e\n",
+						rviscosity,
+						(srJ2/rstrainrate),
+						pow((srJ2/rstrainrate),
+							(1./srexponent-1.)),
+						exp(H/R*(1./(avgTemp+273.15)-1./(rTemp+273.15))),
+						(1./(avgTemp+273.15)-1./(rTemp+273.15)) );
+#if 0
 				// Lavier and Buck, JGR, 2002
 				(*viscosity) = pow(rviscosity,-1.0/srexponent1)*pow(srJ2,1.0/srexponent2-1)*exp(H/R/(avgTemp+273.15));
+#endif
 			}
 			else {
 				(*viscosity) = rviscosity;
