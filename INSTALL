@@ -1,0 +1,11 @@
+SNAC has two dependencies:
+1. libxml2
+2. MPICH1 or 2
+
+Building SNAC takes two steps:
+1. ./configure.sh
+2. make
+
+See the manual for more details:
+http://www.geodynamics.org/cig/software/packages/long/snac/snac.pdf
+
