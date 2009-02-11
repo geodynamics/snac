@@ -69,7 +69,7 @@ if test "${MPI_LIBFILES}x" = "x"; then
 	case ${SYSTEM} in
 		Linux|CYGWIN|Darwin|SunOS)
 			if test "${MPI_IMPLEMENTATION}" = "mpich2"; then
-				MPI_LIBFILES='-lmpich -lpmpich'
+				MPI_LIBFILES='-lmpich'
 				setValueWithDefault MPI_LIBRARY 'mpich'
 			elif test "${MPI_IMPLEMENTATION}" = "mpich"; then
 				MPI_LIBFILES='-lmpich -lpmpich'
