@@ -68,28 +68,13 @@ void _SnacCustomCartesian_InitialConditions( void* _context, void* data ) {
 	#endif
 
 	for( node_gI = 0; node_gI < decomp->nodeGlobal3DCounts[0]; node_gI++ ) {
-		Node_LocalIndex		        node_lI = _MeshDecomp_Node_GlobalToLocal1D( decomp, node_gI );
-		Index				i_gI;
-		Index				j_gI;
-		Index				k_gI;
-		Coord*				coord = 0;
-		Coord				tmpCoord;
 		double                          reg_x;
-		/* If a local node, directly change the node coordinates and initial tpr, else use a temporary location */
-		if( node_lI < context->mesh->nodeLocalCount ) { /* a local node */
-			coord = Snac_NodeCoord_P( context, node_lI );
-		}
-		else {
-			coord = &tmpCoord;
-		}
 
-		RegularMeshUtils_Node_1DTo3D( decomp, node_gI, &i_gI, &j_gI, &k_gI );
-
-		if(i_gI==0)
-			new_x[i_gI] = geometry->min[0];
-		else if(i_gI>0) {
-			reg_x = geometry->min[0] + i_gI*reg_dx;
-			new_x[i_gI] = new_x[i_gI-1] + reg_dx/(5.0/PI*atan((reg_x-xm)/L)+3.0);
+		if(node_gI==0)
+			new_x[node_gI] = geometry->min[0];
+		else if(node_gI>0) {
+			reg_x = geometry->min[0] + node_gI*reg_dx;
+			new_x[node_gI] = new_x[node_gI-1] + reg_dx/(5.0/PI*atan((reg_x-xm)/L)+3.0);
 		}
 	}
 	for( node_gI = 0; node_gI < context->mesh->nodeGlobalCount; node_gI++ ) {
