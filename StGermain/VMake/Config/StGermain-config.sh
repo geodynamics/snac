@@ -50,6 +50,8 @@ case $CC_TYPE in
 		setValueWithDefault STGERMAIN_RPATH '-R ${STGERMAIN_LIBDIR}';;		
 	ibmxl)
 		setValueWithDefault STGERMAIN_RPATH '-R ${STGERMAIN_LIBDIR}';;		
+	mvapich)
+		setValueWithDefault STGERMAIN_RPATH '-Wl,-rpath,${STGERMAIN_LIBDIR}';;
 	*)
 		echo "Warning: STGERMAIN_RPATH for C compiler \"${CC_TYPE}\" unknown";;
 esac

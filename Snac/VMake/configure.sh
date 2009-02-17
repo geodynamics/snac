@@ -1090,6 +1090,8 @@ if test "${CC_WARNINGLEVEL}x" = "x"; then
 		ibmxl)
 			# theres no good equivalient to -Wall, turn on a few warnings at least
 			CC_WARNINGLEVEL="-qformat=all -qwarn64";; 
+		mvapich)
+			CC_WARNINGLEVEL="-Minform=inform";;
 		*)
 			echo "Warning: CC_WARNINGLEVEL for C compiler \"${CC_TYPE}\" unknown. Please set.";;  
 	esac
@@ -1110,6 +1112,8 @@ if test "${CC_SYMBOLLEVEL}x" = "x"; then
 			sparc)
 				CC_SYMBOLLEVEL="-g";;
 			ibmxl)
+				CC_SYMBOLLEVEL="-g";;
+			mvapich)
 				CC_SYMBOLLEVEL="-g";;
 			*)
 				echo "Warning: CC_SYMBOLLEVEL for C compiler \"${CC_TYPE}\" unknown. Please set.";;  

@@ -36,6 +36,9 @@ case ${CC_TYPE} in
 	sparc)
 		setValueWithDefault CC_SYMBOLLEVEL '-g'
 		setValueWithDefault CC_WARNINGLEVEL '';;
+	mvapich)
+		setValueWithDefault CC_SYMBOLLEVEL '-g'
+		setValueWithDefault CC_WARNINGLEVEL '-Minform=inform';;
 	*)
 		echo "Warning: CC_WARNINGLEVEL for C compiler \"${CC_TYPE}\" unknown. Please set."
 		echo "Warning: CC_SYMBOLLEVEL for C compiler \"${CC_TYPE}\" unknown. Please set.";;  

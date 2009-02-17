@@ -27,16 +27,17 @@ parsePackageConfigOptions $@
 # Obtain MPI information
 case ${SYSTEM} in
 	Linux|CYGWIN|Darwin|SunOS)
-		setValueWithDefault MPI_DIR   "/usr/";;
+		setValueWithDefault MPI_DIR   "/usr";;
 	OSF1)
-		setValueWithDefault MPI_DIR   "/usr/";;
+		setValueWithDefault MPI_DIR   "/usr";;
 	*)
 		if test "${MPI_DIR}x" = "x" ; then
-			echo "Warning: MPI_DIR for system \"${SYSTEM}\" unknown. Set the environment variable."
+			echo "Error: MPI_DIR for system \"${SYSTEM}\" unknown. Set the environment variable."
+			exit 1
 		fi;;
 esac
 setValueWithDefault MPI_BINDIR   '${MPI_DIR}/bin'
-setValueWithDefault MPI_LIBDIR   '${MPI_DIR}/lib'
+setValueWithDefault MPI_LIBDIR   '${MPI_DIR}/lib/shared'
 setValueWithDefault MPI_INCDIR   '${MPI_DIR}/include'
 if test ! "${CC}x" = "mpiccx"; then
 	setValueWithDefault MPI_INCLUDES '-I${MPI_INCDIR}'
@@ -57,8 +58,8 @@ if test -r "${MPI_INCDIR}/mpi.h"; then
 		setValueWithDefault MPI_IMPLEMENTATION open_mpi
 	elif `grep "MPICH2" ${MPI_INCDIR}/mpi.h > /dev/null 2>&1`; then
 		setValueWithDefault MPI_IMPLEMENTATION mpich2
-#	elif `grep "Argonne National Laboratory" ${MPI_INCDIR}/mpi.h > /dev/null 2>&1`; then
-#		setValueWithDefault MPI_IMPLEMENTATION mpich
+	elif `grep "Argonne National Laboratory" ${MPI_INCDIR}/mpi.h > /dev/null 2>&1`; then
+		setValueWithDefault MPI_IMPLEMENTATION mpich
 	else
 		setValueWithDefault MPI_IMPLEMENTATION mpich
 	fi
@@ -67,7 +68,7 @@ fi
 # set depending on system. on most systems, just default to mpich
 if test "${MPI_LIBFILES}x" = "x"; then
 	case ${SYSTEM} in
-		Linux|CYGWIN|Darwin|SunOS)
+		Linux|CYGWIN|Darwin|SunOS|ranger)
 			if test "${MPI_IMPLEMENTATION}" = "mpich2"; then
 				MPI_LIBFILES='-lmpich'
 				setValueWithDefault MPI_LIBRARY 'mpich'
@@ -150,6 +151,8 @@ case $CC_TYPE in
 		setValueWithDefault MPI_RPATH '-R ${MPI_LIBDIR}';;
 	ibmxl)
 		setValueWithDefault MPI_RPATH '-R ${MPI_LIBDIR}';;
+	mvapich)
+		setValueWithDefault MPI_RPATH '-Wl,-rpath,${MPI_LIBDIR}';;
 	*)
 		echo "Warning: MPI_RPATH for C compiler \"${CC_TYPE}\" unknown";;
 esac
@@ -161,6 +164,8 @@ case ${SYSTEM} in
 		else
 			setValueWithDefault MPI_LIBS   '-L${STGERMAIN_LIBDIR} -l${MPI_LIBRARY} -L${MPI_LIBDIR} ${MPI_LIBFILES} -L/sw/lib ${CC_FORTRAN_LFLAGS}'
 		fi;;
+	ranger)
+		setValueWithDefault MPI_LIBS '';;
 	*)
 		setValueWithDefault MPI_LIBS   '-L${MPI_LIBDIR} ${MPI_LIBFILES}';;
 esac
@@ -173,7 +178,7 @@ if test "${MPI_EXTERNAL_LIBS}x" = "x"; then
 fi
 
 case ${SYSTEM} in
-	Linux|CYGWIN|Darwin|SunOS)
+	Linux|CYGWIN|Darwin|SunOS|ranger)
 		setValueWithDefault MPI_RUN_COMMAND   'mpirun';;
 	OSF1)
 		setValueWithDefault MPI_RUN_COMMAND   'prun';;
@@ -196,7 +201,7 @@ fi
 setValueWithDefault MPI_RUN   '${MPI_BINDIR}/${MPI_RUN_COMMAND}'
 
 case ${SYSTEM} in
-	Linux|CYGWIN|Darwin|SunOS)
+	Linux|CYGWIN|Darwin|SunOS|ranger)
 		setValueWithDefault MPI_NPROC   '-np';;
 	OSF1)
 		setValueWithDefault MPI_NPROC   '-n';;

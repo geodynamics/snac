@@ -645,7 +645,7 @@ if test "${CXX_EXT}x" = "x"; then
 fi
 
 if test "${CXX}x" = "x"; then
-	CXX=`${WHICH} cxx 2> /dev/null`
+	CXX=`${WHICH} c++ 2> /dev/null`
 	if whichFailed "${CXX}"; then
 		case ${SYSTEM} in
 			Linux|Darwin|CYGWIN|SunOS)
@@ -882,6 +882,8 @@ if test "${SO_CFLAGS}x" = "x"; then
 			SO_CFLAGS="-shared";;
 		ibmxl)
 			SO_CFLAGS="-qpic";;
+		mvapich)
+			SO_CFLAGS="-fPIC";;
 		*)
 			echo "SO_CFLAGS for C compiler \"${CC_TYPE}\" unknown";
 			exit ;;
@@ -921,6 +923,9 @@ if test "${SO_EXT}x" = "x"; then
 		ibmxl)
 			SO_EXT="so";
 			MODULE_EXT='${SO_EXT}';;
+		mvapich)
+			SO_EXT="so";
+			MODULE_EXT='${SO_EXT}';;
 		*)
 			echo "Error: SO_EXT/MODULE_EXT for C compiler \"${CC_TYPE}\" unknown";
 			exit ;;
@@ -952,6 +957,8 @@ if test "${SO_LFLAGS}x" = "x"; then
 			SO_LFLAGS="-G";;
 		ibmxl)
 			SO_LFLAGS="-qmkshrobj";;
+		mvapich)
+			SO_LFLAGS="-shared";;
 		*)
 			echo "Error: SO_LFLAGS for C compiler \"${CC_TYPE}\" unknown";
 			exit ;;
@@ -982,6 +989,8 @@ if test "${MODULE_LFLAGS}x" = "x"; then
 		sparc)
 			MODULE_LFLAGS='${SO_LFLAGS}';;
 		ibmxl)
+			MODULE_LFLAGS='${SO_LFLAGS}';;
+		mvapich)
 			MODULE_LFLAGS='${SO_LFLAGS}';;
 		*)
 			echo "Error: MODULE_LFLAGS for C compiler \"${CC_TYPE}\" unknown";
@@ -1020,6 +1029,8 @@ if test "${RPATH_FLAG}x" = "x"; then
 		ibmxl)
 			RPATH_FLAG='-R '
 			;;
+		mvapich)
+			RPATH_FLAG="-Wl,-rpath,";;
 		*)
 			echo "Error: RPATH_FLAG for C compiler \"${CC_TYPE}\" unknown";
 			exit ;;
@@ -1067,6 +1078,8 @@ if test "${EXPORT_DYNAMIC_LFLAGS}x" = "x"; then
 			EXPORT_DYNAMIC_LFLAGS="-B dynamic";;
 		ibmxl)
 			EXPORT_DYNAMIC_LFLAGS="-Wl,--export-dynamic";;
+		mvapich)
+			EXPORT_DYNAMIC_LFLAGS="-Bdynamic";;
 		*)
 			echo "Error: EXPORT_DYNAMIC_LFLAGS for C compiler \"${CC_TYPE}\" unknown";
 			exit ;;
@@ -1089,6 +1102,8 @@ if test "${CC_WARNINGLEVEL}x" = "x"; then
 		ibmxl)
 			# theres no good equivalient to -Wall, turn on a few warnings at least
 			CC_WARNINGLEVEL="-qformat=all -qwarn64";; 
+		mvapich)
+			CC_WARNINGLEVEL="-Minform=inform";;
 		*)
 			echo "Warning: CC_WARNINGLEVEL for C compiler \"${CC_TYPE}\" unknown. Please set.";;  
 	esac
@@ -1109,6 +1124,8 @@ if test "${CC_SYMBOLLEVEL}x" = "x"; then
 			sparc)
 				CC_SYMBOLLEVEL="-g";;
 			ibmxl)
+				CC_SYMBOLLEVEL="-g";;
+			mvapich)
 				CC_SYMBOLLEVEL="-g";;
 			*)
 				echo "Warning: CC_SYMBOLLEVEL for C compiler \"${CC_TYPE}\" unknown. Please set.";;  
@@ -1154,7 +1171,7 @@ fi
 # Obtain dl information
 if test "${DL_DIR}x" = "x"; then
 	case ${SYSTEM} in
-		Linux|CYGWIN|OSF1|SunOS)
+		Linux|CYGWIN|OSF1|SunOS|ranger)
 			DL_DIR="/usr";;
 		Darwin)
 			DL_DIR="/sw";;
@@ -1169,7 +1186,7 @@ if test "${DL_LIBDIR}x" = "x"; then
 fi
 if test "${DL_LIBFILES}x" = "x"; then
 	case $SYSTEM in
-		Linux|Darwin|SunOS)
+		Linux|Darwin|SunOS|ranger)
 			DL_LIBFILES="-ldl";;
 			# dlcompat package is required for darwin
 		CYGWIN|OSF1)

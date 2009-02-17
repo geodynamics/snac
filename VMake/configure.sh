@@ -151,6 +151,32 @@ if test "${SYSTEM}x" = "x"; then
 	esac
 	export SYSTEM
 fi
+
+## ${SYSTEM} is set to "linux" on ranger.tacc.utexas.edu. 
+## Because the MPI-linking for "Linux" causes a strange run-time error on ranger,
+## we define a new system type, "ranger" such that all the
+## mpi-related variables remain undefined and the system's "mpicc" can
+## take care of everything during compiling and linking.
+## 
+## This might be necessary on other systems that use
+## customized MPI libraries such as mpi_gm and mvapich.
+##
+## Choi, 2009/02/17.
+##
+if test "${SYSTEM}x" = "linuxx"; then
+	if test "${UNAME_N}x" = "x"; then
+		UNAME_N="${UNAME} -n"
+		export UNAME_N
+	fi
+	case `$UNAME_N` in 
+		*ranger*) 
+			SYSTEM=ranger;; 
+		*) 
+			SYSTEM=Unknown;; 
+	esac
+	export SYSTEM
+fi
+
 if test "${KERNEL_RELEASE}x" = "x"; then
 	KERNEL_RELEASE=`${UNAME_R}`
 	# The kernel release is general more important for macs so give meaningful name
@@ -543,6 +569,11 @@ if test "${RANLIB}x" = "x"; then
 	fi
 fi
 
+## Set CC to mpicc if on ranger
+## Choi, 2009/02/17.
+if test "${SYSTEM}x" = "rangerx"; then
+	CC="mpicc"
+fi
 if test "${CC}x" = "x"; then
 	CC=`${WHICH} cc 2> /dev/null`
 	if whichFailed "${CC}"; then
@@ -559,6 +590,11 @@ else
 fi
 
 DoCritialConftest ./VMake/SystemTests/C-CompilerType CC_TYPE
+## Set CC_TYPE to mpicc if on ranger
+## Choi, 2009/02/17.
+if test "${SYSTEM}x" = "rangerx"; then
+	CC_TYPE="mvapich"
+fi
 if test "${CC_TYPE}x" = "x"; then
 	echo "Warning: Unknown C compiler type \"${CC_TYPE}\"."
 	unset CC_TYPE
@@ -577,6 +613,8 @@ if test "${CC_PIPE}x" = "x"; then
 		sparc)
 			CC_PIPE="";;
 		ibmxl)
+			CC_PIPE="";;
+		mvapich)
 			CC_PIPE="";;
 		*)
 			echo "Warning: CC_PIPE for C compiler \"${CC_TYPE}\" unknown. Please set.";;  
@@ -597,6 +635,8 @@ if test "${CC_64}x" = "x"; then
 			CC_64="";;
 		ibmxl)
 			CC_64="-q64";;
+		mvapich)
+			CC_64="";;
 		*)
 			echo "Warning: CC_64 for C compiler \"${CC_TYPE}\" unknown. Please set if needed.";;  
 	esac
@@ -648,7 +688,7 @@ if test "${CXX}x" = "x"; then
 	CXX=`${WHICH} cxx 2> /dev/null`
 	if whichFailed "${CXX}"; then
 		case ${SYSTEM} in
-			Linux|Darwin|CYGWIN|SunOS)
+			Linux|Darwin|CYGWIN|SunOS|ranger)
 				CXX=`${WHICH} g++ 2> /dev/null`
 				if whichFailed "${CXX}"; then
 					CXX="/usr/bin/g++";
@@ -669,6 +709,11 @@ if test "${CXX_TEST}x" != "x"; then
 	echo ${CXX_TEST}
 else
 	DoCritialConftest ./VMake/SystemTests/CXX-CompilerType CXX_TYPE
+	## Set CC_TYPE to mpicc if on ranger
+	## Choi, 2009/02/17.
+	if test "${SYSTEM}x" = "rangerx"; then
+		CXX_TYPE="mvapich"
+	fi
 	if test "${CXX_TYPE}x" = "x"; then
 		echo "Warning: Unknown C compiler type \"${CXX_TYPE}\"."
 		unset CXX_TYPE
@@ -711,8 +756,8 @@ else
 		ibmxl)
 			CC_CXX_LFLAGS="-L /usr/local/IBM_compilers/vacpp/7.0/lib64 -lxlopt -lxl -libmc++ -L /usr/lib64 -lstdc++ -R /usr/local/IBM_compilers/vacpp/7.0/lib64";;
 		*)
-			echo "Error: CC_CXX_LFLAGS for C compiler \"${CC_TYPE}\" unknown";
-			exit ;;
+			echo "Warning: CC_CXX_LFLAGS for C compiler \"${CC_TYPE}\" unknown";
+#			exit ;;
 	esac
 	export CC_CXX_LFLAGS
 fi	
@@ -802,7 +847,7 @@ else
 
 	if test "${EXTRA_FORTRAN_LIBS}x" = "x"; then
 		case $CC_TYPE in
-			gnu)
+			gnu|mvapich)
 				case $F77_TYPE in
 					gnu)
 						EXTRA_FORTRAN_LIBS="-lg2c";;
@@ -834,8 +879,8 @@ else
 			ibmxl)
 				EXTRA_FORTRAN_LIBS="";;	
 			*)
-				echo "Error: EXTRA_FORTRAN_LIBS for C compiler \"${CC_TYPE}\" unknown";
-				exit ;;
+				echo "Warning: EXTRA_FORTRAN_LIBS for C compiler \"${CC_TYPE}\" unknown";
+#				exit ;;
 		esac
 		export EXTRA_FORTRAN_LIBS
 	fi	
@@ -882,6 +927,8 @@ if test "${SO_CFLAGS}x" = "x"; then
 			SO_CFLAGS="-shared";;
 		ibmxl)
 			SO_CFLAGS="-qpic";;
+		mvapich)
+			SO_CFLAGS="-fPIC";;
 		*)
 			echo "SO_CFLAGS for C compiler \"${CC_TYPE}\" unknown";
 			exit ;;
@@ -921,6 +968,9 @@ if test "${SO_EXT}x" = "x"; then
 		ibmxl)
 			SO_EXT="so";
 			MODULE_EXT='${SO_EXT}';;
+		mvapich)
+			SO_EXT="so";
+			MODULE_EXT='${SO_EXT}';;
 		*)
 			echo "Error: SO_EXT/MODULE_EXT for C compiler \"${CC_TYPE}\" unknown";
 			exit ;;
@@ -952,6 +1002,8 @@ if test "${SO_LFLAGS}x" = "x"; then
 			SO_LFLAGS="-G";;
 		ibmxl)
 			SO_LFLAGS="-qmkshrobj";;
+		mvapich)
+			SO_LFLAGS="-shared";;
 		*)
 			echo "Error: SO_LFLAGS for C compiler \"${CC_TYPE}\" unknown";
 			exit ;;
@@ -982,6 +1034,8 @@ if test "${MODULE_LFLAGS}x" = "x"; then
 		sparc)
 			MODULE_LFLAGS='${SO_LFLAGS}';;
 		ibmxl)
+			MODULE_LFLAGS='${SO_LFLAGS}';;
+		mvapich)
 			MODULE_LFLAGS='${SO_LFLAGS}';;
 		*)
 			echo "Error: MODULE_LFLAGS for C compiler \"${CC_TYPE}\" unknown";
@@ -1019,6 +1073,9 @@ if test "${RPATH_FLAG}x" = "x"; then
 			;;
 		ibmxl)
 			RPATH_FLAG='-R '
+			;;
+		mvapich)
+			RPATH_FLAG="-Wl,-rpath,"
 			;;
 		*)
 			echo "Error: RPATH_FLAG for C compiler \"${CC_TYPE}\" unknown";
@@ -1067,6 +1124,8 @@ if test "${EXPORT_DYNAMIC_LFLAGS}x" = "x"; then
 			EXPORT_DYNAMIC_LFLAGS="-B dynamic";;
 		ibmxl)
 			EXPORT_DYNAMIC_LFLAGS="-Wl,--export-dynamic";;
+		mvapich)
+			EXPORT_DYNAMIC_LFLAGS="";;
 		*)
 			echo "Error: EXPORT_DYNAMIC_LFLAGS for C compiler \"${CC_TYPE}\" unknown";
 			exit ;;
@@ -1089,6 +1148,8 @@ if test "${CC_WARNINGLEVEL}x" = "x"; then
 		ibmxl)
 			# theres no good equivalient to -Wall, turn on a few warnings at least
 			CC_WARNINGLEVEL="-qformat=all -qwarn64";; 
+		mvapich)
+			CC_WARNINGLEVEL="-Minform=inform";;
 		*)
 			echo "Warning: CC_WARNINGLEVEL for C compiler \"${CC_TYPE}\" unknown. Please set.";;  
 	esac
@@ -1109,6 +1170,8 @@ if test "${CC_SYMBOLLEVEL}x" = "x"; then
 			sparc)
 				CC_SYMBOLLEVEL="-g";;
 			ibmxl)
+				CC_SYMBOLLEVEL="-g";;
+			mvapich)
 				CC_SYMBOLLEVEL="-g";;
 			*)
 				echo "Warning: CC_SYMBOLLEVEL for C compiler \"${CC_TYPE}\" unknown. Please set.";;  
@@ -1154,7 +1217,7 @@ fi
 # Obtain dl information
 if test "${DL_DIR}x" = "x"; then
 	case ${SYSTEM} in
-		Linux|CYGWIN|OSF1|SunOS)
+		Linux|CYGWIN|OSF1|SunOS|ranger)
 			DL_DIR="/usr";;
 		Darwin)
 			DL_DIR="/sw";;
@@ -1169,7 +1232,7 @@ if test "${DL_LIBDIR}x" = "x"; then
 fi
 if test "${DL_LIBFILES}x" = "x"; then
 	case $SYSTEM in
-		Linux|Darwin|SunOS)
+		Linux|Darwin|SunOS|ranger)
 			DL_LIBFILES="-ldl";;
 			# dlcompat package is required for darwin
 		CYGWIN|OSF1)
