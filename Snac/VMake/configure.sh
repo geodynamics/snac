@@ -1090,7 +1090,7 @@ if test "${CC_WARNINGLEVEL}x" = "x"; then
 		ibmxl)
 			# theres no good equivalient to -Wall, turn on a few warnings at least
 			CC_WARNINGLEVEL="-qformat=all -qwarn64";; 
-		mvapich)
+		pgi)
 			CC_WARNINGLEVEL="-Minform=inform";;
 		*)
 			echo "Warning: CC_WARNINGLEVEL for C compiler \"${CC_TYPE}\" unknown. Please set.";;  
@@ -1113,7 +1113,7 @@ if test "${CC_SYMBOLLEVEL}x" = "x"; then
 				CC_SYMBOLLEVEL="-g";;
 			ibmxl)
 				CC_SYMBOLLEVEL="-g";;
-			mvapich)
+			pgi)
 				CC_SYMBOLLEVEL="-g";;
 			*)
 				echo "Warning: CC_SYMBOLLEVEL for C compiler \"${CC_TYPE}\" unknown. Please set.";;  
@@ -1133,7 +1133,11 @@ if test "${CC_OPTIMISATIONLEVEL}x" = "x"; then
 			i686)
 				CC_OPTIMISATIONLEVEL="-O3 -march=i686 -fomit-frame-pointer -funroll-loops";; #-fmove-all-movables";;
 			x86_64)
-				CC_OPTIMISATIONLEVEL="-O3 -march=athlon64";; #-fomit-frame-pointer -funroll-loops";;
+				if test "${CC_TYPE}x" = "pgix"; then
+					CC_OPTIMISATIONLEVEL="-O3 -tp amd64e" #-fomit-frame-pointer -funroll-loops";;
+				else
+					CC_OPTIMISATIONLEVEL="-O3 -march=athlon64" #-fomit-frame-pointer -funroll-loops";;
+				fi;;
 			ia64)
 				CC_OPTIMISATIONLEVEL=" ";;
 			alpha)

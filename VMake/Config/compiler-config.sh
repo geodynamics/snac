@@ -36,7 +36,7 @@ case ${CC_TYPE} in
 	sparc)
 		setValueWithDefault CC_SYMBOLLEVEL '-g'
 		setValueWithDefault CC_WARNINGLEVEL '';;
-	mvapich)
+	pgi)
 		setValueWithDefault CC_SYMBOLLEVEL '-g'
 		setValueWithDefault CC_WARNINGLEVEL '-Minform=inform';;
 	*)

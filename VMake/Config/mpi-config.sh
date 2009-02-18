@@ -151,7 +151,7 @@ case $CC_TYPE in
 		setValueWithDefault MPI_RPATH '-R ${MPI_LIBDIR}';;
 	ibmxl)
 		setValueWithDefault MPI_RPATH '-R ${MPI_LIBDIR}';;
-	mvapich)
+	pgi)
 		setValueWithDefault MPI_RPATH '-Wl,-rpath,${MPI_LIBDIR}';;
 	*)
 		echo "Warning: MPI_RPATH for C compiler \"${CC_TYPE}\" unknown";;

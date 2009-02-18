@@ -882,7 +882,7 @@ if test "${SO_CFLAGS}x" = "x"; then
 			SO_CFLAGS="-shared";;
 		ibmxl)
 			SO_CFLAGS="-qpic";;
-		mvapich)
+		pgi)
 			SO_CFLAGS="-fPIC";;
 		*)
 			echo "SO_CFLAGS for C compiler \"${CC_TYPE}\" unknown";
@@ -923,7 +923,7 @@ if test "${SO_EXT}x" = "x"; then
 		ibmxl)
 			SO_EXT="so";
 			MODULE_EXT='${SO_EXT}';;
-		mvapich)
+		pgi)
 			SO_EXT="so";
 			MODULE_EXT='${SO_EXT}';;
 		*)
@@ -957,7 +957,7 @@ if test "${SO_LFLAGS}x" = "x"; then
 			SO_LFLAGS="-G";;
 		ibmxl)
 			SO_LFLAGS="-qmkshrobj";;
-		mvapich)
+		pgi)
 			SO_LFLAGS="-shared";;
 		*)
 			echo "Error: SO_LFLAGS for C compiler \"${CC_TYPE}\" unknown";
@@ -990,7 +990,7 @@ if test "${MODULE_LFLAGS}x" = "x"; then
 			MODULE_LFLAGS='${SO_LFLAGS}';;
 		ibmxl)
 			MODULE_LFLAGS='${SO_LFLAGS}';;
-		mvapich)
+		pgi)
 			MODULE_LFLAGS='${SO_LFLAGS}';;
 		*)
 			echo "Error: MODULE_LFLAGS for C compiler \"${CC_TYPE}\" unknown";
@@ -1029,7 +1029,7 @@ if test "${RPATH_FLAG}x" = "x"; then
 		ibmxl)
 			RPATH_FLAG='-R '
 			;;
-		mvapich)
+		pgi)
 			RPATH_FLAG="-Wl,-rpath,";;
 		*)
 			echo "Error: RPATH_FLAG for C compiler \"${CC_TYPE}\" unknown";
@@ -1078,7 +1078,7 @@ if test "${EXPORT_DYNAMIC_LFLAGS}x" = "x"; then
 			EXPORT_DYNAMIC_LFLAGS="-B dynamic";;
 		ibmxl)
 			EXPORT_DYNAMIC_LFLAGS="-Wl,--export-dynamic";;
-		mvapich)
+		pgi)
 			EXPORT_DYNAMIC_LFLAGS="-Bdynamic";;
 		*)
 			echo "Error: EXPORT_DYNAMIC_LFLAGS for C compiler \"${CC_TYPE}\" unknown";
@@ -1102,7 +1102,7 @@ if test "${CC_WARNINGLEVEL}x" = "x"; then
 		ibmxl)
 			# theres no good equivalient to -Wall, turn on a few warnings at least
 			CC_WARNINGLEVEL="-qformat=all -qwarn64";; 
-		mvapich)
+		pgi)
 			CC_WARNINGLEVEL="-Minform=inform";;
 		*)
 			echo "Warning: CC_WARNINGLEVEL for C compiler \"${CC_TYPE}\" unknown. Please set.";;  
@@ -1125,7 +1125,7 @@ if test "${CC_SYMBOLLEVEL}x" = "x"; then
 				CC_SYMBOLLEVEL="-g";;
 			ibmxl)
 				CC_SYMBOLLEVEL="-g";;
-			mvapich)
+			pgi)
 				CC_SYMBOLLEVEL="-g";;
 			*)
 				echo "Warning: CC_SYMBOLLEVEL for C compiler \"${CC_TYPE}\" unknown. Please set.";;  
@@ -1145,7 +1145,11 @@ if test "${CC_OPTIMISATIONLEVEL}x" = "x"; then
 			i686)
 				CC_OPTIMISATIONLEVEL="-O3 -march=i686 -fomit-frame-pointer -funroll-loops";; #-fmove-all-movables";;
 			x86_64)
-				CC_OPTIMISATIONLEVEL="-O3 -march=athlon64";; #-fomit-frame-pointer -funroll-loops";;
+				if test "${CC_TYPE}x" = "pgix"; then
+					CC_OPTIMISATIONLEVEL="-O3 -tp amd64e" #-fomit-frame-pointer -funroll-loops";;
+				else
+					CC_OPTIMISATIONLEVEL="-O3 -march=athlon64" #-fomit-frame-pointer -funroll-loops";;
+				fi;;
 			ia64)
 				CC_OPTIMISATIONLEVEL=" ";;
 			alpha)
