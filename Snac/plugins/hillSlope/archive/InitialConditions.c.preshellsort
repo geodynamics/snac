@@ -1,0 +1,433 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**
+** Copyright (C), 2003,
+**	Steve Quenette, 110 Victoria Street, Melbourne, Victoria, 3053, Australia.
+**	Californian Institute of Technology, 1200 East California Boulevard, Pasadena, California, 91125, USA.
+**	University of Texas, 1 University Station, Austin, Texas, 78712, USA.
+**
+** Authors:
+**	Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
+**	Stevan M. Quenette, Visitor in Geophysics, Caltech.
+**	Luc Lavier, Research Scientist, The University of Texas. (luc@utig.ug.utexas.edu)
+**	Luc Lavier, Research Scientist, Caltech.
+**
+**  Mods by:
+**           Colin Stark, Doherty Research Scientist, Lamont-Doherty Earth Observatory (cstark@ldeo.columbia.edu)
+**
+** This program is free software; you can redistribute it and/or modify it
+** under the terms of the GNU General Public License as published by the
+** Free Software Foundation; either version 2, or (at your option) any
+** later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+**
+** $Id: InitialConditions.c  $
+**
+**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+#include <mpi.h>
+#include <StGermain/StGermain.h>
+#include <StGermain/FD/FD.h>
+#include "Snac/Snac.h"
+#include "types.h"
+#include "Context.h"
+#include "Register.h"
+#include "InitialConditions.h"
+#include "Snac/Plastic/Plastic.h"
+
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <assert.h>
+#include <math.h>
+#ifndef PI
+	#ifndef M_PIl
+		#ifndef M_PI
+			#define PI 3.1415927
+		#else
+			#define PI M_PI
+		#endif
+	#else
+		#define PI M_PIl
+	#endif
+#endif
+
+
+
+#define min(a,b) ((a)<(b) ? (a):(b))
+
+#ifndef PATH_MAX
+	#define PATH_MAX 1024
+#endif
+
+
+//void _SnacHillSlope_ShellSort( unsigned int* vecPtr,  unsigned int* idxPtr, long n );
+
+//#define DEBUG
+
+void _SnacHillSlope_InitialConditions( void* _context, void* data ) {
+	Snac_Context*			context = (Snac_Context*)_context;
+	SnacHillSlope_Context*		contextExt = ExtensionManager_Get(
+							context->extensionMgr,
+							context,
+							SnacHillSlope_ContextHandle );
+	Mesh*				mesh = context->mesh;
+	MeshLayout*			layout = (MeshLayout*)mesh->layout;
+	HexaMD*				decomp = (HexaMD*)layout->decomp;
+	BlockGeometry*			geometry = (BlockGeometry*)layout->elementLayout->geometry;
+	Node_GlobalIndex		node_g;
+	Node_GlobalIndex		node_gI;
+	Node_GlobalIndex		node_gJ;
+
+	const int			full_I_node_range=decomp->nodeGlobal3DCounts[0];
+	const int			full_J_node_range=decomp->nodeGlobal3DCounts[1];
+	//	const int			full_K_node_range=decomp->nodeGlobal3DCounts[2];
+
+	const int			full_I_element_range=decomp->elementGlobal3DCounts[0];
+	const int			full_J_element_range=decomp->elementGlobal3DCounts[1];
+	const int			full_K_element_range=decomp->elementGlobal3DCounts[2];
+
+	double                          new_x[full_I_node_range];
+	double                    	reg_dx;
+	double                          new_y[full_J_node_range];
+	double                    	reg_dy;
+	double                          new_xMax;
+	double                          new_xMin;
+	double                          new_yMax;
+	double                          new_yMin;
+
+	double                          slopeAngle = contextExt->slopeAngle * M_PI/180.0;
+	unsigned int                    rngSeed = contextExt->rngSeed;
+	double                          fractionWeakPoints = contextExt->fractionWeakPoints;
+	double                          x_subdomain_fraction = contextExt->xSubDomainFraction;
+	double                          y_subdomain_fraction = contextExt->ySubDomainFraction;
+	double                          z_subdomain_fraction = contextExt->zSubDomainFraction;
+
+	int				restart = 0;
+	Dictionary_Entry_Value* 	pluginsList;
+	Dictionary_Entry_Value* 	plugin;
+
+	Element_LocalIndex		element_lI;
+	Element_GlobalIndex       	element_gI;
+	int                   	        index_I,index_J,subdomain_I_element_range,
+					   subdomain_J_element_range,subdomain_K_element_range;
+	IJK				ijk;
+	Snac_Element*			element;
+	const Snac_Material*	    	material;
+	Tetrahedra_Index		tetra_I;
+	SnacPlastic_Element*		plasticElement;
+	double                       	randomNumber;
+	unsigned int                   	numberSubDomainPoints;
+	unsigned int                   	numberWeakPoints;
+
+	unsigned int*				shuffleIndexListPtr;
+	unsigned int*				randomNumberListPtr;
+
+	int imax=0;
+
+	pluginsList = PluginsManager_GetPluginsList( context->dictionary );
+	if (pluginsList) {
+		plugin = Dictionary_Entry_Value_GetFirstElement(pluginsList);
+		while ( plugin ) {
+			if ( 0 == strcmp( Dictionary_Entry_Value_AsString( plugin ),
+					  "SnacRestart" ) ) {
+				restart = 1;
+				break;
+			}
+			plugin = plugin->next;
+		}
+	}
+	if( restart )
+		return;
+
+
+	#ifdef DEBUG
+		printf( "In: %s\n", __func__ );
+		fprintf(stderr, "Slope angle = %g degrees\n", slopeAngle/(M_PI/180.0));
+	#endif
+
+	/*  Report HillSlope plugin variables picked up (?) from xml parameter file */
+	Journal_Printf( context->snacInfo, "\n\tSlope angle = %g degrees\n", slopeAngle/(M_PI/180.0) );
+	Journal_Printf( context->snacInfo, "\tRNG seed = %u\n", rngSeed );
+	Journal_Printf( context->snacInfo, "\tFraction of weak points = %g\n", fractionWeakPoints );
+	Journal_Printf( context->snacInfo, "\tx subdomain fraction = %g\n", x_subdomain_fraction );
+	Journal_Printf( context->snacInfo, "\ty subdomain fraction = %g\n", y_subdomain_fraction );
+	Journal_Printf( context->snacInfo, "\tz subdomain fraction = %g\n", z_subdomain_fraction );
+
+	reg_dx = (geometry->max[0]-geometry->min[0])/(full_I_node_range-1);
+	reg_dy = (geometry->max[1]-geometry->min[1])/(full_J_node_range-1);
+/* 	Journal_Printf( context->snacInfo, "\t new_x[1] = %g\n\n", geometry->min[0] + 1*reg_dx ); */
+/* 	Journal_Printf( context->snacInfo, "\t new_y[1] = %g\n\n", geometry->min[1] + 1*reg_dy ); */
+
+	for( node_gI = 0; node_gI < full_I_node_range; node_gI++ )
+		new_x[node_gI] = geometry->min[0] + node_gI*reg_dx;
+	
+	for( node_gJ = 0; node_gJ < full_J_node_range; node_gJ++ )
+		new_y[node_gJ] = geometry->min[1] + node_gJ*reg_dy;
+	
+	/*
+	for( node_gJ = 0; node_gJ < full_J_node_range; node_gJ++ ) {
+		double                          reg_y;
+		if(node_gJ==0)
+			new_y[node_gJ] = geometry->min[1];
+		else if(node_gJ>0) {
+			reg_y = geometry->min[1] + node_gJ*reg_dy;
+			new_y[node_gJ] = new_y[node_gJ-1] + reg_dy/(5.0/PI*atan((reg_y-ym)/Ly)+3.0);
+		}
+	}
+	*/
+	
+
+	/*
+	 *  Assume highest point in x,y is at the last mesh node
+	 */
+	new_xMin = new_x[0];
+	new_xMax = new_x[full_I_node_range-1];
+	new_yMin = new_y[0];
+	new_yMax = new_y[full_J_node_range-1];  /*+ tan(mesh_slope)*geometry->max[0]; */
+	/*
+	 *  Loop across all nodes in mesh
+	 *    - total of x*y*z nodes is given by context->mesh->nodeGlobalCount+1
+	 */
+	for( node_g = 0; node_g < context->mesh->nodeGlobalCount; node_g++ ) {
+		Node_LocalIndex			node_l = _MeshDecomp_Node_GlobalToLocal1D( decomp, node_g );
+		Index				i_g;
+		Index				j_g;
+		Index				k_g;
+		Coord*				coord = 0;
+		Coord				tmpCoord;
+
+		/* If a local node, directly change the node coordinates and initial tpr, else use a temporary location */
+		if( node_l < context->mesh->nodeLocalCount ) { /* a local node */
+			coord = Snac_NodeCoord_P( context, node_l );
+		}
+		else {
+			coord = &tmpCoord;
+		}
+
+		RegularMeshUtils_Node_1DTo3D( decomp, node_g, &i_g, &j_g, &k_g );
+
+		(*coord)[0] = new_x[i_g];
+		(*coord)[0] *= geometry->max[0]/new_xMax;
+
+		(*coord)[1] = new_y[j_g] + tan(slopeAngle)*(*coord)[0];
+		(*coord)[1] *= geometry->max[1]/new_yMax;
+
+		//fprintf(stderr,"i_g=%d coord=%e newX=%e min=%e max=%e\n",
+		//	i_g,(*coord)[0],new_x[i_g],geometry->min[0],geometry->max[0]);
+
+		#ifdef DEBUG
+		fprintf( stderr, "\tnode_l: %2u, node_g: %2u, i: %2u, j: %2u, k: %2u, ",
+				node_l,
+				node_g,
+				i_g,
+				j_g,
+				k_g );
+		fprintf( stderr, "x: %12g, y: %12g, z: %12g\n", (*coord)[0], (*coord)[1], (*coord)[2] );
+		#endif
+	}
+
+
+	//	return;
+
+	/*
+	 *  Define portion of mesh (cells) that need weak point "seeding"
+	 *    - lots of sloppy float/int casting back and forth here
+	 */
+	subdomain_I_element_range = (int)(full_I_element_range*x_subdomain_fraction);
+	subdomain_J_element_range = (int)(full_J_element_range*y_subdomain_fraction);
+	subdomain_K_element_range = (int)(full_K_element_range*z_subdomain_fraction); 
+
+	Journal_Printf( context->snacInfo, "\tx subdomain element range = %d/%d\n", subdomain_I_element_range,full_I_element_range );
+	Journal_Printf( context->snacInfo, "\ty subdomain element range = %d/%d\n", subdomain_J_element_range,full_J_element_range );
+	Journal_Printf( context->snacInfo, "\tz subdomain element range = %d/%d\n\n", subdomain_K_element_range,full_K_element_range );
+
+	numberSubDomainPoints = subdomain_I_element_range*subdomain_J_element_range*subdomain_K_element_range;
+	numberWeakPoints = (unsigned int)((float)numberSubDomainPoints*fractionWeakPoints);
+	Journal_Printf(context->snacInfo,  "Number of weak points = %u/%u\n", numberWeakPoints,numberSubDomainPoints);
+	
+	/*
+	 *  Seed RNG (random number generator) using seed value from input xml file
+	 */
+	srand( rngSeed );
+	shuffleIndexListPtr=(unsigned int *)malloc((size_t)(numberSubDomainPoints*sizeof(unsigned int)));
+	randomNumberListPtr=(unsigned int *)malloc((size_t)(numberSubDomainPoints*sizeof(unsigned int)));
+	/*
+	 *  Create (1) ordered sequence of element indices, (2) parallel list of random variates
+	 */
+	for(index_I = 0; index_I < numberSubDomainPoints; index_I++) {
+	    shuffleIndexListPtr[index_I]=index_I;
+	    randomNumberListPtr[index_I]=rand();
+	}
+	/*
+	 *  
+	 */
+	ShellSort( randomNumberListPtr, shuffleIndexListPtr, numberSubDomainPoints );
+	/*
+	 *  Loop over total number of weak points and locate each one
+	 */
+	for(index_I = 0; index_I < numberWeakPoints; index_I++) {
+	    /*
+	     *  Select random i,j,k indices  
+	     *    - converts int random number into double, scales, and casts back to int.  Ugh.
+	     */ 
+	    randomNumber = (double)rand()/((double)RAND_MAX+1.0);
+	    ijk[0] = (int)((subdomain_I_element_range) * randomNumber);
+ 	    ijk[0] = ijk[0]+(full_I_element_range-subdomain_I_element_range)/2;
+
+	    randomNumber = (double)rand()/((double)RAND_MAX+1.0);
+	    ijk[1] = (int)((subdomain_J_element_range) * randomNumber);
+ 	    ijk[1] =  full_J_element_range-1-ijk[1];
+
+	    randomNumber = (double)rand()/((double)RAND_MAX+1.0);
+	    ijk[2] = (int)((subdomain_K_element_range) * randomNumber);
+ 	    ijk[2] = ijk[2]+(full_K_element_range-subdomain_K_element_range)/2;
+
+	#ifdef DEBUG
+	    if (imax<ijk[1]) imax=ijk[1];
+	#endif
+	    /*
+	     *  Calculate "global" (across all processors) element index and then find local equivalent (this CPU)
+	     */
+	    element_gI = ijk[0] + full_I_element_range*ijk[1] 
+		                + full_I_element_range*full_J_element_range*ijk[2];
+	    element_lI = Mesh_ElementMapGlobalToLocal( mesh, element_gI );
+
+	#ifdef DEBUG
+	    Journal_Printf(context->snacInfo,  "Weak point:  ijk = %d,%d,%d  ->  %d  -> %d  <?  %d\n", 
+			   ijk[0], ijk[1], ijk[2],  element_gI, element_lI, mesh->elementLocalCount);
+	#endif
+	    
+	    /*
+	     *  At each point, force low cohesion by imposing a degree of plastic strain
+	     */
+	    if(element_lI < mesh->elementLocalCount) {
+		
+		element = Snac_Element_At( context, element_lI );
+		material = &context->materialProperty[element->material_I];
+		plasticElement = ExtensionManager_Get(
+						      mesh->elementExtensionMgr,
+						      element,
+						      SnacPlastic_ElementHandle );
+		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
+		    plasticElement->plasticStrain[tetra_I] = contextExt->weakPointCohesion * material->plstrain[1];
+#ifdef DEBUG		    
+		    if(tetra_I==0) Journal_Printf(
+						  context->snacInfo,
+						  "timeStep=%d ijkt=%d %d %d %d  plasticE=%e\n",
+						  context->timeStep,
+						  ijk[0],
+						  ijk[1],
+						  ijk[2],
+						  tetra_I,
+						  plasticElement->plasticStrain[tetra_I] );
+#endif
+
+		}
+	    } // End if
+	    
+	} // End for
+
+
+	/*
+	 *  Trigger point assignment
+	 */
+	ijk[0]=(int)(full_I_element_range*contextExt->xTriggerPointFraction);
+	ijk[1]=(int)(full_J_element_range*contextExt->yTriggerPointFraction);
+	ijk[1]=	full_J_element_range-ijk[1];
+	ijk[2]=(int)(full_K_element_range*contextExt->zTriggerPointFraction);
+	/*
+	 *  Calculate "global" (across all processors) element index and then find local equivalent (this CPU)
+	 */
+	element_gI = ijk[0] + full_I_element_range*ijk[1] 
+	    + full_I_element_range*full_J_element_range*ijk[2];
+	element_lI = Mesh_ElementMapGlobalToLocal( mesh, element_gI );
+	
+	Journal_Printf(context->snacInfo,  "Trigger point:  ijk = %d,%d,%d  ->  %d  -> %d  <?  %d\n", ijk[0], ijk[1], ijk[2],  element_gI, element_lI, mesh->elementLocalCount);
+	#ifdef DEBUG
+	#endif
+	/*
+	 *  At trigger point, force low cohesion by imposing a degree of plastic strain
+	 */
+	if(element_lI < mesh->elementLocalCount) {
+	    
+	    element = Snac_Element_At( context, element_lI );
+	    material = &context->materialProperty[element->material_I];
+	    plasticElement = ExtensionManager_Get(
+						  mesh->elementExtensionMgr,
+						  element,
+						  SnacPlastic_ElementHandle );
+	    for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
+		plasticElement->plasticStrain[tetra_I] = contextExt->triggerPointCohesion * material->plstrain[1];
+		
+		if(tetra_I==0) Journal_Printf(
+					      context->snacVerbose,
+					      "timeStep=%d ijkt=%d %d %d %d  plasticE=%e\n",
+					      context->timeStep,
+					      ijk[0],
+					      ijk[1],
+					      ijk[2],
+					      tetra_I,
+					      plasticElement->plasticStrain[tetra_I] );
+	    }
+	}
+}
+
+
+/*
+ *----------------------------------------------------------------------
+ *
+ * ShellSort --
+ *
+ *      Shell sort vector (double) and coevally rearrange input
+ *      (index, int) vector
+ *
+ * Results:
+ *	None
+ *
+ * Side effects:
+ *      Modifies input vectors
+ *
+ *----------------------------------------------------------------------
+ */
+
+void 
+ShellSort(vecPtr,idxPtr,n)
+	unsigned int vecPtr[];              /* Input unsorted data vector (e.g. random numbers) */  /* was double */
+	unsigned int idxPtr[];              /* Input index vector, to be sorted according to vecPtr */
+	unsigned long n;           /* Data length */
+{
+    unsigned long i,j,incr;
+    unsigned int v;  /* was double */
+    unsigned int w;
+    incr=1;
+    do {
+	incr *= 3;
+	incr++;
+    } while (incr <= n);
+    do {
+	incr /= 3;
+	for (i=incr;i<n;i++) {
+	    v=vecPtr[i];
+	    w=idxPtr[i];
+	    j=i;
+	    while (vecPtr[j-incr] > v) {
+		vecPtr[j]=vecPtr[j-incr];
+		idxPtr[j]=idxPtr[j-incr];
+		j -= incr;
+		if (j < incr) {
+		    break;
+		}
+	    }
+	    vecPtr[j]=v;
+	    idxPtr[j]=w;
+	}
+    } while (incr > 1);
+}
