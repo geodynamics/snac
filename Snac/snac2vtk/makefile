@@ -40,4 +40,17 @@ include Makefile.def
 bin = ${def_bin}
 SRCS = ${def_srcs}
 
+# CPS mods...
+includes = ${def_inc}
+packages = MPI XML MATH
+# ...CPS mods
+
+
 include ${PROJ_ROOT}/Makefile.vmake
+
+
+
+
+
+
+
