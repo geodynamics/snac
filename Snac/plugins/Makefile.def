@@ -25,8 +25,11 @@
 ## along with this program; if not, write to the Free Software
 ## Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ##
+## Modified by:  Colin Stark, Lamont-Doherty Earth Observatory (cstark@ldeo.columbia.edu)
+##      - to implement hillslope plugin
+##
 ## $Id: Makefile.def 3276 2007-03-28 22:59:47Z EunseoChoi $
 ##
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def_sub = temperature elastic plastic maxwell maxwelldruckerprager maxwellmohrcoulomb creepmohrcoulomb viscoplastic spherical exchanger remesher hydroStaticIC cylindrical cylinder_quadrant customCartesianMesh plSeeds vpSeeds winkler restarter heterogeneities
+def_sub = temperature elastic plastic maxwell maxwelldruckerprager maxwellmohrcoulomb creepmohrcoulomb viscoplastic spherical exchanger remesher hydroStaticIC cylindrical cylinder_quadrant customCartesianMesh plSeeds vpSeeds winkler restarter heterogeneities hillSlope
