@@ -134,7 +134,10 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 #endif
 					}
 			}
-			/*ccccc*/
+			/*
+			*  Calculate material props (friction angle, cohesion, etc) from piecewise-linear
+			*    functions defined in terms of plastic strain.
+			*/
                         for( i = 0; i < material->nsegments; i++ ) {
 				const double pl1 = material->plstrain[i];
 				const double pl2 = material->plstrain[i+1];
@@ -154,10 +157,10 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 				     *    has pl strain larger than piece  -  then set physical params to maxima for this piece
 				     *  Purpose:  to prevent crazy behavior for extreme plastic strains
 				     */
-				    frictionAngle = material->frictionAngle[i];
-				    dilationAngle = material->dilationAngle[i];
-				    cohesion = material->cohesion[i];
-				    hardening = (material->cohesion[i+1] - material->cohesion[i]) / (pl2 - pl1);
+				    frictionAngle = material->frictionAngle[material->nsegments];
+				    dilationAngle = material->dilationAngle[material->nsegments];
+				    cohesion = material->cohesion[material->nsegments];
+				    hardening = 0.0;
 				}
                         }
 
