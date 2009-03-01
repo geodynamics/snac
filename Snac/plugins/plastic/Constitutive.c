@@ -53,6 +53,7 @@
 #endif
 #endif
 
+//#define DEBUG
 
 void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 	Snac_Context* context = (Snac_Context*)_context;
@@ -99,7 +100,10 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 			double		        trace_strain;
 			StressTensor*		stress = &element->tetra[tetra_I].stress;
 			StrainTensor*		strain = &element->tetra[tetra_I].strain;
-                        Strain		        plasticStrain = 0.0f;
+			/*  
+			 *  CPS bug fix:  was set to zero, thus not picking up plastic strain weakening except at t=0
+			 */
+                        Strain		        plasticStrain = plasticElement->plasticStrain[tetra_I];
 
 
 			/* Compute elastic stress first */
@@ -121,12 +125,13 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 			if(material->putSeeds && context->timeStep <= 1) {
 				if(ijk[1] >= decomp->elementGlobal3DCounts[1]-2)
 					if(ijk[0] == decomp->elementGlobal3DCounts[0]/2 ) {
-				//if(ijk[0] >= 10 && ijk[0] <= 14 ) {
 						plasticElement->plasticStrain[tetra_I] = 1.1*material->plstrain[1];
 						plasticStrain = plasticElement->plasticStrain[tetra_I];
+#ifdef DEBUG
 						fprintf(stderr,"timeStep=%d ijk=%d %d %d aps=%e plasticE=%e\n",
 							context->timeStep,ijk[0],ijk[1],ijk[2],plasticStrain,
 							plasticElement->plasticStrain[tetra_I]);
+#endif
 					}
 			}
 			/*ccccc*/
@@ -143,10 +148,20 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 					dilationAngle = material->dilationAngle[i] + tgd * (plasticStrain - pl1);
 					cohesion = material->cohesion[i] + tgc * (plasticStrain - pl1);
 					hardening = tgc;
+				} else if(i==material->nsegments-1 && plasticStrain > pl2) {
+				    /*
+				     *  CPS mod:  one extra test if pl strain is outside piecewise range, is last piece, and 
+				     *    has pl strain larger than piece  -  then set physical params to maxima for this piece
+				     *  Purpose:  to prevent crazy behavior for extreme plastic strains
+				     */
+				    frictionAngle = material->frictionAngle[i];
+				    dilationAngle = material->dilationAngle[i];
+				    cohesion = material->cohesion[i];
+				    hardening = (material->cohesion[i+1] - material->cohesion[i]) / (pl2 - pl1);
 				}
                         }
 
-#if 0
+#ifdef DEBUG
 			/*ccccc*/
 			if(ijk[1] >= decomp->elementGlobal3DCounts[1]-2 && context->timeStep <= 1)
 				if(ijk[0] == decomp->elementGlobal3DCounts[0]/2 || ijk[0] == decomp->elementGlobal3DCounts[0]/2+1 ) {
@@ -173,6 +188,16 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 
 			/* CHECK FOR COMPOSITE YIELD CRITERION  */
 			fs = s[0] - s[2] * anphi + 2 * cohesion * sqrt( anphi );
+#ifdef DEBUG
+			if(context->timeStep>435 && (ijk[0]>=9 && ijk[0]<=11))
+			   fprintf(stderr,"t=%d: (%d,%d,%d):  ps=%g  ->  fs=%g  = (%g) - (%g * %g) + 2 * %g * %g = %g + %g + %g :  phi=%g\n", 
+				   context->timeStep,
+				   ijk[0],ijk[1],ijk[2], 
+				   plasticStrain,
+				   fs, s[0], s[2], anphi, cohesion, sqrt(anphi),
+				   s[0], -s[2]*anphi, 2*cohesion*sqrt(anphi),
+				   frictionAngle);
+#endif
 			ft = s[2] - st;
                         ind=0;
 			if( fs < 0.0f || ft > 0.0f ) {
