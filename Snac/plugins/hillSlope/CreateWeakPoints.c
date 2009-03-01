@@ -289,8 +289,8 @@ void SnacHillSlope_CreateWeakPoints( void* _context ) {
 	    /*  Force each of 5*2 tetrahedra to have extra plastic strain to impose lower cohesion indirectly */
 	    for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
 		plasticElement->plasticStrain[tetra_I] =  PlasticStrainFromCohesion(material,(double)contextExt->triggerPointCohesion);
+		if(tetra_I==0) Journal_Printf(context->snacInfo, "timeStep=%d ijkt=%d %d %d %d  setting plasticE=%e\n", context->timeStep,ijk[0],ijk[1],ijk[2], tetra_I,  plasticElement->plasticStrain[tetra_I] );
 #ifdef DEBUG
-		if(tetra_I==0) Journal_Printf(context->snacInfo, "timeStep=%d ijkt=%d %d %d %d  plasticE=%e\n", context->timeStep,ijk[0],ijk[1],ijk[2], tetra_I,  plasticElement->plasticStrain[tetra_I] );
 #endif
 	    }
 	}

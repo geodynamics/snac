@@ -44,6 +44,8 @@
 #define FALSE 0
 #endif
 
+//#define DEBUG
+
 void SnacHillSlope_Track( void* _context ) {
 	Snac_Context			*context = (Snac_Context*)_context;
 	SnacHillSlope_Context		*contextExt = ExtensionManager_Get(
@@ -163,7 +165,10 @@ void SnacHillSlope_Track( void* _context ) {
 	 *  Decide whether to stop or to continue simulation
 	 */
 	if(contextExt->startedTrackingFlag && !contextExt->elasticStabilizedFlag){
-
+#ifdef DEBUG
+	    fprintf(stderr,"t=%d:  elasticStabilizedFlag=%d   startedTrackingFlag=%d\n",
+		    context->timeStep, contextExt->elasticStabilizedFlag, contextExt->startedTrackingFlag ); 
+#endif
 	    fallingFlag = CheckFallingFn(max_yVelocity,max_yAcceln,old_max_yVelocity,old_max_yAcceln);
 	    if(CheckStabilizingFn(max_yVelocity/unit_yVelocity, 
 				  max_yAcceln/unit_yAcceln, stopThreshold, fallingFlag)==TRUE
@@ -173,7 +178,7 @@ void SnacHillSlope_Track( void* _context ) {
 		 */
 		contextExt->elasticStabilizedFlag=TRUE;
 		if(contextExt->solveElasticEqmOnlyFlag)
-		    context->maxTimeSteps=context->timeStep+1;
+		    context->maxTimeSteps=context->timeStep+context->dumpEvery;
 
 /* 		Journal_Printf( context->snacInfo,"Stabilizing (falling?=%d) on level %d (%g)\n", */
 /* 				fallingFlag, index_J, trackLevel ); */
@@ -212,9 +217,6 @@ void SnacHillSlope_Track( void* _context ) {
 	old_max_yVelocity = max_yVelocity;
 	old_max_yAcceln = max_yAcceln;
 
-
-#ifdef DEBUG		    
-#endif
 }
 
 
