@@ -124,12 +124,12 @@ void DeriveStressMeasures(FILE *stressTensorIn,
 
 char		path[PATH_MAX];
 FILE*		strainRateIn;
-FILE*		stressIn;
 /*
  * CPS mods start ...
  */
+/* FILE*		stressIn; */
 FILE*		stressTensorIn;
-FILE*		pisosIn;
+/* FILE*		pisosIn; */
 /*
  * ... end CPS mods
  */
@@ -150,7 +150,7 @@ int 			doVisc = 1;
 /*
  * CPS mods start ...
  */
-double			failureAngle = -1.0;
+double			failureAngle = 30.0;
 /*
  * ... end CPS mods
  */
@@ -213,13 +213,13 @@ int main( int argc, char* argv[])
 		if( (strainRateIn = fopen( tmpBuf, "r" )) == NULL ) {
 		    assert( strainRateIn /* failed to open file for reading */ );
 		}
-		sprintf( tmpBuf, "%s/stress.%u", path, rank );
-		if( (stressIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    assert( stressIn /* failed to open file for reading */ );
-		}
 		/*
 		 * CPS mods start ...
 		 */
+/* 		sprintf( tmpBuf, "%s/stress.%u", path, rank ); */
+/* 		if( (stressIn = fopen( tmpBuf, "r" )) == NULL ) { */
+/* 		    assert( stressIn ); */
+/* 		} */
 		sprintf( tmpBuf, "%s/stressTensor.%u", path, rank );
 		if( (stressTensorIn = fopen( tmpBuf, "r" )) == NULL ) {
 		    assert( stressTensorIn /* failed to open file for reading */ );
@@ -353,10 +353,10 @@ int main( int argc, char* argv[])
 		fclose( phaseIn );
 		fclose( velIn );
 		fclose( coordIn );
-		fclose( stressIn );
 		/*
 		 * CPS mods start ...
 		 */
+/* 		fclose( stressIn ); */
 		fclose( stressTensorIn );
 		/*
 		 * ... end CPS mods
@@ -440,11 +440,27 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     }
     fprintf( vtkOut, "      </PointData>\n");
 
+    /*
+     * CPS mods start ...
+     */
+
     /* Start the element section */
-    fprintf( vtkOut, "      <CellData Scalars=\"strainRate\">\n");
+    fprintf( vtkOut, "      <CellData Scalars=\"Plastic strain\">\n");
+
+    /* Write out the plastic strain information */
+    if( doAps ) {
+	fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Plastic strain\" format=\"ascii\">\n");
+	fseek( apsIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET );
+	for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
+	    float		plStrain;
+	    fread( &plStrain, sizeof(float), 1, apsIn );
+	    fprintf( vtkOut, "%g ", plStrain );
+	}
+	fprintf( vtkOut, "        </DataArray>\n");
+    }
 	
     /* Write out the strain rate information */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"strainRate\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Strain rate\" format=\"ascii\">\n");
     fseek( strainRateIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET );
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 	float		strainRate;
@@ -453,21 +469,39 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     }
     fprintf( vtkOut, "        </DataArray>\n");
 	
-    /* Write out the stress information */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"stress\" format=\"ascii\">\n");
-    fseek( stressIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET );
+    /* Write out the pressure information */
+    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Pressure\" format=\"ascii\">\n");
+    fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET );
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
-	float		stress;
-	fread( &stress, sizeof(float), 1, stressIn );
-	fprintf( vtkOut, "%g ", stress );
+	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
+	struct stressMeasures	elementStressMeasures;
+	/*
+	 *  Build average stress tensor for element and derive useful stress measures
+	 */
+	DeriveStressMeasures(stressTensorIn, elementStressTensor, &elementStressMeasures);
+	/*
+	 *  Write the chosen derived stress value to Paraview file
+	 */
+	fprintf( vtkOut, "%g ", -elementStressMeasures.pressure );
+#ifdef DEBUG
+	if (element_gI<10) fprintf( stderr, "Element pressure %d: %g  at angle %g\n", element_gI, elementStressMeasures.pressure, elementStressMeasures.failureAngle); 
+#endif	
     }
     fprintf( vtkOut, "        </DataArray>\n");
 
-    /*
-     * CPS mods start ...
-     */
+
+    /* Write out the stress information */
+/*     fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"stress\" format=\"ascii\">\n"); */
+/*     fseek( stressIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET ); */
+/*     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) { */
+/* 	float		stress; */
+/* 	fread( &stress, sizeof(float), 1, stressIn ); */
+/* 	fprintf( vtkOut, "%g ", stress ); */
+/*     } */
+/*     fprintf( vtkOut, "        </DataArray>\n"); */
+
     /* Write out the maxShearStress information */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"maxShearStress\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Max. shear stress\" format=\"ascii\">\n");
     fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET );
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
@@ -488,7 +522,7 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     fprintf( vtkOut, "        </DataArray>\n");
 
     /* Write out the vonMisesStress information */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"vonMisesStress\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Von Mises stress\" format=\"ascii\">\n");
     fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET );
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
@@ -508,7 +542,7 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     fprintf( vtkOut, "        </DataArray>\n");
 
     /* Write out the slopeShearStress information */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"slopeShearStress\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Shear stress @%gd\" format=\"ascii\">\n",failureAngle);
     fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET );
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
@@ -529,7 +563,7 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     fprintf( vtkOut, "        </DataArray>\n");
 
     /* Write out the slopeNormalStress information */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"slopeNormalStress\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Normal stress @%gd\" format=\"ascii\">\n", failureAngle);
     fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET );
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
@@ -550,7 +584,7 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     fprintf( vtkOut, "        </DataArray>\n");
 
     /* Write out the failurePotential information */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"failurePotential\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Failure potential\" format=\"ascii\">\n");
     fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET );
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
@@ -571,25 +605,6 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     fprintf( vtkOut, "        </DataArray>\n");
 
 
-    /* Write out the pressure information */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"pressure\" format=\"ascii\">\n");
-    fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET );
-    for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
-	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
-	struct stressMeasures	elementStressMeasures;
-	/*
-	 *  Build average stress tensor for element and derive useful stress measures
-	 */
-	DeriveStressMeasures(stressTensorIn, elementStressTensor, &elementStressMeasures);
-	/*
-	 *  Write the chosen derived stress value to Paraview file
-	 */
-	fprintf( vtkOut, "%g ", -elementStressMeasures.pressure );
-#ifdef DEBUG
-	if (element_gI<10) fprintf( stderr, "Element pressure %d: %g  at angle %g\n", element_gI, elementStressMeasures.pressure, elementStressMeasures.failureAngle); 
-#endif	
-    }
-    fprintf( vtkOut, "        </DataArray>\n");
 
 
     /*
@@ -609,18 +624,6 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 	fprintf( vtkOut, "%u ", phaseIndex );
     }
     fprintf( vtkOut, "        </DataArray>\n");
-
-    /* Write out the plastic strain information */
-    if( doAps ) {
-	fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"plStrain\" format=\"ascii\">\n");
-	fseek( apsIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET );
-	for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
-	    float		plStrain;
-	    fread( &plStrain, sizeof(float), 1, apsIn );
-	    fprintf( vtkOut, "%g ", plStrain );
-	}
-	fprintf( vtkOut, "        </DataArray>\n");
-    }
 
     /* Write out the pressure information */
 /*     if( doHPr ) { */
@@ -690,24 +693,24 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 
 	/* Start the element section */
 	fprintf( vtkOut1, "    <PCellData>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"strainRate\"/>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"stress\"/>\n");
+	if( doAps )
+	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Plastic strain\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Strain rate\"/>\n");
 	/*
 	 * CPS mods start ...
 	 */
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"maxShearStress\"/>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"vonMisesStress\"/>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"slopeShearStress\"/>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"slopeNormalStress\"/>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"failurePotential\"/>\n");
 /* 	if( doHPr ) */
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"pressure\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Pressure\"/>\n");
+/* 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"stress\"/>\n"); */
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Max. shear stress\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Von Mises stress\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Shear stress @%gd\"/>\n",failureAngle);
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Normal stress @%gd\"/>\n",failureAngle);
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Failure potential @%gd\"/>\n",failureAngle);
 	/*
 	 * ... end CPS mods
 	 */
 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"phase\"/>\n");
-	if( doAps )
-	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"plStrain\"/>\n");
 	if( doVisc )
 	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"viscosity\"/>\n");
 	fprintf( vtkOut1, "    </PCellData>\n");
@@ -1002,7 +1005,7 @@ DeriveStressMeasures(FILE *stressTensorIn, double elementStressTensor[3][3], str
     float		stressTensorArray[10][3][3];
     int			tetra_I;
     const int		numberTetrahedra=10;
-    double		failureAngle=elementStressMeasures->failureAngle*M_PI/180.0;
+    double		failureAngleRadians=elementStressMeasures->failureAngle*M_PI/180.0;
     double		normalVector[3],slopeParallelVector[3],tractionVector[3];
     double		tmp;
 
@@ -1055,11 +1058,11 @@ DeriveStressMeasures(FILE *stressTensorIn, double elementStressTensor[3][3], str
     /*
      *  Calculate the traction vector on hillslope and related shear and normal stresses on that dipping surface (down to left)
      */
-    normalVector[0] = -sin(failureAngle);
-    normalVector[1] = cos(failureAngle);
+    normalVector[0] = -sin(failureAngleRadians);
+    normalVector[1] = cos(failureAngleRadians);
     normalVector[2] = 0.0;
-    slopeParallelVector[0] = -cos(failureAngle);
-    slopeParallelVector[1] = -sin(failureAngle);
+    slopeParallelVector[0] = -cos(failureAngleRadians);
+    slopeParallelVector[1] = -sin(failureAngleRadians);
     slopeParallelVector[2] = 0.0;
     tractionVector[0] = ( elementStressTensor[0][0]*normalVector[0] + elementStressTensor[1][0]*normalVector[1] + elementStressTensor[2][0]*normalVector[2] );
     tractionVector[1] = ( elementStressTensor[0][1]*normalVector[0] + elementStressTensor[1][1]*normalVector[1] + elementStressTensor[2][1]*normalVector[2] );
