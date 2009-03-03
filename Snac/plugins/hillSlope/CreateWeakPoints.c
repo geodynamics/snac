@@ -65,7 +65,7 @@
 	#define PATH_MAX 1024
 #endif
 
-#define DEBUG
+//#define DEBUG
 
 
 /*
