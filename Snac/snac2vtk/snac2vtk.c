@@ -26,8 +26,6 @@
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 **
-*/
-/** \file
 ** Role:
 **	Converts Snac's binary output to VTK format
 **
@@ -131,10 +129,10 @@ FILE*		stressIn;
  * CPS mods start ...
  */
 FILE*		stressTensorIn;
+FILE*		pisosIn;
 /*
  * ... end CPS mods
  */
-FILE*		pisosIn;
 FILE*		coordIn;
 FILE*		velIn;
 FILE*		forceIn;
@@ -226,14 +224,14 @@ int main( int argc, char* argv[])
 		if( (stressTensorIn = fopen( tmpBuf, "r" )) == NULL ) {
 		    assert( stressTensorIn /* failed to open file for reading */ );
 		}
+/* 		sprintf( tmpBuf, "%s/hydroPressure.%u", path, rank ); */
+/* 		if( ( pisosIn = fopen( tmpBuf, "r" )) == NULL ) { */
+/* 		    printf( "Warning, no hydropressure.%u found... assuming the new context is not written.\n", rank ); */
+/* 		    doHPr = 0; */
+/* 		} */
 		/*
 		 * ... end CPS mods
 		 */
-		sprintf( tmpBuf, "%s/hydroPressure.%u", path, rank );
-		if( ( pisosIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    printf( "Warning, no hydropressure.%u found... assuming the new context is not written.\n", rank );
-		    doHPr = 0;
-		}
 		sprintf( tmpBuf, "%s/coord.%u", path, rank );
 		if( (coordIn = fopen( tmpBuf, "r" )) == NULL ) {
 		    assert( coordIn /* failed to open file for reading */ );
@@ -343,9 +341,15 @@ int main( int argc, char* argv[])
 		if( forceIn ) {
 		    fclose( forceIn );
 		}
-		if( pisosIn ) {
-		    fclose( pisosIn );
-		}
+		/*
+		 * CPS mods start ...
+		 */
+/* 		if( pisosIn ) { */
+/* 		    fclose( pisosIn ); */
+/* 		} */
+		/*
+		 * ... end CPS mods
+		 */
 		fclose( phaseIn );
 		fclose( velIn );
 		fclose( coordIn );
@@ -565,6 +569,29 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 #endif	
     }
     fprintf( vtkOut, "        </DataArray>\n");
+
+
+    /* Write out the pressure information */
+    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"pressure\" format=\"ascii\">\n");
+    fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET );
+    for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
+	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
+	struct stressMeasures	elementStressMeasures;
+	/*
+	 *  Build average stress tensor for element and derive useful stress measures
+	 */
+	DeriveStressMeasures(stressTensorIn, elementStressTensor, &elementStressMeasures);
+	/*
+	 *  Write the chosen derived stress value to Paraview file
+	 */
+	fprintf( vtkOut, "%g ", -elementStressMeasures.pressure );
+#ifdef DEBUG
+	if (element_gI<10) fprintf( stderr, "Element pressure %d: %g  at angle %g\n", element_gI, elementStressMeasures.pressure, elementStressMeasures.failureAngle); 
+#endif	
+    }
+    fprintf( vtkOut, "        </DataArray>\n");
+
+
     /*
      * ... end CPS mods
      */
@@ -596,18 +623,18 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     }
 
     /* Write out the pressure information */
-    if( doHPr ) {
-	fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"pressure\" format=\"ascii\">\n");
-	fseek( pisosIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET );
-	for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
-	    float		pressure;
-	    fread( &pressure, sizeof(float), 1, pisosIn );
-	    fprintf( vtkOut, "%g ", pressure );
-	}
-	fprintf( vtkOut, "        </DataArray>\n");
-    }
+/*     if( doHPr ) { */
+/* 	fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"pressure\" format=\"ascii\">\n"); */
+/* 	fseek( pisosIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET ); */
+/* 	for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) { */
+/* 	    float		pressure; */
+/* 	    fread( &pressure, sizeof(float), 1, pisosIn ); */
+/* 	    fprintf( vtkOut, "%g ", pressure ); */
+/* 	} */
+/* 	fprintf( vtkOut, "        </DataArray>\n"); */
+/*     } */
 
-    /* Write out the pressure information */
+    /* Write out the viscosity information */
     if( doVisc ) {
 	fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"viscosity\" format=\"ascii\">\n");
 	fseek( viscIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET );
@@ -673,14 +700,14 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"slopeShearStress\"/>\n");
 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"slopeNormalStress\"/>\n");
 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"failurePotential\"/>\n");
+/* 	if( doHPr ) */
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"pressure\"/>\n");
 	/*
 	 * ... end CPS mods
 	 */
 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"phase\"/>\n");
 	if( doAps )
 	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"plStrain\"/>\n");
-	if( doHPr )
-	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"pressure\"/>\n");
 	if( doVisc )
 	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"viscosity\"/>\n");
 	fprintf( vtkOut1, "    </PCellData>\n");
