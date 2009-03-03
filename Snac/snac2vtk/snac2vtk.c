@@ -1046,9 +1046,19 @@ DeriveStressMeasures(FILE *stressTensorIn, double elementStressTensor[3][3], str
      *  Calculate the failure potential for hillslope angle
      */
 /*     elementStressMeasures->failurePotential= ( (fabs(elementStressMeasures->maxShearStress)-1e6) */
-/* 					       /(-2*elementStressMeasures->pressure/3.0) ); */
-    elementStressMeasures->failurePotential= fabs(-elementStressMeasures->slopeShearStress/elementStressMeasures->slopeNormalStress);
-					       
+/* 					       /(-2*elementStressMeasures->pessure/3.0) ); */
+
+	/* If slopeNormalStress is 0, failurePotential is not defined. Assign some indicative value: -1 for now. */
+	/* If the computed slopeNormalStress is infinite, assign -1 again. */
+	/* In either case, a warning message would be desirable. Or a switch to turn off failure potential calculations might be better. */
+	/* -EChoi 2009/03/03 */
+	if( elementStressMeasures->slopeNormalStress == 0.0 )
+		elementStressMeasures->failurePotential = -1.0; 
+	else {
+		elementStressMeasures->failurePotential= fabs(-elementStressMeasures->slopeShearStress/elementStressMeasures->slopeNormalStress);
+		if( isinf( elementStressMeasures->failurePotential ) )
+			elementStressMeasures->failurePotential = -1.0;
+	}
 
 }
 
