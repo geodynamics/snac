@@ -44,7 +44,7 @@
 #define FALSE 0
 #endif
 
-//#define DEBUG
+#define DEBUG
 
 void SnacHillSlope_Track( void* _context ) {
 	Snac_Context			*context = (Snac_Context*)_context;
@@ -69,15 +69,21 @@ void SnacHillSlope_Track( void* _context ) {
 	static char			fallingFlag=FALSE;
 
 	const double			trackLevel=(double)contextExt->trackLevel;
-	const double			startThreshold=(double)(contextExt->startThreshold<=1? 
-					       (contextExt->startThreshold>=0 ? contextExt->startThreshold : 0) : 1);
-	const double			stopThreshold=(double)(contextExt->stopThreshold<=1? 
-					       (contextExt->stopThreshold>=0 ? contextExt->stopThreshold : 0) : 1);
+	const double			startThreshold=(contextExt->startThreshold>=0.0 ? contextExt->startThreshold : 1e-2);
+	const double			stopThreshold=(contextExt->stopThreshold>=0.0 ? contextExt->stopThreshold : 1e-3);
 	
 
 /* 	if (context->timeStep % context->dumpEvery == 0) { */
 /* 	    Journal_Printf( context->snacInfo,"timeStep=%d (in track)\n", context->timeStep ); */
 /* 	} */
+
+	/*
+	 *  Bail now if all threads have reached elastic equilibrium
+	 */
+	if(contextExt->consensusElasticStabilizedFlag){
+	    return;
+	}
+
 	/*
 	 *  Set up a tracking grids (slices of mesh) to allow t instance to be compared with t-1, t-2 instances
 	 */
@@ -108,9 +114,6 @@ void SnacHillSlope_Track( void* _context ) {
 		index_J=(int)(((double)full_J_node_range-1.0)*(1.0-trackLevel));
 		node_gI = index_I + full_I_node_range*index_J + full_I_node_range*full_J_node_range*index_K;
 		node_lI = Mesh_NodeMapGlobalToLocal( mesh, node_gI );
-/* 		Journal_Printf( context->snacInfo,"\t\t%d,%d,%d -> %d ->%d \n", index_I,index_J,index_K,node_gI,node_lI ); */
-/* 		node_lI = _MeshDecomp_Node_GlobalToLocal1D( decomp, node_gI ); */
-/* 		Journal_Printf( context->snacInfo,"\t\t%d,%d,%d -> %d ->%d \n", index_I,index_J,index_K,node_gI,node_lI ); */
 
 		/* If a local node, read its elevation, if not, give a dummy value */
 		if( node_lI < context->mesh->nodeLocalCount ) { /* a local node */
@@ -132,17 +135,7 @@ void SnacHillSlope_Track( void* _context ) {
 			max_yVelocity = fabs(node_yVelocity);
 		    if(fabs(node_yAcceln)>max_yAcceln)
 			max_yAcceln = fabs(node_yAcceln);
-/* 		    if(fabs(node_yVelocity)<min_yVelocity && fabs(node_yVelocity)>0.0) */
-/* 			min_yVelocity = fabs(node_yVelocity); */
-/* 		    if(fabs(node_yAcceln)<min_yAcceln && fabs(node_yAcceln)>0.0) */
-/* 			min_yAcceln = fabs(node_yAcceln); */
 		}
-/* 		Journal_Printf( context->snacInfo, */
-/* 				"%d,%d,%d -> %d ->%d   :   y=%0.8f  /  oy=%0.8f  /  ooy=%0.8f   ->  v%g (%g)  ,  a=%g (%g)\n",  */
-/* 				index_I,index_J,index_K,node_gI,node_lI,   */
-/* 				node_yElevation, *tmp_yGridOldPtr, *tmp_yGridOlderPtr, */
-/* 				node_yVelocity,max_yVelocity, node_yAcceln,max_yAcceln */
-/* 				); */
 		/*
 		 * Record this elevation field and push previous back to "OlderPtr" array
 		 */
@@ -150,10 +143,6 @@ void SnacHillSlope_Track( void* _context ) {
 		*tmp_yGridOldPtr = node_yElevation;
 	    }
 	}
-/* 	if(!contextExt->startedTrackingFlag && unit_yVelocity>min_yVelocity && min_yVelocity<1.0) */
-/* 	    unit_yVelocity = min_yVelocity;		 */
-/* 	if(!contextExt->startedTrackingFlag && unit_yAcceln>min_yAcceln && min_yAcceln<1.0) */
-/* 	    unit_yAcceln = min_yAcceln;	 */
 	if(unit_yVelocity==0.0 && max_yVelocity>0.0)
 	    unit_yVelocity = max_yVelocity;		
 	if(unit_yAcceln==0.0 && max_yAcceln>0.0)
@@ -164,52 +153,36 @@ void SnacHillSlope_Track( void* _context ) {
 	/*
 	 *  Decide whether to stop or to continue simulation
 	 */
-	if(contextExt->startedTrackingFlag && !contextExt->elasticStabilizedFlag){
+	if(contextExt->startedTrackingFlag){
 #ifdef DEBUG
-	    fprintf(stderr,"t=%d:  elasticStabilizedFlag=%d   startedTrackingFlag=%d\n",
-		    context->timeStep, contextExt->elasticStabilizedFlag, contextExt->startedTrackingFlag ); 
+	    fprintf(stderr,"t=%d:  consensusElasticStabilized=%d  elasticStabilized=%d   startedTracking=%d:  max_vel=%g  unit_vel=%g\n",
+		    context->timeStep, contextExt->consensusElasticStabilizedFlag, contextExt->elasticStabilizedFlag, contextExt->startedTrackingFlag, max_yVelocity, unit_yVelocity ); 
 #endif
 	    fallingFlag = CheckFallingFn(max_yVelocity,max_yAcceln,old_max_yVelocity,old_max_yAcceln);
-	    if(CheckStabilizingFn(max_yVelocity/unit_yVelocity, 
-				  max_yAcceln/unit_yAcceln, stopThreshold, fallingFlag)==TRUE
-	       && context->maxTimeSteps!=context->timeStep) {
+/* 	    if(CheckStabilizingFn(max_yVelocity/unit_yVelocity, max_yAcceln/unit_yAcceln, stopThreshold, fallingFlag)==TRUE */
+	    if( !contextExt->elasticStabilizedFlag
+		&& CheckStabilizingFn(max_yVelocity, max_yAcceln, stopThreshold, fallingFlag)==TRUE
+		&& context->maxTimeSteps!=context->timeStep ) {
 		/*
-		 *  Stabilizing!  Therefore terminate processing at the next time step
+		 *  Stabilizing on this thread
 		 */
-		contextExt->elasticStabilizedFlag=TRUE;
-		if(contextExt->solveElasticEqmOnlyFlag)
-		    context->maxTimeSteps=context->timeStep+context->dumpEvery;
-
-/* 		Journal_Printf( context->snacInfo,"Stabilizing (falling?=%d) on level %d (%g)\n", */
-/* 				fallingFlag, index_J, trackLevel ); */
-	    } else {
-		/*
-		 *  Still working...
-		 */
-/* 		if (context->timeStep % context->dumpEvery == 0) { */
-/* 		    Journal_Printf( context->snacInfo,"Changing (rising?=%d) on level %d (%g) (t steps=%d/%d)\n", */
-/* 				    fallingFlag, index_J, trackLevel,  */
-/* 				    context->timeStep, context->maxTimeSteps ); */
-/* 		} */
+		contextExt->elasticStabilizedFlag = TRUE;
+	    }
+	    /*
+	     *  Check all threads to see if global equilibration has been reached
+	     */
+	    MPI_Allreduce( &(contextExt->elasticStabilizedFlag), &(contextExt->consensusElasticStabilizedFlag), 
+			   1, MPI_INT, MPI_LAND, context->communicator );
+	    /*
+	     *  If all threads agree to elastic eqm, and we only want to run to this point, 
+	     *    tell the simulation to stop at this time step
+	     */
+	    if(contextExt->consensusElasticStabilizedFlag) {
+		if(contextExt->solveElasticEqmOnlyFlag) {
+		    context->maxTimeSteps=context->timeStep/*+context->dumpEvery*/;
+		}
 	    }
 	}
-
-
-/* 	if (context->timeStep % context->dumpEvery == 0) { */
-/* 	    Journal_Printf( context->snacInfo,"\tTracking?=%d  unit vel=%g,  unit accel=%g\n", */
-/* 			    contextExt->startedTrackingFlag, */
-/* 			    unit_yVelocity/geometry->max[1], unit_yAcceln/geometry->max[1] */
-/* 			    ); */
-/* 	    Journal_Printf( context->snacInfo,"\tmax vel=%g (was %g)  ,  max accel=%g (was %g)\n",  */
-/* 			    max_yVelocity/(unit_yVelocity>0.0?unit_yVelocity:1), */
-/* 			    old_max_yVelocity/(unit_yVelocity>0.0?unit_yVelocity:1),  */
-/* 			    max_yAcceln/(unit_yAcceln>0.0?unit_yAcceln:1),  */
-/* 			    old_max_yAcceln/(unit_yAcceln>0.0?unit_yAcceln:1) */
-/* 			    ); */
-/* 	    Journal_Printf( context->snacInfo,"\tfalling?=%d  tracking?=%d  stabilized?=%d\n", */
-/* 			    fallingFlag, contextExt->startedTrackingFlag, contextExt->elasticStabilizedFlag); */
-/* 	} */
-
 
 	/*
 	 * Record the current mesh slice velocity and acceln for use next iteration

@@ -135,13 +135,16 @@ void _SnacHillSlope_ConstructExtensions( void* _context, void* data ) {
 
 	contextExt->startThreshold = Dictionary_Entry_Value_AsDouble(
 		Dictionary_GetDefault( context->dictionary, "startThreshold", 
-				       Dictionary_Entry_Value_FromDouble( 1.0f ) ) );
+				       Dictionary_Entry_Value_FromDouble( 1.0e-2f ) ) );
 	contextExt->stopThreshold = Dictionary_Entry_Value_AsDouble(
 		Dictionary_GetDefault( context->dictionary, "stopThreshold", 
-				       Dictionary_Entry_Value_FromDouble( 1.0f ) ) );
+				       Dictionary_Entry_Value_FromDouble( 1.0e-3f ) ) );
 
 	contextExt->startedTrackingFlag = Dictionary_Entry_Value_AsBool(
 		Dictionary_GetDefault( context->dictionary, "startedTrackingFlag", 
+				       Dictionary_Entry_Value_FromBool( 0 ) ) );
+	contextExt->consensusElasticStabilizedFlag = Dictionary_Entry_Value_AsBool(
+		Dictionary_GetDefault( context->dictionary, "consensusElasticStabilizedFlag", 
 				       Dictionary_Entry_Value_FromBool( 0 ) ) );
 	contextExt->elasticStabilizedFlag = Dictionary_Entry_Value_AsBool(
 		Dictionary_GetDefault( context->dictionary, "elasticStabilizedFlag", 

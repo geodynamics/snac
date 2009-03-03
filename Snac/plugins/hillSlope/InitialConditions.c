@@ -112,10 +112,10 @@ void _SnacHillSlope_InitialConditions( void* _context, void* data ) {
 #ifdef DEBUG
     printf( "In: %s\n", __func__ );
 #endif
-    fprintf(stderr, "Slope angle = %g degrees\n", slopeAngle/(M_PI/180.0));
+    //    fprintf(stderr, "Slope angle = %g degrees\n", slopeAngle/(M_PI/180.0));
 
     /*  Report HillSlope plugin variables picked up (?) from xml parameter file */
-    Journal_Printf( context->snacInfo, "\n\tSlope angle = %g degrees\n", slopeAngle/(M_PI/180.0) );
+    Journal_Printf( context->snacInfo, "\nSlope angle = %g degrees\n", slopeAngle/(M_PI/180.0) );
 
     reg_dx = (geometry->max[0]-geometry->min[0])/(double)(full_I_node_range-1);
     reg_dy = (geometry->max[1]-geometry->min[1])/(double)(full_J_node_range-1);

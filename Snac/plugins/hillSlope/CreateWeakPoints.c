@@ -126,9 +126,9 @@ void SnacHillSlope_CreateWeakPoints( void* _context ) {
 
 
     /*
-     *  Bail now if initial elastic equilibrium has not been reached
+     *  Bail now if initial elastic equilibrium has not been reached on all threads
      */
-    if(!contextExt->elasticStabilizedFlag || contextExt->seedingCompletedFlag) return;
+    if(!contextExt->consensusElasticStabilizedFlag || contextExt->seedingCompletedFlag) return;
 
     //    fprintf(stderr, "CWP\n");
 
@@ -297,7 +297,7 @@ void SnacHillSlope_CreateWeakPoints( void* _context ) {
     } // End if
 
     /*
-     *  Flag that seeing has been done and don't do any more
+     *  Flag that seeding has been done and don't do any more
      */
     contextExt->seedingCompletedFlag = TRUE;
 }
@@ -341,7 +341,7 @@ PlasticStrainFromCohesion(Snac_Material *material, double cohesion)
 	plasticStrain = pl1+(pl2-pl1)*( (cohesion-coh1)/(coh2-coh1) );
 	if( plasticStrain >= pl1 && plasticStrain <= pl2 ) {
 #ifdef DEBUG
-	    fprintf(stderr,  "Returning plastic strain = %g  from cohesion = %g  (%g, %g)\n", plasticStrain, cohesion, coh1,coh2);
+	    //	    fprintf(stderr,  "Returning plastic strain = %g  from cohesion = %g  (%g, %g)\n", plasticStrain, cohesion, coh1,coh2);
 #endif
 	    return plasticStrain;
 	}

@@ -65,6 +65,7 @@
 		double				startThreshold;
 		double				stopThreshold;
 		int				startedTrackingFlag;
+		int				consensusElasticStabilizedFlag;
 		int				elasticStabilizedFlag;
 		int				solveElasticEqmOnlyFlag;		
 		int				seedingCompletedFlag;		
