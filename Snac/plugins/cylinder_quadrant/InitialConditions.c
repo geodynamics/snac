@@ -91,12 +91,16 @@ void _SnacCylinderQuad_InitialConditions( void* _context, void* data ) {
 
 		RegularMeshUtils_Node_1DTo3D( decomp, node_gI, &i_gI, &j_gI, &k_gI );
 
+		/*               -----                   */
+		/*         right |    \ front            */
+		/*     z ^       --\   \                 */
+		/*       |     back  |_ |                */
+		/*       -->x       left                 */
 		initialRTZ[0] = ri; // radius
 		if(k_gI>0) rsum = (pow(alpha,k_gI)-1.0)/(alpha-1.0)*d;
 		initialRTZ[0] += rsum;
-
-		initialRTZ[1] = (90.0f - 90.0f/(decomp->nodeGlobal3DCounts[2]-1)*i_gI)*PI/180.0f; // theta
-		initialRTZ[2] = (ztop-zbot)/(decomp->nodeGlobal3DCounts[1]-1)*j_gI; // Z
+		initialRTZ[1] = (90.0f/(decomp->nodeGlobal3DCounts[0]-1)*i_gI)*PI/180.0f; // theta
+		initialRTZ[2] = ztop - (ztop-zbot)/(decomp->nodeGlobal3DCounts[1]-1)*j_gI; // Z
 
 		(*coord)[0] = initialRTZ[0]*cos(initialRTZ[1]);
 		(*coord)[1] = initialRTZ[2];

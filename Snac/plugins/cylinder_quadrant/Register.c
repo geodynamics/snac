@@ -66,7 +66,7 @@ void* _SnacCylinderQuad_DefaultNew( Name name ) {
 			     name );
 }
 
-void _SnacCustomCartesian_Construct( void* component, Stg_ComponentFactory* cf, void* data ) {
+void _SnacCylinderQuad_Construct( void* component, Stg_ComponentFactory* cf, void* data ) {
 	Snac_Context*	context;
 
 	/* Retrieve context. */

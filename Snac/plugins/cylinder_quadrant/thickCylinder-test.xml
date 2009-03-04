@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+<!DOCTYPE StGermainData SYSTEM "stgermain.dtd">
+
+<!-- StGermain-Snac input file -->
+<!-- Role:
+	This is the input file specific for the problem of a thick cylinder with pressure applied on its inner wall.
+	The detailed description and the analytic solutions are given in the manual.
+-->
+	
+<StGermainData xmlns="http://www.vpac.org/StGermain/XML_IO_Handler/Jun2003">
+	
+	<!-- StGermain simulation parameters -->
+	<param name="start"> 0 </param>
+	<param name="maxTimeSteps"> 5001 </param>
+	<param name="outputPath">results_thickCylinder</param>
+	<param name="dumpEvery"> 500 </param>
+	
+	<!-- Snac variables -->
+	<param name="gravity"> 0 </param>
+	<param name="demf"> 0.8 </param>
+	<param name="dtType"> constant </param>
+	<param name="timeStep"> 1 </param>
+	<param name="forceCalcType"> complete </param>
+	<param name="decomposedAxis"> 0 </param> <!-- hack: 0=X, 1=Y, 2=Z. Should and will eventually be automatically discovered-->
+	<param name="storeForces"> no </param>
+	<param name="forceCheckSum"> no </param>
+	
+	<!-- Extension modules -->
+	<list name="extensions">
+		<param> SnacPlastic </param>
+		<param> SnacCylinderQuad </param>
+	</list>
+
+	<!-- Usual mesh parameters. The default mesh geometry will be overwritten by the SnacCylinderQuad plugin. -->
+	<struct name="mesh">
+		<param name="shadowDepth"> 1 </param>
+		<param name="decompDims"> 2 </param>
+
+		<!-- Mesh size -->
+		<param name="meshSizeI"> 31 </param>
+		<param name="meshSizeJ"> 2 </param>
+		<param name="meshSizeK"> 29 </param>
+
+ 		<param name="buildNodeNeighbourTbl"> True </param>
+	</struct>
+	
+	<!-- Special parameters for the mesh of a quadrant of cylinder. -->
+	<param name="cylinder_ri"> 3.0 </param>
+	<param name="cylinder_ro"> 10.0 </param>
+	<param name="cylinder_zbot"> 0.0 </param>
+	<param name="cylinder_ztop"> 0.5 </param>
+	<param name="cylinder_alpha"> 1.1 </param>
+	<param name="cylinder_innerP"> 2.0e+06 </param>
+	<!-- Elastic material parameters -->
+	<param name="lambda"> 6.666667e+07 </param>
+	<param name="mu"> 2.0e+08 </param>
+	<!-- Plastic material parameters -->
+	<param name="yieldcriterion"> mohrcoulomb </param>
+	<param name="nsegments"> 1 </param>
+	<param name="plstrain0"> 0.0 </param>
+	<param name="plstrain1"> 1000.0 </param>
+	<param name="frictionAngle0"> 10.0 </param>
+	<param name="frictionAngle1"> 10.0 </param>
+	<param name="dilationAngle0"> 10.0 </param>
+	<param name="dilationAngle1"> 10.0 </param>
+	<param name="cohesion0"> 1.0e+06 </param>
+	<param name="cohesion1"> 1.0e+06 </param>
+	<param name="ten_off"> 5.67e+08 </param>
+
+	<!-- node ICs -->
+	<struct name="nodeICs">
+		<list name="vcList">
+			<struct>
+				<param name="type"> AllNodesVC </param>
+				<list name="variables">
+					<struct>
+						<param name="name">vx</param>
+						<param name="type">double</param>
+						<param name="value"> 0 </param>
+					</struct>
+					<struct>
+						<param name="name">vy</param>
+						<param name="type">double</param>
+						<param name="value"> 0 </param>
+					</struct>
+					<struct>
+						<param name="name">vz</param>
+						<param name="type">double</param>
+						<param name="value"> 0 </param>
+					</struct>
+				</list>
+			</struct>
+		</list>
+	</struct>
+
+	<!-- element ICs -->
+	<struct name="elementICs">
+		<list name="vcList">
+			<struct>
+				<param name="type"> AllElementsVC </param>
+				<list name="variables">
+					<struct>
+						<param name="name">elementMaterial</param>
+						<param name="type">int</param>
+						<param name="value"> 0 </param>
+					</struct>
+				</list>
+			</struct>
+		</list>
+	</struct>
+
+	<!-- Velocity BCs -->
+	<struct name="velocityBCs">
+		<list name="vcList">
+			<!-- Face on the z axis (i.e., normal to the x axis). -->
+			<struct>
+				<param name="type"> WallVC </param>
+				<param name="wall"> right </param>
+				<list name="variables">
+					<struct>
+						<param name="name">vx</param>
+						<param name="type">double</param>
+						<param name="value"> 0.0 </param>
+					</struct>
+				</list>
+			</struct>
+			<!-- Face on the x axis (i.e., normal to the z axis). -->
+			<struct>
+				<param name="type"> WallVC </param>
+				<param name="wall"> left </param>
+				<list name="variables">
+					<struct>
+						<param name="name">vz</param>
+						<param name="type">double</param>
+						<param name="value"> 0.0 </param>
+					</struct>
+				</list>
+			</struct>
+			<struct>
+				<param name="type"> WallVC </param>
+				<param name="wall"> bottom </param>
+				<list name="variables">
+					<struct>
+						<param name="name">vy</param>
+						<param name="type">double</param>
+						<param name="value"> 0.0 </param>
+					</struct>
+				</list>
+			</struct>
+			<struct>
+				<param name="type"> WallVC </param>
+				<param name="wall"> top </param>
+				<list name="variables">
+					<struct>
+						<param name="name">vy</param>
+						<param name="type">double</param>
+						<param name="value"> 0.0 </param>
+					</struct>
+				</list>
+			</struct>
+		</list>
+	</struct>
+</StGermainData>

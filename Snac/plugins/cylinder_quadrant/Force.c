@@ -54,7 +54,7 @@ void _SnacCylinderQuad_Force_Apply(
 	double				area, normal1[3], normal2[3], normal[3];
 	Node_ElementIndex		nodeElement_I, nodeElementCount;
 	const double			factor4 = 1.0f / 4.0f;
-	const double			Pressure = 2.0e+06;
+	const double			Pressure = Dictionary_Entry_Value_AsDouble(Dictionary_GetDefault( context->dictionary, "cylinder_innerP", Dictionary_Entry_Value_FromDouble( 1.0e+06 ) ) );
 
 	/* loop over all the elements surrounding node_dI */
 	HexaMD*			decomp = (HexaMD*)meshLayout->decomp;
@@ -68,30 +68,33 @@ void _SnacCylinderQuad_Force_Apply(
 		for( nodeElement_I = 0; nodeElement_I < nodeElementCount; nodeElement_I++ ) {
 			Element_LocalIndex		element_lI = context->mesh->nodeElementTbl[node_lI][nodeElement_I];
 
-			if( element_lI < context->mesh->elementLocalCount ) {
-
+			if( element_lI < context->mesh->elementDomainCount ) {
 				area = Tetrahedra_SurfaceArea( Snac_Element_NodeCoord( context, element_lI, 0 ),
-							       Snac_Element_NodeCoord( context, element_lI, 1 ),
-							       Snac_Element_NodeCoord( context, element_lI, 2 ) ) +
+											   Snac_Element_NodeCoord( context, element_lI, 1 ),
+											   Snac_Element_NodeCoord( context, element_lI, 2 ) ) +
 					Tetrahedra_SurfaceArea( Snac_Element_NodeCoord( context, element_lI, 0 ),
-								Snac_Element_NodeCoord( context, element_lI, 2 ),
-								Snac_Element_NodeCoord( context, element_lI, 3 ) );
+											Snac_Element_NodeCoord( context, element_lI, 2 ),
+											Snac_Element_NodeCoord( context, element_lI, 3 ) );
 				Tetrahedra_SurfaceNormal( Snac_Element_NodeCoord( context, element_lI, 0 ),
-							  Snac_Element_NodeCoord( context, element_lI, 1 ),
-							  Snac_Element_NodeCoord( context, element_lI, 2 ),
-							  &normal1 );
+										  Snac_Element_NodeCoord( context, element_lI, 1 ),
+										  Snac_Element_NodeCoord( context, element_lI, 2 ),
+										  &normal1 );
 				Tetrahedra_SurfaceNormal( Snac_Element_NodeCoord( context, element_lI, 0 ),
-							  Snac_Element_NodeCoord( context, element_lI, 2 ),
-							  Snac_Element_NodeCoord( context, element_lI, 3 ),
-							  &normal2 );
-
+										  Snac_Element_NodeCoord( context, element_lI, 2 ),
+										  Snac_Element_NodeCoord( context, element_lI, 3 ),
+										  &normal2 );
+				
 				normal[0] = 0.5f * ( normal1[0] + normal2[0] );
 				normal[1] = 0.5f * ( normal1[1] + normal2[1] );
 				normal[2] = 0.5f * ( normal1[2] + normal2[2] );
-
+				
 				(*force)[0] += factor4 * ( Pressure * area * normal[0] );
 				(*force)[1] += factor4 * ( Pressure * area * normal[1] );
 				(*force)[2] += factor4 * ( Pressure * area * normal[2] );
+				
+				(*balance)[0] += fabs( (*force)[0] );
+				(*balance)[1] += fabs( (*force)[1] );
+				(*balance)[2] += fabs( (*force)[2] );
 			}
 		}
 	}
