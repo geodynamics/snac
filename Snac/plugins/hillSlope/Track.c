@@ -44,7 +44,7 @@
 #define FALSE 0
 #endif
 
-#define DEBUG
+#define DEBUG2
 
 void SnacHillSlope_Track( void* _context ) {
 	Snac_Context			*context = (Snac_Context*)_context;
@@ -72,6 +72,7 @@ void SnacHillSlope_Track( void* _context ) {
 	const double			trackLevel=(double)contextExt->trackLevel;
 	const double			startThreshold=(contextExt->startThreshold>=0.0 ? contextExt->startThreshold : 1e-2);
 	const double			stopThreshold=(contextExt->stopThreshold>=0.0 ? contextExt->stopThreshold : 1e-3);
+	char eflag, ceflag;
 	
 
 /* 	if (context->timeStep % context->dumpEvery == 0) { */
@@ -82,6 +83,10 @@ void SnacHillSlope_Track( void* _context ) {
 	 *  Bail now if all threads have reached elastic equilibrium
 	 */
 	if(contextExt->consensusElasticStabilizedFlag){
+#ifdef DEBUG
+	    fprintf(stderr,"c=%d,t=%d/%d: Consensus eqm... bailing at top of Track.c\n",context->rank, 
+		    context->timeStep,context->maxTimeSteps);
+#endif
 	    return;
 	}
 
@@ -154,10 +159,10 @@ void SnacHillSlope_Track( void* _context ) {
 	    }
 	}
 
-#ifdef DEBUG
+#ifdef DEBUG2
 	    fprintf(stderr,
-		    "t=%d:  reachesTop=%d consensusElasticStabilized=%d  elasticStabilized=%d   startedTracking=%d:  max_vel=%g  unit_vel=%g\n",
-		    context->timeStep, reachesTopFlag, 
+		    "c=%d,t=%d/%d:  reachesTop=%d consensusElasticStabilized=%d  elasticStabilized=%d   startedTracking=%d:  max_vel=%g  unit_vel=%g\n",
+		    context->rank, context->timeStep, context->maxTimeSteps, reachesTopFlag, 
 		    contextExt->consensusElasticStabilizedFlag, contextExt->elasticStabilizedFlag, contextExt->startedTrackingFlag, 
 		    max_yVelocity, unit_yVelocity ); 
 #endif
@@ -168,6 +173,9 @@ void SnacHillSlope_Track( void* _context ) {
 	if(!reachesTopFlag) {
 	    contextExt->startedTrackingFlag = TRUE;
 	    contextExt->elasticStabilizedFlag = TRUE;
+#ifdef DEBUG
+	    fprintf(stderr,"c=%d,t=%d/%d:  Doesn't reach top\n",context->rank, context->timeStep, context->maxTimeSteps);
+#endif
 	} else {
 	    /*
 	     * Now deprecated: estimate unit rates of motion for later comparison with falling rates
@@ -179,6 +187,9 @@ void SnacHillSlope_Track( void* _context ) {
 	    if(!contextExt->startedTrackingFlag && max_yVelocity>=unit_yVelocity && context->timeStep>=4) 
 		contextExt->startedTrackingFlag=TRUE;
 
+#ifdef DEBUG
+	    fprintf(stderr,"c=%d,t=%d/%d: Does reach top - check if equilibrating\n",context->rank, context->timeStep, context->maxTimeSteps);
+#endif
 	    /*
 	     *  If surface change is slowing and slowly enough, flag that elastic eqm has been reached on this thread
 	     */
@@ -191,6 +202,9 @@ void SnacHillSlope_Track( void* _context ) {
 		    /*
 		     *  Stabilizing on this thread
 		     */
+#ifdef DEBUG
+		  fprintf(stderr,"c=%d,t=%d/%d: Locally report we're equilibrating\n",context->rank, context->timeStep, context->maxTimeSteps);
+#endif
 		    contextExt->elasticStabilizedFlag = TRUE;
 		}
 	    }
@@ -198,21 +212,44 @@ void SnacHillSlope_Track( void* _context ) {
 	/*
 	 *  Decide whether to stop or to continue simulation
 	 */
+#ifdef DEBUG
+	fprintf(stderr,"c=%d,t=%d/%d: Checking consensus... %d\n",context->rank, context->timeStep, context->maxTimeSteps,
+		contextExt->consensusElasticStabilizedFlag);
+#endif
+	/*
+	 *  Check all threads to see if global equilibration has been reached
+	 */
+	//	    MPI_Allreduce( &contextExt->elasticStabilizedFlag, &contextExt->consensusElasticStabilizedFlag, 
+	//	   1, MPI_INT, MPI_LAND, context->communicator );
+	eflag=contextExt->elasticStabilizedFlag;
+	MPI_Allreduce( &eflag, &ceflag, 
+		       1, MPI_CHAR, MPI_MIN, context->communicator );
+#ifdef DEBUG
+	fprintf(stderr,"c=%d,t=%d/%d: ... revised consensus= %d->%d\n",context->rank, context->timeStep, context->maxTimeSteps,
+		ceflag,
+		contextExt->consensusElasticStabilizedFlag);
+#endif
 	if(contextExt->startedTrackingFlag){
-	    /*
-	     *  Check all threads to see if global equilibration has been reached
-	     */
-	    MPI_Allreduce( &(contextExt->elasticStabilizedFlag), &(contextExt->consensusElasticStabilizedFlag), 
-			   1, MPI_INT, MPI_LAND, context->communicator );
 	    /*
 	     *  If all threads agree to elastic eqm, and we only want to run to this point, 
 	     *    tell the simulation to stop at this time step
 	     */
-	    if(contextExt->consensusElasticStabilizedFlag) {
-		if(contextExt->solveElasticEqmOnlyFlag) {
-		    context->maxTimeSteps=context->timeStep/*+context->dumpEvery*/;
-		}
+	  contextExt->consensusElasticStabilizedFlag=ceflag;
+#ifdef DEBUG
+	fprintf(stderr,"c=%d,t=%d/%d: ... revised consensus= %d->%d\n",context->rank, context->timeStep, context->maxTimeSteps,
+		ceflag,
+		contextExt->consensusElasticStabilizedFlag);
+#endif
+
+	  if(contextExt->consensusElasticStabilizedFlag) {
+	    if(contextExt->solveElasticEqmOnlyFlag) {
+#ifdef DEBUG
+	      fprintf(stderr,"c=%d, t=%d/%d: Stopping run at t= %d\n",context->rank, context->timeStep, 
+		      context->maxTimeSteps,context->maxTimeSteps);
+#endif
+	      context->maxTimeSteps=context->timeStep/*+context->dumpEvery*/;
 	    }
+	  }
 	}
 
 	/*
