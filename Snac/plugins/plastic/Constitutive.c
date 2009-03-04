@@ -56,18 +56,16 @@
 //#define DEBUG
 
 void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
-	Snac_Context* context = (Snac_Context*)_context;
-	Snac_Element* element = Snac_Element_At( context, element_lI );
-	SnacPlastic_Element* plasticElement = ExtensionManager_Get( context->mesh->elementExtensionMgr, element, SnacPlastic_ElementHandle );
-	const Snac_Material* material = &context->materialProperty[element->material_I];
+	Snac_Context			*context = (Snac_Context*)_context;
+	Snac_Element			*element = Snac_Element_At( context, element_lI );
+	SnacPlastic_Element		*plasticElement = ExtensionManager_Get( context->mesh->elementExtensionMgr, element, SnacPlastic_ElementHandle );
+	const Snac_Material		*material = &context->materialProperty[element->material_I];
 
-	/*ccccc*/
 	MeshLayout*			meshLayout = (MeshLayout*)context->meshLayout;
 	HexaMD*				decomp = (HexaMD*)meshLayout->decomp;
 	IJK				ijk;
 	Element_GlobalIndex		element_gI = _MeshDecomp_Element_LocalToGlobal1D( decomp, element_lI );
 	RegularMeshUtils_Element_1DTo3D( decomp, element_gI, &ijk[0], &ijk[1], &ijk[2] );
-	/*ccccc*/
 
 	if ( material->rheology & Snac_Material_Plastic ) {
 		Tetrahedra_Index	tetra_I;
@@ -90,7 +88,9 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 		const double		a2 = material->lambda ;
                 int                     ind=0;
 
-		/* Work out the plastic material properties of this element */
+		/* 
+		 *   Work out the plastic material properties of this element 
+		*/
 		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
 			double		        cn[3][3] = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}};
 			double		        s[3] = {0.0,0.0,0.0};
@@ -106,7 +106,9 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
                         Strain		        plasticStrain = plasticElement->plasticStrain[tetra_I];
 
 
-			/* Compute elastic stress first */
+			/* 
+			 *  Compute elastic stress first 
+			 */
 			trace_strain = (*strain)[0][0] + (*strain)[1][1] + (*strain)[2][2];
 
 			(*stress)[0][0] += (2.0f * material->mu) * (*strain)[0][0] + material->lambda * (trace_strain );
@@ -118,10 +120,11 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 
 			principal_stresses(stress,s,cn);
 
-                        /* compute friction and dilation angles based on accumulated plastic strain in tetrahedra */
-                        /* Piece-wise linear softening */
-                        /* Find current properties from linear interpolation */
-			/*ccccc*/
+                        /* 
+			 * Compute friction and dilation angles based on accumulated plastic strain in tetrahedra 
+			 * Piece-wise linear softening
+			 * Find current properties from linear interpolation
+			 */
 			if(material->putSeeds && context->timeStep <= 1) {
 				if(ijk[1] >= decomp->elementGlobal3DCounts[1]-2)
 					if(ijk[0] == decomp->elementGlobal3DCounts[0]/2 ) {
@@ -165,7 +168,6 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
                         }
 
 #ifdef DEBUG
-			/*ccccc*/
 			if(ijk[1] >= decomp->elementGlobal3DCounts[1]-2 && context->timeStep <= 1)
 				if(ijk[0] == decomp->elementGlobal3DCounts[0]/2 || ijk[0] == decomp->elementGlobal3DCounts[0]/2+1 ) {
 					fprintf(stderr,"phi=%e psi=%e c=%e h=%e\n",frictionAngle,dilationAngle,cohesion,hardening);
@@ -270,7 +272,6 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 		/* volume-averaged accumulated plastic strain, aps */
 		plasticElement->aps = depls/totalVolume;
 #if 0
-		/*ccccc*/
 		if(ijk[1] >= decomp->elementGlobal3DCounts[1]-2 && context->timeStep <= 10)
 			if(ijk[0] == decomp->elementGlobal3DCounts[0]/2 || ijk[0] == decomp->elementGlobal3DCounts[0]/2+1 ) {
 				fprintf(stderr,"aps=%e\n",
