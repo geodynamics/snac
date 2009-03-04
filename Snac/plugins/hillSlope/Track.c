@@ -67,6 +67,7 @@ void SnacHillSlope_Track( void* _context ) {
 	static double			old_max_yVelocity=0.0, old_max_yAcceln=0.0;
 /* 	static double			min_yVelocity=0.0, min_yAcceln=0.0; */
 	static char			fallingFlag=FALSE;
+	unsigned char			reachesTopFlag=FALSE;
 
 	const double			trackLevel=(double)contextExt->trackLevel;
 	const double			startThreshold=(contextExt->startThreshold>=0.0 ? contextExt->startThreshold : 1e-2);
@@ -115,12 +116,21 @@ void SnacHillSlope_Track( void* _context ) {
 		node_gI = index_I + full_I_node_range*index_J + full_I_node_range*full_J_node_range*index_K;
 		node_lI = Mesh_NodeMapGlobalToLocal( mesh, node_gI );
 
-		/* If a local node, read its elevation, if not, give a dummy value */
-		if( node_lI < context->mesh->nodeLocalCount ) { /* a local node */
+		/* 
+		 * If a local node, read its elevation, if not, give a dummy value 
+		 */
+		if( node_lI < context->mesh->nodeLocalCount ) { 
+		    /* 
+		     *  A local node 
+		     */
 		    coordPtr = Snac_NodeCoord_P( context, node_lI );
 		    node_yElevation = (*coordPtr)[1]+(*coordPtr)[1]+(*coordPtr)[1];
+		    reachesTopFlag |= TRUE;
 		}
 		else {
+		    /*
+		     *  Not a local node - handled by another CPU thread
+		     */
 		    node_yElevation=-1.0E29;
 		}
 		tmp_yGridOldPtr = yGridOldPtr+index_I + full_I_node_range*index_K;
@@ -143,31 +153,52 @@ void SnacHillSlope_Track( void* _context ) {
 		*tmp_yGridOldPtr = node_yElevation;
 	    }
 	}
-	if(unit_yVelocity==0.0 && max_yVelocity>0.0)
-	    unit_yVelocity = max_yVelocity;		
-	if(unit_yAcceln==0.0 && max_yAcceln>0.0)
-	    unit_yAcceln = max_yAcceln;	
-	if(!contextExt->startedTrackingFlag && max_yVelocity>=unit_yVelocity && context->timeStep>=4) 
-	    contextExt->startedTrackingFlag=TRUE;
 
+#ifdef DEBUG
+	    fprintf(stderr,
+		    "t=%d:  reachesTop=%d consensusElasticStabilized=%d  elasticStabilized=%d   startedTracking=%d:  max_vel=%g  unit_vel=%g\n",
+		    context->timeStep, reachesTopFlag, 
+		    contextExt->consensusElasticStabilizedFlag, contextExt->elasticStabilizedFlag, contextExt->startedTrackingFlag, 
+		    max_yVelocity, unit_yVelocity ); 
+#endif
+
+	/*
+	 *  If none of the top-surface nodes are local, set flags to pretend we're equilibrated on this thread
+	 */
+	if(!reachesTopFlag) {
+	    contextExt->startedTrackingFlag = TRUE;
+	    contextExt->elasticStabilizedFlag = TRUE;
+	} else {
+	    /*
+	     * Now deprecated: estimate unit rates of motion for later comparison with falling rates
+	     */
+	    if(unit_yVelocity==0.0 && max_yVelocity>0.0)
+		unit_yVelocity = max_yVelocity;		
+	    if(unit_yAcceln==0.0 && max_yAcceln>0.0)
+		unit_yAcceln = max_yAcceln;	
+	    if(!contextExt->startedTrackingFlag && max_yVelocity>=unit_yVelocity && context->timeStep>=4) 
+		contextExt->startedTrackingFlag=TRUE;
+
+	    /*
+	     *  If surface change is slowing and slowly enough, flag that elastic eqm has been reached on this thread
+	     */
+	    if(contextExt->startedTrackingFlag){
+		fallingFlag = CheckFallingFn(max_yVelocity,max_yAcceln,old_max_yVelocity,old_max_yAcceln);
+		/* 	    if(CheckStabilizingFn(max_yVelocity/unit_yVelocity, max_yAcceln/unit_yAcceln, stopThreshold, fallingFlag)==TRUE */
+		if( !contextExt->elasticStabilizedFlag
+		    && CheckStabilizingFn(max_yVelocity, max_yAcceln, stopThreshold, fallingFlag)==TRUE
+		    && context->maxTimeSteps!=context->timeStep ) {
+		    /*
+		     *  Stabilizing on this thread
+		     */
+		    contextExt->elasticStabilizedFlag = TRUE;
+		}
+	    }
+	}
 	/*
 	 *  Decide whether to stop or to continue simulation
 	 */
 	if(contextExt->startedTrackingFlag){
-#ifdef DEBUG
-	    fprintf(stderr,"t=%d:  consensusElasticStabilized=%d  elasticStabilized=%d   startedTracking=%d:  max_vel=%g  unit_vel=%g\n",
-		    context->timeStep, contextExt->consensusElasticStabilizedFlag, contextExt->elasticStabilizedFlag, contextExt->startedTrackingFlag, max_yVelocity, unit_yVelocity ); 
-#endif
-	    fallingFlag = CheckFallingFn(max_yVelocity,max_yAcceln,old_max_yVelocity,old_max_yAcceln);
-/* 	    if(CheckStabilizingFn(max_yVelocity/unit_yVelocity, max_yAcceln/unit_yAcceln, stopThreshold, fallingFlag)==TRUE */
-	    if( !contextExt->elasticStabilizedFlag
-		&& CheckStabilizingFn(max_yVelocity, max_yAcceln, stopThreshold, fallingFlag)==TRUE
-		&& context->maxTimeSteps!=context->timeStep ) {
-		/*
-		 *  Stabilizing on this thread
-		 */
-		contextExt->elasticStabilizedFlag = TRUE;
-	    }
 	    /*
 	     *  Check all threads to see if global equilibration has been reached
 	     */
