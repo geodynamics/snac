@@ -1002,7 +1002,6 @@ void free_ivector(int *v, long nl, long nh)
 void 
 DeriveStressMeasures(FILE *stressTensorIn, double elementStressTensor[3][3], struct stressMeasures *elementStressMeasures)
 {
-    float		stressTensorArray[10][3][3];
     int			tetra_I;
     const int		numberTetrahedra=10;
     double		failureAngleRadians=elementStressMeasures->failureAngle*M_PI/180.0;
@@ -1012,21 +1011,22 @@ DeriveStressMeasures(FILE *stressTensorIn, double elementStressTensor[3][3], str
     /*
      *  Read all tetrahedral stress tensors for this element gI
      */
-    fread( stressTensorArray, sizeof(float)*9*numberTetrahedra, 1, stressTensorIn );
     for( tetra_I = 0; tetra_I < 10; tetra_I++ ) {
+	float	stressTensorArray[3][3];
+	fread( stressTensorArray, sizeof(float), 9, stressTensorIn );
 	/*
 	 *  Build average stress tensor for element by summing tetrahedral tensor components
 	 *   - even though it's symmetric, do for all 9 components in case we pick the wrong ones before diagonalization
 	 */
-	elementStressTensor[0][0]+=stressTensorArray[tetra_I][0][0]/(double)numberTetrahedra;
-	elementStressTensor[1][1]+=stressTensorArray[tetra_I][1][1]/(double)numberTetrahedra;
-	elementStressTensor[2][2]+=stressTensorArray[tetra_I][2][2]/(double)numberTetrahedra;
-	elementStressTensor[0][1]+=stressTensorArray[tetra_I][0][1]/(double)numberTetrahedra;
-	elementStressTensor[0][2]+=stressTensorArray[tetra_I][0][2]/(double)numberTetrahedra;
-	elementStressTensor[1][2]+=stressTensorArray[tetra_I][1][2]/(double)numberTetrahedra;
-	elementStressTensor[1][0]+=stressTensorArray[tetra_I][1][0]/(double)numberTetrahedra;
-	elementStressTensor[2][0]+=stressTensorArray[tetra_I][2][0]/(double)numberTetrahedra;
-	elementStressTensor[2][1]+=stressTensorArray[tetra_I][2][1]/(double)numberTetrahedra;
+	elementStressTensor[0][0]+=stressTensorArray[0][0]/(double)numberTetrahedra;
+	elementStressTensor[1][1]+=stressTensorArray[1][1]/(double)numberTetrahedra;
+	elementStressTensor[2][2]+=stressTensorArray[2][2]/(double)numberTetrahedra;
+	elementStressTensor[0][1]+=stressTensorArray[0][1]/(double)numberTetrahedra;
+	elementStressTensor[0][2]+=stressTensorArray[0][2]/(double)numberTetrahedra;
+	elementStressTensor[1][2]+=stressTensorArray[1][2]/(double)numberTetrahedra;
+	elementStressTensor[1][0]+=stressTensorArray[1][0]/(double)numberTetrahedra;
+	elementStressTensor[2][0]+=stressTensorArray[2][0]/(double)numberTetrahedra;
+	elementStressTensor[2][1]+=stressTensorArray[2][1]/(double)numberTetrahedra;
     }
     /*
      *  Diagonalize and find principal stresses from mean stress tensor for element
