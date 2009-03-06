@@ -224,6 +224,7 @@
 	
 	/* Temporary revert back to old protoype to avoid compilation issues. Need to fix. */
 	int Journal_Firewall( int expression, void* stream, char* fmt, ... );
+	int Journal_OptFirewall( int expression, void* stream, const char* FILE, const char* func, int LINE, char* fmt, ... );
 	
 	#ifdef DEBUG
 		/** Performs a Journal_Firewall() only if DEBUG is defined. */
@@ -233,6 +234,7 @@
 		 * Compilers won't compile if (0) code even without optimisation options
 		 */
 		#define Journal_DFirewall	if (0) Journal_Firewall
+		#define Journal_OFirewall	Journal_OptFirewall
 	#endif
 
 	/** Performs a write() to the given stream.

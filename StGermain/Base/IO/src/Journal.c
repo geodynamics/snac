@@ -587,11 +587,11 @@ int Journal_Firewall( int expression, void* _stream, char* fmt, ... )
 	{
 		va_start( ap, fmt );
 /*
-		Journal_Printf( stream, "Expression: %s\n", expressionText );
-		Journal_Printf( stream, "From File: %s\n", file );
-		Journal_Printf( stream, "     Function: %s\n", func );
-		Journal_Printf( stream, "     Line: %d\n", line );
-*/	
+ 		Journal_Printf( stream, "Expression: %s\n", expressionText );
+ 		Journal_Printf( stream, "From File: %s\n", file ); 
+ 		Journal_Printf( stream, "     Function: %s\n", func );
+ 		Journal_Printf( stream, "     Line: %d\n", line );
+*/
 		result = Stream_Printf( stream, fmt, ap );
 		Stream_Flush( stream );
 
@@ -600,6 +600,62 @@ int Journal_Firewall( int expression, void* _stream, char* fmt, ... )
 	
 	if ( stJournal->firewallProducesAssert == True ) {
 		assert( expression );
+	}
+	else {
+		/* TODO: Don't use FAILURE until Pat beef's up the test scripts to do .error checks
+			exit( EXIT_FAILURE );
+		*/
+
+		// SGI MPI on the ess does not always print out everything before it exits
+		// To ensure all output is displayed before the program quits on firewall, sleep for one second
+		// Alan & Kath 20061006
+		sleep( 1 );
+		if ( nProc == 1 ) {
+			exit(EXIT_SUCCESS);
+		}
+		else {
+			MPI_Abort( MPI_COMM_WORLD, EXIT_SUCCESS );
+		}
+	}
+	
+	return result;	
+}
+
+int Journal_OptFirewall( int expression, void* _stream, const char* file, const char* func, int line, char* fmt,  ... )
+{
+	int result = 0;
+	Stream* stream = (Stream*)_stream;
+	int nProc = 0;
+
+	va_list ap;
+	
+	MPI_Comm_size( MPI_COMM_WORLD, &nProc );
+	
+	if ( expression )
+	{
+		/* Every thing is OK! Back to work as normal */
+		return 0;
+	}
+	
+	Stream_Enable( stream, True ); /* Enforce enabling of stream because we really do want to see this */
+
+	if ( stJournal->enable && Stream_IsEnable( stream ) )
+	{
+		va_start( ap, fmt );
+
+		result = Stream_Printf( stream, fmt, ap );
+		Stream_Flush( stream );
+
+		va_end(ap);
+	}
+	
+	if ( stJournal->firewallProducesAssert == True ) {
+/* 		Journal_Printf( stream, "Expression: %s\n", expressionText ); */
+		Journal_Printf( stream, "From File: %s\n", file );
+		Journal_Printf( stream, "     Function: %s\n", func );
+		Journal_Printf( stream, "     Line: %d\n", line );
+		__assert_fail("expression hidden", file, line, func);
+/* 		assert( expression ); */
 	}
 	else {
 		/* TODO: Don't use FAILURE until Pat beef's up the test scripts to do .error checks
