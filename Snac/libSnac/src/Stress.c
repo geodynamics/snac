@@ -155,6 +155,16 @@ void Snac_Stress( void* context, Element_LocalIndex element_lI ) {
 	element->stress         = 0.5f * sqrt( 0.5f * fabs( -1.0f * sVolAvg + sOtherAvg ) );
 	element->hydroPressure  = pressure;
 
+	/* To catch nan or inf in the stress values even in the optimised mode. */
+	/* In the usual DEBUG mode, the above Journal_DFirewalls are sufficient. */
+	/* -- EChoi 03/06/2009. */
+#ifdef NDEBUG
+	Journal_OFirewall( (!isnan(element->stress) && !isinf(element->stress)),
+					   self->snacError, __FILE__, __func__, __LINE__,
+					   "timeStep=%u rank=%u Element %u: The scalar measure of stress is either nan or infinity", 
+					   self->timeStep, self->rank, element_lI );
+#endif
+
 	/* update density with updated pressure */
 	for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ )
 		element->tetra[tetra_I].density = phsDensity * (1.0 - alpha * (element->tetra[tetra_I].avgTemp-material->reftemp) + beta * pressure);
