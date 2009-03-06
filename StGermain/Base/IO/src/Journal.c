@@ -654,7 +654,7 @@ int Journal_OptFirewall( int expression, void* _stream, const char* file, const 
 		Journal_Printf( stream, "From File: %s\n", file );
 		Journal_Printf( stream, "     Function: %s\n", func );
 		Journal_Printf( stream, "     Line: %d\n", line );
-		__assert_fail("expression hidden", file, line, func);
+		abort();
 /* 		assert( expression ); */
 	}
 	else {
