@@ -922,8 +922,8 @@ void _AbstractContext_Step( Context* context, double dt ) {
 	 * have just synchronised while calculating timestep anyway. */
 	MPI_Barrier( self->communicator );
 	Journal_DPrintf( self->debug, "In: %s\n", __func__ );
-	Journal_Printf( self->info, "TimeStep = %d, Start time = %.6g + %.6g prev timeStep dt\n",
-		self->timeStep, self->currentTime, dt );
+	Journal_Printf( self->info, "r=%d, ts=%d/%d: t=%.6g->+%.6g\n", 
+			self->rank, self->timeStep, self->maxTimeSteps, self->currentTime, self->currentTime+dt );
 
 	if (self->loadFromCheckPoint) {
 		Journal_Printf( self->info, "TimeStep since job restart = %d\n", self->timeStepSinceJobRestart );
