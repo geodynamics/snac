@@ -83,7 +83,7 @@ void SnacHillSlope_Track( void* _context ) {
      */
     if(contextExt->consensusElasticStabilizedFlag || doneTrackingFlag){
 #ifdef DEBUG
-	fprintf(stderr,"c=%d,t=%d/%d: Consensus eqm... bailing at top of Track.c\n",context->rank, 
+	fprintf(stderr,"r=%d, ts=%d/%d: Consensus eqm... bailing at top of Track.c\n",context->rank, 
 		context->timeStep,context->maxTimeSteps);
 #endif
 	return;
@@ -160,7 +160,7 @@ void SnacHillSlope_Track( void* _context ) {
 
 #ifdef DEBUG2
     fprintf(stderr,
-	    "c=%d,t=%d/%d:  reachesTop=%d consensusElasticStabilized=%d  elasticStabilized=%d   startedTracking=%d:  max_vel=%g  unit_vel=%g\n",
+	    "r=%d, ts=%d/%d:  reachesTop=%d consensusElasticStabilized=%d  elasticStabilized=%d   startedTracking=%d:  max_vel=%g  unit_vel=%g\n",
 	    context->rank, context->timeStep, context->maxTimeSteps, reachesTopFlag, 
 	    contextExt->consensusElasticStabilizedFlag, contextExt->elasticStabilizedFlag, contextExt->startedTrackingFlag, 
 	    max_yVelocity, unit_yVelocity ); 
@@ -173,7 +173,7 @@ void SnacHillSlope_Track( void* _context ) {
 	contextExt->startedTrackingFlag = TRUE;
 	contextExt->elasticStabilizedFlag = TRUE;
 #ifdef DEBUG
-	fprintf(stderr,"c=%d,t=%d/%d:  Doesn't reach top\n",context->rank, context->timeStep, context->maxTimeSteps);
+	fprintf(stderr,"r=%d, ts=%d/%d:  Doesn't reach top\n",context->rank, context->timeStep, context->maxTimeSteps);
 #endif
     } else {
 	/*
@@ -187,7 +187,7 @@ void SnacHillSlope_Track( void* _context ) {
 	    contextExt->startedTrackingFlag=TRUE;
 
 #ifdef DEBUG
-	fprintf(stderr,"c=%d,t=%d/%d: Does reach top - check if equilibrating\n",context->rank, context->timeStep, context->maxTimeSteps);
+	fprintf(stderr,"r=%d, ts=%d/%d: Does reach top - check if equilibrating\n",context->rank, context->timeStep, context->maxTimeSteps);
 #endif
 	/*
 	 *  If surface change is slowing and slowly enough, flag that elastic eqm has been reached on this thread
@@ -202,7 +202,7 @@ void SnacHillSlope_Track( void* _context ) {
 		 *  Stabilizing on this thread
 		 */
 #ifdef DEBUG
-		fprintf(stderr,"c=%d,t=%d/%d: Locally report we're equilibrating\n",context->rank, context->timeStep, context->maxTimeSteps);
+		fprintf(stderr,"r=%d, ts=%d/%d: Locally report we're equilibrating\n",context->rank, context->timeStep, context->maxTimeSteps);
 #endif
 		contextExt->elasticStabilizedFlag = TRUE;
 	    }
@@ -212,7 +212,7 @@ void SnacHillSlope_Track( void* _context ) {
      *  Decide whether to stop or to continue simulation
      */
 #ifdef DEBUG
-    fprintf(stderr,"c=%d,t=%d/%d: Checking consensus... %d\n",context->rank, context->timeStep, context->maxTimeSteps,
+    fprintf(stderr,"r=%d, ts=%d/%d: Checking consensus... %d\n",context->rank, context->timeStep, context->maxTimeSteps,
 	    contextExt->consensusElasticStabilizedFlag);
 #endif
     /*
@@ -221,30 +221,32 @@ void SnacHillSlope_Track( void* _context ) {
     MPI_Allreduce( &(contextExt->elasticStabilizedFlag), &(contextExt->consensusElasticStabilizedFlag), 
 		   1, MPI_CHAR, MPI_MIN, context->communicator );
 #ifdef DEBUG
-    fprintf(stderr,"c=%d,t=%d/%d: ... revised consensus=%d\n",context->rank, context->timeStep, context->maxTimeSteps,
+    fprintf(stderr,"r=%d, ts=%d/%d: ... revised consensus=%d\n",context->rank, context->timeStep, context->maxTimeSteps,
 	    contextExt->consensusElasticStabilizedFlag);
 #endif
-    /* 	if(contextExt->startedTrackingFlag  && !doneTrackingFlag ){ */
     /*
-     *  If all threads agree to elastic eqm, and we only want to run to this point, 
-     *    tell the simulation to stop at this time step
+     *  Have we reached elastic eqm?
      */
     if(contextExt->consensusElasticStabilizedFlag) {
-	/*
-	 * Stop the simulation by bringing forward the max time steps to this step.
-	 * In addition, force a dump of this model state by changing dump freq to 1.
-	 */
-	dumpEvery=contextExt->plasticDeformationDumpFreq;
 	if(contextExt->solveElasticEqmOnlyFlag) {
+	    /*
+	     * If solving elastic eqm only, stop the simulation by bringing forward the max time steps to this step.
+	     * In addition, force a dump of this model state by changing dump freq to 1.
+	     */
+	    dumpEvery=1;
 	    maxTimeSteps=context->timeStep+1;
 	    doneTrackingFlag=TRUE;
+	} else {
+	    /*
+	     * Otherwise, change dump frequency to record plastic deformation
+	     */
+	    dumpEvery=contextExt->plasticDeformationDumpFreq;
 	}
 #ifdef DEBUG
-	fprintf(stderr,"c=%d, t=%d/%d: Stopping run at t= %d\n",context->rank, context->timeStep, 
+	fprintf(stderr,"r=%d, ts=%d/%d: Stopping run at t= %d\n",context->rank, context->timeStep, 
 		maxTimeSteps,context->maxTimeSteps);
 #endif
     }
-    /* 	} */
     /*
      *  Ensure that all threads are in agreement
      */
@@ -254,7 +256,7 @@ void SnacHillSlope_Track( void* _context ) {
     }
 
 #ifdef DEBUG
-    fprintf(stderr,"c=%d, t=%d/%d: Exiting Track.c with dumpFreq=%d\n",
+    fprintf(stderr,"r=%d, ts=%d/%d: Exiting Track.c with dumpFreq=%d\n",
 	    context->rank, context->timeStep, context->maxTimeSteps, context->dumpEvery);
 #endif
     /*
