@@ -83,6 +83,9 @@ void _SnacHillSlope_ConstructExtensions( void* _context, void* data ) {
 	contextExt->rngSeed = Dictionary_Entry_Value_AsUnsignedInt(
 		Dictionary_GetDefault( context->dictionary, "rngSeed", 
 				       Dictionary_Entry_Value_FromUnsignedInt( 1 ) ) );
+	contextExt->plasticDeformationDumpFreq = Dictionary_Entry_Value_AsUnsignedInt(
+		Dictionary_GetDefault( context->dictionary, "plasticDeformationDumpFreq", 
+				       Dictionary_Entry_Value_FromUnsignedInt( 100 ) ) );
 
 	contextExt->fractionWeakPoints = Dictionary_Entry_Value_AsDouble(
 		Dictionary_GetDefault( context->dictionary, "fractionWeakPoints", 

@@ -127,8 +127,11 @@ void SnacHillSlope_CreateWeakPoints( void* _context ) {
 
     /*
      *  Bail now if initial elastic equilibrium has not been reached on all threads
+     *
+     *  Also bail if we're solving elastic eqm only
      */
-    if(!contextExt->consensusElasticStabilizedFlag || contextExt->seedingCompletedFlag) return;
+    if(!contextExt->consensusElasticStabilizedFlag || contextExt->seedingCompletedFlag
+       || (contextExt->solveElasticEqmOnlyFlag)) return;
 
     //    fprintf(stderr, "CWP\n");
 
@@ -289,8 +292,8 @@ void SnacHillSlope_CreateWeakPoints( void* _context ) {
 	    /*  Force each of 5*2 tetrahedra to have extra plastic strain to impose lower cohesion indirectly */
 	    for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
 		plasticElement->plasticStrain[tetra_I] =  PlasticStrainFromCohesion(material,(double)contextExt->triggerPointCohesion);
-		if(tetra_I==0) Journal_Printf(context->snacInfo, "timeStep=%d ijkt=%d %d %d %d  setting plasticE=%e\n", context->timeStep,ijk[0],ijk[1],ijk[2], tetra_I,  plasticElement->plasticStrain[tetra_I] );
 #ifdef DEBUG
+		if(tetra_I==0) Journal_Printf(context->snacInfo, "timeStep=%d ijkt=%d %d %d %d  setting plasticE=%e\n", context->timeStep,ijk[0],ijk[1],ijk[2], tetra_I,  plasticElement->plasticStrain[tetra_I] );
 #endif
 	    }
 	}
@@ -371,10 +374,11 @@ PlasticStrainFromCohesion(Snac_Material *material, double cohesion)
  */
 
 void 
-ShellSort(vecPtr,idxPtr,n)
-	unsigned int vecPtr[];              /* Input unsorted data vector (e.g. random numbers) */  /* was double */
-	unsigned int idxPtr[];              /* Input index vector, to be sorted according to vecPtr */
-	unsigned long n;          	    /* Data length */
+ShellSort(
+	unsigned int vecPtr[],              /* Input unsorted data vector (e.g. random numbers) */  /* was double */
+	unsigned int idxPtr[],              /* Input index vector, to be sorted according to vecPtr */
+	unsigned long n          	    /* Data length */
+	)
 {
     unsigned long incr;
     incr=1;

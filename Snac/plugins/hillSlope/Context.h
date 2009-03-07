@@ -48,6 +48,7 @@
 		/* For _SnacHillSlope_Top2BottomSweep condition function */
 		double				slopeAngle;
 		unsigned int			rngSeed;
+		unsigned int			plasticDeformationDumpFreq;
 		double				fractionWeakPoints;
 		double				resolveDepth;
 		double				leftFlatFraction;
