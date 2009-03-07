@@ -1015,6 +1015,13 @@ DeriveStressMeasures(FILE *stressTensorIn, double elementStressTensor[3][3], str
 	float	stressTensorArray[3][3];
 	fread( stressTensorArray, sizeof(float), 9, stressTensorIn );
 	/*
+	 *  Report error and bail if we pick up NaNs in any of the stress components
+	 */
+	if(isnan(stressTensorArray[tetra_I][0][0]) || isnan(stressTensorArray[tetra_I][1][1]) 
+	   || isnan(stressTensorArray[tetra_I][2][2]) || isnan(stressTensorArray[tetra_I][0][1]) 
+	   || isnan(stressTensorArray[tetra_I][0][2]) || isnan(stressTensorArray[tetra_I][1][2])) 
+	    fprintf(stderr,"NaN in stress tensor file\n");
+	/*
 	 *  Build average stress tensor for element by summing tetrahedral tensor components
 	 *   - even though it's symmetric, do for all 9 components in case we pick the wrong ones before diagonalization
 	 */
