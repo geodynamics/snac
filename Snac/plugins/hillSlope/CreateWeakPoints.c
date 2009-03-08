@@ -103,27 +103,6 @@ void SnacHillSlope_CreateWeakPoints( void* _context ) {
     int                         index, index_I,index_J,index_K;
     IJK				ijk;
 
-    /* 	int				restart = 0; */
-    /* 	Dictionary_Entry_Value	 	*pluginsList, *plugin; */
-    /* #ifdef DEBUG */
-    /* 	int imax=0; */
-    /* #endif */
-    /* 	pluginsList = PluginsManager_GetPluginsList( context->dictionary ); */
-    /* 	if (pluginsList) { */
-    /* 		plugin = Dictionary_Entry_Value_GetFirstElement(pluginsList); */
-    /* 		while ( plugin ) { */
-    /* 			if ( 0 == strcmp( Dictionary_Entry_Value_AsString( plugin ), */
-    /* 					  "SnacRestart" ) ) { */
-    /* 				restart = 1; */
-    /* 				break; */
-    /* 			} */
-    /* 			plugin = plugin->next; */
-    /* 		} */
-    /* 	} */
-    /* 	if( restart ) */
-    /* 		return; */
-
-
 
     /*
      *  Bail now if initial elastic equilibrium has not been reached on all threads
@@ -131,7 +110,11 @@ void SnacHillSlope_CreateWeakPoints( void* _context ) {
      *  Also bail if we're solving elastic eqm only
      */
     if(!contextExt->consensusElasticStabilizedFlag || contextExt->seedingCompletedFlag
-       || (contextExt->solveElasticEqmOnlyFlag)) return;
+       || (contextExt->solveElasticEqmOnlyFlag)) {
+/* 	fprintf(stderr,"Bailing from CWP: consensusElasticStabilized=%d, seedingCompletedFlag=%d, solveElasticEqmOnlyFlag=%d\n", */
+/* 		contextExt->consensusElasticStabilizedFlag, contextExt->seedingCompletedFlag, contextExt->solveElasticEqmOnlyFlag); */
+	return;
+    }
 
     //    fprintf(stderr, "CWP\n");
 

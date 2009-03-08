@@ -616,7 +616,7 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 
 
     /* Write out the phase information */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"phase\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Phase\" format=\"ascii\">\n");
     fseek( phaseIn, dumpIteration * elementLocalCount * sizeof(unsigned int), SEEK_SET );
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 	unsigned int		phaseIndex;
@@ -639,7 +639,7 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 
     /* Write out the viscosity information */
     if( doVisc ) {
-	fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"viscosity\" format=\"ascii\">\n");
+	fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Viscosity\" format=\"ascii\">\n");
 	fseek( viscIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET );
 	for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 	    float		viscosity;
@@ -684,11 +684,11 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 
 	/* Start the node section */
 	fprintf( vtkOut1, "    <PPointData>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"velocity\" NumberOfComponents=\"3\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Velocity\" NumberOfComponents=\"3\"/>\n");
 	if( doForce )
-	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"force\" NumberOfComponents=\"3\"/>\n");
+	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Force\" NumberOfComponents=\"3\"/>\n");
 	if( doTemp )
-	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"temperature\"/>\n");
+	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Temperature\"/>\n");
 	fprintf( vtkOut1, "    </PPointData>\n");
 
 	/* Start the element section */
@@ -710,9 +710,9 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 	/*
 	 * ... end CPS mods
 	 */
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"phase\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Phase\"/>\n");
 	if( doVisc )
-	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"viscosity\"/>\n");
+	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Viscosity\"/>\n");
 	fprintf( vtkOut1, "    </PCellData>\n");
 	
 	/* Write out coordinates. */

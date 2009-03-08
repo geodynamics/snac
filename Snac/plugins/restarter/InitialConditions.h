@@ -48,7 +48,7 @@
 
 	void _SnacRestart_resetMinLengthScale( void* _context, void* data );
 	void _SnacRestart_InitialCoords( void* _context, void* data );
-	void _SnacRestart_InitialVelo( void* _context, void* data );
+	void _SnacRestart_InitialVelocities( void* _context, void* data );
 	void _SnacRestart_InitialStress( void* _context, void* data );
 
 #endif /* __SnacRestart_InitialConditions_h__ */

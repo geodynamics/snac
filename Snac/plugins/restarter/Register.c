@@ -41,6 +41,8 @@
 	#define PATH_MAX 1024
 #endif
 
+#define DEBUG
+
 /* Textual name of this class */
 const Type SnacRestart_Type = "SnacRestart";
 
@@ -77,13 +79,16 @@ void _SnacRestart_Construct( void* component, Stg_ComponentFactory* cf, void* da
 	/* Retrieve context. */
 	context = (Snac_Context*)Stg_ComponentFactory_ConstructByName( cf, "context", Snac_Context, True, data ); 
 
-	#ifdef DEBUG
-		printf( "In: _SnacRestart_Register( void* )\n" );
-	#endif
+#ifdef DEBUG
+	printf( "In: _SnacRestart_Register( void* )\n" );
+#endif
 
 	if( context->rank == 0 ) {
 		sprintf( fname, "%s/coord.%d", context->outputPath, context->rank );
-		Journal_Firewall( ( ( fp = fopen( fname, "r") ) == NULL ), context->snacError, "\n\n ###### RESTARTER ERROR ######\n Do NOT restart in %s!!\n All the existing outputs will be overwritten !!\n If absolutely sure, remove the existing outputs first.\n #############################\n\n", context->outputPath );
+		Journal_Firewall( ( ( fp = fopen( fname, "r") ) == NULL ), 
+				  context->snacError, 
+				  "\n\n ###### RESTARTER ERROR ######\n Do NOT restart in %s!!\n All the existing outputs will be overwritten !!\n If absolutely sure, remove the existing outputs first.\n #############################\n\n", 
+				  context->outputPath );
 	}
 
 	EntryPoint_InsertBefore(
@@ -102,7 +107,7 @@ void _SnacRestart_Construct( void* component, Stg_ComponentFactory* cf, void* da
 		Context_GetEntryPoint( context, AbstractContext_EP_Initialise ),
 		"SnacTimeStepZero",
 		SnacRestart_Type,
-		_SnacRestart_InitialVelo,
+		_SnacRestart_InitialVelocities,
 		SnacRestart_Type );
 	EntryPoint_InsertBefore(
 		Context_GetEntryPoint( context, AbstractContext_EP_Initialise ),
@@ -110,4 +115,9 @@ void _SnacRestart_Construct( void* component, Stg_ComponentFactory* cf, void* da
 		SnacRestart_Type,
 		_SnacRestart_InitialStress,
 		SnacRestart_Type );
+
+/* 	_SnacRestart_resetMinLengthScale(context,data); */
+/* 	_SnacRestart_InitialCoords(context,data); */
+/* 	_SnacRestart_InitialVelocities(context,data); */
+/* 	_SnacRestart_InitialStress(context,data); */
 }

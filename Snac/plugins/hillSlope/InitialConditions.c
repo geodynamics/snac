@@ -88,27 +88,29 @@ void _SnacHillSlope_InitialConditions( void* _context, void* data ) {
     const double		smoothFactor = contextExt->rampFlatSmoothFactor;
 
 
-    /* 	int				restart = 0; */
-    /* 	Dictionary_Entry_Value	 	*pluginsList, *plugin; */
-    /* #ifdef DEBUG */
-    /* 	int imax=0; */
-    /* #endif */
-    /* 	pluginsList = PluginsManager_GetPluginsList( context->dictionary ); */
-    /* 	if (pluginsList) { */
-    /* 		plugin = Dictionary_Entry_Value_GetFirstElement(pluginsList); */
-    /* 		while ( plugin ) { */
-    /* 			if ( 0 == strcmp( Dictionary_Entry_Value_AsString( plugin ), */
-    /* 					  "SnacRestart" ) ) { */
-    /* 				restart = 1; */
-    /* 				break; */
-    /* 			} */
-    /* 			plugin = plugin->next; */
-    /* 		} */
-    /* 	} */
-    /* 	if( restart ) */
-    /* 		return; */
+    int				restart = 0;
+    Dictionary_Entry_Value	 	*pluginsList, *plugin;
+#ifdef DEBUG
+    int imax=0;
+#endif
+    pluginsList = PluginsManager_GetPluginsList( context->dictionary );
+    if (pluginsList) {
+	plugin = Dictionary_Entry_Value_GetFirstElement(pluginsList);
+	while ( plugin ) {
+	    if ( 0 == strcmp( Dictionary_Entry_Value_AsString( plugin ),
+			      "SnacRestart" ) ) {
+		restart = 1;
+		break;
+	    }
+	    plugin = plugin->next;
+	}
+    }
+    if( restart ) {
+	fprintf(stderr, "Restarting: thus bailing from hillSlope/InitialConditions.c to avoid overwriting the mesh geometry\n");
+	return;
+    }
 
-
+    
 #ifdef DEBUG
     printf( "In: %s\n", __func__ );
 #endif

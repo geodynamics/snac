@@ -59,6 +59,8 @@
 	#define PATH_MAX 1024
 #endif
 
+#define DEBUG
+
 /* Textual name of this class */
 const Type Snac_Context_Type = "Snac_Context";
 
@@ -895,6 +897,10 @@ void Snac_Context_TimeStepZero( void* context ) {
 	/* if restarting, reset the time step counter */
 	if( self->restartStep > 0 )
 		self->timeStep = self->restartStep;
+
+#ifdef DEBUG
+	fprintf(stderr, "TimeStepZero:  restartStep=%d,  timeStep=%d\n", self->restartStep, self->timeStep);
+#endif
 
 	_Snac_Context_InitDump( self );
 
