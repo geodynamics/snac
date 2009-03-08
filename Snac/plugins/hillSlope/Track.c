@@ -44,8 +44,8 @@
 #define FALSE 0
 #endif
 
-#define DEBUG
-#define DEBUG2
+/* #define DEBUG */
+/* #define DEBUG2 */
 
 void SnacHillSlope_Track( void* _context ) {
     Snac_Context		*context = (Snac_Context*)_context;
@@ -253,10 +253,21 @@ void SnacHillSlope_Track( void* _context ) {
     if(contextExt->consensusElasticStabilizedFlag) {
 	MPI_Allreduce( &(maxTimeSteps), &(context->maxTimeSteps), 1, MPI_INT, MPI_MIN, context->communicator );
 	MPI_Allreduce( &(dumpEvery), &(context->dumpEvery), 1, MPI_INT, MPI_MIN, context->communicator );
+	/*
+	 *  Update dump parameters to ensure that state dumps occur at the revised frequency
+	 */
+	_Snac_Context_AdjustDump( context );
+/* 	if(dumpEvery==1) { */
+/* #ifdef DEBUG */
+/* 	    fprintf(stderr,"Track.c:  trying to dump stress tensor\n"); */
+/* #endif */
+/* 	    _Snac_Context_CalcStresses( context ); */
+/* 	    _Snac_Context_DumpStressTensor( context ); */
+/* 	} */
     }
 
 #ifdef DEBUG
-    fprintf(stderr,"r=%d, ts=%d/%d: Exiting Track.c with dumpFreq=%d\n",
+    fprintf(stderr,"r=%d, ts=%d/%d: Exiting Track.c with dump freq=%d\n",
 	    context->rank, context->timeStep, context->maxTimeSteps, context->dumpEvery);
 #endif
     /*
