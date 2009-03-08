@@ -1268,10 +1268,72 @@ void _Snac_Context_InitDump( Snac_Context* self ) {
 	}
 }
 
+void _Snac_Context_AdjustDump( Snac_Context* self ) {
+	Snac_Mesh* tmpMesh;
+	char tmpBuf[200];
+
+	/* Adjust the strain rate dumping stream */
+	sprintf( tmpBuf, "%s/strainRate.%u", self->outputPath, self->rank );
+	VariableDumpStream_SetVariable(
+		self->strainRateOut,
+		Variable_Register_GetByName( self->variable_Register, "strainRate" ),
+		self->mesh->elementLocalCount,
+		self->dumpEvery,
+		tmpBuf );
+
+	/* Adjust the stress dumping stream */
+	sprintf( tmpBuf, "%s/stress.%u", self->outputPath, self->rank );
+	VariableDumpStream_SetVariable(
+		self->stressOut,
+		Variable_Register_GetByName( self->variable_Register, "stress" ),
+		self->mesh->elementLocalCount,
+		self->dumpEvery,
+		tmpBuf );
+
+	/* Adjust the pressure  dumping stream */
+	sprintf( tmpBuf, "%s/hydroPressure.%u", self->outputPath, self->rank );
+	VariableDumpStream_SetVariable(
+		self->hydroPressureOut,
+		Variable_Register_GetByName( self->variable_Register, "hydroPressure" ),
+		self->mesh->elementLocalCount,
+		self->dumpEvery,
+		tmpBuf );
+
+	/* Adjust the coords dumping stream */
+	sprintf( tmpBuf, "%s/coord.%u", self->outputPath, self->rank );
+	VariableDumpStream_SetVariable(
+		self->coordOut,
+		Variable_Register_GetByName( self->variable_Register, "coord" ),
+		self->mesh->nodeLocalCount,
+		self->dumpEvery,
+		tmpBuf );
+
+	/* Adjust the velocity dumping stream */
+	sprintf( tmpBuf, "%s/vel.%u", self->outputPath, self->rank );
+	VariableDumpStream_SetVariable(
+		self->velOut,
+		Variable_Register_GetByName( self->variable_Register, "velocity" ),
+		self->mesh->nodeLocalCount,
+		self->dumpEvery,
+		tmpBuf );
+
+	/* Adjust the force dumping stream */
+	sprintf( tmpBuf, "%s/force.%u", self->outputPath, self->rank );
+	VariableDumpStream_SetVariable(
+		self->forceOut,
+		Variable_Register_GetByName( self->variable_Register, "force" ),
+		self->mesh->nodeLocalCount,
+		self->dumpEvery,
+		tmpBuf );
+}
+
+
 void _Snac_Context_DumpStressTensor( Snac_Context* self ) {
 
+/*     fprintf(stderr, "Dumping ? stress tensor: ts=%d df=%d\n",self->timeStep,self->dumpEvery); */
 	if( self->timeStep ==0 || (self->timeStep-1) % self->dumpEvery == 0 ) {
 		Element_LocalIndex			element_lI;
+/*     fprintf(stderr, "  ... dumping stress tensor: ts=%d df=%d\n",self->timeStep,self->dumpEvery); */
 
 		for( element_lI = 0; element_lI < self->mesh->elementLocalCount; element_lI++ ) {
 			Snac_Element* 				element = Snac_Element_At( self, element_lI );

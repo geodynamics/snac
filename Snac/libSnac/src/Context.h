@@ -225,6 +225,7 @@
 	void DumpForceCheckSum( Snac_Context* self );
 
 	void _Snac_Context_InitDump( Snac_Context* self );
+	void _Snac_Context_AdjustDump( Snac_Context* self );
 	void _Snac_Context_DumpStressTensor( Snac_Context* self );
 	void _Snac_Context_DumpPhaseIndex( Snac_Context* self );
 
