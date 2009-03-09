@@ -48,11 +48,11 @@ void _SnacRestart_resetMinLengthScale( void* _context, void* data ) {
 	Snac_Context*			context = (Snac_Context*)_context;
 	FILE* fp;
 	char fname[PATH_MAX];
-#ifdef DEBUG
-	fprintf(stderr,"Restarter:  reading min length scale\n");
-#endif
 	sprintf( fname, "%s/snac.minLengthScale.restart", context->outputPath );
-	Journal_Firewall( (fp = fopen( fname, "r" )), "Failed to open %s\n", fname );
+#ifdef DEBUG
+	fprintf(stderr,"Restarter:  reading min length scale from %s\n",fname);
+#endif
+	Journal_Firewall( (fp = fopen( fname, "r" )) != NULL, "Failed to open %s\n", fname );
 	fscanf(fp,"%le",&(context->initMinLengthScale));
 	fclose( fp );
 
@@ -66,11 +66,11 @@ void _SnacRestart_InitialCoords( void* _context, void* data ) {
 
 	Journal_Printf( context->snacInfo, "In: %s\n", __func__ );
 
-#ifdef DEBUG
-	fprintf(stderr,"Restarter:  loading mesh coordinates\n");
-#endif
 	sprintf(path, "%s/snac.coord.%d.%06d.restart",context->outputPath,context->rank,context->restartStep);
-	Journal_Firewall( ( (fp=fopen(path,"r")) != NULL), context->snacError, "Can't find %s - is the parameter \"restartStep\" set correctly in the input xml?\n", path );
+#ifdef DEBUG
+	fprintf(stderr,"Restarter:  loading mesh coordinates from %s for r=%d, ts=%d \n",path,context->rank,context->restartStep);
+#endif
+	Journal_Firewall( (fp = fopen(path,"r")) != NULL, "Can't find %s - is the parameter \"restartStep\" set correctly in the input xml?\n", path);
 
 	/* read in restart file to construct the initial mesh */
 	for( node_lI = 0; node_lI < context->mesh->nodeLocalCount; node_lI++ ) {
@@ -96,11 +96,11 @@ void _SnacRestart_InitialVelocities( void* _context, void* data ) {
 
 	Journal_Printf( context->snacInfo, "In: %s\n", __func__ );
 
-#ifdef DEBUG
-	fprintf(stderr,"Restarter:  loading mesh velocities\n");
-#endif
 	sprintf(path, "%s/snac.vel.%d.%06d.restart",context->outputPath,context->rank,context->restartStep);
-	Journal_Firewall( (fp = fopen(path,"r")) != NULL, "Can't find %s - is the parameter \"restartStep\" set correctly in the input xml?\n", path );
+#ifdef DEBUG
+	fprintf(stderr,"Restarter:  loading mesh velocities from %s for r=%d, ts=%d \n",path,context->rank,context->restartStep);
+#endif
+	Journal_Firewall( (fp = fopen(path,"r")) != NULL, "Can't find %s - is the parameter \"restartStep\" set correctly in the input xml?\n", path);
 
 	/* read in restart file to construct the initial mesh */
 	for( node_lI = 0; node_lI < context->mesh->nodeLocalCount; node_lI++ ) {
@@ -126,8 +126,9 @@ void _SnacRestart_InitialStress( void* _context, void* data ) {
 	Journal_Firewall( (fp = fopen(path,"r")) != NULL, "Can't find %s - is the parameter \"restartStep\" set correctly in the input xml?\n", path );
 
 #ifdef DEBUG
-	fprintf(stderr,"Restarter:  loading stress tensors\n");
+	fprintf(stderr,"Restarter:  loading stress tensors from %s for r=%d, ts=%d \n",path,context->rank,context->restartStep);
 #endif
+
 	/* read in restart file to assign initial stress field. */
 	for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
 		Snac_Element*			element = Snac_Element_At( context, element_lI );

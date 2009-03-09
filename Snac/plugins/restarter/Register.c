@@ -91,6 +91,12 @@ void _SnacRestart_Construct( void* component, Stg_ComponentFactory* cf, void* da
 				  context->outputPath );
 	}
 
+	/*
+	 *  Shift the time step range to start from the restart time step
+	 */
+	context->timeStep += context->restartStep;
+	context->maxTimeSteps += context->restartStep;
+
 	EntryPoint_InsertBefore(
 		Context_GetEntryPoint( context, AbstractContext_EP_Initialise ),
 		"SnacTimeStepZero",
