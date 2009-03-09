@@ -44,8 +44,10 @@
 #define FALSE 0
 #endif
 
-/* #define DEBUG */
-/* #define DEBUG2 */
+//#define DEBUG
+//#define DEBUG2
+//#define DEBUG3
+#define DEBUG4
 
 void SnacHillSlope_Track( void* _context ) {
     Snac_Context		*context = (Snac_Context*)_context;
@@ -73,6 +75,8 @@ void SnacHillSlope_Track( void* _context ) {
     const double		startThreshold=(contextExt->startThreshold>=0.0 ? contextExt->startThreshold : 1e-2);
     const double		stopThreshold=(contextExt->stopThreshold>=0.0 ? contextExt->stopThreshold : 1e-3);
     int				maxTimeSteps=context->maxTimeSteps, dumpEvery=context->dumpEvery;
+    int				restart = FALSE;
+    Dictionary_Entry_Value 	*pluginsList, *plugin;
 
     /* 	if (context->timeStep % context->dumpEvery == 0) { */
     /* 	    Journal_Printf( context->snacInfo,"timeStep=%d (in track)\n", context->timeStep ); */
@@ -82,17 +86,39 @@ void SnacHillSlope_Track( void* _context ) {
      *  Bail now if all threads have reached elastic equilibrium
      */
     if(contextExt->consensusElasticStabilizedFlag || doneTrackingFlag){
-#ifdef DEBUG
+#ifdef DEBUG3
 	fprintf(stderr,"r=%d, ts=%d/%d: Consensus eqm... bailing at top of Track.c\n",context->rank, 
 		context->timeStep,context->maxTimeSteps);
 #endif
 	return;
     }
 
+    pluginsList = PluginsManager_GetPluginsList( context->dictionary );
+    if (pluginsList) {
+	plugin = Dictionary_Entry_Value_GetFirstElement(pluginsList);
+	while ( plugin ) {
+	    if ( 0 == strcmp( Dictionary_Entry_Value_AsString( plugin ),
+			      "SnacRestart" ) ) {
+		restart = TRUE;
+		break;
+	    }
+	    plugin = plugin->next;
+	}
+    }
+/*     if( restart ) { */
+/* 	fprintf(stderr, "Restarting: in Track.c with ts=%d, restart ts=%d\n", context->timeStep, context->restartStep); */
+/* 	return; */
+/*     } */
+
+/*     restart=FALSE; */
+
     /*
      *  Set up a tracking grids (slices of mesh) to allow t instance to be compared with t-1, t-2 instances
      */
-    if(context->timeStep==1) {
+    if(context->timeStep==1 || (restart && (context->timeStep-context->restartStep)==1)) {
+#ifdef DEBUG4
+    fprintf(stderr,"Tracking:  creating surface grid record: %d\n",context->timeStep-context->restartStep);
+#endif
 	yGridOldPtr=(double *)malloc((size_t)(full_I_node_range*full_K_node_range*sizeof(double)));
 	yGridOlderPtr=(double *)malloc((size_t)(full_I_node_range*full_K_node_range*sizeof(double)));
 	for(index_I = 0; index_I < full_I_node_range; index_I++) {
@@ -144,7 +170,7 @@ void SnacHillSlope_Track( void* _context ) {
 	     */
 	    node_yVelocity = node_yElevation-*tmp_yGridOldPtr;
 	    node_yAcceln = node_yVelocity-(*tmp_yGridOldPtr-*tmp_yGridOlderPtr);
-	    if(context->timeStep>=3){
+	    if(context->timeStep>=3 || (restart && (context->timeStep-context->restartStep)>=3)){
 		if(fabs(node_yVelocity)>max_yVelocity)
 		    max_yVelocity = fabs(node_yVelocity);
 		if(fabs(node_yAcceln)>max_yAcceln)
@@ -160,9 +186,9 @@ void SnacHillSlope_Track( void* _context ) {
 
 #ifdef DEBUG2
     fprintf(stderr,
-	    "r=%d, ts=%d/%d:  reachesTop=%d consensusElasticStabilized=%d  elasticStabilized=%d   startedTracking=%d:  max_vel=%g  unit_vel=%g\n",
+	    "r=%d, ts=%d/%d:    top?=%d  tracking?=%d  eqm?=%d  consensus?=%d:  max_vel=%g  unit_vel=%g\n",
 	    context->rank, context->timeStep, context->maxTimeSteps, reachesTopFlag, 
-	    contextExt->consensusElasticStabilizedFlag, contextExt->elasticStabilizedFlag, contextExt->startedTrackingFlag, 
+	    contextExt->startedTrackingFlag, contextExt->elasticStabilizedFlag, contextExt->consensusElasticStabilizedFlag, 
 	    max_yVelocity, unit_yVelocity ); 
 #endif
 
@@ -179,15 +205,17 @@ void SnacHillSlope_Track( void* _context ) {
 	/*
 	 * Now deprecated: estimate unit rates of motion for later comparison with falling rates
 	 */
-	if(unit_yVelocity==0.0 && max_yVelocity>0.0)
-	    unit_yVelocity = max_yVelocity;		
-	if(unit_yAcceln==0.0 && max_yAcceln>0.0)
-	    unit_yAcceln = max_yAcceln;	
-	if(!contextExt->startedTrackingFlag && max_yVelocity>=unit_yVelocity && context->timeStep>=4) 
+/* 	if(unit_yVelocity==0.0 && max_yVelocity>0.0) */
+/* 	    unit_yVelocity = max_yVelocity;		 */
+/* 	if(unit_yAcceln==0.0 && max_yAcceln>0.0) */
+/* 	    unit_yAcceln = max_yAcceln;	 */
+	if( !contextExt->startedTrackingFlag && max_yVelocity>=startThreshold
+	    && (context->timeStep>=4  || (restart && (context->timeStep-context->restartStep)>=4)) ) 
 	    contextExt->startedTrackingFlag=TRUE;
 
 #ifdef DEBUG
-	fprintf(stderr,"r=%d, ts=%d/%d: Does reach top - check if equilibrating\n",context->rank, context->timeStep, context->maxTimeSteps);
+	fprintf(stderr,"r=%d, ts=%d/%d: Does reach top - check if equilibrating: unit_vel=%g\n",
+		context->rank, context->timeStep, context->maxTimeSteps, unit_yVelocity);
 #endif
 	/*
 	 *  If surface change is slowing and slowly enough, flag that elastic eqm has been reached on this thread
@@ -197,7 +225,8 @@ void SnacHillSlope_Track( void* _context ) {
 	    /* 	    if(CheckStabilizingFn(max_yVelocity/unit_yVelocity, max_yAcceln/unit_yAcceln, stopThreshold, fallingFlag)==TRUE */
 	    if( !contextExt->elasticStabilizedFlag
 		&& CheckStabilizingFn(max_yVelocity, max_yAcceln, stopThreshold, fallingFlag)==TRUE
-		&& context->maxTimeSteps!=context->timeStep ) {
+		&& (context->maxTimeSteps!=context->timeStep  
+		    || (restart && (context->maxTimeSteps!=(context->timeStep-context->restartStep)) )) ) {
 		/*
 		 *  Stabilizing on this thread
 		 */
@@ -212,8 +241,8 @@ void SnacHillSlope_Track( void* _context ) {
      *  Decide whether to stop or to continue simulation
      */
 #ifdef DEBUG
-    fprintf(stderr,"r=%d, ts=%d/%d: Checking consensus... %d\n",context->rank, context->timeStep, context->maxTimeSteps,
-	    contextExt->consensusElasticStabilizedFlag);
+    fprintf(stderr,"r=%d, ts=%d/%d: Checking consensus... local=%d, global=%d\n",context->rank, context->timeStep, context->maxTimeSteps,
+	    contextExt->elasticStabilizedFlag,contextExt->consensusElasticStabilizedFlag);
 #endif
     /*
      *  Check all threads to see if global equilibration has been reached
@@ -221,7 +250,7 @@ void SnacHillSlope_Track( void* _context ) {
     MPI_Allreduce( &(contextExt->elasticStabilizedFlag), &(contextExt->consensusElasticStabilizedFlag), 
 		   1, MPI_CHAR, MPI_MIN, context->communicator );
 #ifdef DEBUG
-    fprintf(stderr,"r=%d, ts=%d/%d: ... revised consensus=%d\n",context->rank, context->timeStep, context->maxTimeSteps,
+    fprintf(stderr,"r=%d, ts=%d/%d: ... revised consensus, global=%d\n",context->rank, context->timeStep, context->maxTimeSteps,
 	    contextExt->consensusElasticStabilizedFlag);
 #endif
     /*
@@ -234,7 +263,7 @@ void SnacHillSlope_Track( void* _context ) {
 	     * In addition, force a dump of this model state by changing dump freq to 1.
 	     */
 	    dumpEvery=1;
-	    maxTimeSteps=context->timeStep+1;
+	    maxTimeSteps=(!restart ? context->timeStep+1 : context->timeStep- context->restartStep+1);
 	    doneTrackingFlag=TRUE;
 	} else {
 	    /*
@@ -242,9 +271,9 @@ void SnacHillSlope_Track( void* _context ) {
 	     */
 	    dumpEvery=contextExt->plasticDeformationDumpFreq;
 	}
-#ifdef DEBUG
-	fprintf(stderr,"r=%d, ts=%d/%d: Stopping run at t= %d\n",context->rank, context->timeStep, 
-		maxTimeSteps,context->maxTimeSteps);
+#ifdef DEBUG4
+	fprintf(stderr,"r=%d, ts=%d/%d: Stopping run at t=%d\n",context->rank, context->timeStep, 
+		context->maxTimeSteps, maxTimeSteps);
 #endif
     }
     /*

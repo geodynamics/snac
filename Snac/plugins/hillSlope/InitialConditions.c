@@ -57,8 +57,15 @@
 	#define PATH_MAX 1024
 #endif
 
+#ifndef TRUE
+#define TRUE 1
+#endif
+#ifndef FALSE
+#define FALSE 0
+#endif
 
-//#define DEBUG
+
+#define DEBUG
 
 void _SnacHillSlope_InitialConditions( void* _context, void* data ) {
     Snac_Context		*context = (Snac_Context*)_context;
@@ -87,19 +94,19 @@ void _SnacHillSlope_InitialConditions( void* _context, void* data ) {
 										  1.0 : contextExt->rightFlatFraction));
     const double		smoothFactor = contextExt->rampFlatSmoothFactor;
 
-
-    int				restart = 0;
-    Dictionary_Entry_Value	 	*pluginsList, *plugin;
+    int				restart = FALSE;
+    Dictionary_Entry_Value 	*pluginsList, *plugin;
 #ifdef DEBUG
     int imax=0;
 #endif
+
     pluginsList = PluginsManager_GetPluginsList( context->dictionary );
     if (pluginsList) {
 	plugin = Dictionary_Entry_Value_GetFirstElement(pluginsList);
 	while ( plugin ) {
 	    if ( 0 == strcmp( Dictionary_Entry_Value_AsString( plugin ),
 			      "SnacRestart" ) ) {
-		restart = 1;
+		restart = TRUE;
 		break;
 	    }
 	    plugin = plugin->next;

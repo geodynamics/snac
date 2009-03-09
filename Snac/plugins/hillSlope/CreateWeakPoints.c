@@ -111,8 +111,10 @@ void SnacHillSlope_CreateWeakPoints( void* _context ) {
      */
     if(!contextExt->consensusElasticStabilizedFlag || contextExt->seedingCompletedFlag
        || (contextExt->solveElasticEqmOnlyFlag)) {
-/* 	fprintf(stderr,"Bailing from CWP: consensusElasticStabilized=%d, seedingCompletedFlag=%d, solveElasticEqmOnlyFlag=%d\n", */
-/* 		contextExt->consensusElasticStabilizedFlag, contextExt->seedingCompletedFlag, contextExt->solveElasticEqmOnlyFlag); */
+#ifdef DEBUG
+	fprintf(stderr,"Bailing from CWP: consensusElasticStabilized=%d, seedingCompletedFlag=%d, solveElasticEqmOnlyFlag=%d\n",
+		contextExt->consensusElasticStabilizedFlag, contextExt->seedingCompletedFlag, contextExt->solveElasticEqmOnlyFlag);
+#endif
 	return;
     }
 
