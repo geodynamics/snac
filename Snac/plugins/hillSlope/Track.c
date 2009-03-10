@@ -45,8 +45,8 @@
 #endif
 
 //#define DEBUG
-//#define DEBUG2
-//#define DEBUG3
+#define DEBUG2
+#define DEBUG3
 #define DEBUG4
 
 void SnacHillSlope_Track( void* _context ) {
@@ -257,24 +257,32 @@ void SnacHillSlope_Track( void* _context ) {
      *  Have we reached elastic eqm?
      */
     if(contextExt->consensusElasticStabilizedFlag) {
+#ifdef DEBUG4
+	fprintf(stderr,"r=%d, ts=%d/%d: Global elastic eqm has been reached\n",
+		context->rank, context->timeStep, context->maxTimeSteps);
+#endif
 	if(contextExt->solveElasticEqmOnlyFlag) {
 	    /*
 	     * If solving elastic eqm only, stop the simulation by bringing forward the max time steps to this step.
 	     * In addition, force a dump of this model state by changing dump freq to 1.
 	     */
 	    dumpEvery=1;
-	    maxTimeSteps=(!restart ? context->timeStep+1 : context->timeStep- context->restartStep+1);
+	    maxTimeSteps=(!restart ? context->timeStep+1 : context->timeStep-context->restartStep+1);
 	    doneTrackingFlag=TRUE;
+#ifdef DEBUG4
+	fprintf(stderr,"r=%d, ts=%d/%d: Shifting to elastoplastic simulation at step=%d\n",context->rank, context->timeStep, 
+		context->maxTimeSteps, maxTimeSteps);
+#endif
 	} else {
 	    /*
 	     * Otherwise, change dump frequency to record plastic deformation
 	     */
 	    dumpEvery=contextExt->plasticDeformationDumpFreq;
-	}
 #ifdef DEBUG4
-	fprintf(stderr,"r=%d, ts=%d/%d: Stopping run at t=%d\n",context->rank, context->timeStep, 
+	fprintf(stderr,"r=%d, ts=%d/%d: Terminating simulation at step=%d\n",context->rank, context->timeStep, 
 		context->maxTimeSteps, maxTimeSteps);
 #endif
+	}
     }
     /*
      *  Ensure that all threads are in agreement

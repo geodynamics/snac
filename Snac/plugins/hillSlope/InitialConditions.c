@@ -65,7 +65,7 @@
 #endif
 
 
-#define DEBUG
+//#define DEBUG
 
 void _SnacHillSlope_InitialConditions( void* _context, void* data ) {
     Snac_Context		*context = (Snac_Context*)_context;

@@ -93,9 +93,11 @@ void _SnacRestart_Construct( void* component, Stg_ComponentFactory* cf, void* da
 
 	/*
 	 *  Shift the time step range to start from the restart time step
+	 *    - this doesn't seem to work since the changes don't appear to propagate into StGermain
+	 *     far enough to cause the maxTimeSteps to stop the simulation when desired
 	 */
-	context->timeStep += context->restartStep;
-	context->maxTimeSteps += context->restartStep;
+/* 	context->timeStep += context->restartStep; */
+/* 	context->maxTimeSteps += context->restartStep; */
 
 	EntryPoint_InsertBefore(
 		Context_GetEntryPoint( context, AbstractContext_EP_Initialise ),
