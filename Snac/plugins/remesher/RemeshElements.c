@@ -455,24 +455,9 @@ void _SnacRemesher_InterpolateElement( void*				_context,
 								     dstEltInd );
 	Snac_Element*	srcElt = Snac_Element_At( context, srcEltInd );
 
-	memcpy( dstElt, srcElt, 
-		ExtensionManager_GetFinalSize( mesh->elementExtensionMgr ) );
+	/* Copy the whole structure from the nearest tet in the old mesh. */
+	memcpy( &(dstElt->tetra[dstTetInd]), &(srcElt->tetra[srcTetInd]), sizeof(Snac_Element_Tetrahedra) );
 
-#if 0
-	dstElt->tetra[srcTetInd].strain[0][0] = srcElt->tetra[srcTetInd].strain[0][0];
-	dstElt->tetra[srcTetInd].strain[1][1] = srcElt->tetra[srcTetInd].strain[1][1];
-	dstElt->tetra[srcTetInd].strain[2][2] = srcElt->tetra[srcTetInd].strain[2][2];
-	dstElt->tetra[srcTetInd].strain[0][1] = srcElt->tetra[srcTetInd].strain[0][1];
-	dstElt->tetra[srcTetInd].strain[0][2] = srcElt->tetra[srcTetInd].strain[0][2];
-	dstElt->tetra[srcTetInd].strain[1][2] = srcElt->tetra[srcTetInd].strain[1][2];
-
-	dstElt->tetraStress[srcTetInd][0][0] = srcElt->tetraStress[srcTetInd][0][0];
-	dstElt->tetraStress[srcTetInd][1][1] = srcElt->tetraStress[srcTetInd][1][1];
-	dstElt->tetraStress[srcTetInd][2][2] = srcElt->tetraStress[srcTetInd][2][2];
-	dstElt->tetraStress[srcTetInd][0][1] = srcElt->tetraStress[srcTetInd][0][1];
-	dstElt->tetraStress[srcTetInd][0][2] = srcElt->tetraStress[srcTetInd][0][2];
-	dstElt->tetraStress[srcTetInd][1][2] = srcElt->tetraStress[srcTetInd][1][2];
-#endif
 }
 
 
