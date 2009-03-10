@@ -1189,6 +1189,10 @@ void _Snac_Context_Sync( void* context ) {
 	Stream_Flush( self->coordOut );
 	Stream_Flush( self->velOut );
 	Stream_Flush( self->forceOut );
+	fflush(	self->stressTensorOut );
+	fflush(	self->phaseIndexOut );
+	fflush( NULL );
+
 }
 
 
@@ -1336,23 +1340,23 @@ void _Snac_Context_AdjustDump( Snac_Context* self ) {
 
 void _Snac_Context_DumpStressTensor( Snac_Context* self ) {
 
-/*     fprintf(stderr, "Dumping ? stress tensor: ts=%d df=%d\n",self->timeStep,self->dumpEvery); */
-	if( self->timeStep ==0 || (self->timeStep-1) % self->dumpEvery == 0 ) {
-		Element_LocalIndex			element_lI;
-/*     fprintf(stderr, "  ... dumping stress tensor: ts=%d df=%d\n",self->timeStep,self->dumpEvery); */
+    /*     fprintf(stderr, "Dumping ? stress tensor: ts=%d df=%d\n",self->timeStep,self->dumpEvery); */
+    if( self->timeStep ==0 || (self->timeStep-1) % self->dumpEvery == 0 ) {
+	Element_LocalIndex			element_lI;
+	fprintf(stderr, "r=%d, ts=%d/%d:  Dumping stress tensor with df=%d\n", self->rank, self->timeStep, self->maxTimeSteps,self->dumpEvery); 
 
-		for( element_lI = 0; element_lI < self->mesh->elementLocalCount; element_lI++ ) {
-			Snac_Element* 				element = Snac_Element_At( self, element_lI );
-			/* Take average of tetra viscosity for the element */
-			Tetrahedra_Index		tetra_I;
-			for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
-				float tensor[3][3] = { {element->tetra[tetra_I].stress[0][0], element->tetra[tetra_I].stress[0][1], element->tetra[tetra_I].stress[0][2]},
-									   {element->tetra[tetra_I].stress[0][1], element->tetra[tetra_I].stress[1][1], element->tetra[tetra_I].stress[1][2]},
-									   {element->tetra[tetra_I].stress[0][2], element->tetra[tetra_I].stress[1][2], element->tetra[tetra_I].stress[2][2]} };
-				fwrite( &tensor, sizeof(float), 9, self->stressTensorOut );
-			}
-		}
+	for( element_lI = 0; element_lI < self->mesh->elementLocalCount; element_lI++ ) {
+	    Snac_Element* 				element = Snac_Element_At( self, element_lI );
+	    /* Take average of tetra viscosity for the element */
+	    Tetrahedra_Index		tetra_I;
+	    for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
+		float tensor[3][3] = { {element->tetra[tetra_I].stress[0][0], element->tetra[tetra_I].stress[0][1], element->tetra[tetra_I].stress[0][2]},
+				       {element->tetra[tetra_I].stress[0][1], element->tetra[tetra_I].stress[1][1], element->tetra[tetra_I].stress[1][2]},
+				       {element->tetra[tetra_I].stress[0][2], element->tetra[tetra_I].stress[1][2], element->tetra[tetra_I].stress[2][2]} };
+		fwrite( &tensor, sizeof(float), 9, self->stressTensorOut );
+	    }
 	}
+    }
 }
 
 void _Snac_Context_DumpPhaseIndex( Snac_Context* self ) {
