@@ -45,8 +45,8 @@
 #endif
 
 //#define DEBUG
-#define DEBUG2
-#define DEBUG3
+//#define DEBUG2
+//#define DEBUG3
 #define DEBUG4
 
 void SnacHillSlope_Track( void* _context ) {
@@ -270,7 +270,7 @@ void SnacHillSlope_Track( void* _context ) {
 	    maxTimeSteps=(!restart ? context->timeStep+1 : context->timeStep-context->restartStep+1);
 	    doneTrackingFlag=TRUE;
 #ifdef DEBUG4
-	fprintf(stderr,"r=%d, ts=%d/%d: Shifting to elastoplastic simulation at step=%d\n",context->rank, context->timeStep, 
+	fprintf(stderr,"r=%d, ts=%d/%d: Terminating simulation at step=%d\n",context->rank, context->timeStep, 
 		context->maxTimeSteps, maxTimeSteps);
 #endif
 	} else {
@@ -279,8 +279,8 @@ void SnacHillSlope_Track( void* _context ) {
 	     */
 	    dumpEvery=contextExt->plasticDeformationDumpFreq;
 #ifdef DEBUG4
-	fprintf(stderr,"r=%d, ts=%d/%d: Terminating simulation at step=%d\n",context->rank, context->timeStep, 
-		context->maxTimeSteps, maxTimeSteps);
+	fprintf(stderr,"r=%d, ts=%d/%d: Shifting to elastoplastic simulation at step=%d for %d more steps\n",context->rank, context->timeStep, 
+		context->maxTimeSteps, context->timeStep, maxTimeSteps-(context->timeStep-context->restartStep));
 #endif
 	}
     }
