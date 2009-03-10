@@ -190,7 +190,7 @@ void SnacHillSlope_CreateWeakPoints( void* _context ) {
 	 *    - i.e., randomize the index list
 	 */
 	ShellSort( randomNumberListPtr, shuffleIndexListPtr, numberSubDomainPoints );
-#ifdef DEBUG
+#ifdef DEBUG2
 	for(index = 0; index < numberSubDomainPoints; index++) {
 	    Journal_Printf( context->snacInfo, "\t Subdomain point #%d = %d, RNG var=%d\n", 
 			    index, shuffleIndexListPtr[index],randomNumberListPtr[index] );
@@ -208,7 +208,7 @@ void SnacHillSlope_CreateWeakPoints( void* _context ) {
 	for(index = 0; index < numberWeakPoints; index++) {
 	    element_lI = shuffleIndexListPtr[index];
 
-#ifdef DEBUG
+#ifdef DEBUG2
 	    Journal_Printf(context->snacInfo,  "Shuffled weak point # %d  -> %d \n", index,  element_lI);
 #endif
 	    
@@ -226,7 +226,7 @@ void SnacHillSlope_CreateWeakPoints( void* _context ) {
 		plasticElement = ExtensionManager_Get(  mesh->elementExtensionMgr, element, SnacPlastic_ElementHandle );
 		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
 		    plasticElement->plasticStrain[tetra_I] = PlasticStrainFromCohesion(material,(double)contextExt->weakPointCohesion);
-#ifdef DEBUG		    
+#ifdef DEBUG2	    
 		    if(tetra_I==0) Journal_Printf( context->snacInfo,"timeStep=%d et=%d %d  plasticE:  %e -> %e\n",context->timeStep, element_lI, tetra_I, material->plstrain[1], plasticElement->plasticStrain[tetra_I] );
 #endif
 
