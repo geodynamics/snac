@@ -123,8 +123,9 @@ void _SnacRemesher_InterpolateElements( void* _context ) {
 			unsigned				nElements;
 			Element_DomainIndex*	elements;
 			unsigned				elt_i;
-			double minTetDist, minDist;
-			unsigned minTetInd, minEltInd;
+			double minTetDist=1.0e+32;
+			double minDist=1.0e+32;
+			unsigned TetInd, minTetInd, minEltInd;
 			
 			/* Extract the tetrahedron's coordinates. */
 			Vector_Set( tetCrds[0], meshExt->newNodeCoords[eltNodes[TetraToNode[tet_i][0]]] );
@@ -159,17 +160,18 @@ void _SnacRemesher_InterpolateElements( void* _context ) {
 				elements[elt_i] = Mesh_ElementMapGlobalToDomain( mesh, elements[elt_i] );
 			}
 			
-			minDist = 1.0e+21;
 			for( elt_i = 0; elt_i < nElements; elt_i++ ) {
 				if( elements[elt_i] >= context->mesh->elementDomainCount )
 					continue;
 
-				findClosestTet( context, newElt_i, tet_i, bc, elements[elt_i], &minTetInd, &minTetDist );
+				findClosestTet( context, newElt_i, tet_i, bc, elements[elt_i], &TetInd, &minTetDist );
 				if( minTetDist < minDist ) {
 					minDist = minTetDist;
 					minEltInd = elements[elt_i];
+					minTetInd = TetInd;
 				}
 			}
+
 			/* Interpolate the element's tetrahedra. */
 			SnacRemesher_InterpolateElement( context, contextExt, 
 							 newElt_i, tet_i, 
