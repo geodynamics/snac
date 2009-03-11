@@ -75,6 +75,7 @@
 		Bool                computeThermalStress; \
 		Index               restartStep; \
 		\
+		\
 		double				topo_kappa; \
 		double				topoGradMax; \
 		double				topoGradCriterion; \
@@ -130,7 +131,12 @@
 		EntryPoint_Index		loopElementsMomentumK;\
 		EntryPoint_Index		updateElementK; \
 		EntryPoint_Index		loopNodesEnergyK; \
-		EntryPoint_Index		loopElementsEnergyK;
+		EntryPoint_Index		loopElementsEnergyK; \
+		/* Should this type by Index? */ \
+		Index				numProcX; \
+		Index				numProcY; \
+		Index				numProcZ; 
+
 
 	struct _Snac_Context { __Snac_Context };
 

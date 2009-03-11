@@ -210,6 +210,11 @@ void _Snac_Context_Init( Snac_Context* self ) {
 	Dictionary*		velocityBCsDict;
 	char*			tmpStr;
 
+/* 	Mesh*           	mesh = self->mesh; */
+/* 	MeshLayout*		layout = (MeshLayout*)self->layout; */
+/* 	HexaMD*			decomp = (HexaMD*)self->decomp; */
+	
+
 	/* Building StGermain Variables of nodal quantities... we must the "complex" constructor for Variable... the
 	 * info needs to be wrapped this generic way... */
 	Index			nodeOffsetCount = 8;
@@ -337,10 +342,32 @@ void _Snac_Context_Init( Snac_Context* self ) {
 	self->gravity = 0.0f;
 	self->demf = 0.0f;
 
+
 	/* What method are we using to calculate forces? */
 	/* "Complete" type should be always used unless there is a really good reason to use others. */
 	self->forceCalcType = Snac_Force_Complete;
 	Journal_Printf( self->info, "\"forceCalcType\" set by Dictionary to \"complete\"\n" );
+
+	/*
+	 *  Record the number of "processors" in each direction in parallelized runs
+	 *    - This info is routinely required by snac2vtk for postprocessing but has had to be hand-calculated
+	 *      by the user from the numbers recorded in sim.x and in the original input xml.
+	 *      Addition of these variables will enforce reporting of the processor geometry and speed postprocessing.
+	 */
+	self->numProcX = Dictionary_Entry_Value_AsUnsignedInt(
+		Dictionary_GetDefault( self->dictionary, "numProcX", 
+		  Dictionary_Entry_Value_FromUnsignedInt( ((HexaMD*)self->mesh->layout->decomp)->partition3DCounts[0] ) ) );
+	self->numProcY = Dictionary_Entry_Value_AsUnsignedInt(
+		Dictionary_GetDefault( self->dictionary, "numProcY", 
+		  Dictionary_Entry_Value_FromUnsignedInt( ((HexaMD*)self->mesh->layout->decomp)->partition3DCounts[1] ) ) );
+	self->numProcZ = Dictionary_Entry_Value_AsUnsignedInt(
+		Dictionary_GetDefault( self->dictionary, "numProcZ", 
+		  Dictionary_Entry_Value_FromUnsignedInt( ((HexaMD*)self->mesh->layout->decomp)->partition3DCounts[2] ) ) );
+
+	Journal_Printf( self->info, "\nParallel processing geometry:  nX=%d  nY=%d  nZ=%d\n\n",
+			self->numProcX,self->numProcY,self->numProcZ );
+	
+
 
 	/* Add initial condition managers */
 	nodeICsDict = Dictionary_Entry_Value_AsDictionary( Dictionary_Get( self->dictionary, "nodeICs" ) );
@@ -833,7 +860,7 @@ void printMaterial_Properties( void* _context, int phaseI )
 	Snac_Context* self = (Snac_Context*)_context;
 	int             nseg;
 
-	Journal_Printf( self->snacInfo, "For Material %d:\n",phaseI );
+	Journal_Printf( self->snacInfo, "\nFor Material %d:\n",phaseI );
 
 	Journal_Printf( self->snacInfo, "\trheology = %d\n", self->materialProperty[phaseI].rheology );
 
@@ -1343,7 +1370,7 @@ void _Snac_Context_DumpStressTensor( Snac_Context* self ) {
     /*     fprintf(stderr, "Dumping ? stress tensor: ts=%d df=%d\n",self->timeStep,self->dumpEvery); */
     if( self->timeStep ==0 || (self->timeStep-1) % self->dumpEvery == 0 ) {
 	Element_LocalIndex			element_lI;
-	fprintf(stderr, "r=%d, ts=%d/%d:  Dumping stress tensor with df=%d\n", self->rank, self->timeStep, self->maxTimeSteps,self->dumpEvery); 
+	fprintf(stderr, "r=%d, ts=%d/%d: Dumping stress tensor given dump freq=%d\n", self->rank, self->timeStep, self->maxTimeSteps,self->dumpEvery); 
 
 	for( element_lI = 0; element_lI < self->mesh->elementLocalCount; element_lI++ ) {
 	    Snac_Element* 				element = Snac_Element_At( self, element_lI );
