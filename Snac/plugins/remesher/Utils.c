@@ -73,16 +73,21 @@ Node_DomainIndex findClosestNode( void* _context, Coord point, Node_LocalIndex r
 			nNbrs = Topology_NeighbourCount( nodeTopo, gNodeInd );
 			if( nNbrs ) {
 				nbrs = Memory_Alloc_Array( Node_DomainIndex, nNbrs, "SnacRemesher" );
+#if 0
 				Topology_BuildNeighbours( nodeTopo, curNode, nbrs );
+#endif		
 			}
 			else {
 				nbrs = NULL;
 			}
 		}
-		
+
 		/* Convert neighbours to domain indices. */
 		for( nbr_i = 0; nbr_i < nNbrs; nbr_i++ ) {
-			nbrs[nbr_i] = Mesh_NodeMapGlobalToDomain( mesh, nbrs[nbr_i] );
+#if 0
+ 			nbrs[nbr_i] = Mesh_NodeMapGlobalToDomain( mesh, nbrs[nbr_i] ); 
+#endif
+			nbrs[nbr_i] = mesh->nodeNeighbourTbl[curNode][nbr_i];
 		}
 		
 		/* Get the distance to the current node. */
