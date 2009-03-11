@@ -35,10 +35,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-/*
- * CPS mods start ...
- */
 #include <math.h>
+#include <assert.h>
 #ifndef PI
 	#ifndef M_PIl
 		#ifndef M_PI
@@ -50,10 +48,6 @@
 		#define PI M_PIl
 	#endif
 #endif
-/*
- * ... end CPS mods
- */
-#include <assert.h>
 
 #include <limits.h>
 #ifndef PATH_MAX
@@ -61,9 +55,6 @@
 #endif
 
 
-/*
- * CPS mods start ...
- */
 #define ROTATE(a,i,j,k,l) g=a[i][j];h=a[k][l];a[i][j]=g-s*(h+g*tau);\
     a[k][l]=h+s*(g-h*tau);
 
@@ -75,18 +66,11 @@
 
 //#define DEBUG
 
-/*
- * ... end CPS mods
- */
-
 
 
 void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTimeStep, double time, int gnode[3], int rank_array[3], 
 		      const int rankI, const int rankJ, const int rankK );
 
-/*
- * CPS mods start ...
- */
 int DerivePrincipalStresses(double stressTensor[3][3],double sp[3],double cn[3][3]);
 
 double** dmatrix(long nrl, long nrh, long ncl, long nch);
@@ -115,24 +99,13 @@ void DeriveStressMeasures(FILE *stressTensorIn,
 			  double elementStressTensor[3][3], 
 			  struct stressMeasures *elementStressMeasures);
 
-/*
- * ... end CPS mods
- */
-
-
 
 
 char		path[PATH_MAX];
 FILE*		strainRateIn;
-/*
- * CPS mods start ...
- */
-/* FILE*		stressIn; */
+FILE*		stressIn;
 FILE*		stressTensorIn;
-/* FILE*		pisosIn; */
-/*
- * ... end CPS mods
- */
+FILE*		hydroPressureIn;
 FILE*		coordIn;
 FILE*		velIn;
 FILE*		forceIn;
@@ -147,13 +120,7 @@ int 			doForce = 1;
 int 			doAps = 1;
 int 			doHPr = 1;
 int 			doVisc = 1;
-/*
- * CPS mods start ...
- */
 double			failureAngle = 30.0;
-/*
- * ... end CPS mods
- */
 
 int main( int argc, char* argv[]) 
 {
@@ -170,18 +137,14 @@ int main( int argc, char* argv[])
     unsigned int	rankI,rankJ,rankK;
     unsigned int	stepMin=-1,stepMax=0;
 	
-    /*
-     * CPS mods start ...
-     */
     if( argc<7 || argc>10 ) {
 	fprintf(stderr,"snac2vtk global-mesh-size-x global-mesh-size-y global-mesh-size-z num-processors-x num-processors-y num-processors-z [start-step[max-step]] [end-step[max-step]] [failure-angle[30 (degrees)]]\n");
 	exit(1);
     }
-    /*
-     * ... end CPS mods
-     */
 
-    /* TODO, get from arg list */
+    /*
+     * TODO, get from arg list 
+     */
     sprintf( path, "." );
     gnode[0] = atoi(argv[1]);
     gnode[1] = atoi(argv[2]);
@@ -195,11 +158,11 @@ int main( int argc, char* argv[])
 	    for( rankI=0; rankI < rank_array[0]; rankI++ ) {
 		rank = rankI + rankJ*rank_array[0] + rankK*rank_array[0]*rank_array[1]; 
 
-		/* open the input files */
 		sprintf( tmpBuf, "%s/sim.%u", path, rank );
 		if( (simIn = fopen( tmpBuf, "r" )) == NULL ) {
 		    if( rank == 0 ) {
-			assert( simIn /* failed to open file for reading */ );
+			fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+			exit(1);
 		    }
 		    else {
 			break;
@@ -207,72 +170,72 @@ int main( int argc, char* argv[])
 		}
 		sprintf( tmpBuf, "%s/timeStep.%u", path, rank );
 		if( (timeStepIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    assert( timeStepIn /* failed to open file for reading */ );
+		    fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+		    exit(1);
 		}
 		sprintf( tmpBuf, "%s/strainRate.%u", path, rank );
 		if( (strainRateIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    assert( strainRateIn /* failed to open file for reading */ );
+		    fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+		    exit(1);
 		}
-		/*
-		 * CPS mods start ...
-		 */
-/* 		sprintf( tmpBuf, "%s/stress.%u", path, rank ); */
-/* 		if( (stressIn = fopen( tmpBuf, "r" )) == NULL ) { */
-/* 		    assert( stressIn ); */
-/* 		} */
+		sprintf( tmpBuf, "%s/hydroPressure.%u", path, rank );
+		if( ( hydroPressureIn = fopen( tmpBuf, "r" )) == NULL ) {
+		    fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+		    doHPr = 0;
+		}
+		sprintf( tmpBuf, "%s/stress.%u", path, rank );
+		if( (stressIn = fopen( tmpBuf, "r" )) == NULL ) {
+		    fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+		    exit(1);
+		}
 		sprintf( tmpBuf, "%s/stressTensor.%u", path, rank );
 		if( (stressTensorIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    assert( stressTensorIn /* failed to open file for reading */ );
+		    fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+		    exit(1);
 		}
-/* 		sprintf( tmpBuf, "%s/hydroPressure.%u", path, rank ); */
-/* 		if( ( pisosIn = fopen( tmpBuf, "r" )) == NULL ) { */
-/* 		    printf( "Warning, no hydropressure.%u found... assuming the new context is not written.\n", rank ); */
-/* 		    doHPr = 0; */
-/* 		} */
-		/*
-		 * ... end CPS mods
-		 */
 		sprintf( tmpBuf, "%s/coord.%u", path, rank );
 		if( (coordIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    assert( coordIn /* failed to open file for reading */ );
+		    fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+		    exit(1);
 		}
 		sprintf( tmpBuf, "%s/vel.%u", path, rank );
 		if( (velIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    assert( velIn /* failed to open file for reading */ );
+		    fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+		    exit(1);
 		}
 		sprintf( tmpBuf, "%s/force.%u", path, rank );
 		if( (forceIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    fprintf(stderr, "Warning, no force.%u found... assuming force outputting not enabled.\n", rank );
+		    fprintf(stderr, "\"%s\" not found\n", tmpBuf );
 		    doForce = 0;
 		}
 		sprintf( tmpBuf, "%s/phaseIndex.%u", path, rank );
 		if( (phaseIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    assert( phaseIn /* failed to open file for reading */ );
+		    fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+		    exit(1);
 		}
 		sprintf( tmpBuf, "%s/temperature.%u", path, rank );
 		if( (tempIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    fprintf(stderr, "Warning, no temperature.%u found... assuming temperature plugin not used.\n", rank );
+		    fprintf(stderr, "\"%s\" not found... assuming temperature plugin not used\n", tmpBuf );
 		    doTemp = 0;
 		}
 		sprintf( tmpBuf, "%s/plStrain.%u", path, rank );
 		if( (apsIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    fprintf(stderr, "Warning, no plStrain.%u found... assuming plastic plugin not used.\n", rank );
+		    fprintf(stderr, "\"%s\" not found... assuming plastic plugin not used\n", tmpBuf );
 		    doAps = 0;
 		}
 		sprintf( tmpBuf, "%s/viscosity.%u", path, rank );
 		if( (viscIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    fprintf(stderr, "Warning, no viscosity.%u found... assuming maxwell plugin not used.\n", rank );
+		    fprintf(stderr, "\"%s\" not found... assuming Maxwell plugin not used.\n", tmpBuf );
 		    doVisc = 0;
 		}
 		
 		
-		/* Read in simulation information... TODO: assumes nproc=1 */
+		/*
+		 * Read in simulation information... TODO: assumes nproc=1 
+		 */
 		fscanf( simIn, "%u %u %u\n", &elementLocalSize[0], &elementLocalSize[1], &elementLocalSize[2] );
 
 		
-		/*
-		 * CPS mods start ...
-		 */
 		/* 		if( feof(timeStepIn) ) { */
 		/* 			fprintf(stderr, "Time step file zero length\n" ); */
 		/* 			assert(timeStepIn); */
@@ -287,7 +250,7 @@ int main( int argc, char* argv[])
 		}
 		if( stepMin==-1 ) {
 		    fprintf(stderr, "Time step file zero length\n" );
-		    assert(stepMin);
+		    exit(1);
 		}
 		/* 		fseek( timeStepIn, 0, SEEK_SET ); */
 		rewind(timeStepIn);
@@ -303,6 +266,10 @@ int main( int argc, char* argv[])
 		/* 		    stepMax=stepMin; */
 		/* 		} */
 
+		if (stepMax<stepMin) {
+		    fprintf(stderr, "Error in time step range (start/stop reversed):  %u <-> %u\n", stepMin, stepMax );
+		    exit(1);
+		}
 		fprintf(stderr, "Time step range:  %u <-> %u\n", stepMin, stepMax );
 
 		/*
@@ -313,7 +280,9 @@ int main( int argc, char* argv[])
 		    fprintf(stderr, "Failure angle = %g\n", failureAngle );
 		}
 
-		/* Read in loop information */
+		/*
+		 * Read in loop information 
+		 */
 		dumpIteration = 0;
 		while( !feof( timeStepIn ) ) {
 		    fscanf( timeStepIn, "%16u %16lg %16lg\n", &simTimeStep, &time, &dt );
@@ -324,11 +293,10 @@ int main( int argc, char* argv[])
 		    ConvertTimeStep( rank, dumpIteration, simTimeStep, time, gnode, rank_array, rankI, rankJ, rankK );
 		    dumpIteration++;
 		}
-		/*
-		 * ... end CPS mods
-		 */
 		
-		/* Close the input files */
+		/*
+		 * Close the input files 
+		 */
 		if( apsIn ) {
 		    fclose( apsIn );
 		}
@@ -341,31 +309,21 @@ int main( int argc, char* argv[])
 		if( forceIn ) {
 		    fclose( forceIn );
 		}
-		/*
-		 * CPS mods start ...
-		 */
-/* 		if( pisosIn ) { */
-/* 		    fclose( pisosIn ); */
-/* 		} */
-		/*
-		 * ... end CPS mods
-		 */
+		if( hydroPressureIn ) {
+		    fclose( hydroPressureIn );
+		}
 		fclose( phaseIn );
 		fclose( velIn );
 		fclose( coordIn );
-		/*
-		 * CPS mods start ...
-		 */
-/* 		fclose( stressIn ); */
+		fclose( stressIn );
 		fclose( stressTensorIn );
-		/*
-		 * ... end CPS mods
-		 */
 		fclose( strainRateIn );
 		fclose( timeStepIn );
 		fclose( simIn );
 		
-		/* do next rank */
+		/*
+		 * Do next rank 
+		 */
 		rank++;
 	    }
 
@@ -373,7 +331,17 @@ int main( int argc, char* argv[])
 }
 
 
-void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTimeStep, double time, int gnode[3], int rank_array[3], const int rankI, const int rankJ, const int rankK ) 
+void ConvertTimeStep( 
+		     int rank, 
+		     unsigned int dumpIteration, 
+		     unsigned int simTimeStep, 
+		     double time, 
+		     int gnode[3], 
+		     int rank_array[3], 
+		     const int rankI, 
+		     const int rankJ, 
+		     const int rankK 
+		     ) 
 {
     char		tmpBuf[PATH_MAX], tmpBuf1[PATH_MAX];
     FILE*		vtkOut;
@@ -384,13 +352,18 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     unsigned int	node_gI;
     unsigned int	element_gI;
 	
-    /* open the output file */
+    /*
+     * Open the output file 
+     */
     sprintf( tmpBuf, "%s/snac.%i.%06u.vts", path, rank, simTimeStep );
     if( (vtkOut = fopen( tmpBuf, "w+" )) == NULL ) {
-	assert( vtkOut /* failed to open file for writing */ );
+	fprintf(stderr, "Cannot open \"%s\" for writing\n", tmpBuf );
+	exit(1);
     }
 	
-    /* Write out simulation information */
+    /*
+     * Write out simulation information 
+     */
     fprintf( vtkOut, "<?xml version=\"1.0\"?>\n" );
     fprintf( vtkOut, "<VTKFile type=\"StructuredGrid\"  version=\"0.1\" byte_order=\"LittleEndian\" compressor=\"vtkZLibDataCompressor\">\n");
     fprintf( vtkOut, "  <StructuredGrid WholeExtent=\"%d %d %d %d %d %d\">\n",
@@ -402,76 +375,188 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 	     rankJ*elementLocalSize[1],(rankJ+1)*elementLocalSize[1],
 	     rankK*elementLocalSize[2],(rankK+1)*elementLocalSize[2]);
 	
-    /* Start the node section */
+    /* 
+     *
+     *  			Start the ---node--- section 
+     *
+     */
     fprintf( vtkOut, "      <PointData Vectors=\"velocity\">\n");
 	
-    /* Write out the velocity information */
+    /*
+     * Write out the velocity information 
+     */
     fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"velocity\" NumberOfComponents=\"3\" format=\"ascii\">\n");
-    fseek( velIn, dumpIteration * nodeLocalCount * sizeof(float) * 3, SEEK_SET );
+    if (fseek( velIn, dumpIteration * nodeLocalCount * sizeof(float) * 3, SEEK_SET )!=0) {
+	fprintf(stderr, "Cannot find read required portion of Snac velocity output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+		rank, rankI, rankJ, rankK,
+		dumpIteration, nodeLocalCount );
+	exit(1);
+    }
     for( node_gI = 0; node_gI < nodeLocalCount; node_gI++ ) {
 	float		vel[3];
-	fread( &vel, sizeof(float), 3, velIn );
+	if (fread( &vel, sizeof(float), 3, velIn )==0) {
+	    if (feof(velIn)) {
+		fprintf(stderr, "Error (reached EOF prematurely) while reading Snac velocity output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			rank, rankI, rankJ, rankK,
+			dumpIteration, node_gI, nodeLocalCount );
+		exit(1);
+	    } else {
+		fprintf(stderr, "Error while reading Snac velocity output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			rank, rankI, rankJ, rankK,
+			dumpIteration, node_gI, nodeLocalCount );
+		exit(1);
+	    }
+	}	 
+
+
+
+	/* 		fprintf(stderr, "Error (reached EOF prematurely) while reading Snac force stress tensor output file: tetrahedral element #%d\n" , tetra_I); */
+   
 	fprintf( vtkOut, "%g %g %g\n", vel[0], vel[1], vel[2] );
     }
     fprintf( vtkOut, "        </DataArray>\n");
 	
-    /* Write out the force information */
+    /*
+     * Write out the force information 
+     */
     if( doForce ) {
 	fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"force\" NumberOfComponents=\"3\" format=\"ascii\">\n");
-	fseek( forceIn, dumpIteration * nodeLocalCount * sizeof(float) * 3, SEEK_SET );
+	if (fseek( forceIn, dumpIteration * nodeLocalCount * sizeof(float) * 3, SEEK_SET )!=0) {
+	    fprintf(stderr, "Cannot find read required portion of Snac force output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+		    rank, rankI, rankJ, rankK,
+		    dumpIteration, nodeLocalCount );
+	    exit(1);
+	}
 	for( node_gI = 0; node_gI < nodeLocalCount; node_gI++ ) {
 	    float		force[3];
-	    fread( &force, sizeof(float), 3, forceIn );
+	    if (fread( &force, sizeof(float), 3, forceIn )==0)  {
+		if (feof(forceIn)) {
+		    fprintf(stderr, "Error (reached EOF prematurely) while reading Snac force output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			    rank, rankI, rankJ, rankK,
+			    dumpIteration, node_gI, nodeLocalCount );
+		    exit(1);
+		} else {
+		    fprintf(stderr, "Error while reading Snac force output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			    rank, rankI, rankJ, rankK,
+			    dumpIteration, node_gI, nodeLocalCount );
+		    exit(1);
+		}
+	    }
 	    fprintf( vtkOut, "%g %g %g\n", force[0], force[1], force[2] );
 	}
 	fprintf( vtkOut, "        </DataArray>\n");
     }
 	
-    /* Write out the temperature information */
+    /*
+     * Write out the temperature information 
+     */
     if( doTemp ) {
 	fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"temperature\" format=\"ascii\">\n");
-	fseek( tempIn, dumpIteration * nodeLocalCount * sizeof(float), SEEK_SET );
+	if (fseek( tempIn, dumpIteration * nodeLocalCount * sizeof(float), SEEK_SET )!=0) {
+	    fprintf(stderr, "Cannot find read required portion of Snac temperature output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+		    rank, rankI, rankJ, rankK,
+		    dumpIteration, nodeLocalCount );
+	    exit(1);
+	}
 	for( node_gI = 0; node_gI < nodeLocalCount; node_gI++ ) {
 	    float		temperature;
-	    fread( &temperature, sizeof(float), 1, tempIn );
+	    if (fread( &temperature, sizeof(float), 1, tempIn )==0)  {
+		if (feof(tempIn)) {
+		    fprintf(stderr, "Error (reached EOF prematurely) while reading Snac temperature output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			    rank, rankI, rankJ, rankK,
+			    dumpIteration, node_gI, nodeLocalCount );
+		    exit(1);
+		} else {
+		    fprintf(stderr, "Error while reading Snac temperature output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			    rank, rankI, rankJ, rankK,
+			    dumpIteration, node_gI, nodeLocalCount );
+		    exit(1);
+		}
+	    }
 	    fprintf( vtkOut, "%g ", temperature );
 	}
 	fprintf( vtkOut, "        </DataArray>\n");
     }
     fprintf( vtkOut, "      </PointData>\n");
 
-    /*
-     * CPS mods start ...
-     */
 
-    /* Start the element section */
+    /* 
+     *
+     *  			Start the ---element--- section 
+     *
+     */
     fprintf( vtkOut, "      <CellData Scalars=\"Plastic strain\">\n");
 
-    /* Write out the plastic strain information */
+    /*
+     * Write out the plastic strain information 
+     */
     if( doAps ) {
 	fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Plastic strain\" format=\"ascii\">\n");
-	fseek( apsIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET );
+	if (fseek( apsIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET )!=0) {
+	    fprintf(stderr, "Cannot find read required portion of Snac plastic strain output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+		    rank, rankI, rankJ, rankK,
+		    dumpIteration, nodeLocalCount );
+	    exit(1);
+	}
 	for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 	    float		plStrain;
-	    fread( &plStrain, sizeof(float), 1, apsIn );
+	    if (fread( &plStrain, sizeof(float), 1, apsIn )==0)  {
+		if (feof(apsIn)) {
+		    fprintf(stderr, "Error (reached EOF prematurely) while reading Snac plastic strain output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			    rank, rankI, rankJ, rankK,
+			    dumpIteration, node_gI, nodeLocalCount );
+		    exit(1);
+		} else {
+		    fprintf(stderr, "Error while reading Snac plastic strain output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			    rank, rankI, rankJ, rankK,
+			    dumpIteration, node_gI, nodeLocalCount );
+		    exit(1);
+		}
+	    }
 	    fprintf( vtkOut, "%g ", plStrain );
 	}
 	fprintf( vtkOut, "        </DataArray>\n");
     }
 	
-    /* Write out the strain rate information */
+    /*
+     * Write out the strain rate information 
+     */
     fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Strain rate\" format=\"ascii\">\n");
-    fseek( strainRateIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET );
+    if (fseek( strainRateIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET )!=0) {
+	fprintf(stderr, "Cannot find read required portion of Snac strain rate output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+		rank, rankI, rankJ, rankK,
+		dumpIteration, nodeLocalCount );
+	exit(1);
+    }
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 	float		strainRate;
-	fread( &strainRate, sizeof(float), 1, strainRateIn );
+	if (fread( &strainRate, sizeof(float), 1, strainRateIn )==0)  {
+	    if (feof(strainRateIn)) {
+		fprintf(stderr, "Error (reached EOF prematurely) while reading Snac strain rate output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			rank, rankI, rankJ, rankK,
+			dumpIteration, node_gI, nodeLocalCount );
+		exit(1);
+	    } else {
+		fprintf(stderr, "Error while reading Snac strain rate output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			rank, rankI, rankJ, rankK,
+			dumpIteration, node_gI, nodeLocalCount );
+		exit(1);
+	    }
+	}
 	fprintf( vtkOut, "%g ", strainRate );
     }
     fprintf( vtkOut, "        </DataArray>\n");
 	
-    /* Write out the pressure information */
+    /*
+     * Write out the pressure information 
+     */
     fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Pressure\" format=\"ascii\">\n");
-    fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET );
+    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET )!=0) {
+	fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+		rank, rankI, rankJ, rankK,
+		dumpIteration, nodeLocalCount );
+	exit(1);
+    }
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
 	struct stressMeasures	elementStressMeasures;
@@ -489,20 +574,77 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     }
     fprintf( vtkOut, "        </DataArray>\n");
 
+    /*
+     * Write out the pressure information 
+     */
+    if( doHPr ) {
+	fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Hydrostatic pressure\" format=\"ascii\">\n");
+	if (fseek( hydroPressureIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET )!=0) {
+	    fprintf(stderr, "Cannot find read required portion of Snac pressure output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+		    rank, rankI, rankJ, rankK,
+		    dumpIteration, nodeLocalCount );
+	    exit(1);
+	}
+	for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
+	    float		hydroPressure;
+	    if (fread( &hydroPressure, sizeof(float), 1, hydroPressureIn )==0)  {
+		if (feof(hydroPressureIn)) {
+		    fprintf(stderr, "Error (reached EOF prematurely) while reading Snac pressure output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			    rank, rankI, rankJ, rankK,
+			    dumpIteration, node_gI, nodeLocalCount );
+		    exit(1);
+		} else {
+		    fprintf(stderr, "Error while reading Snac pressure output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			    rank, rankI, rankJ, rankK,
+			    dumpIteration, node_gI, nodeLocalCount );
+		    exit(1);
+		}
+	    }
+	    fprintf( vtkOut, "%g ", hydroPressure );
+	}
+	fprintf( vtkOut, "        </DataArray>\n");
+    }
 
-    /* Write out the stress information */
-/*     fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"stress\" format=\"ascii\">\n"); */
-/*     fseek( stressIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET ); */
-/*     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) { */
-/* 	float		stress; */
-/* 	fread( &stress, sizeof(float), 1, stressIn ); */
-/* 	fprintf( vtkOut, "%g ", stress ); */
-/*     } */
-/*     fprintf( vtkOut, "        </DataArray>\n"); */
+    /*
+     * Write out the stress information 
+     */
+    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Tetra shear stress\" format=\"ascii\">\n");
+    if (fseek( stressIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET )!=0) {
+	fprintf(stderr, "Cannot find read required portion of Snac shear stress output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+		rank, rankI, rankJ, rankK,
+		dumpIteration, nodeLocalCount );
+	exit(1);
+    }
+    for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
+	float		stress;
+	if (fread( &stress, sizeof(float), 1, stressIn )==0)  {
+	    if (feof(stressIn)) {
+		fprintf(stderr, "Error (reached EOF prematurely) while reading Snac shear stress output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			rank, rankI, rankJ, rankK,
+			dumpIteration, node_gI, nodeLocalCount );
+		exit(1);
+	    } else {
+		fprintf(stderr, "Error while reading Snac shear stress output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			rank, rankI, rankJ, rankK,
+			dumpIteration, node_gI, nodeLocalCount );
+		exit(1);
+	    }
+	}
+	fprintf( vtkOut, "%g ", stress );
+    }
+    fprintf( vtkOut, "        </DataArray>\n");
 
-    /* Write out the maxShearStress information */
+
+    /*
+     * Write out the maxShearStress information 
+     */
     fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Max. shear stress\" format=\"ascii\">\n");
-    fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET );
+    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET )!=0) {
+	fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+		rank, rankI, rankJ, rankK,
+		dumpIteration, nodeLocalCount );
+	exit(1);
+    }
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
 	struct stressMeasures	elementStressMeasures;
@@ -521,9 +663,16 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     }
     fprintf( vtkOut, "        </DataArray>\n");
 
-    /* Write out the vonMisesStress information */
+    /*
+     * Write out the vonMisesStress information 
+     */
     fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Von Mises stress\" format=\"ascii\">\n");
-    fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET );
+    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET )!=0) {
+	fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+		rank, rankI, rankJ, rankK,
+		dumpIteration, nodeLocalCount );
+	exit(1);
+    }
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
 	struct stressMeasures	elementStressMeasures;
@@ -541,9 +690,16 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     }
     fprintf( vtkOut, "        </DataArray>\n");
 
-    /* Write out the slopeShearStress information */
+    /*
+     * Write out the slopeShearStress information 
+     */
     fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Shear stress @%gd\" format=\"ascii\">\n",failureAngle);
-    fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET );
+    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET )!=0) {
+	fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+		rank, rankI, rankJ, rankK,
+		dumpIteration, nodeLocalCount );
+	exit(1);
+    }
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
 	struct stressMeasures	elementStressMeasures;
@@ -562,9 +718,16 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     }
     fprintf( vtkOut, "        </DataArray>\n");
 
-    /* Write out the slopeNormalStress information */
+    /*
+     * Write out the slopeNormalStress information 
+     */
     fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Normal stress @%gd\" format=\"ascii\">\n", failureAngle);
-    fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET );
+    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET )!=0) {
+	fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+		rank, rankI, rankJ, rankK,
+		dumpIteration, nodeLocalCount );
+	exit(1);
+    }
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
 	struct stressMeasures	elementStressMeasures;
@@ -585,7 +748,12 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 
     /* Write out the failurePotential information */
     fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Failure potential\" format=\"ascii\">\n");
-    fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET );
+    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET )!=0) {
+	fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+		rank, rankI, rankJ, rankK,
+		dumpIteration, nodeLocalCount );
+	exit(1);
+    }
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
 	struct stressMeasures	elementStressMeasures;
@@ -607,56 +775,101 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 
 
 
+
+
     /*
-     * ... end CPS mods
+     * Write out the phase information 
      */
-	
-
-
-
-
-    /* Write out the phase information */
     fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Phase\" format=\"ascii\">\n");
-    fseek( phaseIn, dumpIteration * elementLocalCount * sizeof(unsigned int), SEEK_SET );
+    if (fseek( phaseIn, dumpIteration * elementLocalCount * sizeof(unsigned int), SEEK_SET )!=0) {
+	fprintf(stderr, "Cannot find read required portion of Snac phase index output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+		rank, rankI, rankJ, rankK,
+		dumpIteration, nodeLocalCount );
+	exit(1);
+    }
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 	unsigned int		phaseIndex;
-	fread( &phaseIndex, sizeof(unsigned int), 1, phaseIn );
+	if (fread( &phaseIndex, sizeof(unsigned int), 1, phaseIn )==0)  {
+	    if (feof(phaseIn)) {
+		fprintf(stderr, "Error (reached EOF prematurely) while reading Snac phase index output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			rank, rankI, rankJ, rankK,
+			dumpIteration, node_gI, nodeLocalCount );
+		exit(1);
+	    } else {
+		fprintf(stderr, "Error while reading Snac phase index output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			rank, rankI, rankJ, rankK,
+			dumpIteration, node_gI, nodeLocalCount );
+		exit(1);
+	    }
+	}
 	fprintf( vtkOut, "%u ", phaseIndex );
     }
     fprintf( vtkOut, "        </DataArray>\n");
 
-    /* Write out the pressure information */
-/*     if( doHPr ) { */
-/* 	fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"pressure\" format=\"ascii\">\n"); */
-/* 	fseek( pisosIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET ); */
-/* 	for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) { */
-/* 	    float		pressure; */
-/* 	    fread( &pressure, sizeof(float), 1, pisosIn ); */
-/* 	    fprintf( vtkOut, "%g ", pressure ); */
-/* 	} */
-/* 	fprintf( vtkOut, "        </DataArray>\n"); */
-/*     } */
 
-    /* Write out the viscosity information */
+    /*
+     * Write out the viscosity information 
+     */
     if( doVisc ) {
 	fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Viscosity\" format=\"ascii\">\n");
-	fseek( viscIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET );
+	if (fseek( viscIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET )!=0) {
+	    fprintf(stderr, "Cannot find read required portion of Snac viscosity output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+		    rank, rankI, rankJ, rankK,
+		    dumpIteration, nodeLocalCount );
+	    exit(1);
+	}
 	for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 	    float		viscosity;
-	    fread( &viscosity, sizeof(float), 1, viscIn );
+	    if (fread( &viscosity, sizeof(float), 1, viscIn )==0)  {
+		if (feof(viscIn)) {
+		    fprintf(stderr, "Error (reached EOF prematurely) while reading Snac viscosity output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			    rank, rankI, rankJ, rankK,
+			    dumpIteration, node_gI, nodeLocalCount );
+		    exit(1);
+		} else {
+		    fprintf(stderr, "Error while reading Snac viscosity output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			    rank, rankI, rankJ, rankK,
+			    dumpIteration, node_gI, nodeLocalCount );
+		    exit(1);
+		}
+	    }
 	    fprintf( vtkOut, "%g ", viscosity );
 	}
 	fprintf( vtkOut, "        </DataArray>\n");
     }
     fprintf( vtkOut, "      </CellData>\n");
 	
-    /* Write out coordinates. */
+
+
+
+    /* 
+     *
+     *  			Write out coordinates
+     *
+     */
     fprintf( vtkOut, "      <Points>\n");
     fprintf( vtkOut, "        <DataArray type=\"Float32\" NumberOfComponents=\"3\" format=\"ascii\">\n");
-    fseek( coordIn, dumpIteration * nodeLocalCount * sizeof(float) * 3, SEEK_SET );
+    if (fseek( coordIn, dumpIteration * nodeLocalCount * sizeof(float) * 3, SEEK_SET )!=0) {
+	fprintf(stderr, "Cannot find read required portion of Snac coordinates output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+		rank, rankI, rankJ, rankK,
+		dumpIteration, nodeLocalCount );
+	exit(1);
+    }
     for( node_gI = 0; node_gI < nodeLocalCount; node_gI++ ) {
 	float		coord[3];
-	fread( &coord, sizeof(float), 3, coordIn );
+	if (fread( &coord, sizeof(float), 3, coordIn )==0)  {
+	    if (feof(coordIn)) {
+		fprintf(stderr, "Error (reached EOF prematurely) while reading Snac coordinates output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			rank, rankI, rankJ, rankK,
+			dumpIteration, node_gI, nodeLocalCount );
+		exit(1);
+	    } else {
+		fprintf(stderr, "Error while reading Snac coordinates output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
+			rank, rankI, rankJ, rankK,
+			dumpIteration, node_gI, nodeLocalCount );
+		exit(1);
+	    }
+	}	 
 	fprintf( vtkOut, "%g %g %g\n", coord[0], coord[1], coord[2] );
     }
     fprintf( vtkOut, "        </DataArray>\n");
@@ -665,16 +878,30 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     fprintf( vtkOut, "  </StructuredGrid>\n");
     fprintf( vtkOut, "</VTKFile>\n");
 
-    /* Close the output file */
+
+
+    /*
+     * Close the vtk output file 
+     */
     fclose( vtkOut );
 
-    /* Write out Parallel VTS file. Only once when rank == 0. */
+
+
+
+
+
+
+
+    /*
+     * Write out Parallel VTS file. Only once when rank == 0. 
+     */
     if( rank == 0 ) {
 	int rankII, rankJJ, rankKK, rank2;
 
 	sprintf( tmpBuf1, "%s/snac.%06u.pvts", path, simTimeStep );
 	if( (vtkOut1 = fopen( tmpBuf1, "w" )) == NULL ) {
-	    assert( vtkOut1 /* failed to open file for writing */ );
+	    fprintf(stderr, "Cannot open \"%s\" for writing\n", tmpBuf );
+	    exit(1);
 	}
 	fprintf(stderr,"Writing file %s...\n",tmpBuf1);
 
@@ -682,7 +909,9 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 	fprintf( vtkOut1, "<VTKFile type= \"PStructuredGrid\"  version= \"0.1\" byte_order=\"LittleEndian\" compressor=\"vtkZLibDataCompressor\">\n");
 	fprintf( vtkOut1, "  <PStructuredGrid WholeExtent=\"0 %d 0 %d 0 %d\" GhostLevel=\"0\">\n",gnode[0]-1,gnode[1]-1,gnode[2]-1);
 
-	/* Start the node section */
+	/*
+	 * Start the node section 
+	 */
 	fprintf( vtkOut1, "    <PPointData>\n");
 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Velocity\" NumberOfComponents=\"3\"/>\n");
 	if( doForce )
@@ -691,36 +920,37 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Temperature\"/>\n");
 	fprintf( vtkOut1, "    </PPointData>\n");
 
-	/* Start the element section */
+	/*
+	 * Start the element section 
+	 */
 	fprintf( vtkOut1, "    <PCellData>\n");
 	if( doAps )
 	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Plastic strain\"/>\n");
 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Strain rate\"/>\n");
-	/*
-	 * CPS mods start ...
-	 */
-/* 	if( doHPr ) */
 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Pressure\"/>\n");
-/* 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"stress\"/>\n"); */
+	if( doHPr )
+	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Hydrostatic pressure\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Tetra shear stress\"/>\n");
 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Max. shear stress\"/>\n");
 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Von Mises stress\"/>\n");
 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Shear stress @%gd\"/>\n",failureAngle);
 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Normal stress @%gd\"/>\n",failureAngle);
 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Failure potential @%gd\"/>\n",failureAngle);
-	/*
-	 * ... end CPS mods
-	 */
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Phase\"/>\n");
+
 	if( doVisc )
 	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Viscosity\"/>\n");
 	fprintf( vtkOut1, "    </PCellData>\n");
 	
-	/* Write out coordinates. */
+	/*
+	 * Write out coordinates. 
+	 */
 	fprintf( vtkOut1, "    <PPoints>\n");
 	fprintf( vtkOut1, "      <PDataArray type=\"Float32\" NumberOfComponents=\"3\"/>\n");
 	fprintf( vtkOut1, "    </PPoints>\n");
 
-	/* Write pieces that actually contains data.*/
+	/*
+	 * Write pieces that actually contains data.
+	 */
 	for( rankII=0; rankII < rank_array[0]; rankII++ )
 	    for( rankJJ=0; rankJJ < rank_array[1]; rankJJ++ )
 		for( rankKK=0; rankKK < rank_array[2]; rankKK++ ) {
@@ -734,7 +964,9 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 	
 	fprintf( vtkOut1, "  </PStructuredGrid>\n");
 	fprintf( vtkOut1, "</VTKFile>\n");
-	/* Close the output file. */
+	/*
+	 * Close the output file. 
+	 */
 	fclose( vtkOut1 );
     }
 }
@@ -744,12 +976,6 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 
 
 
-
-
-
-/*
- * CPS mods start ...
- */
 
 int DerivePrincipalStresses(double stressTensor[3][3], double sp[3], double cn[3][3])
 {
@@ -1013,7 +1239,15 @@ DeriveStressMeasures(FILE *stressTensorIn, double elementStressTensor[3][3], str
      */
     for( tetra_I = 0; tetra_I < 10; tetra_I++ ) {
 	float	stressTensorArray[3][3];
-	fread( stressTensorArray, sizeof(float), 9, stressTensorIn );
+	if ( fread( stressTensorArray, sizeof(float), 9, stressTensorIn )==0 )  {
+	    if (feof(stressTensorIn)) {
+		fprintf(stderr, "Error (reached EOF prematurely) while reading Snac stress tensor output file: tetrahedral element #%d\n" , tetra_I);
+		exit(1);
+	    } else {
+		fprintf(stderr, "Error while reading Snac stress tensor output file: tetrahedral element #%d\n" , tetra_I);
+		exit(1);
+	    }
+	}
 	/*
 	 *  Report error and bail if we pick up NaNs in any of the stress components
 	 */
@@ -1082,25 +1316,21 @@ DeriveStressMeasures(FILE *stressTensorIn, double elementStressTensor[3][3], str
     /*
      *  Calculate the failure potential for hillslope angle
      */
-/*     elementStressMeasures->failurePotential= ( (fabs(elementStressMeasures->maxShearStress)-1e6) */
-/* 					       /(-2*elementStressMeasures->pessure/3.0) ); */
+    /*     elementStressMeasures->failurePotential= ( (fabs(elementStressMeasures->maxShearStress)-1e6) */
+    /* 					       /(-2*elementStressMeasures->pessure/3.0) ); */
 
-	/* If slopeNormalStress is 0, failurePotential is not defined. Assign some indicative value: -1 for now. */
-	/* If the computed slopeNormalStress is infinite, assign -1 again. */
-	/* In either case, a warning message would be desirable. Or a switch to turn off failure potential calculations might be better. */
-	/* -EChoi 2009/03/03 */
-	if( elementStressMeasures->slopeNormalStress == 0.0 )
-		elementStressMeasures->failurePotential = -1.0; 
-	else {
-		elementStressMeasures->failurePotential= fabs(-elementStressMeasures->slopeShearStress/elementStressMeasures->slopeNormalStress);
-		if( isinf( elementStressMeasures->failurePotential ) )
-			elementStressMeasures->failurePotential = -1.0;
-	}
+    /*
+     * If slopeNormalStress is 0, failurePotential is not defined. Assign some indicative value: -1 for now. 
+     * If the computed slopeNormalStress is infinite, assign -1 again. 
+     * In either case, a warning message would be desirable. Or a switch to turn off failure potential calculations might be better. 
+     * -EChoi 2009/03/03 
+     */
+    if( elementStressMeasures->slopeNormalStress == 0.0 )
+	elementStressMeasures->failurePotential = -1.0; 
+    else {
+	elementStressMeasures->failurePotential= fabs(-elementStressMeasures->slopeShearStress/elementStressMeasures->slopeNormalStress);
+	if( isinf( elementStressMeasures->failurePotential ) )
+	    elementStressMeasures->failurePotential = -1.0;
+    }
 
 }
-
-
-
-/*
- * ... end CPS mods
- */
