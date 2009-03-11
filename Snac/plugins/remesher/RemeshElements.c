@@ -62,18 +62,6 @@ void _SnacRemesher_InterpolateElements( void* _context ) {
 	IndexSet*				extElements;
 	Element_LocalIndex		newElt_i;
 	
-	const unsigned			nTets = 10;
-	const unsigned			nSub[] = { 0, 2, 3, 7, 
-								 0, 1, 2, 5, 
-								 4, 7, 5, 0, 
-								 5, 7, 6, 2, 
-								 5, 7, 2, 0, 
-								 3, 7, 4, 6, 
-								 4, 0, 3, 1, 
-								 6, 2, 1, 3, 
-								 1, 5, 6, 4, 
-								 1, 6, 3, 4 };
-	
 	void Tet_Barycenter( Coord tetCrds[4], Coord center );
 	void interpolateElement( void*			_context, 
 							 Element_LocalIndex	newEltInd, 
@@ -128,7 +116,7 @@ void _SnacRemesher_InterpolateElements( void* _context ) {
 			}
 		}
 		
-		for( tet_i = 0; tet_i < nTets; tet_i++ ) {
+		for( tet_i = 0; tet_i < Tetrahedra_Count; tet_i++ ) {
 			Coord				tetCrds[4];
 			Coord				bc;
 			Node_DomainIndex		dNodeInd;
@@ -139,17 +127,17 @@ void _SnacRemesher_InterpolateElements( void* _context ) {
 			unsigned minTetInd, minEltInd;
 			
 			/* Extract the tetrahedron's coordinates. */
-			Vector_Set( tetCrds[0], meshExt->newNodeCoords[eltNodes[nSub[tet_i * 4 + 0]]] );
-			Vector_Set( tetCrds[1], meshExt->newNodeCoords[eltNodes[nSub[tet_i * 4 + 1]]] );
-			Vector_Set( tetCrds[2], meshExt->newNodeCoords[eltNodes[nSub[tet_i * 4 + 2]]] );
-			Vector_Set( tetCrds[3], meshExt->newNodeCoords[eltNodes[nSub[tet_i * 4 + 3]]] );
+			Vector_Set( tetCrds[0], meshExt->newNodeCoords[eltNodes[TetraToNode[tet_i][0]]] );
+			Vector_Set( tetCrds[1], meshExt->newNodeCoords[eltNodes[TetraToNode[tet_i][1]]] );
+			Vector_Set( tetCrds[2], meshExt->newNodeCoords[eltNodes[TetraToNode[tet_i][2]]] );
+			Vector_Set( tetCrds[3], meshExt->newNodeCoords[eltNodes[TetraToNode[tet_i][3]]] );
 			
 			/* Calculate the barycenter of this tetrahedron. */
 			Tet_Barycenter( tetCrds, bc );
 			
 			/* Locate the closest node to the barycenter. We use index zero of the tethrahedra coordinates
 			   as a reference. */
-			dNodeInd = findClosestNode( context, bc, eltNodes[nSub[tet_i * 4]] );
+			dNodeInd = findClosestNodeInElement( context, bc, nEltNodes, eltNodes );
 			
 			/* Grab incident elements. */
 			{
@@ -239,6 +227,26 @@ void _SnacRemesher_InterpolateElements( void* _context ) {
 	Stg_Class_Delete( extElements );
 }
 
+void _SnacRemesher_UpdateElements( void* _context ) {
+
+	Snac_Context*			context = (Snac_Context*)_context;
+	Element_LocalIndex	element_lI;
+
+	/* Update all the elements, and in the process work out this processor's minLengthScale */
+	for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
+		double elementMinLengthScale;
+		
+		KeyCall( context, context->updateElementK, Snac_UpdateElementMomentum_CallCast* )
+			( KeyHandle(context,context->updateElementK),
+			  context,
+			  element_lI,
+			  &elementMinLengthScale );
+		if( elementMinLengthScale < context->minLengthScale ) {
+			context->minLengthScale = elementMinLengthScale;
+		}
+	}
+}
+
 
 /*
 ** Locate the tetrahedra the barycenter falls in and interpolate from there.
@@ -264,20 +272,7 @@ void findClosestTet( void*			_context,
 	Node_DomainIndex*		eltNodes;
 	unsigned				tet_i;
 	
-	const unsigned			nTets = 10;
-	const unsigned			nSub[] = { 0, 2, 3, 7, 
-								 0, 1, 2, 5, 
-								 4, 7, 5, 0, 
-								 5, 7, 6, 2, 
-								 5, 7, 2, 0, 
-								 3, 7, 4, 6, 
-								 4, 0, 3, 1, 
-								 6, 2, 1, 3, 
-								 1, 5, 6, 4, 
-								 1, 6, 3, 4 };
-	
 	void Tet_Barycenter( Coord tetCrds[4], Coord center );
-	
 	
 	/* Extract the element's node indices.  Note that there should always be eight of these. */
 	{
@@ -300,16 +295,16 @@ void findClosestTet( void*			_context,
 	
 	/* Loop over 10 sub tets in a brick element, calculate the distance from its barycenter to the supplied one. */
 	{
-		for( tet_i = 0; tet_i < nTets; tet_i++ ) {
+		for( tet_i = 0; tet_i < Tetrahedra_Count; tet_i++ ) {
 			Coord	tCrds[4];
 			Coord	bc;
 			double	dist;
 			
 			/* Extract the tetrahedron's coordinates. */
-			Vector_Set( tCrds[0], mesh->nodeCoord[eltNodes[nSub[tet_i * 4 + 0]]] );
-			Vector_Set( tCrds[1], mesh->nodeCoord[eltNodes[nSub[tet_i * 4 + 1]]] );
-			Vector_Set( tCrds[2], mesh->nodeCoord[eltNodes[nSub[tet_i * 4 + 2]]] );
-			Vector_Set( tCrds[3], mesh->nodeCoord[eltNodes[nSub[tet_i * 4 + 3]]] );
+			Vector_Set( tCrds[0], mesh->nodeCoord[eltNodes[TetraToNode[tet_i][0]]] );
+			Vector_Set( tCrds[1], mesh->nodeCoord[eltNodes[TetraToNode[tet_i][1]]] );
+			Vector_Set( tCrds[2], mesh->nodeCoord[eltNodes[TetraToNode[tet_i][2]]] );
+			Vector_Set( tCrds[3], mesh->nodeCoord[eltNodes[TetraToNode[tet_i][3]]] );
 			
 			/* Calc the barycenter. */
 			Tet_Barycenter( tCrds, bc );
@@ -359,20 +354,7 @@ void interpolateElement( void*			_context,
 	unsigned				minTetInd;
 	unsigned				tet_i;
 	
-	const unsigned			nTets = 10;
-	const unsigned			nSub[] = { 0, 2, 3, 7, 
-								 0, 1, 2, 5, 
-								 4, 7, 5, 0, 
-								 5, 7, 6, 2, 
-								 5, 7, 2, 0, 
-								 3, 7, 4, 6, 
-								 4, 0, 3, 1, 
-								 6, 2, 1, 3, 
-								 1, 5, 6, 4, 
-								 1, 6, 3, 4 };
-	
 	void Tet_Barycenter( Coord tetCrds[4], Coord center );
-	
 	
 	/* Extract the element's node indices.  Note that there should always be eight of these. */
 	{
@@ -397,16 +379,16 @@ void interpolateElement( void*			_context,
 	{
 		double minDist;
 		
-		for( tet_i = 0; tet_i < nTets; tet_i++ ) {
+		for( tet_i = 0; tet_i < Tetrahedra_Count; tet_i++ ) {
 			Coord	tCrds[4];
 			Coord	bc;
 			double	dist;
 			
 			/* Extract the tetrahedron's coordinates. */
-			Vector_Set( tCrds[0], mesh->nodeCoord[eltNodes[nSub[tet_i * 4 + 0]]] );
-			Vector_Set( tCrds[1], mesh->nodeCoord[eltNodes[nSub[tet_i * 4 + 1]]] );
-			Vector_Set( tCrds[2], mesh->nodeCoord[eltNodes[nSub[tet_i * 4 + 2]]] );
-			Vector_Set( tCrds[3], mesh->nodeCoord[eltNodes[nSub[tet_i * 4 + 3]]] );
+			Vector_Set( tCrds[0], mesh->nodeCoord[eltNodes[TetraToNode[tet_i][0]]] );
+			Vector_Set( tCrds[1], mesh->nodeCoord[eltNodes[TetraToNode[tet_i][0]]] );
+			Vector_Set( tCrds[2], mesh->nodeCoord[eltNodes[TetraToNode[tet_i][0]]] );
+			Vector_Set( tCrds[3], mesh->nodeCoord[eltNodes[TetraToNode[tet_i][0]]] );
 			
 			/* Calc the barycenter. */
 			Tet_Barycenter( tCrds, bc );

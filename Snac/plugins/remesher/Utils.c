@@ -129,6 +129,35 @@ Node_DomainIndex findClosestNode( void* _context, Coord point, Node_LocalIndex r
 }
 
 
+Node_DomainIndex findClosestNodeInElement( void* _context, Coord point,	unsigned nEltNodes, Node_DomainIndex *eltNodes ) {
+	Snac_Context*			context = (Snac_Context*)_context;
+	Mesh*				mesh = context->mesh;
+	Bool					done = False;
+	unsigned	eltNode_i;
+	Coord			tmp;
+	double			minDist = 1.0e+32;
+	Node_DomainIndex	minNode = 0;
+
+	/*
+	** Search through the mesh's old coordinates to find the closest node to the new node 'newNode'.
+	*/
+
+	/* Get the distance from the current new node to the element nodes in the old mesh. */
+	for( eltNode_i = 0; eltNode_i < nEltNodes; eltNode_i++ ) {
+		double	dist=0.0;
+			
+		Vector_Sub( tmp, point, mesh->nodeCoord[eltNodes[eltNode_i]] );
+		dist = Vector_Mag( tmp );
+			
+		if( dist < minDist ) {
+			minDist = dist;
+			minNode = eltNodes[eltNode_i];
+		}
+	}
+	
+	return minNode;
+}
+
 /*
 ** Determine if 'point' is inside the element corresponding to 'dElementInd'.
 */

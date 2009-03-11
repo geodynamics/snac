@@ -52,6 +52,7 @@
 					    Snac_Node* dstNodes );
 
 	void _SnacRemesher_InterpolateElements( void* context );
+	void _SnacRemesher_UpdateElements( void* context );
 	void _SnacRemesher_InterpolateElement(
 		void*			_context,
 		Element_LocalIndex	dstEltInd, 

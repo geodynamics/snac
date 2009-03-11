@@ -144,9 +144,6 @@ void _SnacRemesher_Remesh( void* _context, void* data ) {
 		/* Interpolate current elemental values onto new coordinates. */
 		meshExt->newElements = (Snac_Element*)ExtensionManager_Malloc( mesh->elementExtensionMgr, mesh->elementLocalCount );
 
-		/* Store element-level variables. This is temporary. They sould be updated after the nearest neighbor transfer is done on the tet level. */
- 		memcpy( meshExt->newElements, mesh->element, mesh->elementExtensionMgr->finalSize * mesh->elementLocalCount );
-
 		/* Do the nearest neighbor transfer between tets. */
 		_SnacRemesher_InterpolateElements( context );
 		
@@ -155,6 +152,9 @@ void _SnacRemesher_Remesh( void* _context, void* data ) {
 		memcpy( mesh->nodeCoord, meshExt->newNodeCoords, mesh->nodeLocalCount * sizeof(Coord) );
 		memcpy( mesh->node, meshExt->newNodes, mesh->nodeExtensionMgr->finalSize * mesh->nodeLocalCount );
 		memcpy( mesh->element, meshExt->newElements, mesh->elementExtensionMgr->finalSize * mesh->elementLocalCount );
+		
+		/* Update element attributes based on the new coordinates and the transferred variables. */
+		_SnacRemesher_UpdateElements( context );
 		
 		/* Free some space, as it won't be needed until the next remesh. */
 		ExtensionManager_Free( mesh->nodeExtensionMgr, meshExt->newNodes );

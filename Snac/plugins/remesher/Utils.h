@@ -49,6 +49,8 @@
 	
 	
 	Node_DomainIndex findClosestNode( void* _context, Coord point, Node_LocalIndex refNodeInd );
+
+	Node_DomainIndex findClosestNodeInElement( void* _context, Coord point,	unsigned nEltNodes, Node_DomainIndex *eltNodes );
 	
 	Bool pointInElement( void* _context, Coord point, Element_DomainIndex dElementInd );
 	
