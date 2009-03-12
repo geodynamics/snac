@@ -45,7 +45,7 @@
 #endif
 
 //#define DEBUG
-//#define DEBUG2
+#define DEBUG2
 //#define DEBUG3
 #define DEBUG4
 
@@ -185,6 +185,7 @@ void SnacHillSlope_Track( void* _context ) {
     }
 
 #ifdef DEBUG2
+    if (reachesTopFlag)
     fprintf(stderr,
 	    "r=%d, ts=%d/%d:    top?=%d  tracking?=%d  eqm?=%d  consensus?=%d:  max_vel=%g  unit_vel=%g\n",
 	    context->rank, context->timeStep, context->maxTimeSteps, reachesTopFlag, 
