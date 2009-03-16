@@ -27,13 +27,13 @@
 	<!-- Extension modules -->
 	<!--
 		<param> SnacRemesher </param>
+		<param> SnacWinklerForce </param>
 	-->
 	<list name="extensions">
 		<param> SnacTemperature </param>
 		<param> SnacViscoPlastic </param>
 		<param> SnacHydroStaticIC </param>
 		<param> SnacVPSeeds </param>
-		<param> SnacWinklerForce </param>
 	</list>
 	
 	<struct name="mesh">
