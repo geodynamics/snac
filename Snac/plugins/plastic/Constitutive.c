@@ -124,8 +124,10 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 			 *  Calculate material props (friction angle, cohesion, etc) from piecewise-linear
 			 *    functions defined in terms of plastic strain.
 			 */
-			Journal_DFirewall( (material->plstrain[0]==0.0), "The initial segment should start from the plastic strain of 0.0" );
-			Journal_OFirewall( (material->plstrain[0]==0.0), "The initial segment should start from the plastic strain of 0.0" );
+			Journal_DFirewall( (material->plstrain[0]==0.0), context->snacError, "The initial segment should start from the plastic strain of 0.0" );
+			Journal_OFirewall( (material->plstrain[0]==0.0), context->snacError,  __FILE__, __func__, __LINE__,
+							   "timeStep=%u rank=%u: The initial segment should start from the plastic strain of 0.0.",
+							   context->timeStep, context->rank );
 			for( i = 0; i < material->nsegments; i++ ) {
 				const double pl1 = material->plstrain[i];
 				const double pl2 = material->plstrain[i+1];
