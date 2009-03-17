@@ -86,7 +86,7 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 		double		        anpsi = 0.0f;
 		const double		a1 = material->lambda + 2.0f * material->mu ;
 		const double		a2 = material->lambda ;
-                int                     ind=0;
+		int                     ind=0;
 
 		/* 
 		 *   Work out the plastic material properties of this element 
@@ -103,7 +103,7 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 			/*  
 			 *  CPS bug fix:  was set to zero, thus not picking up plastic strain weakening except at t=0
 			 */
-                        Strain		        plasticStrain = plasticElement->plasticStrain[tetra_I];
+			Strain		        plasticStrain = plasticElement->plasticStrain[tetra_I];
 
 
 			/* 
@@ -120,28 +120,13 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 
 			principal_stresses(stress,s,cn);
 
-                        /* 
-			 * Compute friction and dilation angles based on accumulated plastic strain in tetrahedra 
-			 * Piece-wise linear softening
-			 * Find current properties from linear interpolation
-			 */
-			if(material->putSeeds && context->timeStep <= 1) {
-				if(ijk[1] >= decomp->elementGlobal3DCounts[1]-2)
-					if(ijk[0] == decomp->elementGlobal3DCounts[0]/2 ) {
-						plasticElement->plasticStrain[tetra_I] = 1.1*material->plstrain[1];
-						plasticStrain = plasticElement->plasticStrain[tetra_I];
-#ifdef DEBUG
-						fprintf(stderr,"timeStep=%d ijk=%d %d %d aps=%e plasticE=%e\n",
-							context->timeStep,ijk[0],ijk[1],ijk[2],plasticStrain,
-							plasticElement->plasticStrain[tetra_I]);
-#endif
-					}
-			}
 			/*
-			*  Calculate material props (friction angle, cohesion, etc) from piecewise-linear
-			*    functions defined in terms of plastic strain.
-			*/
-                        for( i = 0; i < material->nsegments; i++ ) {
+			 *  Calculate material props (friction angle, cohesion, etc) from piecewise-linear
+			 *    functions defined in terms of plastic strain.
+			 */
+			Journal_DFirewall( (material->plstrain[0]==0.0), "The initial segment should start from the plastic strain of 0.0" );
+			Journal_OFirewall( (material->plstrain[0]==0.0), "The initial segment should start from the plastic strain of 0.0" );
+			for( i = 0; i < material->nsegments; i++ ) {
 				const double pl1 = material->plstrain[i];
 				const double pl2 = material->plstrain[i+1];
 
@@ -154,6 +139,7 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 					dilationAngle = material->dilationAngle[i] + tgd * (plasticStrain - pl1);
 					cohesion = material->cohesion[i] + tgc * (plasticStrain - pl1);
 					hardening = tgc;
+					break;
 				} else if(i==material->nsegments-1 && plasticStrain > pl2) {
 				    /*
 				     *  CPS mod:  one extra test if pl strain is outside piecewise range, is last piece, and 
@@ -164,54 +150,39 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 				    dilationAngle = material->dilationAngle[material->nsegments];
 				    cohesion = material->cohesion[material->nsegments];
 				    hardening = 0.0;
+					break;
 				}
-                        }
+			}
 
-#ifdef DEBUG
-			if(ijk[1] >= decomp->elementGlobal3DCounts[1]-2 && context->timeStep <= 1)
-				if(ijk[0] == decomp->elementGlobal3DCounts[0]/2 || ijk[0] == decomp->elementGlobal3DCounts[0]/2+1 ) {
-					fprintf(stderr,"phi=%e psi=%e c=%e h=%e\n",frictionAngle,dilationAngle,cohesion,hardening);
-				}
-#endif
-                        sphi = sin( frictionAngle * degrad );
-                        spsi = sin( dilationAngle * degrad );
-                        anphi = (1.0f + sphi) / (1.0f - sphi);
-                        anpsi = (1.0f + spsi) / (1.0f - spsi);
-
-                        if( frictionAngle >= 0.0f ) {
+			sphi = sin( frictionAngle * degrad );
+			spsi = sin( dilationAngle * degrad );
+			anphi = (1.0f + sphi) / (1.0f - sphi);
+			anpsi = (1.0f + spsi) / (1.0f - spsi);
+			
+			if( frictionAngle >= 0.0f ) {
 				st = material->ten_off;
 				if( frictionAngle > 0.0) {
 					tmp = cohesion / tan( frictionAngle * degrad);
 					if(tmp < st)st=tmp;
 				}
-                        }
-                        else {
-                                /* frictionAngle < 0.0 violates second law of thermodynamics */
-				assert(0);
-                        }
-
-
+			}
+			else {
+				/* frictionAngle < 0.0 violates second law of thermodynamics */
+				abort();
+			}
+			
+			
 			/* CHECK FOR COMPOSITE YIELD CRITERION  */
 			fs = s[0] - s[2] * anphi + 2 * cohesion * sqrt( anphi );
-#ifdef DEBUG
-			if(context->timeStep>435 && (ijk[0]>=9 && ijk[0]<=11))
-			   fprintf(stderr,"t=%d: (%d,%d,%d):  ps=%g  ->  fs=%g  = (%g) - (%g * %g) + 2 * %g * %g = %g + %g + %g :  phi=%g\n", 
-				   context->timeStep,
-				   ijk[0],ijk[1],ijk[2], 
-				   plasticStrain,
-				   fs, s[0], s[2], anphi, cohesion, sqrt(anphi),
-				   s[0], -s[2]*anphi, 2*cohesion*sqrt(anphi),
-				   frictionAngle);
-#endif
 			ft = s[2] - st;
                         ind=0;
 			if( fs < 0.0f || ft > 0.0f ) {
 				/*! Failure: shear or tensile */
-                                ind=1;
-                                aP = sqrt( 1.0f + anphi * anphi ) + anphi;
+				ind=1;
+				aP = sqrt( 1.0f + anphi * anphi ) + anphi;
 				sP = st * anphi - 2 * cohesion * sqrt( anphi );
 				h = s[2] - st + aP * ( s[0] - sP );
-
+				
 				if( h < 0.0f ) {
 					/* !shear failure  */
 					alam = fs / ( a1 - a2 * anpsi + a1 * anphi * anpsi - a2 * anphi + hardening );
@@ -247,15 +218,6 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 				depm = ( dep1 + dep2 + dep3 ) / 3.0f;
 				plasticElement->plasticStrain[tetra_I] += sqrt( 0.5f * ((dep1-depm) * (dep1-depm) + (dep2-depm) * (dep2-depm) + (dep3-depm) * (dep3-depm) + depm*depm) );
 
-
-#if 0
-				/*ccccc*/
-				if(ijk[1] >= decomp->elementGlobal3DCounts[1]-2 && context->timeStep <= 10)
-					if(ijk[0] == decomp->elementGlobal3DCounts[0]/2 || ijk[0] == decomp->elementGlobal3DCounts[0]/2+1 ) {
-						fprintf(stderr,"plasticElement->plasticStrain[tetra_I]=%e\n",
-							plasticElement->plasticStrain[tetra_I]);
-					}
-#endif
 				memset( stress, 0, sizeof((*stress)) );
 				/* Resolve back to global axes  */
 				for( m = 0; m < 3; m++ ) {
@@ -271,13 +233,6 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 		}
 		/* volume-averaged accumulated plastic strain, aps */
 		plasticElement->aps = depls/totalVolume;
-#if 0
-		if(ijk[1] >= decomp->elementGlobal3DCounts[1]-2 && context->timeStep <= 10)
-			if(ijk[0] == decomp->elementGlobal3DCounts[0]/2 || ijk[0] == decomp->elementGlobal3DCounts[0]/2+1 ) {
-				fprintf(stderr,"aps=%e\n",
-					plasticElement->aps);
-			}
-#endif
 	}
 }
 
