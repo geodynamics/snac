@@ -1,0 +1,19 @@
+* Included files and usage
+
+1. oedometer.xml
+Input file for the oedometer test as described in the SNAC's manual.
+
+2. analytic_soln.py
+A Python script for generating analytic solutions. The default file name for the analytic solution is "analytic_soln.dat".
+
+3. snac_soln.c
+A C program for retrieving strain-stress solution from the SNAC's outputs.
+
+3.1 To compile
+Try "gcc -lm -o snac_soln snac_soln.c".
+
+3.2 To run
+The executable would require the same set of arguments with snac2vtk. For example, ./snac_soln 5 5 5 1 1 1 0 3001
+
+3.3 Output
+The generated data file is "snac_soln.dat" by default.
