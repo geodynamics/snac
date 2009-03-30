@@ -88,6 +88,8 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 		const double		a2 = material->lambda ;
 		int                     ind=0;
 
+                static char             plasticStrainReportedFlag=0;
+
 		/* 
 		 *   Work out the plastic material properties of this element 
 		*/
@@ -179,6 +181,10 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 			ft = s[2] - st;
                         ind=0;
 			if( fs < 0.0f || ft > 0.0f ) {
+                                if(!plasticStrainReportedFlag) {
+                                        fprintf(stderr, "r=%d, ts=%d:  *** Plastic failure *** at (%d, %d, %d)\n",context->rank, context->timeStep, ijk[0],ijk[1],ijk[2]);
+                                        plasticStrainReportedFlag=1;
+                                }
 				/*! Failure: shear or tensile */
 				ind=1;
 				aP = sqrt( 1.0f + anphi * anphi ) + anphi;
