@@ -238,9 +238,11 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 			}
 			depls += plasticElement->plasticStrain[tetra_I]*element->tetra[tetra_I].volume;
 			totalVolume += element->tetra[tetra_I].volume;
+/* 			if(element_lI==738) fprintf(stderr,"   *****  %d: depm=%g  acc plastic strain=%g\n", tetra_I, depm, element->tetra[tetra_I].volume); */
 		}
 		/* volume-averaged accumulated plastic strain, aps */
 		plasticElement->aps = depls/totalVolume;
+/* 		if(element_lI==738) fprintf(stderr,"   *****  acc plastic strain=%g\n", plasticElement->aps); */
 	}
 }
 

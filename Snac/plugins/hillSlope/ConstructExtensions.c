@@ -107,30 +107,41 @@ void _SnacHillSlope_ConstructExtensions( void* _context, void* data ) {
 
 	contextExt->xSubDomainFraction = Dictionary_Entry_Value_AsDouble(
 		Dictionary_GetDefault( context->dictionary, "xSubDomainFraction", 
-				       Dictionary_Entry_Value_FromDouble( 0.5f ) ) );
+				       Dictionary_Entry_Value_FromDouble( 0.7f ) ) );
 	contextExt->ySubDomainFraction = Dictionary_Entry_Value_AsDouble(
 		Dictionary_GetDefault( context->dictionary, "ySubDomainFraction", 
-				       Dictionary_Entry_Value_FromDouble( 0.4f ) ) );
+				       Dictionary_Entry_Value_FromDouble( 0.8f ) ) );
 	contextExt->zSubDomainFraction = Dictionary_Entry_Value_AsDouble(
 		Dictionary_GetDefault( context->dictionary, "zSubDomainFraction", 
-				       Dictionary_Entry_Value_FromDouble( 0.75f ) ) );
+				       Dictionary_Entry_Value_FromDouble( 1.0f ) ) );
+
+	contextExt->xSubDomainLeft = Dictionary_Entry_Value_AsDouble(
+		Dictionary_GetDefault( context->dictionary, "xSubDomainLeft", 
+				       Dictionary_Entry_Value_FromDouble( -0.15f ) ) );
 
 	contextExt->xTriggerPointFraction = Dictionary_Entry_Value_AsDouble(
 		Dictionary_GetDefault( context->dictionary, "xTriggerPointFraction", 
 				       Dictionary_Entry_Value_FromDouble( 0.5f ) ) );
 	contextExt->yTriggerPointFraction = Dictionary_Entry_Value_AsDouble(
 		Dictionary_GetDefault( context->dictionary, "yTriggerPointFraction", 
-				       Dictionary_Entry_Value_FromDouble( 0.4f ) ) );
+				       Dictionary_Entry_Value_FromDouble( 0.3f ) ) );
 	contextExt->zTriggerPointFraction = Dictionary_Entry_Value_AsDouble(
 		Dictionary_GetDefault( context->dictionary, "zTriggerPointFraction", 
 				       Dictionary_Entry_Value_FromDouble( 0.5f ) ) );
 
 	contextExt->weakPointCohesion = Dictionary_Entry_Value_AsDouble(
 		Dictionary_GetDefault( context->dictionary, "weakPointCohesion", 
-				       Dictionary_Entry_Value_FromDouble( 4.0e+05f ) ) );
+				       Dictionary_Entry_Value_FromDouble( 2.0e+04f ) ) );
 	contextExt->triggerPointCohesion = Dictionary_Entry_Value_AsDouble(
 		Dictionary_GetDefault( context->dictionary, "triggerPointCohesion", 
-				       Dictionary_Entry_Value_FromDouble( 1.0e+04f ) ) );
+				       Dictionary_Entry_Value_FromDouble( 2.0e+04f ) ) );
+
+	contextExt->subDomainMinCohesion = Dictionary_Entry_Value_AsDouble(
+		Dictionary_GetDefault( context->dictionary, "subDomainMinCohesion", 
+				       Dictionary_Entry_Value_FromDouble( -1.0e+04f ) ) );
+	contextExt->subDomainMaxCohesion = Dictionary_Entry_Value_AsDouble(
+		Dictionary_GetDefault( context->dictionary, "subDomainMaxCohesion", 
+				       Dictionary_Entry_Value_FromDouble( 3.0e+04f ) ) );
 
 	contextExt->trackLevel = Dictionary_Entry_Value_AsDouble(
 		Dictionary_GetDefault( context->dictionary, "trackLevel", 

@@ -57,11 +57,14 @@
 		double				xSubDomainFraction;
 		double				ySubDomainFraction;
 		double				zSubDomainFraction;
+		double				xSubDomainLeft;
 		double				xTriggerPointFraction;
 		double				yTriggerPointFraction;
 		double				zTriggerPointFraction;
 		double				weakPointCohesion;
 		double				triggerPointCohesion;
+		double				subDomainMinCohesion;
+		double				subDomainMaxCohesion;
 		double				trackLevel;
 		double				startThreshold;
 		double				stopThreshold;

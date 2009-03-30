@@ -108,15 +108,15 @@ void _SnacHillSlope_Construct( void* component, Stg_ComponentFactory* cf, void* 
 		SnacHillSlope_Type );
 
 	EntryPoint_Append( 
-		Context_GetEntryPoint( context, Snac_EP_LoopNodesMomentum ),
-		SnacHillSlope_Type,
-		SnacHillSlope_Track,
+		Context_GetEntryPoint( context,	Snac_EP_Constitutive ),
+		SnacHillSlope_Type, 
+		SnacHillSlope_CreateWeakPoints, 
 		SnacHillSlope_Type );
 
 	EntryPoint_Append( 
 		Context_GetEntryPoint( context, Snac_EP_LoopNodesMomentum ),
 		SnacHillSlope_Type,
-		SnacHillSlope_CreateWeakPoints,
+		SnacHillSlope_Track,
 		SnacHillSlope_Type );
 
 	EntryPoint_Append(
