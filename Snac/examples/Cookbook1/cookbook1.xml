@@ -47,10 +47,10 @@
 		
 		<!-- Initial geometry -->
 		<param name="minX"> 0 </param>
-		<param name="minY"> 0 </param>
+		<param name="minY"> -10000 </param>
 		<param name="minZ"> 0 </param>
 		<param name="maxX">  40000 </param>
-		<param name="maxY">  10000 </param>
+		<param name="maxY">  0 </param>
 		<param name="maxZ">  80000 </param>
 
 		<!-- Remeshing -->
