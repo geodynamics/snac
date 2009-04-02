@@ -262,7 +262,7 @@ void _Snac_Context_Init( Snac_Context* self ) {
 					GetOffsetOfMember( tmpElement, material_I ),
 					GetOffsetOfMember( tmpElement, strainRate ),
 					GetOffsetOfMember( tmpElement, stress ),
-                                        GetOffsetOfMember( tmpElement, hydroPressure )};
+					GetOffsetOfMember( tmpElement, hydroPressure )};
 	Variable_DataType	elementDataTypes[] = {
 					Variable_DataType_Int,
 					Variable_DataType_Double,
@@ -601,7 +601,6 @@ void _Snac_Context_Delete( void* context ) {
 	fclose( self->timeStepInfo );
 	fclose( self->simInfo );
 	fclose( self->stressTensorOut );
-	fclose( self->phaseIndexOut );
 
 	/* Parallelisation information */
 	if( self->parallel ) {
@@ -985,7 +984,7 @@ void Snac_Context_TimeStepZero( void* context ) {
 
 	Journal_Dump( self->forceOut, &(self->timeStep) );
 
-	_Snac_Context_DumpPhaseIndex( self );
+	Journal_Dump( self->phaseIndexOut, &(self->timeStep) );
 
 	KeyCall( self, self->syncK, EntryPoint_Class_VoidPtr_CallCast* )( KeyHandle(self,self->syncK), self );
 	/* _Snac_Context_Sync( self ); */
@@ -1064,7 +1063,7 @@ void _Snac_Context_Solve( void* context ) {
 		Mesh_Sync( self->mesh );
 	}
 
-	_Snac_Context_DumpPhaseIndex( self );
+	Journal_Dump( self->phaseIndexOut, &(self->timeStep) );
 }
 
 
@@ -1213,11 +1212,11 @@ void _Snac_Context_Sync( void* context ) {
 	Stream_Flush( self->strainRateOut );
 	Stream_Flush( self->stressOut );
 	Stream_Flush( self->hydroPressureOut );
+	Stream_Flush( self->phaseIndexOut );
 	Stream_Flush( self->coordOut );
 	Stream_Flush( self->velOut );
 	Stream_Flush( self->forceOut );
 	fflush(	self->stressTensorOut );
-	fflush(	self->phaseIndexOut );
 	fflush( NULL );
 
 }
@@ -1263,6 +1262,16 @@ void _Snac_Context_InitDump( Snac_Context* self ) {
 		self->dumpEvery,
 		tmpBuf );
 
+	/* Create the phase index dumping stream */
+	self->phaseIndexOut = Journal_Register( VariableDumpStream_Type, "PhaseIndex" );
+	sprintf( tmpBuf, "%s/phaseIndex.%u", self->outputPath, self->rank );
+	VariableDumpStream_SetVariable(
+		self->phaseIndexOut,
+		Variable_Register_GetByName( self->variable_Register, "elementMaterial" ),
+		self->mesh->elementLocalCount,
+		self->dumpEvery,
+		tmpBuf );
+
 	/* Create the coords dumping stream */
 	self->coordOut = Journal_Register( VariableDumpStream_Type, "Coord" );
 	sprintf( tmpBuf, "%s/coord.%u", self->outputPath, self->rank );
@@ -1297,11 +1306,6 @@ void _Snac_Context_InitDump( Snac_Context* self ) {
 	sprintf( tmpBuf, "%s/stressTensor.%u", self->outputPath, self->rank );
 	if( (self->stressTensorOut = fopen( tmpBuf, "w+" )) == NULL ) {
 		assert( self->stressTensorOut /* failed to open file for writing */ );
-	}
-	/* Create the phaseIndex dump file */
-	sprintf( tmpBuf, "%s/phaseIndex.%u", self->outputPath, self->rank );
-	if( (self->phaseIndexOut = fopen( tmpBuf, "w+" )) == NULL ) {
-		assert( self->phaseIndexOut /* failed to open file for writing */ );
 	}
 }
 
@@ -1366,34 +1370,20 @@ void _Snac_Context_AdjustDump( Snac_Context* self ) {
 
 
 void _Snac_Context_DumpStressTensor( Snac_Context* self ) {
-
+	
     /*     fprintf(stderr, "Dumping ? stress tensor: ts=%d df=%d\n",self->timeStep,self->dumpEvery); */
     if( self->timeStep ==0 || (self->timeStep-1) % self->dumpEvery == 0 ) {
-	Element_LocalIndex			element_lI;
-	fprintf(stderr, "r=%d, ts=%d/%d: Dumping stress tensor given dump freq=%d\n", self->rank, self->timeStep, self->maxTimeSteps,self->dumpEvery); 
-
-	for( element_lI = 0; element_lI < self->mesh->elementLocalCount; element_lI++ ) {
-	    Snac_Element* 				element = Snac_Element_At( self, element_lI );
-	    /* Take average of tetra viscosity for the element */
-	    Tetrahedra_Index		tetra_I;
-	    for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
-		float tensor[3][3] = { {element->tetra[tetra_I].stress[0][0], element->tetra[tetra_I].stress[0][1], element->tetra[tetra_I].stress[0][2]},
-				       {element->tetra[tetra_I].stress[0][1], element->tetra[tetra_I].stress[1][1], element->tetra[tetra_I].stress[1][2]},
-				       {element->tetra[tetra_I].stress[0][2], element->tetra[tetra_I].stress[1][2], element->tetra[tetra_I].stress[2][2]} };
-		fwrite( &tensor, sizeof(float), 9, self->stressTensorOut );
-	    }
-	}
-    }
-}
-
-void _Snac_Context_DumpPhaseIndex( Snac_Context* self ) {
-
-	if( self->timeStep ==0 || (self->timeStep-1) % self->dumpEvery == 0 ) {
 		Element_LocalIndex			element_lI;
-
+		
 		for( element_lI = 0; element_lI < self->mesh->elementLocalCount; element_lI++ ) {
 			Snac_Element* 				element = Snac_Element_At( self, element_lI );
-			fwrite( &element->material_I, sizeof(unsigned int), 1, self->phaseIndexOut );
+			/* Take average of tetra viscosity for the element */
+			Tetrahedra_Index		tetra_I;
+			for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
+				float stressVector[6] = { element->tetra[tetra_I].stress[0][0], element->tetra[tetra_I].stress[1][1], element->tetra[tetra_I].stress[2][2],
+										  element->tetra[tetra_I].stress[0][1], element->tetra[tetra_I].stress[0][2], element->tetra[tetra_I].stress[1][2]};
+				fwrite( &stressVector, sizeof(float), 6, self->stressTensorOut );
+			}
 		}
-	}
+    }
 }

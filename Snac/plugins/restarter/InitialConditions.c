@@ -139,7 +139,10 @@ void _SnacRestart_InitialStress( void* _context, void* data ) {
 		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
 			double				S[3][3];
 			Index               i,j;
-			fscanf( fp, "%le %le %le %le %le %le %le %le %le", &S[0][0],&S[0][1],&S[0][2],&S[1][0],&S[1][1],&S[1][2],&S[2][0],&S[2][1],&S[2][2]);
+			fscanf( fp, "%le %le %le %le %le %le", &S[0][0],&S[1][1],&S[2][2],&S[0][1],&S[0][2],&S[1][2]);
+			S[1][0] = S[0][1];
+			S[2][0] = S[0][2];
+			S[2][1] = S[1][2];
 			for(i=0;i<3;i++)
 				for(j=0;j<3;j++)
 					element->tetra[tetra_I].stress[i][j] = S[i][j];

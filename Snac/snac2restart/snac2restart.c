@@ -37,15 +37,15 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <math.h>
 #include <limits.h>
+
 #ifndef PATH_MAX
 	#define PATH_MAX 1024
 #endif
 #ifndef Tetrahedra_Count
 	#define Tetrahedra_Count 10
 #endif
-
 
 void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTimeStep, double time );
 
@@ -67,56 +67,73 @@ unsigned int 	restartStep = -1;
 
 const double	velocityDampingFactor = 1.0;
 
+const unsigned	numStressVectorComponent = 6; /* 6 components in stress vector */
+const unsigned	numStressComponentsPerElement = 60; /* 6 components times 10 tets per element */
 
 void checkArgumentType( int argNum, char* arglist[] ) {
     if( argNum == 1 ) {
-	sprintf( readPath, "." );
-	sprintf( writePath, "." );
-	fprintf(stderr,"Reading Snac state files for the last time step from %s/\n",readPath);
-	fprintf(stderr,"Writing Snac restart files to %s/\n",writePath);
-	return;
-    }
-    else if( argNum == 2 ) {
-	if( atoi(arglist[1]) ) {
-	    restartStep = atoi(arglist[1]);
-	    sprintf( readPath, "." );
-	    sprintf( writePath, "." );
-	    fprintf(stderr,"Reading Snac state files for time step ts=%d from %s/\n",restartStep,readPath);
-	    fprintf(stderr,"Writing Snac restart files to %s/\n",writePath);
-	    return;
-	}
-	else {
-	    char zeroChar[PATH_MAX];
-	    sprintf(zeroChar,"0");
-	    if( !strcmp( arglist[1], zeroChar) ) {
-		fprintf(stderr,"\nDon't try to restart from 0th time step. Just rerun the case!!\n\n");
-		exit(0);
-	    }
-	    else {
-		sprintf( readPath, "%s", arglist[1]);
+		sprintf( readPath, "." );
 		sprintf( writePath, "." );
 		fprintf(stderr,"Reading Snac state files for the last time step from %s/\n",readPath);
 		fprintf(stderr,"Writing Snac restart files to %s/\n",writePath);
 		return;
-	    }
-	}
+    }
+    else if( argNum == 2 ) {
+		if( atoi(arglist[1]) ) {
+			restartStep = atoi(arglist[1]);
+			sprintf( readPath, "." );
+			sprintf( writePath, "." );
+			fprintf(stderr,"Reading Snac state files for time step ts=%d from %s/\n",restartStep,readPath);
+			fprintf(stderr,"Writing Snac restart files to %s/\n",writePath);
+			return;
+		}
+		else {
+			char zeroChar[PATH_MAX];
+			sprintf(zeroChar,"0");
+			if( !strcmp( arglist[1], zeroChar) ) {
+				fprintf(stderr,"\nDon't try to restart from 0th time step. Just rerun the case!!\n\n");
+				exit(0);
+			}
+			else {
+				sprintf( readPath, "%s", arglist[1]);
+				sprintf( writePath, "." );
+				fprintf(stderr,"Reading Snac state files for the last time step from %s/\n",readPath);
+				fprintf(stderr,"Writing Snac restart files to %s/\n",writePath);
+				return;
+			}
+		}
     }
     else if( argNum == 3 ) {
-	if( atoi(arglist[1])  && !atoi(arglist[2]) ) {
-	    restartStep = atoi(arglist[1]);
-	    sprintf( readPath, "%s", arglist[2]);
-	    fprintf(stderr,"Reading Snac state files for time step ts=%d from %s/\n",restartStep,readPath);
-	    fprintf(stderr,"Writing Snac restart files to %s/\n",writePath);
-	    return;
-	}
-	else {
-	    fprintf(stderr,"Wrong argument type\n\tUsage: %s [integer timeStep] [input file path]\n",arglist[0]);
-	    exit(0);
-	}
+		if( atoi(arglist[1]) && !atoi(arglist[2]) ) {
+			restartStep = atoi(arglist[1]);
+			sprintf( readPath, "%s", arglist[2]);
+			sprintf( writePath, "%s", arglist[2]);
+			fprintf(stderr,"Reading Snac state files for time step ts=%d from %s/\n",restartStep,readPath);
+			fprintf(stderr,"Writing Snac restart files to %s/\n",writePath);
+			return;
+		}
+		else {
+			fprintf(stderr,"Wrong argument type\n\tUsage: %s [integer timeStep] [your \"outputPath\"] [path to write restart files]\n",arglist[0]);
+			exit(0);
+		}
+    }
+    else if( argNum == 4 ) {
+		if( atoi(arglist[1]) && !atoi(arglist[2]) && !atoi(arglist[3])) {
+			restartStep = atoi(arglist[1]);
+			sprintf( readPath, "%s", arglist[2]);
+			sprintf( writePath, "%s", arglist[3]);
+			fprintf(stderr,"Reading Snac state files for time step ts=%d from %s/\n",restartStep,readPath);
+			fprintf(stderr,"Writing Snac restart files to %s/\n",writePath);
+			return;
+		}
+		else {
+			fprintf(stderr,"Wrong argument type\n\tUsage: %s [integer timeStep] [your \"outputPath\"] [path to write restart files]\n",arglist[0]);
+			exit(0);
+		}
     }
     else if( argNum > 3 ) {
-	fprintf(stderr,"Wrong number of arguments\n\tUsage: %s [timeStep] [input file path]\n",arglist[0]);
-	exit(0);
+		fprintf(stderr,"Wrong number of arguments\n\tUsage: %s [timeStep] [your \"outputPath\"] [path to write restart files]\n",arglist[0]);
+		exit(0);
     }
 }
 
@@ -142,13 +159,13 @@ int main( int argc, char* argv[] ) {
  	fprintf(stderr,"Attempting to read from %s ...",tmpBuf); 
 	if( (simIn = fopen( tmpBuf, "r" )) == NULL ) {
 	    if( rank == 0 ) {
-		/* failed to open file for reading */
-		fprintf(stderr, " failed - no such file\n");
-		exit(0);
+			/* failed to open file for reading */
+			fprintf(stderr, " failed - no such file\n");
+			exit(0);
 	    }
 	    else {
-		fprintf(stderr," no such file\n"); 
-		break;
+			fprintf(stderr,"no files to process for rank %d.\n(Make sure the max rank is indeed %d).\n", rank, rank-1); 
+			break;
 	    }
 	} else {
 		fprintf(stderr," with success\n"); 
@@ -269,14 +286,13 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     unsigned int	tetra_I;
     float		minLength;
 
-
     /* Write out position array */
     sprintf( tmpBuf, "%s/snac.coord.%i.%06u.restart", writePath, rank, simTimeStep );
     fprintf(stderr,"\tWriting out %s\n",tmpBuf);
     if( (restartOut = fopen( tmpBuf, "w" )) == NULL ) {
-	/* failed to open file for writing */
-	fprintf(stderr, "Failed to open for writing\n");
-	exit(0);
+		/* failed to open file for writing */
+		fprintf(stderr, "Failed to open %s for writing\n", tmpBuf);
+		exit(0);
     }
     fseek( coordIn, dumpIteration * nodeLocalCount * sizeof(float) * 3, SEEK_SET );
     for( node_gI = 0; node_gI < nodeLocalCount; node_gI++ ) {
@@ -291,9 +307,9 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     sprintf( tmpBuf, "%s/snac.initCoord.%i.%06u.restart", writePath, rank, simTimeStep );
     fprintf(stderr,"\tWriting out %s\n",tmpBuf);
     if( (restartOut = fopen( tmpBuf, "w" )) == NULL ) {
-	/* failed to open file for writing */
-	fprintf(stderr, "Failed to open for writing\n");
-	exit(0);
+		/* failed to open file for writing */
+		fprintf(stderr, "Failed to open %s for writing\n", tmpBuf);
+		exit(0);
     }
     fseek( coordIn, 0 * nodeLocalCount * sizeof(float) * 3, SEEK_SET );
     for( node_gI = 0; node_gI < nodeLocalCount; node_gI++ ) {
@@ -308,16 +324,16 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     sprintf( tmpBuf, "%s/snac.vel.%i.%06u.restart", writePath, rank, simTimeStep );
     fprintf(stderr,"\tWriting out %s\n",tmpBuf);
     if( (restartOut = fopen( tmpBuf, "w" )) == NULL ) {
-	/* failed to open file for writing */
-	fprintf(stderr, "Failed to open for writing\n");
-	exit(0);
+		/* failed to open file for writing */
+		fprintf(stderr, "Failed to open %s for writing\n", tmpBuf);
+		exit(0);
     }
     /*
      *  CPS hack:  need to try damping/zeroing of node velocities in expts where we are
      *  restarting from assumed static elastic equilibrium
      *
      *  The variable  velocityDampingFactor  should be passed from the command line
-     *  BEWARE that it is fixed at zero for now.
+     *  BEWARE that it is fixed at 1.0 for now.
      */
     fseek( velIn, dumpIteration * nodeLocalCount * sizeof(float) * 3, SEEK_SET );
     for( node_gI = 0; node_gI < nodeLocalCount; node_gI++ ) {
@@ -333,9 +349,9 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     sprintf( tmpBuf, "%s/snac.force.%i.%06u.restart", writePath, rank, simTimeStep );
     fprintf(stderr,"\tWriting out %s\n",tmpBuf);
     if( (restartOut = fopen( tmpBuf, "w" )) == NULL ) {
-	/* failed to open file for writing */
-	fprintf(stderr, "Failed to open for writing\n");
-	exit(0);
+		/* failed to open file for writing */
+		fprintf(stderr, "Failed to open %s for writing\n", tmpBuf);
+		exit(0);
     }
     for( node_gI = 0; node_gI < nodeLocalCount; node_gI++ ) {
 	float		force;
@@ -350,24 +366,38 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
     sprintf( tmpBuf, "%s/snac.stressTensor.%i.%06u.restart", writePath, rank, simTimeStep );
     fprintf(stderr,"\tWriting out %s\n",tmpBuf);
     if( (restartOut = fopen( tmpBuf, "w" )) == NULL ) {
-	/* failed to open file for writing */
-	fprintf(stderr, "Failed to open for writing\n");
-	exit(0);
+		/* failed to open file for writing */
+		fprintf(stderr, "Failed to open %s for writing\n", tmpBuf);
+		exit(0);
     }
-    fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float) * 9 * Tetrahedra_Count, SEEK_SET );
+    fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float) * numStressComponentsPerElement, SEEK_SET );
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
-	for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
-	    float tensor[3][3];
-	    fread( &tensor, sizeof(float), 9, stressTensorIn );
-	    fprintf( restartOut, "%.9e %.9e %.9e %.9e %.9e %.9e %.9e %.9e %.9e\n", 
-		     tensor[0][0], tensor[0][1], tensor[0][2], 
-		     tensor[1][0], tensor[1][1], tensor[1][2], 
-		     tensor[2][0], tensor[2][1], tensor[2][2] );
-	    fflush( restartOut );
+		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
+			float	stressTensorArray[numStressVectorComponent];
+
+			if ( fread( stressTensorArray, sizeof(float), numStressVectorComponent, stressTensorIn )==0 )  {
+				if (feof(stressTensorIn)) {
+					fprintf(stderr, "Error (reached EOF prematurely) while reading Snac stress tensor output file: tetrahedral element #%d\n" , tetra_I);
+					exit(1);
+				} else {
+					fprintf(stderr, "Error while reading Snac stress tensor output file: tetrahedral element #%d\n" , tetra_I);
+					exit(1);
+				}
+			}
+			if(isnan(stressTensorArray[0]) || isnan(stressTensorArray[1]) 
+			   || isnan(stressTensorArray[2]) || isnan(stressTensorArray[3]) 
+			   || isnan(stressTensorArray[4]) || isnan(stressTensorArray[5])) {
+				fprintf(stderr,"NaN in stress tensor file\n");
+				abort();
+			}
+			fprintf( restartOut, "%.9e %.9e %.9e %.9e %.9e %.9e\n", 
+					 stressTensorArray[0],stressTensorArray[1],stressTensorArray[2],
+					 stressTensorArray[3],stressTensorArray[4],stressTensorArray[5] );
+			fflush( restartOut );
+		}
 	}
-    }
     if( restartOut )
-	fclose( restartOut );
+		fclose( restartOut );
 
     /* Write out temperature array */
     if(doTemp) {
@@ -375,7 +405,7 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 	fprintf(stderr,"\tWriting out %s\n",tmpBuf);
 	if( (restartOut = fopen( tmpBuf, "w" )) == NULL ) {
 	    /* failed to open file for writing */
-	    fprintf(stderr, "Failed to open for writing\n");
+		fprintf(stderr, "Failed to open %s for writing\n", tmpBuf);
 	    exit(0);
 	}
 
@@ -425,7 +455,7 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 	fprintf(stderr,"\tWriting out %s\n",tmpBuf);
 	if( (restartOut = fopen( tmpBuf, "w" )) == NULL ) {
 	    /* failed to open file for writing */
-	    fprintf(stderr, "Failed to open for writing\n");
+		fprintf(stderr, "Failed to open %s for writing\n", tmpBuf);
 	    exit(0);
 	}
 
@@ -445,7 +475,7 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 	fprintf(stderr,"\tWriting out %s\n",tmpBuf);
 	if( (restartOut = fopen( tmpBuf, "w" )) == NULL ) {
 	    /* failed to open file for writing */
-	    fprintf(stderr, "Failed to open for writing\n");
+		fprintf(stderr, "Failed to open %s for writing\n", tmpBuf);
 	    exit(0);
 	}
 	fscanf( minLengthIn, "%e", &minLength );

@@ -53,7 +53,9 @@
 #ifndef PATH_MAX
 	#define PATH_MAX 1024
 #endif
-
+#ifndef Tetrahedra_Count
+	#define Tetrahedra_Count 10
+#endif
 
 #define ROTATE(a,i,j,k,l) g=a[i][j];h=a[k][l];a[i][j]=g-s*(h+g*tau);\
     a[k][l]=h+s*(g-h*tau);
@@ -121,6 +123,8 @@ int 			doAps = 1;
 int 			doHPr = 1;
 int 			doVisc = 1;
 double			failureAngle = 30.0;
+const unsigned	numStressVectorComponent = 6; /* 6 components in stress vector */
+const unsigned	numStressComponentsPerElement = 60; /* 6 components times 10 tets per element */
 
 int main( int argc, char* argv[]) 
 {
@@ -551,25 +555,25 @@ void ConvertTimeStep(
      * Write out the pressure information 
      */
     fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Pressure\" format=\"ascii\">\n");
-    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET )!=0) {
-	fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
-		rank, rankI, rankJ, rankK,
-		dumpIteration, nodeLocalCount );
-	exit(1);
+    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float) * numStressComponentsPerElement, SEEK_SET )!=0) {
+		fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+				rank, rankI, rankJ, rankK,
+				dumpIteration, nodeLocalCount );
+		exit(1);
     }
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
-	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
-	struct stressMeasures	elementStressMeasures;
-	/*
-	 *  Build average stress tensor for element and derive useful stress measures
-	 */
-	DeriveStressMeasures(stressTensorIn, elementStressTensor, &elementStressMeasures);
-	/*
-	 *  Write the chosen derived stress value to Paraview file
-	 */
-	fprintf( vtkOut, "%g ", -elementStressMeasures.pressure );
+		double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
+		struct stressMeasures	elementStressMeasures;
+		/*
+		 *  Build average stress tensor for element and derive useful stress measures
+		 */
+		DeriveStressMeasures(stressTensorIn, elementStressTensor, &elementStressMeasures);
+		/*
+		 *  Write the chosen derived stress value to Paraview file
+		 */
+		fprintf( vtkOut, "%g ", -elementStressMeasures.pressure );
 #ifdef DEBUG
-	if (element_gI<10) fprintf( stderr, "Element pressure %d: %g  at angle %g\n", element_gI, elementStressMeasures.pressure, elementStressMeasures.failureAngle); 
+		if (element_gI<10) fprintf( stderr, "Element pressure %d: %g  at angle %g\n", element_gI, elementStressMeasures.pressure, elementStressMeasures.failureAngle); 
 #endif	
     }
     fprintf( vtkOut, "        </DataArray>\n");
@@ -622,7 +626,7 @@ void ConvertTimeStep(
 		fprintf(stderr, "Error (reached EOF prematurely) while reading Snac shear stress output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
 			rank, rankI, rankJ, rankK,
 			dumpIteration, node_gI, nodeLocalCount );
-		exit(1);
+ 			exit(1); 
 	    } else {
 		fprintf(stderr, "Error while reading Snac shear stress output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node=%d/%d\n", 
 			rank, rankI, rankJ, rankK,
@@ -639,14 +643,14 @@ void ConvertTimeStep(
      * Write out the maxShearStress information 
      */
     fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Max. shear stress\" format=\"ascii\">\n");
-    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET )!=0) {
+    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*numStressComponentsPerElement, SEEK_SET )!=0) {
 	fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		rank, rankI, rankJ, rankK,
 		dumpIteration, nodeLocalCount );
 	exit(1);
     }
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
-	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
+		double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
 	struct stressMeasures	elementStressMeasures;
 	/*
 	 *  Build average stress tensor for element and derive useful stress measures
@@ -667,14 +671,14 @@ void ConvertTimeStep(
      * Write out the vonMisesStress information 
      */
     fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Von Mises stress\" format=\"ascii\">\n");
-    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET )!=0) {
+    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*numStressComponentsPerElement, SEEK_SET )!=0) {
 	fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		rank, rankI, rankJ, rankK,
 		dumpIteration, nodeLocalCount );
 	exit(1);
     }
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
-	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
+		double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
 	struct stressMeasures	elementStressMeasures;
 	/*
 	 *  Build average stress tensor for element and derive useful stress measures
@@ -694,14 +698,14 @@ void ConvertTimeStep(
      * Write out the slopeShearStress information 
      */
     fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Shear stress @%gd\" format=\"ascii\">\n",failureAngle);
-    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET )!=0) {
+    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*numStressComponentsPerElement, SEEK_SET )!=0) {
 	fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		rank, rankI, rankJ, rankK,
 		dumpIteration, nodeLocalCount );
 	exit(1);
     }
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
-	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
+		double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
 	struct stressMeasures	elementStressMeasures;
 	/*
 	 *  Build average stress tensor for element and derive useful stress measures
@@ -722,14 +726,14 @@ void ConvertTimeStep(
      * Write out the slopeNormalStress information 
      */
     fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Normal stress @%gd\" format=\"ascii\">\n", failureAngle);
-    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET )!=0) {
+    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*numStressComponentsPerElement, SEEK_SET )!=0) {
 	fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		rank, rankI, rankJ, rankK,
 		dumpIteration, nodeLocalCount );
 	exit(1);
     }
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
-	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
+		double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
 	struct stressMeasures	elementStressMeasures;
 	/*
 	 *  Build average stress tensor for element and derive useful stress measures
@@ -748,14 +752,14 @@ void ConvertTimeStep(
 
     /* Write out the failurePotential information */
     fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Failure potential\" format=\"ascii\">\n");
-    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*9*10, SEEK_SET )!=0) {
+    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*numStressComponentsPerElement, SEEK_SET )!=0) {
 	fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		rank, rankI, rankJ, rankK,
 		dumpIteration, nodeLocalCount );
 	exit(1);
     }
     for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
-	double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
+		double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
 	struct stressMeasures	elementStressMeasures;
 	/*
 	 *  Build average stress tensor for element and derive useful stress measures
@@ -771,7 +775,6 @@ void ConvertTimeStep(
 #endif	
     }
     fprintf( vtkOut, "        </DataArray>\n");
-
 
 
 
@@ -936,6 +939,7 @@ void ConvertTimeStep(
 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Shear stress @%gd\"/>\n",failureAngle);
 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Normal stress @%gd\"/>\n",failureAngle);
 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Failure potential @%gd\"/>\n",failureAngle);
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Phase\"/>\n");
 
 	if( doVisc )
 	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Viscosity\"/>\n");
@@ -1229,45 +1233,47 @@ void
 DeriveStressMeasures(FILE *stressTensorIn, double elementStressTensor[3][3], struct stressMeasures *elementStressMeasures)
 {
     int			tetra_I;
-    const int		numberTetrahedra=10;
     double		failureAngleRadians=elementStressMeasures->failureAngle*M_PI/180.0;
     double		normalVector[3],slopeParallelVector[3],tractionVector[3];
     double		tmp;
 
-    /*
-     *  Read all tetrahedral stress tensors for this element gI
-     */
-    for( tetra_I = 0; tetra_I < 10; tetra_I++ ) {
-	float	stressTensorArray[3][3];
-	if ( fread( stressTensorArray, sizeof(float), 9, stressTensorIn )==0 )  {
-	    if (feof(stressTensorIn)) {
-		fprintf(stderr, "Error (reached EOF prematurely) while reading Snac stress tensor output file: tetrahedral element #%d\n" , tetra_I);
-		exit(1);
-	    } else {
-		fprintf(stderr, "Error while reading Snac stress tensor output file: tetrahedral element #%d\n" , tetra_I);
-		exit(1);
-	    }
-	}
-	/*
-	 *  Report error and bail if we pick up NaNs in any of the stress components
-	 */
-	if(isnan(stressTensorArray[0][0]) || isnan(stressTensorArray[1][1]) 
-	   || isnan(stressTensorArray[2][2]) || isnan(stressTensorArray[0][1]) 
-	   || isnan(stressTensorArray[0][2]) || isnan(stressTensorArray[1][2])) 
-	    fprintf(stderr,"NaN in stress tensor file\n");
-	/*
-	 *  Build average stress tensor for element by summing tetrahedral tensor components
-	 *   - even though it's symmetric, do for all 9 components in case we pick the wrong ones before diagonalization
-	 */
-	elementStressTensor[0][0]+=stressTensorArray[0][0]/(double)numberTetrahedra;
-	elementStressTensor[1][1]+=stressTensorArray[1][1]/(double)numberTetrahedra;
-	elementStressTensor[2][2]+=stressTensorArray[2][2]/(double)numberTetrahedra;
-	elementStressTensor[0][1]+=stressTensorArray[0][1]/(double)numberTetrahedra;
-	elementStressTensor[0][2]+=stressTensorArray[0][2]/(double)numberTetrahedra;
-	elementStressTensor[1][2]+=stressTensorArray[1][2]/(double)numberTetrahedra;
-	elementStressTensor[1][0]+=stressTensorArray[1][0]/(double)numberTetrahedra;
-	elementStressTensor[2][0]+=stressTensorArray[2][0]/(double)numberTetrahedra;
-	elementStressTensor[2][1]+=stressTensorArray[2][1]/(double)numberTetrahedra;
+    for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
+		float	stressTensorArray[numStressVectorComponent];
+
+		/*
+		 *  Read all tetrahedral stress tensors for this element gI
+		 */
+		if ( fread( stressTensorArray, sizeof(float), numStressVectorComponent, stressTensorIn )==0 )  {
+			if (feof(stressTensorIn)) {
+				fprintf(stderr, "Error (reached EOF prematurely) while reading Snac stress tensor output file: tetrahedral element #%d\n" , tetra_I);
+				exit(1);
+			} else {
+				fprintf(stderr, "Error while reading Snac stress tensor output file: tetrahedral element #%d\n" , tetra_I);
+				exit(1);
+			}
+		}
+		/*
+		 *  Report error and bail if we pick up NaNs in any of the stress components.
+		 */
+		if(isnan(stressTensorArray[0]) || isnan(stressTensorArray[1]) 
+		   || isnan(stressTensorArray[2]) || isnan(stressTensorArray[3]) 
+		   || isnan(stressTensorArray[4]) || isnan(stressTensorArray[5])) {
+			fprintf(stderr,"NaN in stress tensor file\n");
+			abort();
+		}
+		/*
+		 *  Build average stress tensor for element by summing tetrahedral tensor components
+		 *   - even though it's symmetric, do for all 9 components in case we pick the wrong ones before diagonalization
+		 */
+		elementStressTensor[0][0]+=stressTensorArray[0]/(double)Tetrahedra_Count;
+		elementStressTensor[1][1]+=stressTensorArray[1]/(double)Tetrahedra_Count;
+		elementStressTensor[2][2]+=stressTensorArray[2]/(double)Tetrahedra_Count;
+		elementStressTensor[0][1]+=stressTensorArray[3]/(double)Tetrahedra_Count;
+		elementStressTensor[0][2]+=stressTensorArray[4]/(double)Tetrahedra_Count;
+		elementStressTensor[1][2]+=stressTensorArray[5]/(double)Tetrahedra_Count;
+		elementStressTensor[1][0]+=stressTensorArray[3]/(double)Tetrahedra_Count;
+		elementStressTensor[2][0]+=stressTensorArray[4]/(double)Tetrahedra_Count;
+		elementStressTensor[2][1]+=stressTensorArray[5]/(double)Tetrahedra_Count;
     }
     /*
      *  Diagonalize and find principal stresses from mean stress tensor for element
