@@ -354,20 +354,11 @@ void _Snac_Context_Init( Snac_Context* self ) {
 	 *      by the user from the numbers recorded in sim.x and in the original input xml.
 	 *      Addition of these variables will enforce reporting of the processor geometry and speed postprocessing.
 	 */
-	self->numProcX = Dictionary_Entry_Value_AsUnsignedInt(
-		Dictionary_GetDefault( self->dictionary, "numProcX", 
-		  Dictionary_Entry_Value_FromUnsignedInt( ((HexaMD*)self->mesh->layout->decomp)->partition3DCounts[0] ) ) );
-	self->numProcY = Dictionary_Entry_Value_AsUnsignedInt(
-		Dictionary_GetDefault( self->dictionary, "numProcY", 
-		  Dictionary_Entry_Value_FromUnsignedInt( ((HexaMD*)self->mesh->layout->decomp)->partition3DCounts[1] ) ) );
-	self->numProcZ = Dictionary_Entry_Value_AsUnsignedInt(
-		Dictionary_GetDefault( self->dictionary, "numProcZ", 
-		  Dictionary_Entry_Value_FromUnsignedInt( ((HexaMD*)self->mesh->layout->decomp)->partition3DCounts[2] ) ) );
-
+	self->numProcX = ((HexaMD*)self->mesh->layout->decomp)->partition3DCounts[0];
+	self->numProcY = ((HexaMD*)self->mesh->layout->decomp)->partition3DCounts[1];
+	self->numProcZ = ((HexaMD*)self->mesh->layout->decomp)->partition3DCounts[2];
 	Journal_Printf( self->info, "\nParallel processing geometry:  nX=%d  nY=%d  nZ=%d\n\n",
 			self->numProcX,self->numProcY,self->numProcZ );
-	
-
 
 	/* Add initial condition managers */
 	nodeICsDict = Dictionary_Entry_Value_AsDictionary( Dictionary_Get( self->dictionary, "nodeICs" ) );
@@ -392,10 +383,14 @@ void _Snac_Context_Init( Snac_Context* self ) {
 			"\"%s\"  failed to open file for writing", tmpBuf );
 	}
 	else {
-		fprintf( self->simInfo, "%u %u %u\n",
-			((HexaMD*)self->mesh->layout->decomp)->elementLocal3DCounts[self->rank][0],
-			((HexaMD*)self->mesh->layout->decomp)->elementLocal3DCounts[self->rank][1],
-			((HexaMD*)self->mesh->layout->decomp)->elementLocal3DCounts[self->rank][2] );
+		fprintf( self->simInfo, "%u %u %u %u %u %u %u %u %u\n(global element numbers)[3]=(proc numbers)[3]*(local element numbers)[3]\n",
+				 ((HexaMD*)self->mesh->layout->decomp)->elementGlobal3DCounts[0],
+				 ((HexaMD*)self->mesh->layout->decomp)->elementGlobal3DCounts[1],
+				 ((HexaMD*)self->mesh->layout->decomp)->elementGlobal3DCounts[2], 
+				 self->numProcX, self->numProcY, self->numProcZ,
+				 ((HexaMD*)self->mesh->layout->decomp)->elementLocal3DCounts[self->rank][0],
+				 ((HexaMD*)self->mesh->layout->decomp)->elementLocal3DCounts[self->rank][1],
+				 ((HexaMD*)self->mesh->layout->decomp)->elementLocal3DCounts[self->rank][2] );
 		fflush( self->simInfo );
 	}
 	sprintf( tmpBuf, "%s/timeStep.%u", self->outputPath, self->rank );
@@ -1045,7 +1040,7 @@ void _Snac_Context_Solve( void* context ) {
 
 	Journal_Dump( self->strainRateOut, &(self->timeStep) );
 	Journal_Dump( self->stressOut, &(self->timeStep) );
-        Journal_Dump( self->hydroPressureOut, &(self->timeStep) );
+	Journal_Dump( self->hydroPressureOut, &(self->timeStep) );
 	_Snac_Context_DumpStressTensor( self );
 
 	KeyCall( self, self->loopNodesMomentumK, EntryPoint_VoidPtr_CallCast* )( KeyHandle(self,self->loopNodesMomentumK), self );
