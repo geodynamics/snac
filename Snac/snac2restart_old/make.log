@@ -1,0 +1,4 @@
+make[1]: Entering directory `/home/echoi/opt/SNAC_clean/Snac/snac2restart'
+/usr/bin/cc -pipe  -DVERSION=\"14568\" -Wall -g  -DCURR_MODULE_NAME=\"snac2restart\"  -fPIC -c -o /home/echoi/opt/SNAC_clean/build/tmp/bin-snac2restart/snac2restart.o -I/home/echoi/opt/SNAC_clean/build/include      snac2restart.c
+/usr/bin/cc -pipe  -DVERSION=\"14568\" -Wall -g  -DCURR_MODULE_NAME=\"snac2restart\"  -o /home/echoi/opt/SNAC_clean/build/bin/snac2restart /home/echoi/opt/SNAC_clean/build/tmp/bin-snac2restart/snac2restart.o  -Xlinker -rpath -Xlinker /home/echoi/opt/SNAC_clean/build/lib  -L/home/echoi/opt/SNAC_clean/build/lib     
+make[1]: Leaving directory `/home/echoi/opt/SNAC_clean/Snac/snac2restart'
