@@ -60,6 +60,8 @@ FILE*		apsIn;
 FILE*		minLengthIn;
 FILE*		forceIn;
 
+unsigned int	elementGlobalSize[3];
+unsigned int	rank_array[3];
 unsigned int	elementLocalSize[3];
 unsigned int 	doTemp = 1;
 unsigned int 	doAps = 1;
@@ -233,7 +235,10 @@ int main( int argc, char* argv[] ) {
 
 
 	/* Read in simulation information... TODO: assumes nproc=1 */
-	fscanf( simIn, "%u %u %u\n", &elementLocalSize[0], &elementLocalSize[1], &elementLocalSize[2] );
+	fscanf( simIn, "%u %u %u %u %u %u %u %u %u\n", 
+			&elementGlobalSize[0],&elementGlobalSize[1],&elementGlobalSize[2],
+			&rank_array[0],&rank_array[1],&rank_array[2],
+			&elementLocalSize[0], &elementLocalSize[1], &elementLocalSize[2] );
 
 	/* Read in loop information */
 	dumpIteration = 0;
