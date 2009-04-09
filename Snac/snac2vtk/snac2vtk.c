@@ -136,201 +136,195 @@ int main( int argc, char* argv[])
     unsigned int	dumpIteration;
     double		time;
     double		dt;
+    int		gelem[3];
     int		gnode[3];
     int		rank_array[3];
     unsigned int	rankI,rankJ,rankK;
     unsigned int	stepMin=-1,stepMax=0;
 	
-    if( argc<7 || argc>10 ) {
-	fprintf(stderr,"snac2vtk global-mesh-size-x global-mesh-size-y global-mesh-size-z num-processors-x num-processors-y num-processors-z [start-step[max-step]] [end-step[max-step]] [failure-angle[30 (degrees)]]\n");
-	exit(1);
+    if( argc<2 || argc>5 ) {
+		fprintf(stderr,"snac2vtk path-to-output-directory [start-step[max-step]] [end-step[max-step]] [failure-angle[30 (degrees)]]\n");
+		exit(1);
     }
 
     /*
-     * TODO, get from arg list 
+     * Set the default input/output path and range of time steps to process.
      */
-    sprintf( path, "." );
-    gnode[0] = atoi(argv[1]);
-    gnode[1] = atoi(argv[2]);
-    gnode[2] = atoi(argv[3]);
-    rank_array[0] = atoi(argv[4]);
-    rank_array[1] = atoi(argv[5]);
-    rank_array[2] = atoi(argv[6]);
+    sprintf( path, argv[1] );
+	sprintf( tmpBuf, "%s/timeStep.0", path );
+	if( (timeStepIn = fopen( tmpBuf, "r" )) == NULL ) {
+		fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+		exit(1);
+	}
+	while( !feof( timeStepIn ) ) {
+		fscanf( timeStepIn, "%16u %16lg %16lg\n", &simTimeStep, &time, &dt );
+		if(stepMin==-1) stepMin=simTimeStep;
+		if(stepMax<simTimeStep) stepMax=simTimeStep;
+	}
+	if( stepMin==-1 ) {
+		fprintf(stderr, "Time step file zero length\n" );
+		exit(1);
+	}
+	fclose( timeStepIn );
+	
+    /*
+     * Overwrite the input/output path and the min/max time step with the user-provided values.
+     */
+	if(argc>=3) {
+		if(atoi(argv[2])>stepMin) stepMin=atoi(argv[2]);
+	} else {
+		stepMin=stepMax;
+	}
+	if(argc>=4) {
+		if(atoi(argv[3])<stepMax) stepMax=atoi(argv[3]);
+	}/*  else { */
+	/* 		    stepMax=stepMin; */
+	/* 		} */
+
+	if (stepMax<stepMin) {
+		fprintf(stderr, "Error in time step range (start/stop reversed):  %u <-> %u\n", stepMin, stepMax );
+		exit(1);
+	}
+	fprintf(stderr, "Time step range:  %u <-> %u\n", stepMin, stepMax );
+
+	/*
+	 *  Parse angle used to compute failure potential - using global variable (ick)
+	 */
+	if(argc>=5) {
+		failureAngle=atof(argv[4]);
+		fprintf(stderr, "Failure angle = %g\n", failureAngle );
+	}
 		
+    /*
+     * Read common parameters for mesh geometry and parallel decomposition.
+     */
+	sprintf( tmpBuf, "%s/sim.0", path );
+	if( (simIn = fopen( tmpBuf, "r" )) == NULL ) {
+		fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+		abort();
+	}
+	fscanf( simIn, "%u %u %u %u %u %u %u %u %u\n", 
+			&gelem[0],&gelem[1],&gelem[2],
+			&rank_array[0],&rank_array[1],&rank_array[2],
+			&elementLocalSize[0], &elementLocalSize[1], &elementLocalSize[2] );
+	fclose( simIn );
+	gnode[0] = gelem[0]+1;
+	gnode[1] = gelem[1]+1;
+	gnode[2] = gelem[2]+1;
+
+	/* Start processing for each rank */
     for( rankK=0; rankK < rank_array[2]; rankK++ )
 	for( rankJ=0; rankJ < rank_array[1]; rankJ++ )
 	    for( rankI=0; rankI < rank_array[0]; rankI++ ) {
-		rank = rankI + rankJ*rank_array[0] + rankK*rank_array[0]*rank_array[1]; 
-
-		sprintf( tmpBuf, "%s/sim.%u", path, rank );
-		if( (simIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    if( rank == 0 ) {
-			fprintf(stderr, "\"%s\" not found\n", tmpBuf );
-			exit(1);
-		    }
-		    else {
-			break;
-		    }
-		}
-		sprintf( tmpBuf, "%s/timeStep.%u", path, rank );
-		if( (timeStepIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    fprintf(stderr, "\"%s\" not found\n", tmpBuf );
-		    exit(1);
-		}
-		sprintf( tmpBuf, "%s/strainRate.%u", path, rank );
-		if( (strainRateIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    fprintf(stderr, "\"%s\" not found\n", tmpBuf );
-		    exit(1);
-		}
-		sprintf( tmpBuf, "%s/hydroPressure.%u", path, rank );
-		if( ( hydroPressureIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    fprintf(stderr, "\"%s\" not found\n", tmpBuf );
-		    doHPr = 0;
-		}
-		sprintf( tmpBuf, "%s/stress.%u", path, rank );
-		if( (stressIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    fprintf(stderr, "\"%s\" not found\n", tmpBuf );
-		    exit(1);
-		}
-		sprintf( tmpBuf, "%s/stressTensor.%u", path, rank );
-		if( (stressTensorIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    fprintf(stderr, "\"%s\" not found\n", tmpBuf );
-		    exit(1);
-		}
-		sprintf( tmpBuf, "%s/coord.%u", path, rank );
-		if( (coordIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    fprintf(stderr, "\"%s\" not found\n", tmpBuf );
-		    exit(1);
-		}
-		sprintf( tmpBuf, "%s/vel.%u", path, rank );
-		if( (velIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    fprintf(stderr, "\"%s\" not found\n", tmpBuf );
-		    exit(1);
-		}
-		sprintf( tmpBuf, "%s/force.%u", path, rank );
-		if( (forceIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    fprintf(stderr, "\"%s\" not found\n", tmpBuf );
-		    doForce = 0;
-		}
-		sprintf( tmpBuf, "%s/phaseIndex.%u", path, rank );
-		if( (phaseIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    fprintf(stderr, "\"%s\" not found\n", tmpBuf );
-		    exit(1);
-		}
-		sprintf( tmpBuf, "%s/temperature.%u", path, rank );
-		if( (tempIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    fprintf(stderr, "\"%s\" not found... assuming temperature plugin not used\n", tmpBuf );
-		    doTemp = 0;
-		}
-		sprintf( tmpBuf, "%s/plStrain.%u", path, rank );
-		if( (apsIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    fprintf(stderr, "\"%s\" not found... assuming plastic plugin not used\n", tmpBuf );
-		    doAps = 0;
-		}
-		sprintf( tmpBuf, "%s/viscosity.%u", path, rank );
-		if( (viscIn = fopen( tmpBuf, "r" )) == NULL ) {
-		    fprintf(stderr, "\"%s\" not found... assuming Maxwell plugin not used.\n", tmpBuf );
-		    doVisc = 0;
-		}
-		
-		
-		/*
-		 * Read in simulation information... TODO: assumes nproc=1 
-		 */
-		fscanf( simIn, "%u %u %u\n", &elementLocalSize[0], &elementLocalSize[1], &elementLocalSize[2] );
-
-		
-		/* 		if( feof(timeStepIn) ) { */
-		/* 			fprintf(stderr, "Time step file zero length\n" ); */
-		/* 			assert(timeStepIn); */
-		/* 		} else { */
-		/* 		    fscanf( timeStepIn, "%16u %16lg %16lg\n", &simTimeStep, &time, &dt ); */
-		/* 		} */
-		while( !feof( timeStepIn ) ) {
-		    fscanf( timeStepIn, "%16u %16lg %16lg\n", &simTimeStep, &time, &dt );
-		    /* 			fprintf(stderr, "Time step:  %u <-> %g\n", simTimeStep, time ); */
-		    if(stepMin==-1) stepMin=simTimeStep;
-		    if(stepMax<simTimeStep) stepMax=simTimeStep;
-		}
-		if( stepMin==-1 ) {
-		    fprintf(stderr, "Time step file zero length\n" );
-		    exit(1);
-		}
-		/* 		fseek( timeStepIn, 0, SEEK_SET ); */
-		rewind(timeStepIn);
-		
-		if(argc>=8) {
-		    if(atoi(argv[7])>stepMin) stepMin=atoi(argv[7]);
-		} else {
-		    stepMin=stepMax;
-		}
-		if(argc>=9) {
-		    if(atoi(argv[8])<stepMax) stepMax=atoi(argv[8]);
-		}/*  else { */
-		/* 		    stepMax=stepMin; */
-		/* 		} */
-
-		if (stepMax<stepMin) {
-		    fprintf(stderr, "Error in time step range (start/stop reversed):  %u <-> %u\n", stepMin, stepMax );
-		    exit(1);
-		}
-		fprintf(stderr, "Time step range:  %u <-> %u\n", stepMin, stepMax );
-
-		/*
-		 *  Parse angle used to compute failure potential - using global variable (ick)
-		 */
-		if(argc>=10) {
-		    failureAngle=atof(argv[9]);
-		    fprintf(stderr, "Failure angle = %g\n", failureAngle );
-		}
-
-		/*
-		 * Read in loop information 
-		 */
-		dumpIteration = 0;
-		while( !feof( timeStepIn ) ) {
-		    fscanf( timeStepIn, "%16u %16lg %16lg\n", &simTimeStep, &time, &dt );
-		    if( simTimeStep <stepMin || simTimeStep > stepMax ) {
-			dumpIteration++;
-			continue;
-		    }
-		    ConvertTimeStep( rank, dumpIteration, simTimeStep, time, gnode, rank_array, rankI, rankJ, rankK );
-		    dumpIteration++;
-		}
-		
-		/*
-		 * Close the input files 
-		 */
-		if( apsIn ) {
-		    fclose( apsIn );
-		}
-		if( viscIn ) {
-		    fclose( viscIn );
-		}
-		if( tempIn ) {
-		    fclose( tempIn );
-		}
-		if( forceIn ) {
-		    fclose( forceIn );
-		}
-		if( hydroPressureIn ) {
-		    fclose( hydroPressureIn );
-		}
-		fclose( phaseIn );
-		fclose( velIn );
-		fclose( coordIn );
-		fclose( stressIn );
-		fclose( stressTensorIn );
-		fclose( strainRateIn );
-		fclose( timeStepIn );
-		fclose( simIn );
-		
-		/*
-		 * Do next rank 
-		 */
-		rank++;
-	    }
-
+			rank = rankI + rankJ*rank_array[0] + rankK*rank_array[0]*rank_array[1]; 
+			
+			sprintf( tmpBuf, "%s/timeStep.%u", path, rank );
+			if( (timeStepIn = fopen( tmpBuf, "r" )) == NULL ) {
+				fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+				exit(1);
+			}
+			sprintf( tmpBuf, "%s/strainRate.%u", path, rank );
+			if( (strainRateIn = fopen( tmpBuf, "r" )) == NULL ) {
+				fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+				exit(1);
+			}
+			sprintf( tmpBuf, "%s/hydroPressure.%u", path, rank );
+			if( ( hydroPressureIn = fopen( tmpBuf, "r" )) == NULL ) {
+				fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+				doHPr = 0;
+			}
+			sprintf( tmpBuf, "%s/stress.%u", path, rank );
+			if( (stressIn = fopen( tmpBuf, "r" )) == NULL ) {
+				fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+				exit(1);
+			}
+			sprintf( tmpBuf, "%s/stressTensor.%u", path, rank );
+			if( (stressTensorIn = fopen( tmpBuf, "r" )) == NULL ) {
+				fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+				exit(1);
+			}
+			sprintf( tmpBuf, "%s/coord.%u", path, rank );
+			if( (coordIn = fopen( tmpBuf, "r" )) == NULL ) {
+				fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+				exit(1);
+			}
+			sprintf( tmpBuf, "%s/vel.%u", path, rank );
+			if( (velIn = fopen( tmpBuf, "r" )) == NULL ) {
+				fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+				exit(1);
+			}
+			sprintf( tmpBuf, "%s/force.%u", path, rank );
+			if( (forceIn = fopen( tmpBuf, "r" )) == NULL ) {
+				fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+				doForce = 0;
+			}
+			sprintf( tmpBuf, "%s/phaseIndex.%u", path, rank );
+			if( (phaseIn = fopen( tmpBuf, "r" )) == NULL ) {
+				fprintf(stderr, "\"%s\" not found\n", tmpBuf );
+				exit(1);
+			}
+			sprintf( tmpBuf, "%s/temperature.%u", path, rank );
+			if( (tempIn = fopen( tmpBuf, "r" )) == NULL ) {
+				fprintf(stderr, "\"%s\" not found... assuming temperature plugin not used\n", tmpBuf );
+				doTemp = 0;
+			}
+			sprintf( tmpBuf, "%s/plStrain.%u", path, rank );
+			if( (apsIn = fopen( tmpBuf, "r" )) == NULL ) {
+				fprintf(stderr, "\"%s\" not found... assuming plastic plugin not used\n", tmpBuf );
+				doAps = 0;
+			}
+			sprintf( tmpBuf, "%s/viscosity.%u", path, rank );
+			if( (viscIn = fopen( tmpBuf, "r" )) == NULL ) {
+				fprintf(stderr, "\"%s\" not found... assuming Maxwell plugin not used.\n", tmpBuf );
+				doVisc = 0;
+			}
+			
+			/*
+			 * Read in loop information and write VTK files for wanted time steps.
+			 */
+			dumpIteration = 0;
+			while( !feof( timeStepIn ) ) {
+				fscanf( timeStepIn, "%16u %16lg %16lg\n", &simTimeStep, &time, &dt );
+				if( simTimeStep <stepMin || simTimeStep > stepMax ) {
+					dumpIteration++;
+					continue;
+				}
+				ConvertTimeStep( rank, dumpIteration, simTimeStep, time, gnode, rank_array, rankI, rankJ, rankK );
+				dumpIteration++;
+			}
+			
+			/*
+			 * Close the input files 
+			 */
+			if( apsIn ) {
+				fclose( apsIn );
+			}
+			if( viscIn ) {
+				fclose( viscIn );
+			}
+			if( tempIn ) {
+				fclose( tempIn );
+			}
+			if( forceIn ) {
+				fclose( forceIn );
+			}
+			if( hydroPressureIn ) {
+				fclose( hydroPressureIn );
+			}
+			fclose( timeStepIn );
+			fclose( phaseIn );
+			fclose( velIn );
+			fclose( coordIn );
+			fclose( stressIn );
+			fclose( stressTensorIn );
+			fclose( strainRateIn );
+			
+			/*
+			 * Do next rank 
+			 */
+			rank++;
+	    } /* End processing for each rank */
+	
     return 0;
 }
 
@@ -949,7 +943,7 @@ void ConvertTimeStep(
 	 * Write out coordinates. 
 	 */
 	fprintf( vtkOut1, "    <PPoints>\n");
-	fprintf( vtkOut1, "      <PDataArray type=\"Float32\" NumberOfComponents=\"3\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" NumberOfComponents=\"3\"/>\n");
 	fprintf( vtkOut1, "    </PPoints>\n");
 
 	/*
@@ -963,7 +957,8 @@ void ConvertTimeStep(
 			     rankII*elementLocalSize[0],(rankII+1)*elementLocalSize[0],
 			     rankJJ*elementLocalSize[1],(rankJJ+1)*elementLocalSize[1],
 			     rankKK*elementLocalSize[2],(rankKK+1)*elementLocalSize[2],
-			     path, rank2, simTimeStep );
+					 ".", rank2, simTimeStep );
+			/* "." is hardwired here assuming *.vts files are in the same directory with *.pvts. */
 		}
 	
 	fprintf( vtkOut1, "  </PStructuredGrid>\n");
