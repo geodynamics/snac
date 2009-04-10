@@ -32,6 +32,8 @@
 #ifndef _SnacMaxwell_Output_
 #define _SnacMaxwell_Output_
 
+	void _SnacMaxwell_WriteViscosity( void* _context );
 	void _SnacMaxwell_DumpViscosity( void* _context );
+	void _SnacMaxwell_CheckpointViscosity( void* _context );
 
 #endif

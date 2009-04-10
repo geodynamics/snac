@@ -44,8 +44,10 @@
 	struct _SnacViscoPlastic_Context {
 		/* Dumping */
 		FILE*				plStrainOut;
-		FILE*				plstrainTensorOut;
 		FILE*				viscOut;
+		FILE*				plStrainCheckpoint;
+		FILE*				viscCheckpoint;
+		FILE*				plstrainTensorOut;
 	};
 	
 	/* Print the contents of the context extension */

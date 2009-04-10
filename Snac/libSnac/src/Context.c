@@ -297,7 +297,7 @@ void _Snac_Context_Init( Snac_Context* self ) {
 	/* Snac_Context info */
 	/* Although we set this for safely (use of it will give 0s), it shouldn't be used... the new value should be set before
 	    hand */
-	self->restartStep = Dictionary_Entry_Value_AsUnsignedInt(
+	self->restartTimestep = Dictionary_Entry_Value_AsUnsignedInt(
 		Dictionary_GetDefault( self->dictionary, "restartStep", Dictionary_Entry_Value_FromUnsignedInt( 0 ) ) );
 
 	tmpStr = Dictionary_Entry_Value_AsString( Dictionary_Get( self->dictionary, "dtType" ) );
@@ -399,6 +399,15 @@ void _Snac_Context_Init( Snac_Context* self ) {
 			(ArithPointer)self->timeStepInfo,
 			self->snacError,
 			"\"%s\"  failed to open file for writing", tmpBuf );
+	}
+	if( self->checkpointEvery > 0 ) {
+		sprintf( tmpBuf, "%s/checkpointTimeStep.%u", self->outputPath, self->rank );
+		if( (self->checkpointTimeStepInfo = fopen( tmpBuf, "w+" )) == NULL ) {
+			Journal_Firewall(
+							 (ArithPointer)self->checkpointTimeStepInfo,
+							 self->snacError,
+							 "\"%s\"  failed to open file for writing", tmpBuf );
+		}
 	}
 
 	/* Add hooks to exisiting entry points */
@@ -915,16 +924,11 @@ void Snac_Context_TimeStepZero( void* context ) {
 	Snac_Context* self = (Snac_Context*)context;
 	Element_LocalIndex	element_lI;
 
-	/* if restarting, reset the time step counter */
-	if( self->restartStep > 0 )
-		self->timeStep = self->restartStep;
-
 #ifdef DEBUG
-	fprintf(stderr, "TimeStepZero:  restartStep=%d,  timeStep=%d\n", self->restartStep, self->timeStep);
+	fprintf(stderr, "TimeStepZero:  restartTimestep=%d,  timeStep=%d\n", self->restartTimestep, self->timeStep);
 #endif
 
-	_Snac_Context_InitDump( self );
-
+	_Snac_Context_InitOutput( self );
 
 	if( self->rank == 0 ) Journal_Printf( self->snacInfo, "In: %s\n", __func__ );
 	if( self->rank == 0 ) Journal_Printf(
@@ -934,10 +938,10 @@ void Snac_Context_TimeStepZero( void* context ) {
 		self->currentTime );
 
 	/* Write out timeStep info */
-	DumpLoopInfo( self );
+	_Snac_Context_WriteLoopInfo( self );
 
-	if( self->restartStep == 0 ) {
-		for( element_lI = 0; element_lI < self->mesh->elementLocalCount && self->restartStep == 0; element_lI++ ) {
+	if( self->restartTimestep == 0 ) {
+		for( element_lI = 0; element_lI < self->mesh->elementLocalCount && self->restartTimestep == 0; element_lI++ ) {
 			Snac_Element* element = Snac_Element_At( self, element_lI );
 			Material_Index                  material_I = element->material_I;
 			Snac_Material*          material = &self->materialProperty[material_I];
@@ -961,25 +965,10 @@ void Snac_Context_TimeStepZero( void* context ) {
 		}
 	}
 
-	Journal_Dump( self->strainRateOut, &(self->timeStep) );
-
-	Journal_Dump( self->stressOut, &(self->timeStep) );
-
-	Journal_Dump( self->hydroPressureOut, &(self->timeStep) );
-
-	_Snac_Context_DumpStressTensor( self );
-
-
 	/* Update all the elements, and in the process work out this processor's minLengthScale */
 	KeyCall( self, self->loopElementsMomentumK, EntryPoint_VoidPtr_CallCast* )( KeyHandle(self,self->loopElementsMomentumK), self );
 
-	Journal_Dump( self->coordOut, &(self->timeStep) );
-
-	Journal_Dump( self->velOut, &(self->timeStep) );
-
-	Journal_Dump( self->forceOut, &(self->timeStep) );
-
-	Journal_Dump( self->phaseIndexOut, &(self->timeStep) );
+	_Snac_Context_WriteOutput( self );
 
 	KeyCall( self, self->syncK, EntryPoint_Class_VoidPtr_CallCast* )( KeyHandle(self,self->syncK), self );
 	/* _Snac_Context_Sync( self ); */
@@ -990,10 +979,6 @@ double _Snac_Context_Dt( void* context ) {
 	Snac_Context*	self = (Snac_Context*)context;
 
 	if( self->rank == 0 ) Journal_Printf( self->debug, "In: %s\n", __func__ );
-
-	/* if restarting, reset the time step counter */
-	if( self->restartStep > 0 && self->timeStep <= 1)
-		self->timeStep = self->restartStep+1;
 
 	return self->dt;
 }
@@ -1019,9 +1004,7 @@ void _Snac_Context_Solve( void* context ) {
 
 	if( self->rank == 0 ) Journal_DPrintf( self->debug, "In: %s\n", __func__ );
 
-	if( self->timeStep == 0 || ((self->timeStep-1) % self->dumpEvery == 0) ) {
-		DumpLoopInfo( self );
-	}
+	_Snac_Context_WriteLoopInfo( self );
 
 	/* Perform the Snac solve loop */
 	/* update the energy solve */
@@ -1038,27 +1021,20 @@ void _Snac_Context_Solve( void* context ) {
 		Mesh_Sync( self->mesh );
 	}
 
-	Journal_Dump( self->strainRateOut, &(self->timeStep) );
-	Journal_Dump( self->stressOut, &(self->timeStep) );
-	Journal_Dump( self->hydroPressureOut, &(self->timeStep) );
-	_Snac_Context_DumpStressTensor( self );
-
 	KeyCall( self, self->loopNodesMomentumK, EntryPoint_VoidPtr_CallCast* )( KeyHandle(self,self->loopNodesMomentumK), self );
-
-	Journal_Dump( self->coordOut, &(self->timeStep) );
-	Journal_Dump( self->velOut, &(self->timeStep) );
-	Journal_Dump( self->forceOut, &(self->timeStep) );
 
 	KeyCall( self, self->loopElementsMomentumK, EntryPoint_VoidPtr_CallCast* )( KeyHandle( self, self->loopElementsMomentumK ), self );
 
+	_Snac_Context_WriteOutput( self );
+
+#if 0
 	/* Synchronise again, but really need to consolidate with the other one... */
 	if( self->forceCalcType == Snac_Force_Complete &&
 	    self->mesh->layout->decomp->procsInUse > 1 )
 	{
 		Mesh_Sync( self->mesh );
 	}
-
-	Journal_Dump( self->phaseIndexOut, &(self->timeStep) );
+#endif
 }
 
 
@@ -1083,7 +1059,6 @@ void _Snac_Context_CalcStresses( void* context ) {
 void _Snac_Context_LoopNodes( void* context ) {
 	Snac_Context* 		self = (Snac_Context*)context;
 	Node_LocalIndex		node_lI;
-	Snac_Parallel*		parallel = self->parallel;
 
 	if( self->rank == 0 ) Journal_DPrintf( self->debug, "In: %s\n", __func__ );
 	if( self->rank == 0 ) Journal_Printf(
@@ -1179,7 +1154,7 @@ void _Snac_Context_Sync( void* context ) {
 
 	MPI_Allreduce( &self->minLengthScale, &tmp, 1, MPI_DOUBLE, MPI_MIN, self->communicator );
 	self->minLengthScale = tmp;
-	if(self->timeStep==self->restartStep && self->restartStep==0) {
+	if(self->timeStep==self->restartTimestep && self->restartTimestep==0) {
 		FILE* fp;
 		char fname[PATH_MAX];
 		self->initMinLengthScale = self->minLengthScale;
@@ -1202,29 +1177,51 @@ void _Snac_Context_Sync( void* context ) {
 		Journal_Printf( self->debug, "new self->dt: %g L/Vmax = %g\n", self->dt,self->minLengthScale/vmax );
 		Journal_Printf( self->debug, "new speed of sound: %g\n", self->speedOfSound );
 	}
+	
+}
 
-	fflush( self->timeStepInfo );
-	Stream_Flush( self->strainRateOut );
-	Stream_Flush( self->stressOut );
-	Stream_Flush( self->hydroPressureOut );
-	Stream_Flush( self->phaseIndexOut );
-	Stream_Flush( self->coordOut );
-	Stream_Flush( self->velOut );
-	Stream_Flush( self->forceOut );
-	fflush(	self->stressTensorOut );
-	fflush( NULL );
+
+void _Snac_Context_WriteLoopInfo( void* context ) {
+	Snac_Context* self = (Snac_Context*)context;
+
+	if( isTimeToDump( self ) ) {
+		fprintf(stderr,"writing timeStep.* at %d\n",self->timeStep );
+		_Snac_Context_DumpLoopInfo( self );
+	}
+
+/* 	if( isTimeToCheckpoint( self ) ) */
+/* 		_Snac_Context_CheckpointLoopInfo( self ); */
 
 }
 
 
-void DumpLoopInfo( void* context ) {
+void _Snac_Context_DumpLoopInfo( void* context ) {
 	Snac_Context* self = (Snac_Context*)context;
 
 	fprintf( self->timeStepInfo, "%16u %16g %16g\n", self->timeStep, self->currentTime, self->dt );
+	fflush( self->timeStepInfo );
 }
 
-void _Snac_Context_InitDump( Snac_Context* self ) {
-	Snac_Mesh* tmpMesh;
+
+void _Snac_Context_CheckpointLoopInfo( void* context ) {
+	Snac_Context* self = (Snac_Context*)context;
+
+	fprintf( self->checkpointTimeStepInfo, "%16u %16g %16g\n", self->timeStep, self->currentTime, self->dt );
+	fflush( self->checkpointTimeStepInfo );
+}
+
+
+void _Snac_Context_InitOutput( void* context ) {
+	Snac_Context* self = (Snac_Context*)context;
+
+	_Snac_Context_InitDump( self );
+	_Snac_Context_InitCheckpoint( self );
+
+}
+
+
+void _Snac_Context_InitDump( void* context ) {
+	Snac_Context* self = (Snac_Context*)context;
 	char tmpBuf[200];
 
 	/* Create the strain rate dumping stream */
@@ -1304,81 +1301,168 @@ void _Snac_Context_InitDump( Snac_Context* self ) {
 	}
 }
 
-void _Snac_Context_AdjustDump( Snac_Context* self ) {
-	Snac_Mesh* tmpMesh;
+
+void _Snac_Context_InitCheckpoint( void* context ) {
+	Snac_Context* self = (Snac_Context*)context;
 	char tmpBuf[200];
 
-	/* Adjust the strain rate dumping stream */
-	sprintf( tmpBuf, "%s/strainRate.%u", self->outputPath, self->rank );
+	/* Create the phase index dumping stream */
+	self->phaseIndexCheckpoint = Journal_Register( VariableDumpStream_Type, "PhaseIndexCP" );
+	sprintf( tmpBuf, "%s/phaseIndexCP.%u", self->outputPath, self->rank );
 	VariableDumpStream_SetVariable(
-		self->strainRateOut,
-		Variable_Register_GetByName( self->variable_Register, "strainRate" ),
+		self->phaseIndexCheckpoint,
+		Variable_Register_GetByName( self->variable_Register, "elementMaterial" ),
 		self->mesh->elementLocalCount,
-		self->dumpEvery,
+		self->checkpointEvery,
 		tmpBuf );
 
-	/* Adjust the stress dumping stream */
-	sprintf( tmpBuf, "%s/stress.%u", self->outputPath, self->rank );
+	/* Create the coords dumping stream */
+	self->coordCheckpoint = Journal_Register( VariableDumpStream_Type, "CoordCP" );
+	sprintf( tmpBuf, "%s/coordCP.%u", self->outputPath, self->rank );
 	VariableDumpStream_SetVariable(
-		self->stressOut,
-		Variable_Register_GetByName( self->variable_Register, "stress" ),
-		self->mesh->elementLocalCount,
-		self->dumpEvery,
-		tmpBuf );
-
-	/* Adjust the pressure  dumping stream */
-	sprintf( tmpBuf, "%s/hydroPressure.%u", self->outputPath, self->rank );
-	VariableDumpStream_SetVariable(
-		self->hydroPressureOut,
-		Variable_Register_GetByName( self->variable_Register, "hydroPressure" ),
-		self->mesh->elementLocalCount,
-		self->dumpEvery,
-		tmpBuf );
-
-	/* Adjust the coords dumping stream */
-	sprintf( tmpBuf, "%s/coord.%u", self->outputPath, self->rank );
-	VariableDumpStream_SetVariable(
-		self->coordOut,
+		self->coordCheckpoint,
 		Variable_Register_GetByName( self->variable_Register, "coord" ),
 		self->mesh->nodeLocalCount,
-		self->dumpEvery,
+		self->checkpointEvery,
 		tmpBuf );
 
-	/* Adjust the velocity dumping stream */
-	sprintf( tmpBuf, "%s/vel.%u", self->outputPath, self->rank );
+	/* Create the velocity dumping stream */
+	self->velCheckpoint = Journal_Register( VariableDumpStream_Type, "VelocityCP" );
+	sprintf( tmpBuf, "%s/velCP.%u", self->outputPath, self->rank );
 	VariableDumpStream_SetVariable(
-		self->velOut,
+		self->velCheckpoint,
 		Variable_Register_GetByName( self->variable_Register, "velocity" ),
 		self->mesh->nodeLocalCount,
-		self->dumpEvery,
+		self->checkpointEvery,
 		tmpBuf );
 
-	/* Adjust the force dumping stream */
-	sprintf( tmpBuf, "%s/force.%u", self->outputPath, self->rank );
-	VariableDumpStream_SetVariable(
-		self->forceOut,
-		Variable_Register_GetByName( self->variable_Register, "force" ),
-		self->mesh->nodeLocalCount,
-		self->dumpEvery,
-		tmpBuf );
+	/* Create the stressTensor dump file */
+	sprintf( tmpBuf, "%s/stressTensorCP.%u", self->outputPath, self->rank );
+	if( (self->stressTensorCheckpoint = fopen( tmpBuf, "w+" )) == NULL ) {
+		assert( self->stressTensorCheckpoint /* failed to open file for writing */ );
+		abort();
+	}
 }
 
 
-void _Snac_Context_DumpStressTensor( Snac_Context* self ) {
+void _Snac_Context_WriteOutput( void* context ) {
+	Snac_Context* self = (Snac_Context*)context;
+
+	if( isTimeToDump( self ) )
+		_Snac_Context_Dump( self );
+
+	if( isTimeToCheckpoint( self ) )
+		_Snac_Context_Checkpoint( self );
+}
+
+
+void _Snac_Context_Dump( void* context ) {
+	Snac_Context* self = (Snac_Context*)context;
 	
-    /*     fprintf(stderr, "Dumping ? stress tensor: ts=%d df=%d\n",self->timeStep,self->dumpEvery); */
-    if( self->timeStep ==0 || (self->timeStep-1) % self->dumpEvery == 0 ) {
-		Element_LocalIndex			element_lI;
+	Journal_Dump( self->strainRateOut, NULL );
+	Journal_Dump( self->stressOut, NULL );
+	Journal_Dump( self->hydroPressureOut, NULL );
+	_Snac_Context_DumpStressTensor( self );
+	Journal_Dump( self->coordOut, NULL );
+	Journal_Dump( self->velOut, NULL );
+	Journal_Dump( self->forceOut, NULL );
+	Journal_Dump( self->phaseIndexOut, NULL );
+
+	Stream_Flush( self->strainRateOut );
+	Stream_Flush( self->stressOut );
+	Stream_Flush( self->hydroPressureOut );
+	Stream_Flush( self->phaseIndexOut );
+	Stream_Flush( self->coordOut );
+	Stream_Flush( self->velOut );
+	Stream_Flush( self->forceOut );
+	fflush(	self->stressTensorOut );
+	fflush( NULL );
+}
+
+
+void _Snac_Context_Checkpoint( void* context ) {
+	Snac_Context* self = (Snac_Context*)context;
+
+	_Snac_Context_CheckpointStressTensor( self );
+	Journal_Dump( self->coordCheckpoint, NULL );
+	Journal_Dump( self->velCheckpoint, NULL );
+	Journal_Dump( self->phaseIndexCheckpoint, NULL );
+
+	fflush( self->stressTensorCheckpoint );
+	Stream_Flush( self->coordCheckpoint );
+	Stream_Flush( self->velCheckpoint );
+	Stream_Flush( self->phaseIndexCheckpoint );
+}
+
+
+void _Snac_Context_DumpStressTensor( void* context ) {
+	Snac_Context* self = (Snac_Context*)context;
+	
+	Element_LocalIndex			element_lI;
+	
+	for( element_lI = 0; element_lI < self->mesh->elementLocalCount; element_lI++ ) {
+		Snac_Element* 				element = Snac_Element_At( self, element_lI );
+		Tetrahedra_Index		tetra_I;
+		float stressVector[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+		float totalVolume = 0.0;
 		
-		for( element_lI = 0; element_lI < self->mesh->elementLocalCount; element_lI++ ) {
-			Snac_Element* 				element = Snac_Element_At( self, element_lI );
-			/* Take average of tetra viscosity for the element */
-			Tetrahedra_Index		tetra_I;
-			for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
-				float stressVector[6] = { element->tetra[tetra_I].stress[0][0], element->tetra[tetra_I].stress[1][1], element->tetra[tetra_I].stress[2][2],
-										  element->tetra[tetra_I].stress[0][1], element->tetra[tetra_I].stress[0][2], element->tetra[tetra_I].stress[1][2]};
-				fwrite( &stressVector, sizeof(float), 6, self->stressTensorOut );
-			}
+		/* Take average of tetra stress for the element */
+		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) 
+			totalVolume += element->tetra[tetra_I].volume;
+		
+		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
+			stressVector[0] += element->tetra[tetra_I].stress[0][0]*element->tetra[tetra_I].volume/totalVolume;
+			stressVector[1] += element->tetra[tetra_I].stress[1][1]*element->tetra[tetra_I].volume/totalVolume;
+			stressVector[2] += element->tetra[tetra_I].stress[2][2]*element->tetra[tetra_I].volume/totalVolume;
+			stressVector[3] += element->tetra[tetra_I].stress[0][1]*element->tetra[tetra_I].volume/totalVolume;
+			stressVector[4] += element->tetra[tetra_I].stress[0][2]*element->tetra[tetra_I].volume/totalVolume;
+			stressVector[5] += element->tetra[tetra_I].stress[1][2]*element->tetra[tetra_I].volume/totalVolume;
 		}
-    }
+		fwrite( &stressVector, sizeof(float), 6, self->stressTensorOut );
+	}
+}
+
+
+void _Snac_Context_CheckpointStressTensor( void* context ) {
+	Snac_Context* self = (Snac_Context*)context;
+	
+	Element_LocalIndex			element_lI;
+	
+	for( element_lI = 0; element_lI < self->mesh->elementLocalCount; element_lI++ ) {
+		Snac_Element* 				element = Snac_Element_At( self, element_lI );
+		/* Take average of tetra viscosity for the element */
+		Tetrahedra_Index		tetra_I;
+		
+		/* Write the stress vector for all the tets. This is for restarting. */
+		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
+			float stressVector[6] = { element->tetra[tetra_I].stress[0][0], element->tetra[tetra_I].stress[1][1], element->tetra[tetra_I].stress[2][2],
+									  element->tetra[tetra_I].stress[0][1], element->tetra[tetra_I].stress[0][2], element->tetra[tetra_I].stress[1][2]};
+			fwrite( &stressVector, sizeof(float), 6, self->stressTensorCheckpoint );
+		}
+	}
+}
+
+
+Bool isTimeToDump( void* context ) {
+	Snac_Context* self = (Snac_Context*)context;
+	
+	if( (self->timeStep==1) || ((self->timeStep>1)&&(self->timeStep%self->dumpEvery==0)) ) 
+		return True;
+	else
+		return False;
+	
+}
+
+
+Bool isTimeToCheckpoint( void* context ) {
+	Snac_Context* self = (Snac_Context*)context;
+	
+	if( (self->timeStep==self->maxTimeSteps) )
+		return True;
+	else {
+		if( self->checkpointEvery == 0 )
+			return False;
+		else if( (self->timeStep%self->checkpointEvery==0) )
+			return True;
+	}
 }

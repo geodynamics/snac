@@ -125,13 +125,13 @@ void _SnacMaxwell_Construct( void* component, Stg_ComponentFactory* cf, void* da
 		SnacMaxwell_Type );
 	EntryPoint_Prepend( /* Dump the initial viscosity */
 		Context_GetEntryPoint( context, AbstractContext_EP_Execute ),
-		"SnacMaxwell_Dump",
-		_SnacMaxwell_DumpViscosity,
+		"SnacMaxwell_Write",
+		_SnacMaxwell_WriteViscosity,
 		SnacMaxwell_Type );
 	EntryPoint_Append( /* and dump each loop */
 		Context_GetEntryPoint( context, Snac_EP_CalcStresses ),
-		"SnacMaxwell_Dump",
-		_SnacMaxwell_DumpViscosity,
+		"SnacMaxwell_Write",
+		_SnacMaxwell_WriteViscosity,
 		SnacMaxwell_Type );
 
 	/* Construct. */

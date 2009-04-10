@@ -42,38 +42,78 @@
 #include <math.h>
 #include <assert.h>
 
+void _SnacMaxwell_WriteViscosity( void* _context ) {
+	Snac_Context*				context = (Snac_Context*) _context;
+
+	if( isTimeToDump( context ) )
+		_SnacMaxwell_DumpViscosity( context );
+	if( isTimeToCheckpoint( context ) )
+		_SnacMaxwell_CheckpointViscosity( context );
+}
+
+
 void _SnacMaxwell_DumpViscosity( void* _context ) {
 	Snac_Context*				context = (Snac_Context*) _context;
-	SnacMaxwell_Context*			contextExt = ExtensionManager_Get(
-							context->extensionMgr,
-							context,
-							SnacMaxwell_ContextHandle );
+	SnacMaxwell_Context*		contextExt = ExtensionManager_Get(
+												context->extensionMgr,
+												context,
+												SnacMaxwell_ContextHandle );
+	Element_LocalIndex			element_lI;
 
-	if( context->timeStep ==0 || (context->timeStep-1) % context->dumpEvery == 0 ) {
-		Element_LocalIndex			element_lI;
-
-		#if DEBUG
-			printf( "In %s()\n", __func__ );
-		#endif
-
-		for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
-			Snac_Element* 				element = Snac_Element_At( context, element_lI );
-			SnacMaxwell_Element*			elementExt = ExtensionManager_Get(
-											context->mesh->elementExtensionMgr,
-											element,
-											SnacMaxwell_ElementHandle );
-			/* Take average of tetra viscosity for the element */
-			Tetrahedra_Index		tetra_I;
-			float                           viscosity = 0.0f;
-			for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ )
-				viscosity += elementExt->viscosity[tetra_I]/Tetrahedra_Count;
-			assert(viscosity >= 0.0);
-
-			if(viscosity > 0.0)
-				viscosity = log10(viscosity);
-
-			fwrite( &viscosity, sizeof(float), 1, contextExt->viscosityOut );
-		}
-		fflush( contextExt->viscosityOut );
+#if DEBUG
+	printf( "In %s()\n", __func__ );
+#endif
+	
+	for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
+		Snac_Element* 				element = Snac_Element_At( context, element_lI );
+		SnacMaxwell_Element*		elementExt = ExtensionManager_Get(
+													context->mesh->elementExtensionMgr,
+													element,
+													SnacMaxwell_ElementHandle );
+		/* Take average of tetra viscosity for the element */
+		Tetrahedra_Index		tetra_I;
+		float					viscosity = 0.0f;
+		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ )
+			viscosity += elementExt->viscosity[tetra_I]/Tetrahedra_Count;
+		assert(viscosity >= 0.0);
+		
+		if(viscosity > 0.0)
+			viscosity = log10(viscosity);
+		
+		fwrite( &viscosity, sizeof(float), 1, contextExt->viscosityOut );
 	}
+	fflush( contextExt->viscosityOut );
+}
+
+void _SnacMaxwell_CheckpointViscosity( void* _context ) {
+	Snac_Context*				context = (Snac_Context*) _context;
+	SnacMaxwell_Context*		contextExt = ExtensionManager_Get(
+												context->extensionMgr,
+												context,
+												SnacMaxwell_ContextHandle );
+	Element_LocalIndex			element_lI;
+
+#if DEBUG
+	printf( "In %s()\n", __func__ );
+#endif
+	
+	for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
+		Snac_Element* 				element = Snac_Element_At( context, element_lI );
+		SnacMaxwell_Element*			elementExt = ExtensionManager_Get(
+														context->mesh->elementExtensionMgr,
+														element,
+														SnacMaxwell_ElementHandle );
+		/* Take average of tetra viscosity for the element */
+		Tetrahedra_Index		tetra_I;
+		float                           viscosity = 0.0f;
+		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ )
+			viscosity += elementExt->viscosity[tetra_I]/Tetrahedra_Count;
+		assert(viscosity >= 0.0);
+		
+		if(viscosity > 0.0)
+			viscosity = log10(viscosity);
+		
+		fwrite( &viscosity, sizeof(float), 1, contextExt->viscosityCheckpoint );
+	}
+	fflush( contextExt->viscosityCheckpoint );
 }

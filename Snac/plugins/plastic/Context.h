@@ -44,6 +44,7 @@
 	struct _SnacPlastic_Context {
 		/* Dumping */
 		FILE*				plStrainOut;
+		FILE*				plStrainCheckpoint;
 	};
 	
 	/* Print the contents of the context extension */

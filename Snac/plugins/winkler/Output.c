@@ -48,7 +48,12 @@ void _SnacWinklerForce_DumpInitForce( void* _context )
 
 	Snac_Context*		context = (Snac_Context*)_context;
 
-	if( context->timeStep - context->restartStep == 1 ) {
+	/* 	if( context->timeStep - context->restartTimestep == 1 ) { */
+	/*
+	* It seems fine to record isoForce.* only once at time step = 1. 
+	* although there might be a pitfall to be found yet.
+	*/
+	if( context->timeStep - context->restartTimestep == 1 ) {
 		FILE* fp;
 		char path[PATH_MAX];
 		Node_LocalIndex       node_lI;

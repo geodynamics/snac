@@ -77,12 +77,12 @@ void _SnacRemesher_InitialConditions( void* _context, void* data ) {
 	/*
 	** Firstly, backup all coords into the 'newNodeCoords' coord block.
 	*/
-	if( context->restartStep > 0 ) {
+	if( context->restartTimestep > 0 ) {
 		FILE *fp;
 		char path[PATH_MAX];
 		double	x,y,z;
 
-		sprintf(path, "%s/snac.initcoord.%d.%06d.restart",context->outputPath,context->rank,context->restartStep);
+		sprintf(path, "%s/snac.initcoord.%d.%06d.restart",context->outputPath,context->rank,context->restartTimestep);
 		Journal_Firewall( ( (fp=fopen(path,"r")) != NULL), context->snacError, "Can't find %s", path );
 		for( lNode_i = 0; lNode_i < mesh->nodeLocalCount; lNode_i++ ) {
 			fscanf( fp, "%le %le %le", &x,&y,&z);

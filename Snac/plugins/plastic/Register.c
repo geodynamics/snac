@@ -109,13 +109,13 @@ void _SnacPlastic_Construct( void* component, Stg_ComponentFactory* cf, void* da
 		SnacPlastic_Type );
 	EntryPoint_Prepend( /* Dump the initial plastic strain */
 		Context_GetEntryPoint( context, AbstractContext_EP_Execute ),
-		"SnacPlastic_Dump",
-		_SnacPlastic_DumpPlasticStrain,
+		"SnacPlastic_Write",
+		_SnacPlastic_WritePlasticStrain,
 		SnacPlastic_Type );
 	EntryPoint_Append( /* and dump each loop */
 		Context_GetEntryPoint( context, Snac_EP_CalcStresses ),
-		"SnacPlastic_Dump",
-		_SnacPlastic_DumpPlasticStrain,
+		"SnacPlastic_Write",
+		_SnacPlastic_WritePlasticStrain,
 		SnacPlastic_Type );
 	
 	/* Add extensions to the interpolate element entry point, but it will only exist if the remesher is loaded. */

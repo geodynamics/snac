@@ -42,35 +42,149 @@
 #include <math.h>
 #include <assert.h>
 
+
+void _SnacViscoPlastic_WritePlasticStrain( void* _context ) {
+	Snac_Context*				context = (Snac_Context*) _context;
+
+	if( isTimeToDump( context ) )
+		_SnacViscoPlastic_DumpPlasticStrain( context );
+
+	if( isTimeToCheckpoint( context ) )
+		_SnacViscoPlastic_CheckpointPlasticStrain( context );
+}
+
+
 void _SnacViscoPlastic_DumpPlasticStrain( void* _context ) {
 	Snac_Context*				context = (Snac_Context*) _context;
-	SnacViscoPlastic_Context*			contextExt = ExtensionManager_Get(
-							context->extensionMgr,
-							context,
-							SnacViscoPlastic_ContextHandle );
+	SnacViscoPlastic_Context*	contextExt = ExtensionManager_Get(
+												context->extensionMgr,
+												context,
+												SnacViscoPlastic_ContextHandle );
+	Element_LocalIndex			element_lI;
+
+#if DEBUG
+	printf( "In %s()\n", __func__ );
+#endif
+	
+	for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
+		Snac_Element* 				element = Snac_Element_At( context, element_lI );
+		SnacViscoPlastic_Element*	elementExt = ExtensionManager_Get(
+													context->mesh->elementExtensionMgr,
+													element,
+													SnacViscoPlastic_ElementHandle );
+		float plasticStrain = elementExt->aps;
+		fwrite( &plasticStrain, sizeof(float), 1, contextExt->plStrainOut );
+	}
+	fflush( contextExt->plStrainOut );
+}
 
 
-	if( context->timeStep ==0 || (context->timeStep-1) % context->dumpEvery == 0 ) {
-		Element_LocalIndex			element_lI;
+void _SnacViscoPlastic_CheckpointPlasticStrain( void* _context ) {
+	Snac_Context*				context = (Snac_Context*) _context;
+	SnacViscoPlastic_Context*	contextExt = ExtensionManager_Get(
+												context->extensionMgr,
+												context,
+												SnacViscoPlastic_ContextHandle );
+	Element_LocalIndex			element_lI;
 
-		#if DEBUG
-			printf( "In %s()\n", __func__ );
-		#endif
-
-		for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
-			Snac_Element* 				element = Snac_Element_At( context, element_lI );
-			SnacViscoPlastic_Element*			elementExt = ExtensionManager_Get(
-											context->mesh->elementExtensionMgr,
-											element,
-											SnacViscoPlastic_ElementHandle );
-			float plasticStrain = elementExt->aps;
-			/* Take average of tetra plastic strain for the element */
-			fwrite( &plasticStrain, sizeof(float), 1, contextExt->plStrainOut );
+#if DEBUG
+	printf( "In %s()\n", __func__ );
+#endif
+	
+	for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
+		Snac_Element* 				element = Snac_Element_At( context, element_lI );
+		SnacViscoPlastic_Element*	elementExt = ExtensionManager_Get(
+													context->mesh->elementExtensionMgr,
+													element,
+													SnacViscoPlastic_ElementHandle );
+		Tetrahedra_Index	tetra_I;
+		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
+			float plasticStrain = elementExt->plasticStrain[tetra_I];
+			fwrite( &plasticStrain, sizeof(float), 1, contextExt->plStrainCheckpoint );
 		}
-		fflush( contextExt->plStrainOut );
+		fflush( contextExt->plStrainCheckpoint );
 	}
 }
 
+
+void _SnacViscoPlastic_WriteViscosity( void* _context ) {
+	Snac_Context*				context = (Snac_Context*) _context;
+
+	if( isTimeToDump( context ) )
+		_SnacViscoPlastic_DumpViscosity( context );
+
+	if( isTimeToCheckpoint( context ) )
+		_SnacViscoPlastic_CheckpointViscosity( context );
+}
+
+
+void _SnacViscoPlastic_DumpViscosity( void* _context ) {
+	Snac_Context*				context = (Snac_Context*) _context;
+	SnacViscoPlastic_Context*	contextExt = ExtensionManager_Get(
+												context->extensionMgr,
+												context,
+												SnacViscoPlastic_ContextHandle );
+	Element_LocalIndex			element_lI;
+
+#if DEBUG
+	printf( "In %s()\n", __func__ );
+#endif
+	
+	for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
+		Snac_Element* 				element = Snac_Element_At( context, element_lI );
+		SnacViscoPlastic_Element*	elementExt = ExtensionManager_Get(
+													context->mesh->elementExtensionMgr,
+													element,
+													SnacViscoPlastic_ElementHandle );
+		Tetrahedra_Index			tetra_I;
+		double					    viscosity = 0.0f;
+		float						logviscosity = 0.0f;
+
+		/* Take average of tetra viscosity for the element */
+		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ )
+			viscosity += elementExt->viscosity[tetra_I]/Tetrahedra_Count;
+		assert(viscosity>0.0);
+		logviscosity = log10(viscosity);
+		fwrite( &logviscosity, sizeof(float), 1, contextExt->viscOut );
+	}
+	fflush( contextExt->viscOut );
+}
+
+
+void _SnacViscoPlastic_CheckpointViscosity( void* _context ) {
+	Snac_Context*				context = (Snac_Context*) _context;
+	SnacViscoPlastic_Context*	contextExt = ExtensionManager_Get(
+												context->extensionMgr,
+												context,
+												SnacViscoPlastic_ContextHandle );
+	Element_LocalIndex			element_lI;
+	
+#if DEBUG
+	printf( "In %s()\n", __func__ );
+#endif
+	
+	for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
+		Snac_Element* 					element = Snac_Element_At( context, element_lI );
+		SnacViscoPlastic_Element*		elementExt = ExtensionManager_Get(
+														context->mesh->elementExtensionMgr,
+														element,
+														SnacViscoPlastic_ElementHandle );
+		Tetrahedra_Index		tetra_I;
+		double					viscosity = 0.0f;
+		float					logviscosity = 0.0f;
+
+		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
+			viscosity = elementExt->viscosity[tetra_I];
+			assert(viscosity>0.0);
+			logviscosity = log10(viscosity);
+			fwrite( &logviscosity, sizeof(float), 1, contextExt->viscCheckpoint );
+		}
+	}
+	fflush( contextExt->viscCheckpoint );
+}
+
+
+#if 0
 void _SnacViscoPlastic_DumpPlasticStrainTensor( void* _context ) {
 	Snac_Context*				context = (Snac_Context*) _context;
 	SnacViscoPlastic_Context*			contextExt = ExtensionManager_Get(
@@ -118,38 +232,4 @@ void _SnacViscoPlastic_DumpPlasticStrainTensor( void* _context ) {
 		fflush( contextExt->plstrainTensorOut );
 	}
 }
-
-void _SnacViscoPlastic_DumpViscosity( void* _context ) {
-	Snac_Context*				context = (Snac_Context*) _context;
-	SnacViscoPlastic_Context*		contextExt = ExtensionManager_Get(
-								   context->extensionMgr,
-								   context,
-								   SnacViscoPlastic_ContextHandle );
-
-	if( context->timeStep ==0 || (context->timeStep-1) % context->dumpEvery == 0 ) {
-		Element_LocalIndex			element_lI;
-
-#if DEBUG
-		printf( "In %s()\n", __func__ );
 #endif
-
-		for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
-			Snac_Element* 				element = Snac_Element_At( context, element_lI );
-			SnacViscoPlastic_Element*		elementExt = ExtensionManager_Get(
-										   context->mesh->elementExtensionMgr,
-										   element,
-										   SnacViscoPlastic_ElementHandle );
-			/* Take average of tetra viscosity for the element */
-			Tetrahedra_Index		tetra_I;
-			double                          viscosity = 0.0f;
-			float                           logviscosity = 0.0f;
-			for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ )
-				viscosity += elementExt->viscosity[tetra_I]/Tetrahedra_Count;
-			assert(viscosity>0.0);
-			logviscosity = log10(viscosity);
-			fwrite( &logviscosity, sizeof(float), 1, contextExt->viscOut );
-		}
-		fflush( contextExt->viscOut );
-	}
-}
-

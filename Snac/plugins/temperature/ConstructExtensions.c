@@ -111,9 +111,15 @@ void _SnacTemperature_ConstructExtensions( void* _context, void* data ) {
 		temperatureBCsDict,
 		context->mesh );
 
-	/* Prepare the dump file */
+	/* Prepare the dump and checkpoint file */
 	sprintf( tmpBuf, "%s/temperature.%u", context->outputPath, context->rank );
 	if( (contextExt->temperatureOut = fopen( tmpBuf, "w+" )) == NULL ) {
 		assert( contextExt->temperatureOut /* failed to open file for writing */ );
+		abort();
+	}
+	sprintf( tmpBuf, "%s/temperatureCP.%u", context->outputPath, context->rank );
+	if( (contextExt->temperatureCheckpoint = fopen( tmpBuf, "w+" )) == NULL ) {
+		assert( contextExt->temperatureCheckpoint /* failed to open file for writing */ );
+		abort();
 	}
 }

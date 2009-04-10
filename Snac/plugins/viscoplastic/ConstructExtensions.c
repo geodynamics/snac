@@ -108,14 +108,21 @@ void _SnacViscoPlastic_ConstructExtensions( void* _context, void* data ) {
 	sprintf( tmpBuf, "%s/plStrain.%u", context->outputPath, context->rank );
 	if( (contextExt->plStrainOut = fopen( tmpBuf, "w+" )) == NULL ) {
 		assert( contextExt->plStrainOut /* failed to open file for writing */ );
+		abort();
 	}
-	/* for restarting, store each Tet's plastic strain */
-	sprintf( tmpBuf, "%s/plStrainTensor.%u", context->outputPath, context->rank );
-	if( (contextExt->plstrainTensorOut = fopen( tmpBuf, "w+" )) == NULL ) {
-		assert( contextExt->plstrainTensorOut /* failed to open file for writing */ );
+	sprintf( tmpBuf, "%s/plStrainCP.%u", context->outputPath, context->rank );
+	if( (contextExt->plStrainCheckpoint = fopen( tmpBuf, "w+" )) == NULL ) {
+		assert( contextExt->plStrainCheckpoint /* failed to open file for writing */ );
+		abort();
 	}
 	sprintf( tmpBuf, "%s/viscosity.%u", context->outputPath, context->rank );
 	if( (contextExt->viscOut = fopen( tmpBuf, "w+" )) == NULL ) {
 		assert( contextExt->viscOut /* failed to open file for writing */ );
+		abort();
+	}
+	sprintf( tmpBuf, "%s/viscosityCP.%u", context->outputPath, context->rank );
+	if( (contextExt->viscCheckpoint = fopen( tmpBuf, "w+" )) == NULL ) {
+		assert( contextExt->viscCheckpoint /* failed to open file for writing */ );
+		abort();
 	}
 }

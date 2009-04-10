@@ -65,4 +65,9 @@ void _SnacPlastic_InterpolateElement( void* _context,
 					       SnacPlastic_ElementHandle );
 
 	elementExt->plasticStrain[dstTetInd] = fromElementExt->plasticStrain[srcTetInd];
+
+	if( (context->rank==1 && (dstElementInd <=7 && dstElementInd >= 6) ) ) //(context->rank==2 && dstElementInd <=2 )
+		fprintf(stderr, "element_lI: (%u %u %e), fromElement_lI: (%u %u %e)\n", 
+				dstElementInd, dstTetInd, elementExt->plasticStrain[dstTetInd],
+				srcElementInd, srcTetInd, fromElementExt->plasticStrain[srcTetInd] );
 }

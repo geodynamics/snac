@@ -32,6 +32,8 @@
 #ifndef _SnacPlastic_Output_
 #define _SnacPlastic_Output_
 
+	void _SnacPlastic_WritePlasticStrain( void* _context );
 	void _SnacPlastic_DumpPlasticStrain( void* _context );
+	void _SnacPlastic_CheckpointPlasticStrain( void* _context );
 
 #endif

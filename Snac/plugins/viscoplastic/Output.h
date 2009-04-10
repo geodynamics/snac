@@ -32,8 +32,12 @@
 #ifndef _SnacViscoPlastic_Output_
 #define _SnacViscoPlastic_Output_
 
+	void _SnacViscoPlastic_WritePlasticStrain( void* _context );
+	void _SnacViscoPlastic_WriteViscosity( void* _context );
 	void _SnacViscoPlastic_DumpPlasticStrain( void* _context );
-	void _SnacViscoPlastic_DumpPlasticStrainTensor( void* _context );
+	void _SnacViscoPlastic_CheckpointPlasticStrain( void* _context );
 	void _SnacViscoPlastic_DumpViscosity( void* _context );
+	void _SnacViscoPlastic_CheckpointViscosity( void* _context );
+	void _SnacViscoPlastic_DumpPlasticStrainTensor( void* _context );
 
 #endif

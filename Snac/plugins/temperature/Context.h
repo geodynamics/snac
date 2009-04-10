@@ -51,6 +51,7 @@
 		
 		/* Dumping */
 		FILE*				temperatureOut;
+		FILE*				temperatureCheckpoint;
 	};
 	
 	/* Print the contents of the context extension */

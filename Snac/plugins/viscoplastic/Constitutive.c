@@ -324,7 +324,7 @@ volumique change in the mesh */
 
 						if( h < 0.0f ) {
 							/* !shear failure  */
-							alam = fs / ( a1 - a2 * anpsi + a1 * anphi * anpsi - a2 * anphi + hardening );
+							alam = fs / ( a1 - a2 * anpsi + a1 * anphi * anpsi - a2 * anphi + 2.0*sqrt(anphi)*hardening );
 							s[0] -= alam * ( a1 - a2 * anpsi );
 							s[1] -= alam * a2 * ( 1.0f - anpsi );
 							s[2] -= alam * ( a2 - a1 * anpsi );

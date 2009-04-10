@@ -75,9 +75,15 @@ void _SnacMaxwell_ConstructExtensions( void* _context, void* data ) {
 		context->condFunc_Register,
 		ConditionFunction_New( _SnacVelocity_VariableCondition, "variablevelBC" ) );
 
-	/* Prepare the dump file */
+	/* Prepare the dump and checkpoint file */
 	sprintf( tmpBuf, "%s/viscosity.%u", context->outputPath, context->rank );
 	if( (contextExt->viscosityOut = fopen( tmpBuf, "w+" )) == NULL ) {
 		assert( contextExt->viscosityOut /* failed to open file for writing */ );
+		abort();
+	}
+	sprintf( tmpBuf, "%s/viscosityCP.%u", context->outputPath, context->rank );
+	if( (contextExt->viscosityCheckpoint = fopen( tmpBuf, "w+" )) == NULL ) {
+		assert( contextExt->viscosityCheckpoint /* failed to open file for writing */ );
+		abort();
 	}
 }

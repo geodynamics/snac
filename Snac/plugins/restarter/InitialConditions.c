@@ -66,11 +66,11 @@ void _SnacRestart_InitialCoords( void* _context, void* data ) {
 
 	Journal_Printf( context->snacInfo, "In: %s\n", __func__ );
 
-	sprintf(path, "%s/snac.coord.%d.%06d.restart",context->outputPath,context->rank,context->restartStep);
+	sprintf(path, "%s/snac.coord.%d.%06d.restart",context->outputPath,context->rank,context->restartTimestep);
 #ifdef DEBUG
-	fprintf(stderr,"Restarter:  loading mesh coordinates from %s for r=%d, ts=%d \n",path,context->rank,context->restartStep);
+	fprintf(stderr,"Restarter:  loading mesh coordinates from %s for r=%d, ts=%d \n",path,context->rank,context->restartTimestep);
 #endif
-	Journal_Firewall( (fp = fopen(path,"r")) != NULL, "Can't find %s - is the parameter \"restartStep\" set correctly in the input xml?\n", path);
+	Journal_Firewall( (fp = fopen(path,"r")) != NULL, "Can't find %s - is the parameter \"restartTimestep\" set correctly in the input xml?\n", path);
 
 	/* read in restart file to construct the initial mesh */
 	for( node_lI = 0; node_lI < context->mesh->nodeLocalCount; node_lI++ ) {
@@ -96,11 +96,11 @@ void _SnacRestart_InitialVelocities( void* _context, void* data ) {
 
 	Journal_Printf( context->snacInfo, "In: %s\n", __func__ );
 
-	sprintf(path, "%s/snac.vel.%d.%06d.restart",context->outputPath,context->rank,context->restartStep);
+	sprintf(path, "%s/snac.vel.%d.%06d.restart",context->outputPath,context->rank,context->restartTimestep);
 #ifdef DEBUG
-	fprintf(stderr,"Restarter:  loading mesh velocities from %s for r=%d, ts=%d \n",path,context->rank,context->restartStep);
+	fprintf(stderr,"Restarter:  loading mesh velocities from %s for r=%d, ts=%d \n",path,context->rank,context->restartTimestep);
 #endif
-	Journal_Firewall( (fp = fopen(path,"r")) != NULL, "Can't find %s - is the parameter \"restartStep\" set correctly in the input xml?\n", path);
+	Journal_Firewall( (fp = fopen(path,"r")) != NULL, "Can't find %s - is the parameter \"restartTimestep\" set correctly in the input xml?\n", path);
 
 	/* read in restart file to construct the initial mesh */
 	for( node_lI = 0; node_lI < context->mesh->nodeLocalCount; node_lI++ ) {
@@ -122,11 +122,11 @@ void _SnacRestart_InitialStress( void* _context, void* data ) {
 	char				path[PATH_MAX];
 
 	Journal_Printf( context->snacInfo, "In: %s\n", __func__ );
-	sprintf(path, "%s/snac.stressTensor.%d.%06d.restart",context->outputPath,context->rank,context->restartStep);
-	Journal_Firewall( (fp = fopen(path,"r")) != NULL, "Can't find %s - is the parameter \"restartStep\" set correctly in the input xml?\n", path );
+	sprintf(path, "%s/snac.stressTensor.%d.%06d.restart",context->outputPath,context->rank,context->restartTimestep);
+	Journal_Firewall( (fp = fopen(path,"r")) != NULL, "Can't find %s - is the parameter \"restartTimestep\" set correctly in the input xml?\n", path );
 
 #ifdef DEBUG
-	fprintf(stderr,"Restarter:  loading stress tensors from %s for r=%d, ts=%d \n",path,context->rank,context->restartStep);
+	fprintf(stderr,"Restarter:  loading stress tensors from %s for r=%d, ts=%d \n",path,context->rank,context->restartTimestep);
 #endif
 
 	/* read in restart file to assign initial stress field. */
@@ -147,9 +147,9 @@ void _SnacRestart_InitialStress( void* _context, void* data ) {
 				for(j=0;j<3;j++)
 					element->tetra[tetra_I].stress[i][j] = S[i][j];
 		}
-		element->hydroPressure = 0.0f;
+		element->hydroPressure = 0.0;
 		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
-			element->hydroPressure += element->tetra[tetra_I].stress[0][0] / Tetrahedra_Count;
+			element->hydroPressure += ((element->tetra[tetra_I].stress[0][0]+element->tetra[tetra_I].stress[1][1]+element->tetra[tetra_I].stress[2][2])/3.0/Tetrahedra_Count);
 			sVolAvg +=
 				element->tetra[tetra_I].stress[1][1] * element->tetra[tetra_I].stress[2][2] +
 				element->tetra[tetra_I].stress[2][2] * element->tetra[tetra_I].stress[0][0] +
@@ -161,7 +161,7 @@ void _SnacRestart_InitialStress( void* _context, void* data ) {
 		}
 		sVolAvg /= Tetrahedra_Count;
 		sOtherAvg /= Tetrahedra_Count;
-		element->stress = 0.5f * sqrt( 0.5f * fabs( -1.0f * sVolAvg + sOtherAvg ) );
+		element->stress = 0.5 * sqrt( 0.5 * fabs( -1.0f * sVolAvg + sOtherAvg ) );
 	}
 	fclose( fp );
 }

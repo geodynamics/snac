@@ -137,13 +137,13 @@ void _SnacTemperature_Construct( void* component, Stg_ComponentFactory* cf, void
 		SnacTemperature_Type );
 	EntryPoint_Prepend( /* Dump the initial temperature */
 		Context_GetEntryPoint( context, AbstractContext_EP_Execute ),
-		"SnacTemperature_Dump",
-		_SnacTemperature_DumpTemp,
+		"SnacTemperature_Write",
+		_SnacTemperature_WriteTemp,
 		SnacTemperature_Type );
 	EntryPoint_Append( /* and dump each loop */
 		Context_GetEntryPoint( context, Snac_EP_LoopNodesEnergy ),
-		"SnacTemperature_Dump",
-		_SnacTemperature_DumpTemp,
+		"SnacTemperature_Write",
+		_SnacTemperature_WriteTemp,
 		SnacTemperature_Type );
 	EntryPoint_Append(
 		Context_GetEntryPoint( context, AbstractContext_EP_DestroyExtensions ),

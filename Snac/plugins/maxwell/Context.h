@@ -45,6 +45,7 @@
 		/* If we need to store anything on the context for viscosity... do it here */
 		/* Dumping */
 		FILE*				viscosityOut;
+		FILE*				viscosityCheckpoint;
 	};
 
 	/* Print the contents of the context extension */

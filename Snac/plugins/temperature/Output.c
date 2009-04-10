@@ -40,30 +40,63 @@
 #include "Register.h"
 #include <stdio.h>
 
+void _SnacTemperature_WriteTemp( void* _context ) {
+	Snac_Context*				context = (Snac_Context*) _context;
+
+	if( isTimeToDump( context ) )
+		_SnacTemperature_DumpTemp( context );
+	
+	if( isTimeToCheckpoint( context ) )
+		_SnacTemperature_CheckpointTemp( context );
+
+}
+
+
 void _SnacTemperature_DumpTemp( void* _context ) {
 	Snac_Context*				context = (Snac_Context*) _context;
-	SnacTemperature_Context*		contextExt = ExtensionManager_Get(
-							context->extensionMgr,
-							context,
-							SnacTemperature_ContextHandle );
+	SnacTemperature_Context*	contextExt = ExtensionManager_Get(
+												context->extensionMgr,
+												context,
+												SnacTemperature_ContextHandle );
 	Node_LocalIndex				node_lI;
 
-
-	if( context->timeStep == 0 || (context->timeStep - 1) % context->dumpEvery == 0 ) {
-		#if DEBUG
-			printf( "In %s()\n", __func__ );
-		#endif
-
-		for( node_lI = 0; node_lI < context->mesh->nodeLocalCount; node_lI++ ) {
-			Snac_Node* 				node = Snac_Node_At( context, node_lI );
-			SnacTemperature_Node*			nodeExt = ExtensionManager_Get(
+#if DEBUG
+	printf( "In %s()\n", __func__ );
+#endif
+	
+	for( node_lI = 0; node_lI < context->mesh->nodeLocalCount; node_lI++ ) {
+		Snac_Node* 				node = Snac_Node_At( context, node_lI );
+		SnacTemperature_Node*	nodeExt = ExtensionManager_Get(
 											context->mesh->nodeExtensionMgr,
 											node,
 											SnacTemperature_NodeHandle );
-			float					temperature = nodeExt->temperature;
-			fwrite( &temperature, sizeof(float), 1, contextExt->temperatureOut );
-		}
-		fflush( contextExt->temperatureOut );
+		float					temperature = nodeExt->temperature;
+		fwrite( &temperature, sizeof(float), 1, contextExt->temperatureOut );
 	}
+	fflush( contextExt->temperatureOut );
 }
 
+
+void _SnacTemperature_CheckpointTemp( void* _context ) {
+	Snac_Context*				context = (Snac_Context*) _context;
+	SnacTemperature_Context*	contextExt = ExtensionManager_Get(
+												context->extensionMgr,
+												context,
+												SnacTemperature_ContextHandle );
+	Node_LocalIndex				node_lI;
+	
+#if DEBUG
+	printf( "In %s()\n", __func__ );
+#endif
+	
+	for( node_lI = 0; node_lI < context->mesh->nodeLocalCount; node_lI++ ) {
+		Snac_Node* 				node = Snac_Node_At( context, node_lI );
+		SnacTemperature_Node*	nodeExt = ExtensionManager_Get(
+											context->mesh->nodeExtensionMgr,
+											node,
+											SnacTemperature_NodeHandle );
+		float					temperature = nodeExt->temperature;
+		fwrite( &temperature, sizeof(float), 1, contextExt->temperatureCheckpoint );
+	}
+	fflush( contextExt->temperatureCheckpoint );
+}

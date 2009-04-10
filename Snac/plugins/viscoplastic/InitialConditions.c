@@ -43,7 +43,7 @@
 #include <math.h>
 #define min(a,b) ((a)<(b) ? (a):(b))
 #ifndef PATH_MAX
-	#define PATH_MAX 1024
+#define PATH_MAX 1024
 #endif
 
 void SnacViscoPlastic_InitialConditions( void* _context, void* data ) {
@@ -53,92 +53,55 @@ void SnacViscoPlastic_InitialConditions( void* _context, void* data ) {
 	double                  dt_maxwell = 0;
 	const double            mfrac      = 9.0e-01;
 
-	int			restart = 0;
-	Dictionary_Entry_Value* pluginsList;
-	Dictionary_Entry_Value* plugin;
-	if( context->rank == 0 ) Journal_Printf( context->snacInfo, "In: %s\n", __func__ );
-// search for restart plugin
-	pluginsList = PluginsManager_GetPluginsList( context->dictionary );
-	if (pluginsList) {
-		plugin = Dictionary_Entry_Value_GetFirstElement(pluginsList);
-		while ( plugin ) {
-			if ( 0 == strcmp( Dictionary_Entry_Value_AsString( plugin ),
-					  "SnacRestart" ) ) {
-				restart = 1;
-				break;
-			}
-			plugin = plugin->next;
+	// loop over the phase using the dictionary
+         
+	Dictionary_Entry_Value* materialList = Dictionary_Get( context->dictionary, "materials" );
+	int                           PhaseI = 0;
+	if( materialList ) {
+		Dictionary_Entry_Value* materialEntry = Dictionary_Entry_Value_GetFirstElement( materialList );
+		/* loop around the  phases to initialize rheology */
+		while( materialEntry ) {
+			context->materialProperty[PhaseI].rheology |= Snac_Material_ViscoPlastic;
+			mu                                          = context->materialProperty[PhaseI].mu;
+			vis_min                                     = context->materialProperty[PhaseI].vis_min;
+			dt_maxwellI                                 = mfrac*vis_min/mu;
+			dt_maxwell                                  = (PhaseI==0)?dt_maxwellI:min(dt_maxwellI,dt_maxwell);
+			PhaseI++;
+			materialEntry                               = materialEntry->next;
+
 		}
 	}
-
-// loop over the phase using the dictionary
-         
-        Dictionary_Entry_Value* materialList = Dictionary_Get( context->dictionary, "materials" );
-        int                           PhaseI = 0;
-        if( materialList ) {
-                Dictionary_Entry_Value* materialEntry = Dictionary_Entry_Value_GetFirstElement( materialList );
-                /* loop around the  phases to initialize rheology */
-                while( materialEntry ) {
-                        context->materialProperty[PhaseI].rheology |= Snac_Material_ViscoPlastic;
-                        mu                                          = context->materialProperty[PhaseI].mu;
-                        vis_min                                     = context->materialProperty[PhaseI].vis_min;
-                        dt_maxwellI                                 = mfrac*vis_min/mu;
-			dt_maxwell                                  = (PhaseI==0)?dt_maxwellI:min(dt_maxwellI,dt_maxwell);
-                        PhaseI++;
-                        materialEntry                               = materialEntry->next;
-
-                }
-        }
-        else {
-                context->materialProperty[PhaseI].rheology |= Snac_Material_ViscoPlastic;
-                mu                                          = context->materialProperty[PhaseI].mu;
-               vis_min                                      = context->materialProperty[PhaseI].vis_min;
-	       dt_maxwell                                   = mfrac*vis_min/mu;
-        }
+	else {
+		context->materialProperty[PhaseI].rheology |= Snac_Material_ViscoPlastic;
+		mu                                          = context->materialProperty[PhaseI].mu;
+		vis_min                                      = context->materialProperty[PhaseI].vis_min;
+		dt_maxwell                                   = mfrac*vis_min/mu;
+	}
 	if( context->dt > dt_maxwell) {
 		if(context->dtType == Snac_DtType_Constant) 
 			fprintf(stderr,"dt(%e) should be smaller than dt_maxwell(%e) (mu=%e vis_min=%e mfrac=%e)\n",context->dt,dt_maxwell,mu,vis_min,mfrac);
 		else    context->dt = dt_maxwell;
-        }
-	if( restart ) {
+	}
+	if( context->restartTimestep > 0 ) {
 		FILE*				fp1;
 		FILE*				fp2;
 		char				path[PATH_MAX];
 
-		sprintf(path, "%s/snac.plStrainTensor.%d.%06d.restart",context->outputPath,context->rank,context->restartStep);
+		sprintf(path, "%s/snac.plStrainTensor.%d.%06d.restart",context->outputPath,context->rank,context->restartTimestep);
 		Journal_Firewall( (fp1 = fopen(path,"r")) != NULL, "Can't find %s", path );
 
-		sprintf(path, "%s/snac.plStrain.%d.%06d.restart",context->outputPath,context->rank,context->restartStep);
+		sprintf(path, "%s/snac.plStrain.%d.%06d.restart",context->outputPath,context->rank,context->restartTimestep);
 		Journal_Firewall( (fp2 = fopen(path,"r")) != NULL, "Can't find %s", path );
 
 		/* read in restart file to construct the initial temperature */
 		for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
 			Snac_Element*		element = Snac_Element_At( context, element_lI );
 			SnacViscoPlastic_Element*	viscoplasticElement = ExtensionManager_Get( context->mesh->elementExtensionMgr, element,
-														SnacViscoPlastic_ElementHandle );
+																					SnacViscoPlastic_ElementHandle );
 			const Snac_Material* material = &context->materialProperty[element->material_I];
 			double		     plStrain;
-                        vis_min = context->materialProperty[element->material_I].vis_min;
-			if( material->yieldcriterion == druckerprager ) {
-				Tetrahedra_Index	tetra_I;
-				double              depls = 0.0f;
-
-				for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
-					double			S[3][3];
-					Index			i,j;
-					double			depm;
-					fscanf( fp1, "%le %le %le %le %le %le %le %le %le", &S[0][0],&S[0][1],&S[0][2],&S[1][0],&S[1][1],&S[1][2],&S[2][0],&S[2][1],&S[2][2]);
-					for(i=0;i<3;i++)
-						for(j=0;j<3;j++)
-							viscoplasticElement->plasticstrainTensor[tetra_I][i][j] = S[i][j];
-					/* not the actual viscosity at restartStep, but doesn't affect the calculation afterwards */
-					viscoplasticElement->viscosity[tetra_I] = vis_min;
-
-					depm = ( S[0][0]+S[1][1]+S[2][2] ) / 3.0f;
-					viscoplasticElement->plasticStrain[tetra_I] = sqrt( 0.5f* ((S[0][0]-depm) * (S[0][0]-depm) + (S[1][1]-depm) * (S[1][1]-depm) + (S[2][2]-depm) * (S[2][2]-depm)) + S[0][1]*S[0][1] + S[0][2]*S[0][2] + S[1][2]*S[1][2]);
-				} // for
-			} // if 
-			else if( material->yieldcriterion == mohrcoulomb ) {
+			vis_min = context->materialProperty[element->material_I].vis_min;
+			if( material->yieldcriterion == mohrcoulomb ) {
 				Tetrahedra_Index	tetra_I;
 				double              depls = 0.0f;
 
@@ -148,7 +111,7 @@ void SnacViscoPlastic_InitialConditions( void* _context, void* data ) {
 					double			depm;
 					fscanf( fp1, "%le", &tetraStrain );
 					viscoplasticElement->plasticStrain[tetra_I] = tetraStrain;
-					/* not the actual viscosity at restartStep, but doesn't affect the calculation afterwards */
+					/* not the actual viscosity at restartTimestep, but doesn't affect the calculation afterwards */
 					viscoplasticElement->viscosity[tetra_I] = vis_min;
 				}//for
 			}//elseif
@@ -165,15 +128,15 @@ void SnacViscoPlastic_InitialConditions( void* _context, void* data ) {
 		for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
 			Snac_Element*		element = Snac_Element_At( context, element_lI );
 			SnacViscoPlastic_Element*	viscoplasticElement = ExtensionManager_Get( context->mesh->elementExtensionMgr, element,
-                                                                                                                SnacViscoPlastic_ElementHandle );
-                        double plStrain = viscoplasticElement->aps;
-                        vis_min = context->materialProperty[element->material_I].vis_min;
+																					SnacViscoPlastic_ElementHandle );
+			double plStrain = viscoplasticElement->aps;
+			vis_min = context->materialProperty[element->material_I].vis_min;
 			Tetrahedra_Index	tetra_I;
 			for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
 				viscoplasticElement->plasticStrain[tetra_I] = plStrain;
 				viscoplasticElement->viscosity[tetra_I] = vis_min;
 			}//for
 		}//for 
-}//else
+	}//else
 }//function
 

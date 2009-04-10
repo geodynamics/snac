@@ -150,7 +150,7 @@ void _SnacTemperature_Citcom_Compatible(
 	RegularMeshUtils_Node_1DTo3D( decomp, node_gI, &ijk[0], &ijk[1], &ijk[2] );
 
 	/* for Cartesian case */
-	rMin = R - 4.0e+04f;
+	rMin = R - 3.0e+03f;
 	rMax = R;
 	r = rMax + (*coord)[1];
 	/*ccccc*/
@@ -160,9 +160,12 @@ void _SnacTemperature_Citcom_Compatible(
 	rMin /= R;
 	rMax /= R;
 
+#if 0
 	if( ijk[0] >= midI-5 && ijk[0] <= midI+5 ) {
 		age = 0.01f + 1.0f*abs(ijk[0]-midI)/5.0*5.01;
 	}
+#endif
+	age = 0.5 - 0.2*ijk[2]/(decomp->nodeGlobal3DCounts[2]-1);
 
 	temp = (rMax-r) * 0.5f / sqrt(age/scalet);
 	*temperature = rTemp * erf(temp);
@@ -177,34 +180,20 @@ void _SnacTemperature_InitialConditions( void* _context ) {
 						SnacTemperature_ContextHandle );
 	Element_LocalIndex		element_lI;
 
-	int			restart = 0;
 	Dictionary_Entry_Value* pluginsList;
 	Dictionary_Entry_Value* plugin;
-
-	pluginsList = PluginsManager_GetPluginsList( context->dictionary );
-	if (pluginsList) {
-		plugin = Dictionary_Entry_Value_GetFirstElement(pluginsList);
-		while ( plugin ) {
-			if ( 0 == strcmp( Dictionary_Entry_Value_AsString( plugin ),
-					  "SnacRestart" ) ) {
-				restart = 1;
-				break;
-			}
-			plugin = plugin->next;
-		}
-	}
 
 	Journal_Printf( context->snacInfo, "In: %s\n", __func__ );
 
 	/* Temperature ICs are applied onto the "nodeICs" of Snac, and hence do not need to be repeated, but we must apply BCs */
 
 	/* In case of restarting, Temperature IC is still applied here */
-	if( restart ) {
+	if( context->restartTimestep>0 ) {
 		FILE*				fp;
 		Node_LocalIndex			node_lI;
 		char				path[PATH_MAX];
 
-		sprintf(path, "%s/snac.temp.%d.%06d.restart",context->outputPath,context->rank,context->restartStep);
+		sprintf(path, "%s/snac.temp.%d.%06d.restart",context->outputPath,context->rank,context->restartTimestep);
 		Journal_Firewall( ( (fp = fopen(path,"r")) != NULL ), context->snacError, "Cannot find %s", path );
 
 		/* read in restart file to construct the initial temperature */

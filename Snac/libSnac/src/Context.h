@@ -73,7 +73,6 @@
 		/* Snac_Context info */ \
 		Bool                spherical; \
 		Bool                computeThermalStress; \
-		Index               restartStep; \
 		\
 		\
 		double				topo_kappa; \
@@ -100,14 +99,21 @@
 		/* TODO... we want journal or the like to look after this in the end */ \
 		FILE*				simInfo; \
 		FILE*				timeStepInfo; \
-		FILE*				phaseIndexOut; \
+		FILE*				stressTensorOut; \
+		Stream*				phaseIndexOut; \
 		Stream*				strainRateOut; \
 		Stream*				hydroPressureOut; \
 		Stream*				stressOut; \
-		FILE*				stressTensorOut; \
 		Stream*				coordOut; \
 		Stream*				velOut; \
 		Stream*				forceOut; \
+		\
+		FILE*				checkpointTimeStepInfo; \
+		FILE*				stressTensorCheckpoint; \
+		Stream*				phaseIndexCheckpoint; \
+		Stream*				coordCheckpoint; \
+		Stream*				velCheckpoint; \
+		\
 		Stream*				snacInfo; \
 		Stream*				snacDebug; \
 		Stream*				snacVerbose; \
@@ -223,16 +229,19 @@
 	void _Snac_Context_Sync( void* context );
 
 	/* Some output dumping helpers */
-	void DumpLoopInfo( void* context );
-	void DumpStrainRateAndStress( Snac_Context* self, Element_LocalIndex element_lI );
-	void DumpCoord( Snac_Context* self, Node_LocalIndex node_lI );
-	void DumpVelocity( Snac_Context* self, Node_LocalIndex node_lI );
-	void DumpForces( Snac_Context* self, Node_LocalIndex node_lI );
-	void DumpForceCheckSum( Snac_Context* self );
+	Bool isTimeToDump( void* context );
+	Bool isTimeToCheckpoint( void* context );
 
-	void _Snac_Context_InitDump( Snac_Context* self );
-	void _Snac_Context_AdjustDump( Snac_Context* self );
-	void _Snac_Context_DumpStressTensor( Snac_Context* self );
-	void _Snac_Context_DumpPhaseIndex( Snac_Context* self );
+	void _Snac_Context_WriteLoopInfo( void* context );
+	void _Snac_Context_DumpLoopInfo( void* context );
+	void _Snac_Context_CheckpointLoopInfo( void* context );
+	void _Snac_Context_InitOutput( void* context );
+	void _Snac_Context_InitDump( void* context );
+	void _Snac_Context_InitCheckpoint( void* context );
+	void _Snac_Context_WriteOutput( void* context );
+	void _Snac_Context_Dump( void* context );
+	void _Snac_Context_Checkpoint( void* context );
+	void _Snac_Context_DumpStressTensor( void* context );
+	void _Snac_Context_CheckpointStressTensor( void* context );
 
 #endif /* __Snac_Context_h__ */

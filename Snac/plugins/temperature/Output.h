@@ -32,6 +32,8 @@
 #ifndef _SnacTemperature_Output_
 #define _SnacTemperature_Output_
 
+	void _SnacTemperature_WriteTemp( void* _context );
 	void _SnacTemperature_DumpTemp( void* _context );
+	void _SnacTemperature_CheckpointTemp( void* _context );
 
 #endif

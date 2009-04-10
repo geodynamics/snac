@@ -109,33 +109,23 @@ void _SnacViscoPlastic_Construct( void* component, Stg_ComponentFactory* cf, voi
 		SnacViscoPlastic_Type );
 	EntryPoint_Prepend( /* Dump the initial plastic strain */
 		Context_GetEntryPoint( context, AbstractContext_EP_Execute ),
-		"SnacViscoPlastic_Dump",
-		_SnacViscoPlastic_DumpPlasticStrain,
+		"SnacViscoPlastic_WritePlasticStrain",
+		_SnacViscoPlastic_WritePlasticStrain,
 		SnacViscoPlastic_Type );
 	EntryPoint_Append( /* and dump each loop */
 		Context_GetEntryPoint( context, Snac_EP_CalcStresses ),
-		"SnacViscoPlastic_Dump",
-		_SnacViscoPlastic_DumpPlasticStrain,
+		"SnacViscoPlastic_WritePlasticStrain",
+		_SnacViscoPlastic_WritePlasticStrain,
 		SnacViscoPlastic_Type );
-	EntryPoint_Prepend( /* Dump the initial tetra plastic strain */
+	EntryPoint_Prepend( /* Dump the initial viscosity */
 		Context_GetEntryPoint( context, AbstractContext_EP_Execute ),
-		"SnacViscoPlastic_Dump",
-		_SnacViscoPlastic_DumpPlasticStrainTensor,
-		SnacViscoPlastic_Type );
-	EntryPoint_Append( /* and dump tetra plastic strain each loop */
-		Context_GetEntryPoint( context, Snac_EP_CalcStresses ),
-		"SnacViscoPlastic_Dump",
-		_SnacViscoPlastic_DumpPlasticStrainTensor,
-		SnacViscoPlastic_Type );
-	EntryPoint_Prepend( /* Dump the initial viscosity*/
-		Context_GetEntryPoint( context, AbstractContext_EP_Execute ),
-		"SnacViscoPlastic_Dump",
-		_SnacViscoPlastic_DumpViscosity,
+		"SnacViscoPlastic_WriteViscosity",
+		_SnacViscoPlastic_WriteViscosity,
 		SnacViscoPlastic_Type );
 	EntryPoint_Append( /* and dump visocisty each loop */
 		Context_GetEntryPoint( context, Snac_EP_CalcStresses ),
-		"SnacViscoPlastic_Dump",
-		_SnacViscoPlastic_DumpViscosity,
+		"SnacViscoPlastic_WriteViscosity",
+		_SnacViscoPlastic_WriteViscosity,
 		SnacViscoPlastic_Type );
 
 	/* Add extensions to the interpolate element entry point, but it will only exist if the remesher is loaded. */

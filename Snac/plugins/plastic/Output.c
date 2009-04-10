@@ -40,31 +40,69 @@
 #include "Register.h"
 #include <stdio.h>
 
+
+
+void _SnacPlastic_WritePlasticStrain( void* _context ) {
+	Snac_Context*				context = (Snac_Context*) _context;
+
+	if( isTimeToDump( context ) )
+		_SnacPlastic_DumpPlasticStrain( context );
+
+	if( isTimeToCheckpoint( context ) )
+		_SnacPlastic_CheckpointPlasticStrain( context );
+
+}
+
+
 void _SnacPlastic_DumpPlasticStrain( void* _context ) {
 	Snac_Context*				context = (Snac_Context*) _context;
-	SnacPlastic_Context*			contextExt = ExtensionManager_Get(
-							context->extensionMgr,
-							context,
-							SnacPlastic_ContextHandle );
-
-
-	if( context->timeStep ==0 || (context->timeStep-1) % context->dumpEvery == 0 ) {
-		Element_LocalIndex			element_lI;
-
-		#if DEBUG
-			printf( "In %s()\n", __func__ );
-		#endif
-
-		for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
-			Snac_Element* 				element = Snac_Element_At( context, element_lI );
-			SnacPlastic_Element*			elementExt = ExtensionManager_Get(
-											context->mesh->elementExtensionMgr,
-											element,
-											SnacPlastic_ElementHandle );
-			float plasticStrain = elementExt->aps;
-			/* Take average of tetra plastic strain for the element */
-			fwrite( &plasticStrain, sizeof(float), 1, contextExt->plStrainOut );
-		}
-		fflush( contextExt->plStrainOut );
+	SnacPlastic_Context*		contextExt = ExtensionManager_Get(
+												context->extensionMgr,
+												context,
+												SnacPlastic_ContextHandle );
+	Element_LocalIndex			element_lI;
+	
+#if DEBUG
+	printf( "In %s()\n", __func__ );
+#endif
+	
+	for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
+		Snac_Element* 				element = Snac_Element_At( context, element_lI );
+		SnacPlastic_Element*		elementExt = ExtensionManager_Get(
+													context->mesh->elementExtensionMgr,
+													element,
+													SnacPlastic_ElementHandle );
+		float plasticStrain = elementExt->aps;
+		/* Take average of tetra plastic strain for the element */
+		fwrite( &plasticStrain, sizeof(float), 1, contextExt->plStrainOut );
 	}
+	fflush( contextExt->plStrainOut );
+}
+
+
+void _SnacPlastic_CheckpointPlasticStrain( void* _context ) {
+	Snac_Context*				context = (Snac_Context*) _context;
+	SnacPlastic_Context*		contextExt = ExtensionManager_Get(
+												context->extensionMgr,
+												context,
+												SnacPlastic_ContextHandle );
+	Element_LocalIndex			element_lI;
+
+#if DEBUG
+	printf( "In %s()\n", __func__ );
+#endif
+	
+	for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
+		Snac_Element* 				element = Snac_Element_At( context, element_lI );
+		SnacPlastic_Element*		plasticElement = ExtensionManager_Get(
+														context->mesh->elementExtensionMgr,
+														element,
+														SnacPlastic_ElementHandle );
+		Tetrahedra_Index	tetra_I;
+		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
+			float plasticStrain = plasticElement->plasticStrain[tetra_I];
+			fwrite( &plasticStrain, sizeof(float), 1, contextExt->plStrainCheckpoint );
+		}
+	}
+	fflush( contextExt->plStrainCheckpoint );
 }

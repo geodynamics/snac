@@ -54,7 +54,7 @@
 	#define PATH_MAX 1024
 #endif
 #ifndef Tetrahedra_Count
-	#define Tetrahedra_Count 10
+	#define Tetrahedra_Count 1
 #endif
 
 #define ROTATE(a,i,j,k,l) g=a[i][j];h=a[k][l];a[i][j]=g-s*(h+g*tau);\
@@ -124,7 +124,7 @@ int 			doHPr = 1;
 int 			doVisc = 1;
 double			failureAngle = 30.0;
 const unsigned	numStressVectorComponent = 6; /* 6 components in stress vector */
-const unsigned	numStressComponentsPerElement = 60; /* 6 components times 10 tets per element */
+const unsigned	numStressComponentsPerElement = 6; /* 6 averaged components per element */
 
 int main( int argc, char* argv[]) 
 {
@@ -1231,45 +1231,43 @@ DeriveStressMeasures(FILE *stressTensorIn, double elementStressTensor[3][3], str
     double		failureAngleRadians=elementStressMeasures->failureAngle*M_PI/180.0;
     double		normalVector[3],slopeParallelVector[3],tractionVector[3];
     double		tmp;
+	float	stressTensorArray[numStressVectorComponent];
 
-    for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
-		float	stressTensorArray[numStressVectorComponent];
+	/*
+	 *  Read all tetrahedral stress tensors for this element gI
+	 */
+	if ( fread( stressTensorArray, sizeof(float), numStressVectorComponent, stressTensorIn )==0 )  {
+		if (feof(stressTensorIn)) {
+			fprintf(stderr, "Error (reached EOF prematurely) while reading Snac stress tensor output file: tetrahedral element #%d\n" , tetra_I);
+			exit(1);
+		} else {
+			fprintf(stderr, "Error while reading Snac stress tensor output file: tetrahedral element #%d\n" , tetra_I);
+			exit(1);
+		}
+	}
+	/*
+	 *  Report error and bail if we pick up NaNs in any of the stress components.
+	 */
+	if(isnan(stressTensorArray[0]) || isnan(stressTensorArray[1]) 
+	   || isnan(stressTensorArray[2]) || isnan(stressTensorArray[3]) 
+	   || isnan(stressTensorArray[4]) || isnan(stressTensorArray[5])) {
+		fprintf(stderr,"NaN in stress tensor file\n");
+		abort();
+	}
+	/*
+	 *  Build average stress tensor for element by summing tetrahedral tensor components
+	 *   - even though it's symmetric, do for all 9 components in case we pick the wrong ones before diagonalization
+	 */
+	elementStressTensor[0][0]=stressTensorArray[0];
+	elementStressTensor[1][1]=stressTensorArray[1];
+	elementStressTensor[2][2]=stressTensorArray[2];
+	elementStressTensor[0][1]=stressTensorArray[3];
+	elementStressTensor[0][2]=stressTensorArray[4];
+	elementStressTensor[1][2]=stressTensorArray[5];
+	elementStressTensor[1][0]=stressTensorArray[3];
+	elementStressTensor[2][0]=stressTensorArray[4];
+	elementStressTensor[2][1]=stressTensorArray[5];
 
-		/*
-		 *  Read all tetrahedral stress tensors for this element gI
-		 */
-		if ( fread( stressTensorArray, sizeof(float), numStressVectorComponent, stressTensorIn )==0 )  {
-			if (feof(stressTensorIn)) {
-				fprintf(stderr, "Error (reached EOF prematurely) while reading Snac stress tensor output file: tetrahedral element #%d\n" , tetra_I);
-				exit(1);
-			} else {
-				fprintf(stderr, "Error while reading Snac stress tensor output file: tetrahedral element #%d\n" , tetra_I);
-				exit(1);
-			}
-		}
-		/*
-		 *  Report error and bail if we pick up NaNs in any of the stress components.
-		 */
-		if(isnan(stressTensorArray[0]) || isnan(stressTensorArray[1]) 
-		   || isnan(stressTensorArray[2]) || isnan(stressTensorArray[3]) 
-		   || isnan(stressTensorArray[4]) || isnan(stressTensorArray[5])) {
-			fprintf(stderr,"NaN in stress tensor file\n");
-			abort();
-		}
-		/*
-		 *  Build average stress tensor for element by summing tetrahedral tensor components
-		 *   - even though it's symmetric, do for all 9 components in case we pick the wrong ones before diagonalization
-		 */
-		elementStressTensor[0][0]+=stressTensorArray[0]/(double)Tetrahedra_Count;
-		elementStressTensor[1][1]+=stressTensorArray[1]/(double)Tetrahedra_Count;
-		elementStressTensor[2][2]+=stressTensorArray[2]/(double)Tetrahedra_Count;
-		elementStressTensor[0][1]+=stressTensorArray[3]/(double)Tetrahedra_Count;
-		elementStressTensor[0][2]+=stressTensorArray[4]/(double)Tetrahedra_Count;
-		elementStressTensor[1][2]+=stressTensorArray[5]/(double)Tetrahedra_Count;
-		elementStressTensor[1][0]+=stressTensorArray[3]/(double)Tetrahedra_Count;
-		elementStressTensor[2][0]+=stressTensorArray[4]/(double)Tetrahedra_Count;
-		elementStressTensor[2][1]+=stressTensorArray[5]/(double)Tetrahedra_Count;
-    }
     /*
      *  Diagonalize and find principal stresses from mean stress tensor for element
      */

@@ -149,7 +149,7 @@ void _SnacWinklerForce_Apply(
 					(*force)[2] += factor4 * ( press_norm * area * normal[2] );
 				}
 			}
-			if( context->restartStep == 0 ) {
+			if( context->restartTimestep == 0 ) {
 				if( context->timeStep == 1 ) {
 					Fy = (*force)[1];
 					if(Fy != 0.0)
@@ -563,7 +563,7 @@ void _SnacWinklerForce_Apply_Spherical(
 			}
 		}
 	}
-	if( context->restartStep == 0 ) {
+	if( context->restartTimestep == 0 ) {
 		if( context->timeStep == 1 ) {
 			Fr = (*force)[0]*sin(theta)*cos(phi) + (*force)[1]*sin(theta)*sin(phi) + (*force)[2]*cos(theta);
 			node->residualFr = Fr;

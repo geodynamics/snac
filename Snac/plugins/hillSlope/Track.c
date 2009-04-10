@@ -106,7 +106,7 @@ void SnacHillSlope_Track( void* _context ) {
 	}
     }
 /*     if( restart ) { */
-/* 	fprintf(stderr, "Restarting: in Track.c with ts=%d, restart ts=%d\n", context->timeStep, context->restartStep); */
+/* 	fprintf(stderr, "Restarting: in Track.c with ts=%d, restart ts=%d\n", context->timeStep, context->restartTimestep); */
 /* 	return; */
 /*     } */
 
@@ -115,9 +115,9 @@ void SnacHillSlope_Track( void* _context ) {
     /*
      *  Set up a tracking grids (slices of mesh) to allow t instance to be compared with t-1, t-2 instances
      */
-    if(context->timeStep==1 || (restart && (context->timeStep-context->restartStep)==1)) {
+    if(context->timeStep==1 || (restart && (context->timeStep-context->restartTimestep)==1)) {
 #ifdef DEBUG4
-    fprintf(stderr,"Tracking:  creating surface grid record: %d\n",context->timeStep-context->restartStep);
+    fprintf(stderr,"Tracking:  creating surface grid record: %d\n",context->timeStep-context->restartTimestep);
 #endif
 	yGridOldPtr=(double *)malloc((size_t)(full_I_node_range*full_K_node_range*sizeof(double)));
 	yGridOlderPtr=(double *)malloc((size_t)(full_I_node_range*full_K_node_range*sizeof(double)));
@@ -170,7 +170,7 @@ void SnacHillSlope_Track( void* _context ) {
 	     */
 	    node_yVelocity = node_yElevation-*tmp_yGridOldPtr;
 	    node_yAcceln = node_yVelocity-(*tmp_yGridOldPtr-*tmp_yGridOlderPtr);
-	    if(context->timeStep>=3 || (restart && (context->timeStep-context->restartStep)>=3)){
+	    if(context->timeStep>=3 || (restart && (context->timeStep-context->restartTimestep)>=3)){
 		if(fabs(node_yVelocity)>max_yVelocity)
 		    max_yVelocity = fabs(node_yVelocity);
 		if(fabs(node_yAcceln)>max_yAcceln)
@@ -211,7 +211,7 @@ void SnacHillSlope_Track( void* _context ) {
 /* 	if(unit_yAcceln==0.0 && max_yAcceln>0.0) */
 /* 	    unit_yAcceln = max_yAcceln;	 */
 	if( !contextExt->startedTrackingFlag && max_yVelocity>=startThreshold
-	    && (context->timeStep>=4  || (restart && (context->timeStep-context->restartStep)>=4)) ) 
+	    && (context->timeStep>=4  || (restart && (context->timeStep-context->restartTimestep)>=4)) ) 
 	    contextExt->startedTrackingFlag=TRUE;
 
 #ifdef DEBUG
@@ -227,7 +227,7 @@ void SnacHillSlope_Track( void* _context ) {
 	    if( !contextExt->elasticStabilizedFlag
 		&& CheckStabilizingFn(max_yVelocity, max_yAcceln, stopThreshold, fallingFlag)==TRUE
 		&& (context->maxTimeSteps!=context->timeStep  
-		    || (restart && (context->maxTimeSteps!=(context->timeStep-context->restartStep)) )) ) {
+		    || (restart && (context->maxTimeSteps!=(context->timeStep-context->restartTimestep)) )) ) {
 		/*
 		 *  Stabilizing on this thread
 		 */
@@ -268,7 +268,7 @@ void SnacHillSlope_Track( void* _context ) {
 	     * In addition, force a dump of this model state by changing dump freq to 1.
 	     */
 	    dumpEvery=1;
-	    maxTimeSteps=(!restart ? context->timeStep+1 : context->timeStep-context->restartStep+1);
+	    maxTimeSteps=(!restart ? context->timeStep+1 : context->timeStep-context->restartTimestep+1);
 	    doneTrackingFlag=TRUE;
 #ifdef DEBUG4
 	fprintf(stderr,"r=%d, ts=%d/%d: Terminating simulation at step=%d\n",context->rank, context->timeStep, 
@@ -281,7 +281,7 @@ void SnacHillSlope_Track( void* _context ) {
 	    dumpEvery=contextExt->plasticDeformationDumpFreq;
 #ifdef DEBUG4
 	fprintf(stderr,"r=%d, ts=%d/%d: Shifting to elastoplastic simulation at step=%d for %d more steps\n",context->rank, context->timeStep, 
-		context->maxTimeSteps, context->timeStep, maxTimeSteps-(context->timeStep-context->restartStep));
+		context->maxTimeSteps, context->timeStep, maxTimeSteps-(context->timeStep-context->restartTimestep));
 #endif
 	}
     }

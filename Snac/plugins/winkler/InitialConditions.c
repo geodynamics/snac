@@ -46,7 +46,7 @@ void _SnacWinklerForce_InitialConditions( void* _context, void* data ) {
 
 	Snac_Context*		context = (Snac_Context*)_context;
 
-	if( context->restartStep > 0 && (context->timeStep - context->restartStep == 1) ) {
+	if( context->restartTimestep > 0 && (context->timeStep - context->restartTimestep == 1) ) {
 
 		FILE* fp;
 		char path[PATH_MAX];
