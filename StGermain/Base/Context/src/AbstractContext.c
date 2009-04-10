@@ -888,9 +888,9 @@ void _AbstractContext_Execute_Hook( Context* context ) {
 			dt = self->dtFactor * AbstractContext_Dt( self );
 		}
 
-		AbstractContext_Step( self, dt );
-
 		self->currentTime += dt;
+
+		AbstractContext_Step( self, dt );
 
 		if ( self->frequentOutputEvery ) {
 			if ( self->timeStep % self->frequentOutputEvery == 0 )
@@ -900,10 +900,14 @@ void _AbstractContext_Execute_Hook( Context* context ) {
 			if ( self->timeStep % self->dumpEvery == 0 )
 				AbstractContext_Dump( self );
 		}	
-		if ( self->checkpointEvery ) {
-			if ( self->timeStep % self->checkpointEvery == 0 )
-				AbstractContext_Save( self );
-		}	
+		if( self->timeStep == self->maxTimeSteps )
+			AbstractContext_Save( self );
+		else {
+			if ( self->checkpointEvery ) {
+				if ( self->timeStep % self->checkpointEvery == 0 )
+					AbstractContext_Save( self );
+			}
+		}
 
 		if (self->maxTimeSteps && (self->timeStepSinceJobRestart >= self->maxTimeSteps)) break;
 		if (self->finalTimeStep && (self->timeStep >= self->finalTimeStep)) break;
