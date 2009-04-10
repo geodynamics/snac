@@ -780,123 +780,127 @@ if test "${CXX_PIPE}x" = "x"; then
 	export CXX_PIPE
 fi
 
-if test "${F77}x" = "x"; then
-	F77=`${WHICH} f77 2> /dev/null`
-	if whichFailed "${F77}"; then
-		F77="/usr/bin/f77"
-		if test ! -x ${F77}; then
-			echo "Warning: f77 not found, using g77 instead."
-			F77=`${WHICH} g77 2> /dev/null`
-			if whichFailed "${F77}"; then
-				if test "${SYSTEM}" = "Darwin"; then
-					if test -x "/usr/bin/g77"; then
-						F77="/usr/bin/g77"
-					else
-						F77="/sw/bin/g77"
-					fi
-				else
-					F77="/usr/bin/g77"
-				fi
-			fi	
-		fi
-	fi
-	F77_TEST=`warnValidExecutable ${F77} f77`
-	export F77
-else
-	F77_TEST=`warnValidExecutableInput ${F77} f77`
-fi
-
-if test "${F77_TEST}x" != "x"; then
-	echo ${F77_TEST}
-else
-	DoCritialConftest ./VMake/SystemTests/Fortran-CompilerType F77_TYPE
-	if test "${F77_TYPE}x" = "x"; then
-		echo "Warning: Unknown F77 compiler type \"${F77_TYPE}\"."
-		unset F77_TYPE
-	else
-		export F77_TYPE
-	fi
-
-	if test "${FORTRAN_COMPILER_LIBDIR}x" = "x"; then
-		case $F77_TYPE in
-			gnu)
-				case ${SYSTEM} in
-					Darwin)
-						FORTRAN_COMPILER_LIBDIR="/sw/lib";;
-					*)
-						#gcc can usually find it for systems...
-						FORTRAN_COMPILER_LIBDIR="/usr/lib";;
-				esac;;		
-			osf)
-				case ${SYSTEM} in
-					OSF1)
-						FORTRAN_COMPILER_LIBDIR="/usr/lib";;
-					*)
-						echo "Error: FORTRAN_COMPILER_LIBDIR for F77 compiler \"${F77_TYPE}\" unknown for system \"${SYSTEM}\"";
-						exit ;;
-				esac;;
-			intel)
-				IFORT_EXE=`which ifort`;
-				FORTRAN_COMPILER_LIBDIR=`${GREP} 'LD_LIBRARY_PATH=.*;' ${IFORT_EXE} | ${GREP} -v '\$LD_LIBRARY_PATH' | cut -f 2 -d = | sed 's/;//g'`
-				;;
-			sparc)
-				echo "Warning: FORTRAN_COMPILER_LIBDIR for F77 compiler \"${F77_TYPE}\" not able be determined automatically, please set as an environment variable.";;
-			esac	
-		export FORTRAN_COMPILER_LIBDIR
-	fi
-
-	if test "${EXTRA_FORTRAN_LIBS}x" = "x"; then
-		case $CC_TYPE in
-			gnu|pgi)
-				case $F77_TYPE in
-					gnu)
-						EXTRA_FORTRAN_LIBS="-lg2c";;
-					*)
-						echo "Warning: EXTRA_FORTRAN_LIBS for C compiler \"${CC_TYPE}\" unknown for F77 compiler \"${F77_TYPE}\".";
-				esac ;;
-			osf)
-				case $F77_TYPE in
-					osf)
-						EXTRA_FORTRAN_LIBS="-lfor";;
-					*)
-						echo "Error: EXTRA_FORTRAN_LIBS for C compiler \"${CC_TYPE}\" unknown for F77 compiler \"${F77_TYPE}\"";
-						exit ;;
-				esac ;;
-			intel)
-				case $F77_TYPE in
-					intel)
-						EXTRA_FORTRAN_LIBS="-lifport -lifcore";;
-					*)
-						echo "Warning: EXTRA_FORTRAN_LIBS for C compiler \"${CC_TYPE}\" unknown for F77 compiler \"${F77_TYPE}\".";
-				esac ;;
-			sparc)
-				case $F77_TYPE in
-					sparc)
-						EXTRA_FORTRAN_LIBS="";;
-					*)
-						echo "Warning: EXTRA_FORTRAN_LIBS for C compiler \"${CC_TYPE}\" unknown for F77 compiler \"${F77_TYPE}\".";
-				esac ;;
-			ibmxl)
-				EXTRA_FORTRAN_LIBS="";;	
-			*)
-				echo "Warning: EXTRA_FORTRAN_LIBS for C compiler \"${CC_TYPE}\" unknown";
-#				exit ;;
-		esac
-		export EXTRA_FORTRAN_LIBS
-	fi	
-
-	if test "${CC_FORTRAN_LFLAGS}x" = "x"; then
-		if test "${FORTRAN_COMPILER_LIBDIR}x" != "x"; then
-			CC_FORTRAN_LFLAGS='-L${FORTRAN_COMPILER_LIBDIR} ${EXTRA_FORTRAN_LIBS}'
-		else
-			CC_FORTRAN_LFLAGS='${EXTRA_FORTRAN_LIBS}'
-		fi
-		export CC_FORTRAN_LFLAGS
-	fi	
-
-	DoCritialConftest ./VMake/SystemTests/Fortran-Symbol F77_SYMBOL_TRANSLATION
-	export F77_SYMBOL_TRANSLATION
-fi	
+###
+### Fortran-related configuration disabled. Restore when necessary.
+### EChoi 2009/03/10
+###
+#if test "${F77}x" = "x"; then
+#	F77=`${WHICH} f77 2> /dev/null`
+#	if whichFailed "${F77}"; then
+#		F77="/usr/bin/f77"
+#		if test ! -x ${F77}; then
+#			echo "Warning: f77 not found, using g77 instead."
+#			F77=`${WHICH} g77 2> /dev/null`
+#			if whichFailed "${F77}"; then
+#				if test "${SYSTEM}" = "Darwin"; then
+#					if test -x "/usr/bin/g77"; then
+#						F77="/usr/bin/g77"
+#					else
+#						F77="/sw/bin/g77"
+#					fi
+#				else
+#					F77="/usr/bin/g77"
+#				fi
+#			fi	
+#		fi
+#	fi
+#	F77_TEST=`warnValidExecutable ${F77} f77`
+#	export F77
+#else
+#	F77_TEST=`warnValidExecutableInput ${F77} f77`
+#fi
+#
+#if test "${F77_TEST}x" != "x"; then
+#	echo ${F77_TEST}
+#else
+#	DoCritialConftest ./VMake/SystemTests/Fortran-CompilerType F77_TYPE
+#	if test "${F77_TYPE}x" = "x"; then
+#		echo "Warning: Unknown F77 compiler type \"${F77_TYPE}\"."
+#		unset F77_TYPE
+#	else
+#		export F77_TYPE
+#	fi
+#
+#	if test "${FORTRAN_COMPILER_LIBDIR}x" = "x"; then
+#		case $F77_TYPE in
+#			gnu)
+#				case ${SYSTEM} in
+#					Darwin)
+#						FORTRAN_COMPILER_LIBDIR="/sw/lib";;
+#					*)
+#						#gcc can usually find it for systems...
+#						FORTRAN_COMPILER_LIBDIR="/usr/lib";;
+#				esac;;		
+#			osf)
+#				case ${SYSTEM} in
+#					OSF1)
+#						FORTRAN_COMPILER_LIBDIR="/usr/lib";;
+#					*)
+#						echo "Error: FORTRAN_COMPILER_LIBDIR for F77 compiler \"${F77_TYPE}\" unknown for system \"${SYSTEM}\"";
+#						exit ;;
+#				esac;;
+#			intel)
+#				IFORT_EXE=`which ifort`;
+#				FORTRAN_COMPILER_LIBDIR=`${GREP} 'LD_LIBRARY_PATH=.*;' ${IFORT_EXE} | ${GREP} -v '\$LD_LIBRARY_PATH' | cut -f 2 -d = | sed 's/;//g'`
+#				;;
+#			sparc)
+#				echo "Warning: FORTRAN_COMPILER_LIBDIR for F77 compiler \"${F77_TYPE}\" not able be determined automatically, please set as an environment variable.";;
+#			esac	
+#		export FORTRAN_COMPILER_LIBDIR
+#	fi
+#
+#	if test "${EXTRA_FORTRAN_LIBS}x" = "x"; then
+#		case $CC_TYPE in
+#			gnu|pgi)
+#				case $F77_TYPE in
+#					gnu)
+#						EXTRA_FORTRAN_LIBS="-lg2c";;
+#					*)
+#						echo "Warning: EXTRA_FORTRAN_LIBS for C compiler \"${CC_TYPE}\" unknown for F77 compiler \"${F77_TYPE}\".";
+#				esac ;;
+#			osf)
+#				case $F77_TYPE in
+#					osf)
+#						EXTRA_FORTRAN_LIBS="-lfor";;
+#					*)
+#						echo "Error: EXTRA_FORTRAN_LIBS for C compiler \"${CC_TYPE}\" unknown for F77 compiler \"${F77_TYPE}\"";
+#						exit ;;
+#				esac ;;
+#			intel)
+#				case $F77_TYPE in
+#					intel)
+#						EXTRA_FORTRAN_LIBS="-lifport -lifcore";;
+#					*)
+#						echo "Warning: EXTRA_FORTRAN_LIBS for C compiler \"${CC_TYPE}\" unknown for F77 compiler \"${F77_TYPE}\".";
+#				esac ;;
+#			sparc)
+#				case $F77_TYPE in
+#					sparc)
+#						EXTRA_FORTRAN_LIBS="";;
+#					*)
+#						echo "Warning: EXTRA_FORTRAN_LIBS for C compiler \"${CC_TYPE}\" unknown for F77 compiler \"${F77_TYPE}\".";
+#				esac ;;
+#			ibmxl)
+#				EXTRA_FORTRAN_LIBS="";;	
+#			*)
+#				echo "Warning: EXTRA_FORTRAN_LIBS for C compiler \"${CC_TYPE}\" unknown";
+##				exit ;;
+#		esac
+#		export EXTRA_FORTRAN_LIBS
+#	fi	#
+#
+#	if test "${CC_FORTRAN_LFLAGS}x" = "x"; then
+#		if test "${FORTRAN_COMPILER_LIBDIR}x" != "x"; then
+#			CC_FORTRAN_LFLAGS='-L${FORTRAN_COMPILER_LIBDIR} ${EXTRA_FORTRAN_LIBS}'
+#		else
+#			CC_FORTRAN_LFLAGS='${EXTRA_FORTRAN_LIBS}'
+#		fi
+#		export CC_FORTRAN_LFLAGS
+#	fi	
+#
+#	DoCritialConftest ./VMake/SystemTests/Fortran-Symbol F77_SYMBOL_TRANSLATION
+#	export F77_SYMBOL_TRANSLATION
+#fi	
 
 	
 if test "${LINKER}x" = "x"; then
