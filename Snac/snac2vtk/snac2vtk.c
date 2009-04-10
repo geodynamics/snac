@@ -218,7 +218,7 @@ int main( int argc, char* argv[])
 	    for( rankI=0; rankI < rank_array[0]; rankI++ ) {
 			rank = rankI + rankJ*rank_array[0] + rankK*rank_array[0]*rank_array[1]; 
 			
-			sprintf( tmpBuf, "%s/timeStep.%u", path, rank );
+			sprintf( tmpBuf, "%s/timeStep.0", path );
 			if( (timeStepIn = fopen( tmpBuf, "r" )) == NULL ) {
 				fprintf(stderr, "\"%s\" not found\n", tmpBuf );
 				exit(1);

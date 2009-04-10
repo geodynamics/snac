@@ -374,33 +374,33 @@ void _Snac_Context_Init( Snac_Context* self ) {
 	/* Parallelisation information */
 	self->parallel = Snac_Parallel_New( self->communicator, self->mesh );
 
-	/* Output */
-	sprintf( tmpBuf, "%s/sim.%u", self->outputPath, self->rank );
-	if( (self->simInfo = fopen( tmpBuf, "w+" )) == NULL ) {
-		Journal_Firewall(
-			(ArithPointer)self->simInfo,
-			self->snacError,
-			"\"%s\"  failed to open file for writing", tmpBuf );
-	}
-	else {
-		fprintf( self->simInfo, "%u %u %u %u %u %u %u %u %u\n(global element numbers)[3]=(proc numbers)[3]*(local element numbers)[3]\n",
-				 ((HexaMD*)self->mesh->layout->decomp)->elementGlobal3DCounts[0],
-				 ((HexaMD*)self->mesh->layout->decomp)->elementGlobal3DCounts[1],
-				 ((HexaMD*)self->mesh->layout->decomp)->elementGlobal3DCounts[2], 
-				 self->numProcX, self->numProcY, self->numProcZ,
-				 ((HexaMD*)self->mesh->layout->decomp)->elementLocal3DCounts[self->rank][0],
-				 ((HexaMD*)self->mesh->layout->decomp)->elementLocal3DCounts[self->rank][1],
-				 ((HexaMD*)self->mesh->layout->decomp)->elementLocal3DCounts[self->rank][2] );
-		fflush( self->simInfo );
-	}
-	sprintf( tmpBuf, "%s/timeStep.%u", self->outputPath, self->rank );
-	if( (self->timeStepInfo = fopen( tmpBuf, "w+" )) == NULL ) {
-		Journal_Firewall(
-			(ArithPointer)self->timeStepInfo,
-			self->snacError,
-			"\"%s\"  failed to open file for writing", tmpBuf );
-	}
-	if( self->checkpointEvery > 0 ) {
+	/* Outputs that can be written only for one processor (rank==0). */
+	if( self->rank==0 ) {
+		sprintf( tmpBuf, "%s/sim.%u", self->outputPath, self->rank );
+		if( (self->simInfo = fopen( tmpBuf, "w+" )) == NULL ) {
+			Journal_Firewall(
+							 (ArithPointer)self->simInfo,
+							 self->snacError,
+							 "\"%s\"  failed to open file for writing", tmpBuf );
+		}
+		else {
+			fprintf( self->simInfo, "%u %u %u %u %u %u %u %u %u\n(global element numbers)[3]=(proc numbers)[3]*(local element numbers)[3]\n",
+					 ((HexaMD*)self->mesh->layout->decomp)->elementGlobal3DCounts[0],
+					 ((HexaMD*)self->mesh->layout->decomp)->elementGlobal3DCounts[1],
+					 ((HexaMD*)self->mesh->layout->decomp)->elementGlobal3DCounts[2], 
+					 self->numProcX, self->numProcY, self->numProcZ,
+					 ((HexaMD*)self->mesh->layout->decomp)->elementLocal3DCounts[self->rank][0],
+					 ((HexaMD*)self->mesh->layout->decomp)->elementLocal3DCounts[self->rank][1],
+					 ((HexaMD*)self->mesh->layout->decomp)->elementLocal3DCounts[self->rank][2] );
+			fflush( self->simInfo );
+		}
+		sprintf( tmpBuf, "%s/timeStep.%u", self->outputPath, self->rank );
+		if( (self->timeStepInfo = fopen( tmpBuf, "w+" )) == NULL ) {
+			Journal_Firewall(
+							 (ArithPointer)self->timeStepInfo,
+							 self->snacError,
+							 "\"%s\"  failed to open file for writing", tmpBuf );
+		}
 		sprintf( tmpBuf, "%s/checkpointTimeStep.%u", self->outputPath, self->rank );
 		if( (self->checkpointTimeStepInfo = fopen( tmpBuf, "w+" )) == NULL ) {
 			Journal_Firewall(
@@ -1184,13 +1184,14 @@ void _Snac_Context_Sync( void* context ) {
 void _Snac_Context_WriteLoopInfo( void* context ) {
 	Snac_Context* self = (Snac_Context*)context;
 
-	if( isTimeToDump( self ) ) {
-		fprintf(stderr,"writing timeStep.* at %d\n",self->timeStep );
-		_Snac_Context_DumpLoopInfo( self );
-	}
+	if( self->rank >0 )
+		return;
 
-/* 	if( isTimeToCheckpoint( self ) ) */
-/* 		_Snac_Context_CheckpointLoopInfo( self ); */
+	if( isTimeToDump( self ) ) 
+		_Snac_Context_DumpLoopInfo( self );
+
+	if( isTimeToCheckpoint( self ) )
+		_Snac_Context_CheckpointLoopInfo( self );
 
 }
 
