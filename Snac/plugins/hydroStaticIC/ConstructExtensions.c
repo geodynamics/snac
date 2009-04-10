@@ -142,14 +142,6 @@ void _SnacHydroStaticIC_ConstructExtensions( void* _context, void* data ) {
 		&context->mesh->layout->decomp->elementDomainCount,
 		(void**)&context->mesh->element,
 		context->variable_Register );
-	/* Register these functions for use in VCs */
-/* 	ConditionFunction_Register_Add( */
-/*          	context->condFunc_Register, */
-/* 	ConditionFunction_New( _SnacHydroStaticIC_IC, "SnacHydroStaticIC_IC" ) ); */
-
-/* 	ConditionFunction_Register_Add( */
-/* 	        context->condFunc_Register, */
-/* 		ConditionFunction_New( _SnacHydroStaticIC_IC_Spherical, "SnacHydroStaticIC_IC_Spherical" ) ); */
 
 	/* HydroStaticIC variables */
 

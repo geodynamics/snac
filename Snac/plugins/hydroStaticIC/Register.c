@@ -85,7 +85,7 @@ void _SnacHydroStaticIC_Construct( void* component, Stg_ComponentFactory* cf, vo
 	printf( "In %s()\n", __func__ );
 	#endif
 
-	if( context->restartStep > 0 )
+	if( context->restartTimestep > 0 )
 		return;
 
 	/*ccccc*/
