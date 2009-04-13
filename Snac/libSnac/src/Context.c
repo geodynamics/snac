@@ -1460,6 +1460,8 @@ Bool isTimeToCheckpoint( void* context ) {
 	
 	if( (self->timeStep==self->maxTimeSteps) )
 		return True;
+	else if( (self->timeStep==0) )
+		return False;
 	else {
 		if( self->checkpointEvery == 0 )
 			return False;
