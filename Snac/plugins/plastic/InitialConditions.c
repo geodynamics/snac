@@ -37,26 +37,78 @@
 #include "Element.h"
 #include "InitialConditions.h"
 #include "Register.h"
+#ifndef PATH_MAX
+#define PATH_MAX 1024
+#endif
 
 void SnacPlastic_InitialConditions( void* _context ) {
-	Snac_Context*		context = (Snac_Context*)_context;
-	Element_LocalIndex	element_lI;
-	
-	#ifdef DEBUG
-		printf( "In: _SnacPlastic_InitialConditions( void* )\n" );
-	#endif
-	context->materialProperty[0].rheology |= Snac_Material_Plastic;
-		
-	/* Set the plastic element initial conditions */
-	for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
-		Snac_Element*		element = Snac_Element_At( context, element_lI );
-		SnacPlastic_Element*	plasticElement = ExtensionManager_Get( context->mesh->elementExtensionMgr, element, 
-						SnacPlastic_ElementHandle );
-		Tetrahedra_Index	tetra_I;
-		
-		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
-			plasticElement->plasticStrain[tetra_I] = 0.0f;
+	Snac_Context*			context = (Snac_Context*)_context;
+	Element_LocalIndex		element_lI;
+	Dictionary_Entry_Value* materialList = Dictionary_Get( context->dictionary, "materials" );
+	int						PhaseI = 0;
+#ifdef DEBUG
+	printf( "In: _SnacPlastic_InitialConditions( void* )\n" );
+#endif
+
+	if( materialList ) {
+		Dictionary_Entry_Value* materialEntry = Dictionary_Entry_Value_GetFirstElement( materialList );
+		/* loop around the  phases to initialize rheology */
+		while( materialEntry ) {
+			context->materialProperty[PhaseI].rheology |= Snac_Material_Plastic;
+			PhaseI++;
+			materialEntry                               = materialEntry->next;
 		}
-		plasticElement->aps = 0.0f;
+	}
+	else
+		context->materialProperty[PhaseI].rheology |= Snac_Material_Plastic;
+
+	if( context->restartTimestep > 0 ) {
+		FILE*				plStrainIn;
+		char				path[PATH_MAX];
+		
+		sprintf(path, "%s/snac.plStrain.%d.%06d.restart",context->outputPath,context->rank,context->restartTimestep);
+		Journal_Firewall( (plStrainIn = fopen(path,"r")) != NULL, "Can't find %s", path );
+		
+		/* read in restart file to reconstruct the previous plastic strain.*/
+		for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
+			Snac_Element*				element = Snac_Element_At( context, element_lI );
+			SnacPlastic_Element*		plasticElement = ExtensionManager_Get( context->mesh->elementExtensionMgr, element,
+															SnacPlastic_ElementHandle );
+			const Snac_Material* 		material = &context->materialProperty[element->material_I];
+
+			if( material->yieldcriterion == mohrcoulomb ) {
+				Tetrahedra_Index	tetra_I;
+				double              depls = 0.0f;
+				double              totalVolume = 0.0f;
+				
+				for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
+					double			tetraPlStrain;
+
+					fscanf( plStrainIn, "%le", &tetraPlStrain );
+					plasticElement->plasticStrain[tetra_I] = tetraPlStrain;
+					depls += plasticElement->plasticStrain[tetra_I]*element->tetra[tetra_I].volume;
+					totalVolume += element->tetra[tetra_I].volume;
+				}
+				/* volume-averaged accumulated plastic strain, aps */
+				plasticElement->aps = depls/totalVolume;
+			}//if(mohrcoulomb)
+		}//for elements
+		if( plStrainIn )
+			fclose( plStrainIn );
+	}//if restarting
+	else {
+		/* Set the plastic element initial conditions */
+		for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
+			Snac_Element*		element = Snac_Element_At( context, element_lI );
+			SnacPlastic_Element*	plasticElement = ExtensionManager_Get( context->mesh->elementExtensionMgr, element, 
+																		   SnacPlastic_ElementHandle );
+			Tetrahedra_Index	tetra_I;
+			
+			for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
+				plasticElement->plasticStrain[tetra_I] = 0.0f;
+			}
+			plasticElement->aps = 0.0f;
+		}
 	}
 }
+		
