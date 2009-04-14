@@ -64,19 +64,7 @@ void _SnacVPSeeds_InitialConditions( void* _context, void* data ) {
 	Dictionary_Entry_Value* pluginsList;
 	Dictionary_Entry_Value* plugin;
 
-	pluginsList = PluginsManager_GetPluginsList( context->dictionary );
-	if (pluginsList) {
-		plugin = Dictionary_Entry_Value_GetFirstElement(pluginsList);
-		while ( plugin ) {
-			if ( 0 == strcmp( Dictionary_Entry_Value_AsString( plugin ),
-					  "SnacRestart" ) ) {
-				restart = 1;
-				break;
-			}
-			plugin = plugin->next;
-		}
-	}
-	if( restart )
+	if( context->restartTimestep > 0 )
 		return;
 
 #ifdef DEBUG

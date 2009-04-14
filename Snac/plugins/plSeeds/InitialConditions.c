@@ -59,9 +59,12 @@ void _SnacPlSeeds_InitialConditions( void* _context, void* data ) {
 	int				NUM_SEED;
 	int				incZ = 0;
 	
-	#ifdef DEBUG
-		printf( "In: %s\n", __func__ );
-	#endif
+	if( context->restartTimestep > 0 )
+		return;
+
+#ifdef DEBUG
+	printf( "In: %s\n", __func__ );
+#endif
 
     srand( (unsigned int)time(NULL) );
     global_I_range = 5; //decomp->elementGlobal3DCounts[0]/8;
