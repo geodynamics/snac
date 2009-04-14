@@ -47,9 +47,7 @@
 	#define Snac_Material_Plastic		0x00000002
 	#define Snac_Material_Maxwell		0x00000004
 	#define Snac_Material_ViscoPlastic	0x00000008
-	#define Snac_Material_MaxwellDruckerPrager	0x00000010
-	#define Snac_Material_MaxwellMohrCoulomb	0x00000020
-	#define Snac_Material_CreepMohrCoulomb		0x00000040
+	#define Snac_Material_EngVP			0x00000010
         typedef enum            {mohrcoulomb,druckerprager} plModel;
 
 	/* Material */

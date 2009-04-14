@@ -601,10 +601,13 @@ void _Snac_Context_Delete( void* context ) {
 	if( self->rank == 0 ) Journal_Printf( self->debug, "In: %s\n", __func__ );
 
 	/* Close the output files */
-
-	fclose( self->timeStepInfo );
-	fclose( self->simInfo );
 	fclose( self->stressTensorOut );
+	fclose( self->stressTensorCheckpoint );
+	if( self->rank==0 ) {
+		fclose( self->timeStepInfo );
+		fclose( self->checkpointTimeStepInfo );
+		fclose( self->simInfo );
+	}
 
 	/* Parallelisation information */
 	if( self->parallel ) {
