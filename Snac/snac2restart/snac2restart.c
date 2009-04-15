@@ -148,10 +148,6 @@ int main( int argc, char* argv[] ) {
 	unsigned int	dumpIteration;
 	double			time;
 	double			dt;
-	unsigned int	elementGlobalSize[3];
-	unsigned int	elementLocalSize[3];
-	unsigned int	gnode[3];
-	unsigned int	rank_array[3];
 	unsigned int	rankI, rankJ, rankK;
 
     /* safety check and assign restartStep and path */
@@ -174,9 +170,6 @@ int main( int argc, char* argv[] ) {
 				&rank_array[0],&rank_array[1],&rank_array[2],
 				&elementLocalSize[0], &elementLocalSize[1], &elementLocalSize[2] );
 		fclose( simIn );
-		gnode[0] = elementGlobalSize[0]+1;
-		gnode[1] = elementGlobalSize[1]+1;
-		gnode[2] = elementGlobalSize[2]+1;
 		fprintf(stderr," ... with success\n"); 
 	}
 
