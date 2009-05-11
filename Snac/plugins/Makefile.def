@@ -32,4 +32,4 @@
 ##
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def_sub = customCartesianMesh cylinder_quadrant cylindrical elastic exchanger heterogeneities hydroStaticIC temperature maxwell plastic plSeeds remesher restarter restarter_old spherical viscoplastic vpSeeds winkler hillSlope 
+def_sub = customCartesianMesh cylinder_quadrant cylindrical elastic exchanger heterogeneities hydroStaticIC temperature maxwell plastic plSeeds remesher restarter restarter_old spherical viscoplastic vpSeeds winkler hillSlope tractionBC 
