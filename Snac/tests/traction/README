@@ -1,0 +1,15 @@
+An extremely simple 1D benchmark for the tractionBC plugin.
+	- EChoi 2009/05/08
+
+An elastic bar of 2x1x1 (2x1x1 m) elements is stretched by a given traction (specified in Snac/plugins/tractionBC/Force.c). The traction is applied on the "right" wall, while the "left" wall is fixed in the x direction. All the other surfaces are free to move, making the solution that of 1D stretching.
+
+Verification can be made by the elastic constitutive equation:
+sigma_xx = E * epsilon_xx,
+where simga_xx is the resultant stress, E is the Young's modulus, and epsilon_xx is the total strain.
+
+Noting that sigma_xx should have the same magnitude with the applied traction,
+results for the default values are supposed to have the following values:
+1.0e+08 Pa = 2.5e+10 Pa * 0.004.
+
+Strain from SNAC's solution can be computed by running "snac2vtk ./ 1 5000" and comparing the coordinates in snac.0.000001.vts and snac.0.005001.vts.
+Also, the stress values can be viewed by "od -f stressTensor.0".
