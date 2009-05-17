@@ -1,0 +1,21 @@
+For instrumentation, one can compile SNAC with the TAU wrapper for C compiler. 
+
+0) Install the latest TAU (http://www.cs.uoregon.edu/research/tau/home.php).
+
+1) Set some env. vars. 
+export TAU_DIR=${TAUROOT}
+export TAU_OPTIONS=-optCompInst
+export TAU_MAKEFILE=${TAUROOT}/${TAUARCH}/lib/Makefile.tau-mpi
+export PROFILEDIR=[somewhere you want]
+
+Note: Run tau-config to get the values of TAUROOT and TAUARCH.
+e.g., tau-config | grep TAUROOT
+
+2) ./configure --options=profile,tau
+
+3) Change C compiler to 'tau_cc.sh'
+export CC='tau_cc.sh'
+
+4) make
+5) mpirun -np 2 `which Snac` ./input.xml
+6) Go to ${PROFILEDIR} and run 'pprof' or 'paraprof'.
