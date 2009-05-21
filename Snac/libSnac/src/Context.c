@@ -1470,5 +1470,7 @@ Bool isTimeToCheckpoint( void* context ) {
 			return False;
 		else if( (self->timeStep%self->checkpointEvery==0) )
 			return True;
+		else
+			return False;
 	}
 }
