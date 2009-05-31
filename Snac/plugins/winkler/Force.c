@@ -70,8 +70,8 @@ void _SnacWinklerForce_Apply(
     double                  Fy;
 	Snac_Node*			node = Snac_Node_At( context, node_lI );
 	Coord*				coord = Snac_NodeCoord_P( context, node_lI );
-	SnacTemperature_Node* temperatureNodeExt = ExtensionManager_Get( context->mesh->nodeExtensionMgr, node, SnacTemperature_NodeHandle );
-	double          nodeT =temperatureNodeExt->temperature;
+/* 	SnacTemperature_Node* temperatureNodeExt = ExtensionManager_Get( context->mesh->nodeExtensionMgr, node, SnacTemperature_NodeHandle ); */
+ 	double          nodeT = 0.0; //temperatureNodeExt->temperature; 
 
 	/* loop over all the elements surrounding node_dI */
 	if( context->gravity > 0.0 ) {
@@ -481,13 +481,13 @@ void _SnacWinklerForce_Apply_Spherical(
 	double				radius,theta,phi;
 	Snac_Node*			node = Snac_Node_At( context, node_lI );
 	Coord*				coord = Snac_NodeCoord_P( context, node_lI );
-	SnacTemperature_Node* temperatureNodeExt = ExtensionManager_Get( context->mesh->nodeExtensionMgr, node, SnacTemperature_NodeHandle );
-	double          nodeT =temperatureNodeExt->temperature;
 	double          Fr;
 	float           sphF[3];
 	HexaMD*			decomp = (HexaMD*)meshLayout->decomp;
 	Node_GlobalIndex	node_gI = context->mesh->nodeL2G[node_lI];
 	IJK			ijk;
+/* 	SnacTemperature_Node* temperatureNodeExt = ExtensionManager_Get( context->mesh->nodeExtensionMgr, node, SnacTemperature_NodeHandle ); */
+ 	double          nodeT = 0.0; //temperatureNodeExt->temperature; 
 
 	RegularMeshUtils_Node_1DTo3D( decomp, node_gI, &ijk[0], &ijk[1], &ijk[2] );
 
