@@ -44,13 +44,13 @@
 
 void _SnacPlastic_WritePlasticStrain( void* _context ) {
 	Snac_Context*				context = (Snac_Context*) _context;
-
+/*
 	if( isTimeToDump( context ) )
 		_SnacPlastic_DumpPlasticStrain( context );
 
 	if( isTimeToCheckpoint( context ) )
 		_SnacPlastic_CheckpointPlasticStrain( context );
-
+*/
 }
 
 
