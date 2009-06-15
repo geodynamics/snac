@@ -55,8 +55,6 @@
 #include <limits.h>
 #include <math.h>
 #include <assert.h>
-#include <time.h>
-
 #ifndef PATH_MAX
 	#define PATH_MAX 1024
 #endif
@@ -310,7 +308,7 @@ void _Snac_Context_Init( Snac_Context* self ) {
 		/* When constant Dt type is specified, Dt should be given an initial-non-zero value */
 		self->dt = Dictionary_Entry_Value_AsDouble(
 			Dictionary_GetDefault( self->dictionary, "timeStep", Dictionary_Entry_Value_FromDouble( 1.0 ) ) );
-		if (self->rank==0)
+
 		Journal_Printf( self->info, "\"dtType\" set by Dictionary to \"%s\"\n", self->dtType );
 	}
 	else if( !strcmp( tmpStr, Snac_DtType_Dynamic ) ) {
@@ -321,7 +319,6 @@ void _Snac_Context_Init( Snac_Context* self ) {
 		self->dt = Dictionary_Entry_Value_AsDouble(
 			Dictionary_GetDefault( self->dictionary, "timeStep", Dictionary_Entry_Value_FromDouble( 0.0 ) ) );
 
-		if (self->rank==0)
 		Journal_Printf( self->info, "\"dtType\" set by Dictionary to \"%s\"\n", self->dtType );
 	}
 	else {
@@ -332,7 +329,7 @@ void _Snac_Context_Init( Snac_Context* self ) {
 		/* When dynamic Dt type is specified, Dt will be calculated later, give 0 as starting value... legacy behaviour. */
 		self->dt = Dictionary_Entry_Value_AsDouble(
 			Dictionary_GetDefault( self->dictionary, "timeStep", Dictionary_Entry_Value_FromDouble( 0.0 ) ) );
-		if (self->rank==0)
+
 		Journal_Printf(
 			self->info,
 			"\"dtType\" not specified in Dictionary... assuming \"%s\", of init value: %g\n",
@@ -349,7 +346,6 @@ void _Snac_Context_Init( Snac_Context* self ) {
 	/* What method are we using to calculate forces? */
 	/* "Complete" type should be always used unless there is a really good reason to use others. */
 	self->forceCalcType = Snac_Force_Complete;
-	if (self->rank==0)
 	Journal_Printf( self->info, "\"forceCalcType\" set by Dictionary to \"complete\"\n" );
 
 	/*
@@ -361,8 +357,7 @@ void _Snac_Context_Init( Snac_Context* self ) {
 	self->numProcX = ((HexaMD*)self->mesh->layout->decomp)->partition3DCounts[0];
 	self->numProcY = ((HexaMD*)self->mesh->layout->decomp)->partition3DCounts[1];
 	self->numProcZ = ((HexaMD*)self->mesh->layout->decomp)->partition3DCounts[2];
-	if (self->rank==0)
-		Journal_Printf( self->info, "\nParallel processing geometry:  nX=%d  nY=%d  nZ=%d\n\n",
+	Journal_Printf( self->info, "\nParallel processing geometry:  nX=%d  nY=%d  nZ=%d\n\n",
 			self->numProcX,self->numProcY,self->numProcZ );
 
 	/* Add initial condition managers */
@@ -932,7 +927,7 @@ void Snac_Context_TimeStepZero( void* context ) {
 	Snac_Context* self = (Snac_Context*)context;
 	Element_LocalIndex	element_lI;
 
-#ifdef DEBUGscaling
+#ifdef DEBUG
 	fprintf(stderr, "TimeStepZero:  restartTimestep=%d,  timeStep=%d\n", self->restartTimestep, self->timeStep);
 #endif
 
@@ -1191,14 +1186,6 @@ void _Snac_Context_Sync( void* context ) {
 
 void _Snac_Context_WriteLoopInfo( void* context ) {
 	Snac_Context* self = (Snac_Context*)context;
-	/*
-	time_t now=time(NULL);
-	char *cnow;
-	cnow=ctime(&now);
-
-	if (self->rank==1)
-            fprintf( self->timeStepInfo, "Internal time (%d) = %s\n", self->timeStep, cnow);
-	*/
 
 	if( self->rank >0 )
 		return;
@@ -1215,10 +1202,8 @@ void _Snac_Context_WriteLoopInfo( void* context ) {
 void _Snac_Context_DumpLoopInfo( void* context ) {
 	Snac_Context* self = (Snac_Context*)context;
 
-	/*
 	fprintf( self->timeStepInfo, "%16u %16g %16g\n", self->timeStep, self->currentTime, self->dt );
 	fflush( self->timeStepInfo );
-	*/
 }
 
 
@@ -1245,7 +1230,6 @@ void _Snac_Context_InitDump( void* context ) {
 
 	/* Create the strain rate dumping stream */
 	self->strainRateOut = Journal_Register( VariableDumpStream_Type, "StrainRate" );
-	/*
 	sprintf( tmpBuf, "%s/strainRate.%u", self->outputPath, self->rank );
 	VariableDumpStream_SetVariable(
 		self->strainRateOut,
@@ -1253,11 +1237,9 @@ void _Snac_Context_InitDump( void* context ) {
 		self->mesh->elementLocalCount,
 		self->dumpEvery,
 		tmpBuf );
-	*/
 
 	/* Create the stress dumping stream */
 	self->stressOut = Journal_Register( VariableDumpStream_Type, "Stress" );
-	/*
 	sprintf( tmpBuf, "%s/stress.%u", self->outputPath, self->rank );
 	VariableDumpStream_SetVariable(
 		self->stressOut,
@@ -1265,11 +1247,9 @@ void _Snac_Context_InitDump( void* context ) {
 		self->mesh->elementLocalCount,
 		self->dumpEvery,
 		tmpBuf );
-	*/
 
 	/* Create the pressure  dumping stream */
 	self->hydroPressureOut = Journal_Register( VariableDumpStream_Type, "HydroPressure" );
-	/*
 	sprintf( tmpBuf, "%s/hydroPressure.%u", self->outputPath, self->rank );
 	VariableDumpStream_SetVariable(
 		self->hydroPressureOut,
@@ -1277,11 +1257,9 @@ void _Snac_Context_InitDump( void* context ) {
 		self->mesh->elementLocalCount,
 		self->dumpEvery,
 		tmpBuf );
-	*/
 
 	/* Create the phase index dumping stream */
 	self->phaseIndexOut = Journal_Register( VariableDumpStream_Type, "PhaseIndex" );
-	/*	
 	sprintf( tmpBuf, "%s/phaseIndex.%u", self->outputPath, self->rank );
 	VariableDumpStream_SetVariable(
 		self->phaseIndexOut,
@@ -1289,11 +1267,9 @@ void _Snac_Context_InitDump( void* context ) {
 		self->mesh->elementLocalCount,
 		self->dumpEvery,
 		tmpBuf );
-	*/
 
 	/* Create the coords dumping stream */
 	self->coordOut = Journal_Register( VariableDumpStream_Type, "Coord" );
-	/*
 	sprintf( tmpBuf, "%s/coord.%u", self->outputPath, self->rank );
 	VariableDumpStream_SetVariable(
 		self->coordOut,
@@ -1301,11 +1277,9 @@ void _Snac_Context_InitDump( void* context ) {
 		self->mesh->nodeLocalCount,
 		self->dumpEvery,
 		tmpBuf );
-	*/
 
 	/* Create the velocity dumping stream */
 	self->velOut = Journal_Register( VariableDumpStream_Type, "Velocity" );
-	/*	
 	sprintf( tmpBuf, "%s/vel.%u", self->outputPath, self->rank );
 	VariableDumpStream_SetVariable(
 		self->velOut,
@@ -1313,12 +1287,9 @@ void _Snac_Context_InitDump( void* context ) {
 		self->mesh->nodeLocalCount,
 		self->dumpEvery,
 		tmpBuf );
-	*/
 
 	/* Create the force dumping stream */
 	self->forceOut = Journal_Register( VariableDumpStream_Type, "Forces" );
-
-	/*
 	sprintf( tmpBuf, "%s/force.%u", self->outputPath, self->rank );
 	VariableDumpStream_SetVariable(
 		self->forceOut,
@@ -1326,16 +1297,12 @@ void _Snac_Context_InitDump( void* context ) {
 		self->mesh->nodeLocalCount,
 		self->dumpEvery,
 		tmpBuf );
-	*/
 
 	/* Create the stressTensor dump file */
-	/*
 	sprintf( tmpBuf, "%s/stressTensor.%u", self->outputPath, self->rank );
 	if( (self->stressTensorOut = fopen( tmpBuf, "w+" )) == NULL ) {
-		assert( self->stressTensorOut );
+		assert( self->stressTensorOut /* failed to open file for writing */ );
 	}
-	*/
-
 }
 
 
@@ -1345,8 +1312,6 @@ void _Snac_Context_InitCheckpoint( void* context ) {
 
 	/* Create the phase index dumping stream */
 	self->phaseIndexCheckpoint = Journal_Register( VariableDumpStream_Type, "PhaseIndexCP" );
-	
-	/*
 	sprintf( tmpBuf, "%s/phaseIndexCP.%u", self->outputPath, self->rank );
 	VariableDumpStream_SetVariable(
 		self->phaseIndexCheckpoint,
@@ -1354,12 +1319,9 @@ void _Snac_Context_InitCheckpoint( void* context ) {
 		self->mesh->elementLocalCount,
 		self->checkpointEvery,
 		tmpBuf );
-	*/
 
 	/* Create the coords dumping stream */
 	self->coordCheckpoint = Journal_Register( VariableDumpStream_Type, "CoordCP" );
-
-	/*
 	sprintf( tmpBuf, "%s/coordCP.%u", self->outputPath, self->rank );
 	VariableDumpStream_SetVariable(
 		self->coordCheckpoint,
@@ -1367,11 +1329,9 @@ void _Snac_Context_InitCheckpoint( void* context ) {
 		self->mesh->nodeLocalCount,
 		self->checkpointEvery,
 		tmpBuf );
-	*/
 
 	/* Create the velocity dumping stream */
 	self->velCheckpoint = Journal_Register( VariableDumpStream_Type, "VelocityCP" );
-	/*
 	sprintf( tmpBuf, "%s/velCP.%u", self->outputPath, self->rank );
 	VariableDumpStream_SetVariable(
 		self->velCheckpoint,
@@ -1379,23 +1339,18 @@ void _Snac_Context_InitCheckpoint( void* context ) {
 		self->mesh->nodeLocalCount,
 		self->checkpointEvery,
 		tmpBuf );
-	*/
 
 	/* Create the stressTensor dump file */
-	/*
 	sprintf( tmpBuf, "%s/stressTensorCP.%u", self->outputPath, self->rank );
 	if( (self->stressTensorCheckpoint = fopen( tmpBuf, "w+" )) == NULL ) {
-		assert( self->stressTensorCheckpoint );
+		assert( self->stressTensorCheckpoint /* failed to open file for writing */ );
 		abort();
 	}
-	*/
 }
 
 
 void _Snac_Context_WriteOutput( void* context ) {
 	Snac_Context* self = (Snac_Context*)context;
-
-	return;
 
 	if( isTimeToDump( self ) )
 		_Snac_Context_Dump( self );
@@ -1494,8 +1449,6 @@ void _Snac_Context_CheckpointStressTensor( void* context ) {
 
 Bool isTimeToDump( void* context ) {
 	Snac_Context* self = (Snac_Context*)context;
-
-	return False;
 	
 	if( (self->timeStep==1) || ((self->timeStep>1)&&(self->timeStep%self->dumpEvery==0)) ) 
 		return True;
@@ -1507,8 +1460,6 @@ Bool isTimeToDump( void* context ) {
 
 Bool isTimeToCheckpoint( void* context ) {
 	Snac_Context* self = (Snac_Context*)context;
-
-	return False;
 
 	if( (self->timeStep==self->maxTimeSteps) )
 		return True;

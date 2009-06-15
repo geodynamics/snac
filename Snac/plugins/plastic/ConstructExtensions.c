@@ -84,16 +84,14 @@ void _SnacPlastic_ConstructExtensions( void* _context, void* data ) {
 									   ConditionFunction_New( _SnacVelocity_VariableCondition, "variableVelBC" ) );
 
 	/* Prepare the dump and checkpoint file */
-	/*
 	sprintf( tmpBuf, "%s/plStrain.%u", context->outputPath, context->rank );
 	if( (contextExt->plStrainOut = fopen( tmpBuf, "w+" )) == NULL ) {
-		assert( contextExt->plStrainOut  );
+		assert( contextExt->plStrainOut /* failed to open file for writing */ );
 		abort();
 	}
 	sprintf( tmpBuf, "%s/plStrainCP.%u", context->outputPath, context->rank );
 	if( (contextExt->plStrainCheckpoint = fopen( tmpBuf, "w+" )) == NULL ) {
-		assert( contextExt->plStrainCheckpoint  );
+		assert( contextExt->plStrainCheckpoint /* failed to open file for writing */ );
 		abort();
 	}
-	*/
 }

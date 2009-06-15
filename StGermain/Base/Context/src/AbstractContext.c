@@ -839,7 +839,6 @@ void _AbstractContext_Execute_Hook( Context* context ) {
 	double             dt = 0;
 	double             dtLoadedFromFile = 0;
 	
-	if (self->rank==1) {
 	if (self->maxTimeSteps) {
 		Journal_Printf( self->info, "Run until %u timeSteps have been run\n", self->maxTimeSteps );
 	}
@@ -862,8 +861,7 @@ void _AbstractContext_Execute_Hook( Context* context ) {
 		}
 		Journal_Printf( self->info, "until simulation time passes %g.\n", self->stopTime );
 	}
-	}
-
+	
 	self->timeStepSinceJobRestart = 1;
 
 	/* Set timeStep to 0 if not restarting, so that incrementing timestep below affects both
@@ -928,7 +926,6 @@ void _AbstractContext_Step( Context* context, double dt ) {
 	 * have just synchronised while calculating timestep anyway. */
 	MPI_Barrier( self->communicator );
 	Journal_DPrintf( self->debug, "In: %s\n", __func__ );
-	if (self->rank==1)	
 	Journal_Printf( self->info, "r=%d, ts=%d/%d: t=%.6g->%.6g\n", 
 			self->rank, self->timeStep, self->maxTimeSteps, self->currentTime, self->currentTime+dt );
 
