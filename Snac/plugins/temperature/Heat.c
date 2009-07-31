@@ -55,7 +55,6 @@ void SnacTemperature_LoopNodes( void* _context ) {
 	}
 	/* update density using updated temperature */
 	effectiveDensity( context );
-	Journal_Printf( context->snacInfo, "In %s(): updating temperature of all nodes.\n", __func__ );
 
 	SnacTemperature_BoundaryConditions( context );
 }
