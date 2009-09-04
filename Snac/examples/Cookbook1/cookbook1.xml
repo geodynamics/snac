@@ -7,12 +7,13 @@
 	
 	<!-- StGermain simulation parameters -->
 	<param name="start"> 0 </param>
-	<param name="outputPath">./data</param>
-	<param name="dumpEvery"> 1000 </param>
-	<param name="maxTimeSteps"> 100001 </param>
+	<param name="outputPath">./newdata</param>
+	<param name="dumpEvery"> 2 </param>
+	<param name="checkpointEvery"> 4 </param>
+	<param name="maxTimeSteps"> 10 </param>
+	<param name="restartTimestep"> 0 </param>
 	
 	<!-- Snac variables -->
-	<param name="density"> 2700 </param>
 	<param name="gravity"> 9.8 </param>
 	<param name="demf"> 0.8 </param>
 	<param name="dtType"> constant </param>
@@ -22,12 +23,12 @@
 	<param name="storeForces"> no </param>
 	<param name="forceCheckSum"> no </param>
 	<param name="topo_kappa"> 0.0 </param>
-	<param name="alpha"> 0 </param>
 	
 	<!-- Extension modules -->
 	<!--
 		<param> SnacRemesher </param>
 		<param> SnacWinklerForce </param>
+		<param> SnacCustomCartesian </param>
 	-->
 	<list name="extensions">
 		<param> SnacTemperature </param>
@@ -37,8 +38,8 @@
 	</list>
 	
 	<struct name="mesh">
-        <param name="shadowDepth"> 1 </param>
-		<param name="decompDims"> 1 </param>
+	        <param name="shadowDepth"> 1 </param>
+		<param name="decompDims"> 2 </param>
 
 		<!-- Mesh size -->
 		<param name="meshSizeI"> 21 </param>
@@ -58,37 +59,46 @@
  		<param name="buildNodeNeighbourTbl"> True </param>
 	</struct>
 
-	<!-- Elastic material parameters -->
-	<param name="lambda"> 1.0e+10 </param>
-	<param name="mu"> 1.0e+10 </param>
-	<!-- Viscous material parameters -->
-	<param name="refvisc"> 1.0e+20 </param>
-	<param name="reftemp"> 1400.0 </param>
-	<param name="activationE"> 45.0e+03 </param>
-	<param name="vis_min"> 1.0e+30 </param>
-	<param name="vis_max"> 1.0e+30 </param>
-	<param name="srexponent"> 1 </param>
-	<!-- Plastic material parameters -->
-	<param name="yieldcriterion"> mohrcoulomb </param>
-	<param name="nsegments"> 2 </param>
-	<param name="plstrain0"> 0.0 </param>
-	<param name="plstrain1"> 0.02 </param>
-	<param name="plstrain2"> 1000.0 </param>
-	<param name="frictionAngle0"> 30.0 </param>
-	<param name="frictionAngle1"> 30.0 </param>
-	<param name="frictionAngle2"> 30.0 </param>
-	<param name="dilationAngle0"> 5.0 </param>
-	<param name="dilationAngle1"> 5.0 </param>
-	<param name="dilationAngle2"> 5.0 </param>
-	<param name="cohesion0"> 4.0e+07 </param>
-	<param name="cohesion1"> 4.0e+05 </param>
-	<param name="cohesion2"> 0.0e+00 </param>
-	<param name="ten_off"> 1.0e+13 </param>
-	<!-- Temperature variables -->
-	<param name="topTemp"> 0.0 </param>
-	<param name="bottomTemp"> 700.0 </param>
-	<param name="thermal_conduct"> 1.6 </param>
-	<param name="heatCapacity"> 1000.0 </param>
+	<list name="materials">
+	<!-- name doesn't matter, but ORDER does.-->
+	<struct name="mat0">	
+		<!-- phase density and T/P-dependence -->
+		<param name="density"> 2700 </param>
+		<param name="alpha"> 0 </param>
+		<param name="beta"> 0 </param>
+		<!-- Elastic material parameters -->
+		<param name="lambda"> 1.0e+10 </param>
+		<param name="mu"> 1.0e+10 </param>
+		<!-- Viscous material parameters -->
+		<param name="refvisc"> 1.0e+20 </param>
+		<param name="reftemp"> 1400.0 </param>
+		<param name="activationE"> 45.0e+03 </param>
+		<param name="vis_min"> 1.0e+30 </param>
+		<param name="vis_max"> 1.0e+30 </param>
+		<param name="srexponent"> 1 </param>
+		<!-- Plastic material parameters -->
+		<param name="yieldcriterion"> mohrcoulomb </param>
+		<param name="nsegments"> 2 </param>
+		<param name="plstrain0"> 0.0 </param>
+		<param name="plstrain1"> 0.02 </param>
+		<param name="plstrain2"> 1000.0 </param>
+		<param name="frictionAngle0"> 30.0 </param>
+		<param name="frictionAngle1"> 30.0 </param>
+		<param name="frictionAngle2"> 30.0 </param>
+		<param name="dilationAngle0"> 5.0 </param>
+		<param name="dilationAngle1"> 5.0 </param>
+		<param name="dilationAngle2"> 5.0 </param>
+		<param name="cohesion0"> 4.0e+07 </param>
+		<param name="cohesion1"> 4.0e+05 </param>
+		<param name="cohesion2"> 0.0e+00 </param>
+		<param name="ten_off"> 1.0e+13 </param>
+		<!-- Temperature variables -->
+		<param name="topTemp"> 0.0 </param>
+		<param name="bottomTemp"> 700.0 </param>
+		<param name="thermal_conduct"> 1.6 </param>
+		<param name="heatCapacity"> 1000.0 </param>
+	</struct>
+	</list>
 	<!-- Remesher info -->
 	<!-- 
 		<param name="remeshCondition"> onBothTimeStepLength </param>
