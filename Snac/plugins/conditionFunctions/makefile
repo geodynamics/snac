@@ -25,11 +25,29 @@
 ## along with this program; if not, write to the Free Software
 ## Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ##
-## Modified by:  Colin Stark, Lamont-Doherty Earth Observatory (cstark@ldeo.columbia.edu)
-##      - to implement hillslope plugin
-##
-## $Id: Makefile.def 3276 2007-03-28 22:59:47Z EunseoChoi $
+## $Id: Makefile.rules 1792 2004-07-30 05:42:39Z SteveQuenette $
 ##
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def_sub = customCartesianMesh cylinder_quadrant cylindrical elastic exchanger heterogeneities hydroStaticIC temperature maxwell plastic plSeeds remesher restarter restarter_old spherical viscoplastic vpSeeds winkler hillSlope tractionBC conditionFunctions
+# obtain defaults for required variables according to system and project location, and then run the build.
+ifndef PROJ_ROOT
+	PROJ_ROOT=../..
+endif
+include ${PROJ_ROOT}/Makefile.system
+
+include Makefile.def
+
+mod = ${def_mod}
+includes = ${def_inc}
+
+SRCS = ${def_srcs}
+
+HDRS = ${def_hdrs}
+
+PROJ_LIBS = ${def_libs}
+EXTERNAL_LIBS = -L${STGERMAIN_LIBDIR}  -lSnac -lStGermain
+EXTERNAL_INCLUDES = -I${STGERMAIN_INCDIR}/StGermain -I${STGERMAIN_INCDIR} 
+
+packages = MPI XML MATH
+
+include ${PROJ_ROOT}/Makefile.vmake

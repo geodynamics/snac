@@ -10,6 +10,7 @@
 ##	Stevan M. Quenette, Visitor in Geophysics, Caltech.
 ##	Luc Lavier, Research Scientist, The University of Texas. (luc@utig.ug.utexas.edu)
 ##	Luc Lavier, Research Scientist, Caltech.
+##	Luc Lavier, Caltech.
 ##
 ## This program is free software; you can redistribute it and/or modify it
 ## under the terms of the GNU General Public License as published by the
@@ -25,11 +26,21 @@
 ## along with this program; if not, write to the Free Software
 ## Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ##
-## Modified by:  Colin Stark, Lamont-Doherty Earth Observatory (cstark@ldeo.columbia.edu)
-##      - to implement hillslope plugin
-##
-## $Id: Makefile.def 3276 2007-03-28 22:59:47Z EunseoChoi $
+## $Id: Makefile.def 1677 2004-07-20 10:30:34Z SteveQuenette $
 ##
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+def_mod = SnacCondFunc
+def_inc = Snac/conditionFunctions
 
-def_sub = customCartesianMesh cylinder_quadrant cylindrical elastic exchanger heterogeneities hydroStaticIC temperature maxwell plastic plSeeds remesher restarter restarter_old spherical viscoplastic vpSeeds winkler hillSlope tractionBC conditionFunctions
+def_srcs = \
+	Register.c \
+	SnacCondFunc_NodeCondFunc.c \
+	SnacCondFunc_ElementCondFunc.c
+
+def_hdrs = \
+	SnacCondFunc.h \
+	Register.h \
+	SnacCondFunc_NodeCondFunc.h \
+	SnacCondFunc_ElementCondFunc.h
+
