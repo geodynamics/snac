@@ -142,7 +142,6 @@ Bool _VariableDumpStream_Dump( Stream* stream, void* _loop )
 	int* loop = (int*)_loop;
 	float tmp;
 	
-	
 	if ( self->data == NULL || self->numItems == 0 )
 	{
 		return True;
@@ -170,11 +169,20 @@ Bool _VariableDumpStream_Dump( Stream* stream, void* _loop )
 			}
 		}
 		else {
-			tmp = Variable_GetValueDoubleAsFloat( self->data, varI );
-			self->_write(
-				stream,
-				&tmp,
-				sizeof(float), 1 );
+			if( *self->data->dataTypes == Variable_DataType_Int ) {
+				int tmp1 = Variable_GetValueInt( self->data, varI );
+				self->_write(
+					stream,
+					&tmp1,
+					sizeof(int), 1 );
+			}
+			else {
+				tmp = Variable_GetValueDoubleAsFloat( self->data, varI );
+				self->_write(
+					stream,
+					&tmp,
+					sizeof(float), 1 );
+			}
 		}
 	}
 
