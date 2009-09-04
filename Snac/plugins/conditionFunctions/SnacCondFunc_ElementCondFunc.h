@@ -47,4 +47,9 @@
 		void*				context, 
 		void*				result );
 
+	void _SnacCondFunc_DeadSea( 
+		Element_LocalIndex		element_lI, 
+		Variable_Index			var_I, 
+		void*				context, 
+		void*				result );
 #endif

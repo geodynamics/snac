@@ -75,6 +75,9 @@ void _SnacCondFunc_Construct( void* component, Stg_ComponentFactory* cf, void* d
 			ConditionFunction_New(_SnacCondFunc_AssignPhaseID,"SnacCF_AssignPhaseID" ) );
 	ConditionFunction_Register_Add(
 			context->condFunc_Register,
+			ConditionFunction_New(_SnacCondFunc_DeadSea,"SnacCF_DeadSea" ) );
+	ConditionFunction_Register_Add(
+			context->condFunc_Register,
 			ConditionFunction_New( _SnacCondFunc_MaxwellBenchmark,"SnacCF_MaxwellBenchmark" ) );
 	ConditionFunction_Register_Add(
 			context->condFunc_Register,
