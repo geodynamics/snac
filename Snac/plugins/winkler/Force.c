@@ -70,8 +70,8 @@ void _SnacWinklerForce_Apply(
     double                  Fy;
 	Snac_Node*			node = Snac_Node_At( context, node_lI );
 	Coord*				coord = Snac_NodeCoord_P( context, node_lI );
-/* 	SnacTemperature_Node* temperatureNodeExt = ExtensionManager_Get( context->mesh->nodeExtensionMgr, node, SnacTemperature_NodeHandle ); */
- 	double          nodeT = 0.0; //temperatureNodeExt->temperature; 
+	SnacTemperature_Node* temperatureNodeExt = ExtensionManager_Get( context->mesh->nodeExtensionMgr, node, SnacTemperature_NodeHandle );
+	double          nodeT =temperatureNodeExt->temperature;
 
 	/* loop over all the elements surrounding node_dI */
 	if( context->gravity > 0.0 ) {
@@ -189,6 +189,10 @@ void _SnacWinklerForce_Apply_South( void* _context, Node_LocalIndex	node_lI, For
             nodeElementCount = context->mesh->nodeElementCountTbl[node_lI];
             for( nodeElement_I = 0; nodeElement_I < nodeElementCount; nodeElement_I++ ) {
                 Element_LocalIndex		element_lI = context->mesh->nodeElementTbl[node_lI][nodeElement_I];
+				Snac_Element*		element = Snac_Element_At( context, element_lI );
+				Material_Index          material_I = element->material_I;
+				Snac_Material*          material = &context->materialProperty[material_I];
+				Density                 phsDensity = material->phsDensity; /* node->density */
                 if( element_lI < context->mesh->elementDomainCount ) {
                     if(nodeElement_I == 0 || nodeElement_I == 1 || nodeElement_I == 2 || nodeElement_I == 3) {
                         r1 = Snac_Element_NodeCoord( context, element_lI, 4 )[1];
@@ -222,9 +226,9 @@ void _SnacWinklerForce_Apply_South( void* _context, Node_LocalIndex	node_lI, For
                         normal[0] = factor4 * ( normal1[0] + normal2[0] + normal3[0] + normal4[0]);
                         normal[1] = factor4 * ( normal1[1] + normal2[1] + normal3[1] + normal4[1]);
                         normal[2] = factor4 * ( normal1[2] + normal2[2] + normal3[2] + normal4[2] );
-                        (*force)[0] -= factor4 * ( context->density * context->gravity * (0.0-dhE) * area * normal[0] );
-                        (*force)[1] -= factor4 * ( context->density * context->gravity * (0.0-dhE) * area * normal[1] );
-                        (*force)[2] -= factor4 * ( context->density * context->gravity * (0.0-dhE) * area * normal[2] );
+                        (*force)[0] -= factor4 * ( phsDensity * context->gravity * (0.0-dhE) * area * normal[0] );
+                        (*force)[1] -= factor4 * ( phsDensity * context->gravity * (0.0-dhE) * area * normal[1] );
+                        (*force)[2] -= factor4 * ( phsDensity * context->gravity * (0.0-dhE) * area * normal[2] );
                     }
                 }
             }
@@ -264,6 +268,10 @@ void _SnacWinklerForce_Apply_North( void* _context, Node_LocalIndex	node_lI, For
             nodeElementCount = context->mesh->nodeElementCountTbl[node_lI];
             for( nodeElement_I = 0; nodeElement_I < nodeElementCount; nodeElement_I++ ) {
                 Element_LocalIndex		element_lI = context->mesh->nodeElementTbl[node_lI][nodeElement_I];
+				Snac_Element*		element = Snac_Element_At( context, element_lI );
+				Material_Index          material_I = element->material_I;
+				Snac_Material*          material = &context->materialProperty[material_I];
+				Density                 phsDensity = material->phsDensity; /* node->density */
                 if( element_lI < context->mesh->elementDomainCount ) {
                     if(nodeElement_I == 4 || nodeElement_I == 5 || nodeElement_I == 6 || nodeElement_I == 7) {
                         r1 = Snac_Element_NodeCoord( context, element_lI, 0 )[1];
@@ -297,9 +305,9 @@ void _SnacWinklerForce_Apply_North( void* _context, Node_LocalIndex	node_lI, For
                         normal[0] = factor4 * ( normal1[0] + normal2[0] + normal3[0] + normal4[0]);
                         normal[1] = factor4 * ( normal1[1] + normal2[1] + normal3[1] + normal4[1]);
                         normal[2] = factor4 * ( normal1[2] + normal2[2] + normal3[2] + normal4[2] );
-                        (*force)[0] -= factor4 * ( context->density * context->gravity * (0.0-dhE) * area * normal[0] );
-                        (*force)[1] -= factor4 * ( context->density * context->gravity * (0.0-dhE) * area * normal[1] );
-                        (*force)[2] -= factor4 * ( context->density * context->gravity * (0.0-dhE) * area * normal[2] );
+                        (*force)[0] -= factor4 * ( phsDensity * context->gravity * (0.0-dhE) * area * normal[0] );
+                        (*force)[1] -= factor4 * ( phsDensity * context->gravity * (0.0-dhE) * area * normal[1] );
+                        (*force)[2] -= factor4 * ( phsDensity * context->gravity * (0.0-dhE) * area * normal[2] );
                     }
                 }
             }
@@ -339,6 +347,10 @@ void _SnacWinklerForce_Apply_East( void* _context, Node_LocalIndex	node_lI, Forc
             nodeElementCount = context->mesh->nodeElementCountTbl[node_lI];
             for( nodeElement_I = 0; nodeElement_I < nodeElementCount; nodeElement_I++ ) {
                 Element_LocalIndex		element_lI = context->mesh->nodeElementTbl[node_lI][nodeElement_I];
+				Snac_Element*		element = Snac_Element_At( context, element_lI );
+				Material_Index          material_I = element->material_I;
+				Snac_Material*          material = &context->materialProperty[material_I];
+				Density                 phsDensity = material->phsDensity; /* node->density */
                 if( element_lI < context->mesh->elementDomainCount ) {
                     if(nodeElement_I == 0 || nodeElement_I == 3 || nodeElement_I == 4 || nodeElement_I == 7) {
                         r1 = Snac_Element_NodeCoord( context, element_lI, 1 )[1];
@@ -372,9 +384,9 @@ void _SnacWinklerForce_Apply_East( void* _context, Node_LocalIndex	node_lI, Forc
                         normal[0] = factor4 * ( normal1[0] + normal2[0] + normal3[0] + normal4[0]);
                         normal[1] = factor4 * ( normal1[1] + normal2[1] + normal3[1] + normal4[1]);
                         normal[2] = factor4 * ( normal1[2] + normal2[2] + normal3[2] + normal4[2] );
-                        (*force)[0] -= factor4 * ( context->density * context->gravity * (0.0-dhE) * area * normal[0] );
-                        (*force)[1] -= factor4 * ( context->density * context->gravity * (0.0-dhE) * area * normal[1] );
-                        (*force)[2] -= factor4 * ( context->density * context->gravity * (0.0-dhE) * area * normal[2] );
+                        (*force)[0] -= factor4 * ( phsDensity * context->gravity * (0.0-dhE) * area * normal[0] );
+                        (*force)[1] -= factor4 * ( phsDensity * context->gravity * (0.0-dhE) * area * normal[1] );
+                        (*force)[2] -= factor4 * ( phsDensity * context->gravity * (0.0-dhE) * area * normal[2] );
                     }
                 }
             }
@@ -414,6 +426,10 @@ void _SnacWinklerForce_Apply_West( void* _context, Node_LocalIndex	node_lI, Forc
             nodeElementCount = context->mesh->nodeElementCountTbl[node_lI];
             for( nodeElement_I = 0; nodeElement_I < nodeElementCount; nodeElement_I++ ) {
                 Element_LocalIndex		element_lI = context->mesh->nodeElementTbl[node_lI][nodeElement_I];
+				Snac_Element*		element = Snac_Element_At( context, element_lI );
+				Material_Index          material_I = element->material_I;
+				Snac_Material*          material = &context->materialProperty[material_I];
+				Density                 phsDensity = material->phsDensity; /* node->density */
                 if( element_lI < context->mesh->elementDomainCount ) {
                     if(nodeElement_I == 1 || nodeElement_I == 2 || nodeElement_I == 5 || nodeElement_I == 6) {
                         r1 = Snac_Element_NodeCoord( context, element_lI, 0 )[1];
@@ -447,9 +463,9 @@ void _SnacWinklerForce_Apply_West( void* _context, Node_LocalIndex	node_lI, Forc
                         normal[0] = factor4 * ( normal1[0] + normal2[0] + normal3[0] + normal4[0]);
                         normal[1] = factor4 * ( normal1[1] + normal2[1] + normal3[1] + normal4[1]);
                         normal[2] = factor4 * ( normal1[2] + normal2[2] + normal3[2] + normal4[2] );
-                        (*force)[0] -= factor4 * ( context->density * context->gravity * (0.0-dhE) * area * normal[0] );
-                        (*force)[1] -= factor4 * ( context->density * context->gravity * (0.0-dhE) * area * normal[1] );
-                        (*force)[2] -= factor4 * ( context->density * context->gravity * (0.0-dhE) * area * normal[2] );
+                        (*force)[0] -= factor4 * ( phsDensity * context->gravity * (0.0-dhE) * area * normal[0] );
+                        (*force)[1] -= factor4 * ( phsDensity * context->gravity * (0.0-dhE) * area * normal[1] );
+                        (*force)[2] -= factor4 * ( phsDensity * context->gravity * (0.0-dhE) * area * normal[2] );
                     }
                 }
             }
@@ -481,13 +497,13 @@ void _SnacWinklerForce_Apply_Spherical(
 	double				radius,theta,phi;
 	Snac_Node*			node = Snac_Node_At( context, node_lI );
 	Coord*				coord = Snac_NodeCoord_P( context, node_lI );
+	SnacTemperature_Node* temperatureNodeExt = ExtensionManager_Get( context->mesh->nodeExtensionMgr, node, SnacTemperature_NodeHandle );
+	double          nodeT =temperatureNodeExt->temperature;
 	double          Fr;
 	float           sphF[3];
 	HexaMD*			decomp = (HexaMD*)meshLayout->decomp;
 	Node_GlobalIndex	node_gI = context->mesh->nodeL2G[node_lI];
 	IJK			ijk;
-/* 	SnacTemperature_Node* temperatureNodeExt = ExtensionManager_Get( context->mesh->nodeExtensionMgr, node, SnacTemperature_NodeHandle ); */
- 	double          nodeT = 0.0; //temperatureNodeExt->temperature; 
 
 	RegularMeshUtils_Node_1DTo3D( decomp, node_gI, &ijk[0], &ijk[1], &ijk[2] );
 

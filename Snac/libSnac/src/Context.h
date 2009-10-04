@@ -88,7 +88,6 @@
 		double				initMinLengthScale; \
 		\
 		double				pisos; \
-		Density				density; \
 		double				gravity; \
 		double				demf; \
 		\

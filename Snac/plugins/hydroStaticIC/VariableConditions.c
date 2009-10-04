@@ -99,7 +99,10 @@ void _SnacHydroStaticIC_IC( void* _context ) {
 
 						/* Initialize tetrahedral arrays and get the average T-dependent density */
 						for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
-							densT += phsDensity * ( 1.0 - alpha * (element->tetra[tetra_I].avgTemp-material->reftemp) ) / Tetrahedra_Count;
+							densT += ((element->tetra[tetra_I].density==0.0)?
+									  (phsDensity*(1.0-alpha*(element->tetra[tetra_I].avgTemp-material->reftemp))):
+									  (element->tetra[tetra_I].density)
+									  ) / Tetrahedra_Count;
 /* 							memset( element->tetra[tetra_I].stress, 0, sizeof(element->tetra[tetra_I].stress) ); */
 							memset( element->tetra[tetra_I].strainRate, 0, sizeof(element->tetra[tetra_I].strainRate));
 						}

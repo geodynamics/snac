@@ -43,6 +43,6 @@
 
 	void SnacTemperature_LoopNodes( void* _context );
 	void Snac_Heat( void* _context, Node_LocalIndex node_lI, double sourceterm );
-	void effectiveDensity( void* _context );
+	void UpdateAverageTemp_LoopElements( void* _context );
 
 #endif /* __Snac_Heat_h__ */

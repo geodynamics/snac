@@ -338,7 +338,6 @@ void _Snac_Context_Init( Snac_Context* self ) {
 	};
 	self->speedOfSound = 0.0f;
 	self->minLengthScale = 0.0f;
-	self->density = 0.0f;
 	self->gravity = 0.0f;
 	self->demf = 0.0f;
 

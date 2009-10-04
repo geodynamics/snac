@@ -55,6 +55,7 @@ void SnacTemperature_LoopNodes( void* _context ) {
 	}
 	/* update density using updated temperature */
 	effectiveDensity( context );
+	Journal_Printf( context->snacInfo, "In %s(): updating temperature of all nodes.\n", __func__ );
 
 	SnacTemperature_BoundaryConditions( context );
 }
@@ -108,11 +109,14 @@ void Snac_Heat( void* _context, Node_LocalIndex node_lI, double sourceterm ) {
 				/* sourceterm is a volumetric heat source */
 				source += sourceterm * tetra.volume / 4.0f;
 
+				/* density calculation below is redundant but kept as a safety measure. */
 				lumpVolume += material->heatCapacity *
 					(
-					 ((tetra.density==0.0)?(material->phsDensity*(1.0-material->alpha*(tetra.avgTemp-material->reftemp) + material->beta * element->hydroPressure)):tetra.density)
-					 *
-					 tetra.volume
+					 (
+					  (tetra.density==0.0)?
+					  (material->phsDensity*(1.0-material->alpha*(tetra.avgTemp-material->reftemp) + material->beta * element->hydroPressure)):
+					  tetra.density
+					  ) * tetra.volume
 					 ) / 8.0f;
 			}
 			/* Update temperature at the Node */
@@ -129,14 +133,12 @@ void Snac_Heat( void* _context, Node_LocalIndex node_lI, double sourceterm ) {
 		}
 	}
 
-
-
 	nodeExt->temperature0 = nodeExt->temperature;
 	nodeExt->temperature += (energy + source) * -1.0f * context->dt / lumpVolume;
 }
 
 
-void effectiveDensity( void* _context )
+void UpdateAverageTemp_LoopElements( void* _context )
 {
 
 	Snac_Context*           context = (Snac_Context*)_context;
