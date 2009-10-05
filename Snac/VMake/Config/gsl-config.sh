@@ -85,7 +85,7 @@ esac
 case ${SYSTEM} in
 	*)
 		setValueWithDefault GSL_LIBS   '-L${GSL_LIBDIR} ${GSL_LIBFILES}'
-		setValueWithDefault GSL_INCLUDES '-I${GSL_INCDIR} -DHAVE_GSL';;
+		setValueWithDefault GSL_INCLUDES '-I${GSL_INCDIR} -DHAVE_GSL=1';;
 esac
 
 warnIfNotValidFile ${GSL_DIR} gsl "GNU Scientific Library (GSL)" GSL_DIR

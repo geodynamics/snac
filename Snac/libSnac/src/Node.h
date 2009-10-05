@@ -47,6 +47,9 @@
 	#define __Snac_Node \
 		Velocity	velocity; \
 		Force		force; \
+		double		stressSPR[6]; \
+		double		strainSPR[6]; \
+		double		plStrainSPR; \
 		double	    dh; \
 		double		residualFr; \
 		double		residualFt; \

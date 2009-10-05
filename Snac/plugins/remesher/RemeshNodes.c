@@ -46,20 +46,23 @@
 #include <string.h>
 #include <assert.h>
 #include <float.h>
+#include <gsl/gsl_vector.h>
+#include <gsl/gsl_matrix.h>
+#include <gsl/gsl_linalg.h>
 
 
 void _SnacRemesher_InterpolateNodes( void* _context ) {
-	Snac_Context*			context = (Snac_Context*)_context;
+	Snac_Context*		context = (Snac_Context*)_context;
 	Mesh*				mesh = context->mesh;
-	SnacRemesher_Mesh*		meshExt = ExtensionManager_Get( context->meshExtensionMgr,
-									mesh,
-									SnacRemesher_MeshHandle );
+	SnacRemesher_Mesh*	meshExt = ExtensionManager_Get( context->meshExtensionMgr,
+															mesh,
+															SnacRemesher_MeshHandle );
 	NodeLayout*			nLayout = mesh->layout->nodeLayout;
 	Node_LocalIndex		newNode_i;
-	IndexSet*				extNodes;
+	IndexSet*			extNodes;
 
 	void interpolateNode( void* _context, Node_LocalIndex newNodeInd, Element_DomainIndex dEltInd );
-
+	void SPR( void* _context );
 
 	/*
 	** Free any owned arrays that may still exist from the last node interpolation.
@@ -68,6 +71,11 @@ void _SnacRemesher_InterpolateNodes( void* _context ) {
 	FreeArray( meshExt->externalNodes );
 	meshExt->nExternalNodes = 0;
 
+	
+	/*
+	** Populate arrays for recovered fields using the SPR method.
+	*/
+	SPR( context );
 
 	/*
 	** Scoot over all the new nodes and find the old element in which each one resides, then interpolate.
@@ -189,22 +197,6 @@ void interpolateNode( void* _context, Node_LocalIndex newNodeInd, Element_Domain
 	double			weights[4];
 	unsigned		tetNodeInds[4];
 	unsigned		eltNode_i;
-	double				dett;
-	double				det[4];
-	unsigned				tet_i;
-
-	const unsigned			nTets = 10;
-	const unsigned			nSub[] = { 0, 2, 3, 7,
-						   0, 1, 2, 5,
-						   4, 7, 5, 0,
-						   5, 7, 6, 2,
-						   5, 7, 2, 0,
-						   3, 7, 4, 6,
-						   4, 0, 3, 1,
-						   6, 2, 1, 3,
-						   1, 5, 6, 4,
-						   1, 6, 3, 4 };
-
 
 	/* Extract the element's node indices.  Note that there should always be eight of these. */
 	{
@@ -381,8 +373,24 @@ void _SnacRemesher_InterpolateNode( void* _context,
 
 	/* Clear the velocity. */
 	dstNode->velocity[0] = 0.0;
-	dstNode->velocity[0] = 0.0;
-	dstNode->velocity[0] = 0.0;
+	dstNode->velocity[1] = 0.0;
+	dstNode->velocity[2] = 0.0;
+
+	dstNode->strainSPR[0] = 0.0;
+	dstNode->strainSPR[1] = 0.0;
+	dstNode->strainSPR[2] = 0.0;
+	dstNode->strainSPR[3] = 0.0;
+	dstNode->strainSPR[4] = 0.0;
+	dstNode->strainSPR[5] = 0.0;
+
+	dstNode->stressSPR[0] = 0.0;
+	dstNode->stressSPR[1] = 0.0;
+	dstNode->stressSPR[2] = 0.0;
+	dstNode->stressSPR[3] = 0.0;
+	dstNode->stressSPR[4] = 0.0;
+	dstNode->stressSPR[5] = 0.0;
+
+	dstNode->plStrainSPR = 0.0;
 
 	/* Loop over each contributing node. */
 	for( tetNode_i = 0; tetNode_i < 4; tetNode_i++ ) {
@@ -396,12 +404,189 @@ void _SnacRemesher_InterpolateNode( void* _context,
 		dstNode->velocity[0] += srcNode->velocity[0] * weights[tetNode_i];
 		dstNode->velocity[1] += srcNode->velocity[1] * weights[tetNode_i];
 		dstNode->velocity[2] += srcNode->velocity[2] * weights[tetNode_i];
+
+		dstNode->strainSPR[0] += srcNode->strainSPR[0] * weights[tetNode_i];
+		dstNode->strainSPR[1] += srcNode->strainSPR[1] * weights[tetNode_i];
+		dstNode->strainSPR[2] += srcNode->strainSPR[2] * weights[tetNode_i];
+		dstNode->strainSPR[3] += srcNode->strainSPR[3] * weights[tetNode_i];
+		dstNode->strainSPR[4] += srcNode->strainSPR[4] * weights[tetNode_i];
+		dstNode->strainSPR[5] += srcNode->strainSPR[5] * weights[tetNode_i];
+
+		dstNode->stressSPR[0] += srcNode->stressSPR[0] * weights[tetNode_i];
+		dstNode->stressSPR[1] += srcNode->stressSPR[1] * weights[tetNode_i];
+		dstNode->stressSPR[2] += srcNode->stressSPR[2] * weights[tetNode_i];
+		dstNode->stressSPR[3] += srcNode->stressSPR[3] * weights[tetNode_i];
+		dstNode->stressSPR[4] += srcNode->stressSPR[4] * weights[tetNode_i];
+		dstNode->stressSPR[5] += srcNode->stressSPR[5] * weights[tetNode_i];
+
 	}
 }
 
 
+void SPR( void* _context )
+{
+	Snac_Context*		context = (Snac_Context*)_context;
+	Mesh*				mesh = context->mesh;
+	NodeLayout*			nLayout = mesh->layout->nodeLayout;
+	Node_LocalIndex		node_lI;
 
+	/* Populate field variables by SPR */
+	for( node_lI = 0; node_lI < mesh->nodeLocalCount; node_lI++ ) {
+		Snac_Node*				node = Snac_Node_At( context, node_lI );
+		Coord*					coord = Snac_NodeCoord_P( context, node_lI );
+		Index 					nodeElementCount = context->mesh->nodeElementCountTbl[node_lI];
+		Index 					nodeElement_I;
+		Element_DomainIndex*	elements;
+		gsl_matrix*				matA;
+		gsl_vector* 			vecaStrain[6];
+		gsl_vector*				vecaStress[6];
+		gsl_vector*				vecaplStrain;
+		gsl_vector* 			vecbStrain[6];
+		gsl_vector* 			vecbStress[6];
+		gsl_vector* 			vecbplStrain;
+		Index 	 	 	 	 	i,j; 
+		
+		// initialize gsl vectors and matrix.
+		matA = gsl_matrix_alloc(4,4); gsl_matrix_set_zero( matA );
+		vecaplStrain = gsl_vector_alloc(4); gsl_vector_set_zero( vecaplStrain );
+		vecbplStrain = gsl_vector_alloc(4); gsl_vector_set_zero( vecbplStrain );
+		for(i=0;i<6;i++) {
+			vecaStrain[i] = gsl_vector_alloc(4); gsl_vector_set_zero( vecaStrain[i] );
+			vecaStress[i] = gsl_vector_alloc(4); gsl_vector_set_zero( vecaStress[i] );
+			vecbStrain[i] = gsl_vector_alloc(4); gsl_vector_set_zero( vecbStrain[i] );
+			vecbStress[i] = gsl_vector_alloc(4); gsl_vector_set_zero( vecbStress[i] );
+		}
+			
+		/* For each incident element, find inicident tets. */
+		for( nodeElement_I = 0; nodeElement_I < nodeElementCount; nodeElement_I++ ) {
+			Element_DomainIndex		element_dI = context->mesh->nodeElementTbl[node_lI][nodeElement_I];
 
+			if( element_dI < mesh->elementDomainCount ) {
+				Index elementTetra_I;
+				Snac_Element* element = Snac_Element_At( context, element_dI );
+
+				/* Extract the element's node indices.  Note that there should always be eight of these. */
+				{
+					Element_GlobalIndex	element_gI;
+					
+					elements = Memory_Alloc_Array( Node_DomainIndex, nodeElementCount, "SnacRemesher" );
+					element_gI = Mesh_ElementMapDomainToGlobal( mesh, element_dI );
+					nLayout->buildElementNodes( nLayout, element_gI, elements );
+				}
+				
+				/* Convert global node indices to domain. */
+				{
+					unsigned	eltNode_i;
+					
+					for( eltNode_i = 0; eltNode_i < nodeElementCount; eltNode_i++ ) {
+						elements[eltNode_i] = Mesh_NodeMapGlobalToDomain( mesh, elements[eltNode_i] );
+					}
+				}
+
+				/* For each incident tetrahedron in the incident element,
+				   add up contributions to P, A, and b as in Zienkiewicz and Zhu (1992), p. 1336 */
+				for( elementTetra_I = 0; elementTetra_I < Node_Element_Tetrahedra_Count;elementTetra_I++ ) {
+					Tetrahedra_Index	tetra_I = NodeToTetra[nodeElement_I][elementTetra_I];
+					Coord	tCrds[4];
+					double 	positionP[4] = {1.0,0.0,0.0,0.0};
+					Index 	ii,jj;
+
+					/* Extract the tetrahedron's coordinates. */
+					Vector_Set( tCrds[0], mesh->nodeCoord[elements[TetraToNode[tetra_I][0]]] );
+					Vector_Set( tCrds[1], mesh->nodeCoord[elements[TetraToNode[tetra_I][1]]] );
+					Vector_Set( tCrds[2], mesh->nodeCoord[elements[TetraToNode[tetra_I][2]]] );
+					Vector_Set( tCrds[3], mesh->nodeCoord[elements[TetraToNode[tetra_I][3]]] );
+					
+					for(ii=1;ii<4;ii++)
+						for(jj=0;jj<4;jj++)
+							positionP[ii] += (0.25f * tCrds[jj][ii-1]);
+					
+					for(ii=0;ii<4;ii++) {
+						double tmp;
+						tmp = gsl_vector_get(vecbStrain[0],ii) + positionP[ii]*element->tetra[tetra_I].strain[0][0];
+						gsl_vector_set(vecbStrain[0],ii,tmp);
+						tmp = gsl_vector_get(vecbStrain[1],ii) + positionP[ii]*element->tetra[tetra_I].strain[1][1];
+						gsl_vector_set(vecbStrain[1],ii,tmp);
+						tmp = gsl_vector_get(vecbStrain[2],ii) + positionP[ii]*element->tetra[tetra_I].strain[2][2];
+						gsl_vector_set(vecbStrain[2],ii,tmp);
+						tmp = gsl_vector_get(vecbStrain[3],ii) + positionP[ii]*element->tetra[tetra_I].strain[0][1];
+						gsl_vector_set(vecbStrain[3],ii,tmp);
+						tmp = gsl_vector_get(vecbStrain[4],ii) + positionP[ii]*element->tetra[tetra_I].strain[0][2];
+						gsl_vector_set(vecbStrain[4],ii,tmp);
+						tmp = gsl_vector_get(vecbStrain[5],ii) + positionP[ii]*element->tetra[tetra_I].strain[1][2];
+						gsl_vector_set(vecbStrain[5],ii,tmp);
+
+						tmp = gsl_vector_get(vecbStress[0],ii) + positionP[ii]*element->tetra[tetra_I].stress[0][0];
+						gsl_vector_set(vecbStress[0],ii,tmp);
+						tmp = gsl_vector_get(vecbStress[1],ii) + positionP[ii]*element->tetra[tetra_I].stress[1][1];
+						gsl_vector_set(vecbStress[1],ii,tmp);
+						tmp = gsl_vector_get(vecbStress[2],ii) + positionP[ii]*element->tetra[tetra_I].stress[2][2];
+						gsl_vector_set(vecbStress[2],ii,tmp);
+						tmp = gsl_vector_get(vecbStress[3],ii) + positionP[ii]*element->tetra[tetra_I].stress[0][1];
+						gsl_vector_set(vecbStress[3],ii,tmp);
+						tmp = gsl_vector_get(vecbStress[4],ii) + positionP[ii]*element->tetra[tetra_I].stress[0][2];
+						gsl_vector_set(vecbStress[4],ii,tmp);
+						tmp = gsl_vector_get(vecbStress[5],ii) + positionP[ii]*element->tetra[tetra_I].stress[1][2];
+						gsl_vector_set(vecbStress[5],ii,tmp);
+
+/* 						tmp = gsl_vector_get(vecbplStrain,i) + positionP[i]*plasticElement->tetra[tetra_I].stress[1][2]; */
+/* 						gsl_vector_set(vecStress[5],i,tmp); */
+						for(jj=0;jj<4;jj++) {
+							tmp = gsl_matrix_get(matA,ii,jj) + positionP[ii]*positionP[jj];
+							gsl_matrix_set(matA,ii,jj,tmp);
+						}
+					}
+				} // end of incident tets.
+			} // if within my domain
+		} // end of incident elements.
+		
+		// compute parameter vectors.
+		{
+			int s;
+			gsl_permutation * p = gsl_permutation_alloc (4);
+     
+			gsl_linalg_LU_decomp (matA, p, &s);
+			
+			for(i=0;i<6;i++) {
+				gsl_linalg_LU_solve (matA, p, vecbStrain[i], vecaStrain[i]);
+				gsl_linalg_LU_solve (matA, p, vecbStress[i], vecaStress[i]);
+			}
+/* 			printf ("x = \n"); */
+/* 			gsl_vector_fprintf (stdout, x, "%g"); */
+			gsl_permutation_free (p);
+		}	
+
+		// zero the arrays to store recovered field.
+		// probably not necessary.
+/* 		for(i=0;i<6;i++) { */
+/* 			node->strainSPR[i] = 0.0f; */
+/* 			node->stressSPR[i] = 0.0f; */
+/* 		} */
+
+		// Recover using the parameter vectors.
+		for(j=0;j<6;j++) {
+			node->strainSPR[j] = gsl_vector_get(vecaStrain[j],0);
+			node->stressSPR[j] = gsl_vector_get(vecaStress[j],0);
+			for(i=0;i<3;i++) {
+				node->strainSPR[j] += gsl_vector_get(vecaStrain[j],i+1)*(*coord)[i];
+				node->stressSPR[j] += gsl_vector_get(vecaStress[j],i+1)*(*coord)[i];
+			}
+		}
+
+		// free gsl vectors and matrix.
+		gsl_matrix_free( matA );
+		gsl_vector_free( vecaplStrain );
+		gsl_vector_free( vecbplStrain );
+		for(i=0;i<6;i++) {
+			gsl_vector_free( vecaStrain[i] );
+			gsl_vector_free( vecaStress[i] );
+			gsl_vector_free( vecbStrain[i] );
+			gsl_vector_free( vecbStress[i] );
+		}
+		/* Free the element node array. */
+		FreeArray( elements );
+	} // end of recovery.
+}
 
 
 
