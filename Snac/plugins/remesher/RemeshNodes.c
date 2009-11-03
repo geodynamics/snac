@@ -390,8 +390,6 @@ void _SnacRemesher_InterpolateNode( void* _context,
 	dstNode->stressSPR[4] = 0.0;
 	dstNode->stressSPR[5] = 0.0;
 
-	dstNode->plStrainSPR = 0.0;
-
 	/* Loop over each contributing node. */
 	for( tetNode_i = 0; tetNode_i < 4; tetNode_i++ ) {
 		Snac_Node*	srcNode;
