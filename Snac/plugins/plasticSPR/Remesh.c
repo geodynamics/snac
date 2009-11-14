@@ -165,12 +165,15 @@ void _SnacPlastic_InterpolateNode( void* _context,
 	Snac_Context*			context = (Snac_Context*)_context;
 	Mesh*					mesh = context->mesh;
 	NodeLayout*				nLayout = mesh->layout->nodeLayout;
-	SnacPlastic_Node*		dstNodeExt = (SnacPlastic_Node*)ExtensionManager_At( context->mesh->nodeExtensionMgr, 
-																				 dstNodes, 
-																				 nodeInd );
+	Snac_Node*				dstNode = (Snac_Node*)ExtensionManager_At( context->mesh->nodeExtensionMgr, 
+																	   dstNodes, 
+																	   nodeInd );
+	SnacPlastic_Node*		dstNodeExt = ExtensionManager_Get( context->mesh->nodeExtensionMgr, 
+															   dstNode, 
+															   SnacPlastic_NodeHandle );
 	Index					tetNode_i;
 
-	SnacPlastic_Node_Print( dstNodeExt );
+/* 	SnacPlastic_Node_Print( dstNodeExt ); */
 
 	/* Extract the element's node indices.  Note that there should always be eight of these. */
 	Node_DomainIndex*	eltNodes;
@@ -216,8 +219,8 @@ void _SnacPlastic_InterpolateNode( void* _context,
 
 
 void _SnacPlastic_InterpolateElement( void* _context, 
-									  unsigned dstEltInd,
-									  unsigned dstTetInd )
+									  Element_LocalIndex dstEltInd,
+									  Tetrahedra_Index dstTetInd )
 {
 	Snac_Context* 			context = (Snac_Context*)_context;
 	Snac_Element*			dstElt = Snac_Element_At( context, dstEltInd );
@@ -227,14 +230,15 @@ void _SnacPlastic_InterpolateElement( void* _context,
 	double				 	plasticStrain = 0.0;
 	Index 					i;
 	
+/*  	fprintf(stderr,"element:%d tet=%d\n",dstEltInd,dstTetInd);  */
 	for(i=0;i<4;i++) {
 		Snac_Node*			node = Snac_Element_Node_P( context, dstEltInd, TetraToNode[dstTetInd][i] );
 		SnacPlastic_Node*	nodeExt = ExtensionManager_Get( context->mesh->nodeExtensionMgr, 
 															node, 
 															SnacPlastic_NodeHandle );
 		plasticStrain += 0.25f*nodeExt->plStrainSPR;
- 		fprintf(stderr,"element=%d tet=%d %d:(%d %e)\n",dstEltInd, dstTetInd, i, TetraToNode[dstTetInd][i], nodeExt->plStrainSPR);
+/* 		if( nodeExt->plStrainSPR != 0.0 ) */
+/* 		  fprintf(stderr,"\t%d:(%d %e)\n", i, TetraToNode[dstTetInd][i], nodeExt->plStrainSPR); */
 	}
- 	fprintf(stderr,"\n"); 
 	dstEltExt->plasticStrain[dstTetInd] = plasticStrain;
 }
