@@ -49,7 +49,7 @@
 		Force		force; \
 		double		stressSPR[6]; \
 		double		strainSPR[6]; \
-		double		plStrainSPR; \
+		double		material_ISPR; \
 		double	    dh; \
 		double		residualFr; \
 		double		residualFt; \
