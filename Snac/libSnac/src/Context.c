@@ -83,6 +83,7 @@ const Name Snac_EP_RheologyUpdate =		"Snac_EP_RheologyUpdate";
 /* Snac_Context dt type names */
 const Name Snac_DtType_Constant =              "constant";
 const Name Snac_DtType_Dynamic =               "dynamic";
+const Name Snac_DtType_Wave =                  "wave";
 
 
 Snac_Context* Snac_Context_New(
@@ -316,6 +317,17 @@ void _Snac_Context_Init( Snac_Context* self ) {
 		self->dtType = Snac_DtType_Dynamic;
 
 		/* When dynamic Dt type is specified, Dt will be calculated later, give 0 as starting value... legacy behaviour. */
+		self->dt = Dictionary_Entry_Value_AsDouble(
+			Dictionary_GetDefault( self->dictionary, "timeStep", Dictionary_Entry_Value_FromDouble( 0.0 ) ) );
+
+		Journal_Printf( self->info, "\"dtType\" set by Dictionary to \"%s\"\n", self->dtType );
+	}
+	else if( !strcmp( tmpStr, Snac_DtType_Wave ) ) {
+		/* Set dtType to "dynamic" using known pointer/key... it means checks are pointer comparisons only, not strcmp */
+		self->dtType = Snac_DtType_Wave;
+
+		/* When Courant Dt type is specified, Dt will be calculated later, 
+		   upper-bounded by the Courant-Fredrichs-Levy condition. Give 0 as starting value... legacy behaviour. */
 		self->dt = Dictionary_Entry_Value_AsDouble(
 			Dictionary_GetDefault( self->dictionary, "timeStep", Dictionary_Entry_Value_FromDouble( 0.0 ) ) );
 
@@ -1171,6 +1183,11 @@ void _Snac_Context_Sync( void* context ) {
 		self->dt = self->minLengthScale * 0.45f * self->strain_inert / vmax;
 
 		self->speedOfSound = self->minLengthScale * 0.5f / self->dt;
+	}
+	else if( self->dtType == Snac_DtType_Wave ) {
+		MPI_Allreduce( &self->speedOfSound, &tmp, 1, MPI_DOUBLE, MPI_MIN, self->communicator );
+		self->speedOfSound = tmp;
+		self->dt = 0.5f * self->minLengthScale / self->speedOfSound;
 	}
 
 	if( self->rank == 0 ) {

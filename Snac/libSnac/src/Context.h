@@ -62,6 +62,7 @@
 	/* Snac_Context dt type names */
 	extern const Name Snac_DtType_Constant;
 	extern const Name Snac_DtType_Dynamic;
+	extern const Name Snac_DtType_Wave;
 
 	/* Snac_Context info */
 	#define __Snac_Context \
@@ -79,7 +80,7 @@
 		double				topoGradMax; \
 		double				topoGradCriterion; \
 		\
-		Snac_Material*			materialProperty; \
+		Snac_Material*		materialProperty; \
 		double				dt; \
 		Type				dtType; \
 		double				strain_inert; \
@@ -91,9 +92,9 @@
 		double				gravity; \
 		double				demf; \
 		\
-		CompositeVC*			nodeICs; \
-		CompositeVC*			elementICs; \
-		CompositeVC*			velocityBCs; \
+		CompositeVC*		nodeICs; \
+		CompositeVC*		elementICs; \
+		CompositeVC*		velocityBCs; \
 		\
 		/* TODO... we want journal or the like to look after this in the end */ \
 		FILE*				simInfo; \

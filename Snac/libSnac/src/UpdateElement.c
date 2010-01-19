@@ -57,6 +57,14 @@ void Snac_UpdateElementMomentum( void* context, Element_LocalIndex element_lI, d
 	Snac_Element*		element = Snac_Element_At( self, element_lI );
 	Rotation		rotation[Tetrahedra_Count];
 
+	Snac_Material*      material = &self->materialProperty[element->material_I];
+
+	/* Find this processor's maximum Vp and store it as speedOfSound. */
+	if( self->dtType == Snac_DtType_Wave ) {
+		double Vp = sqrt((material->lambda+2.0f*material->mu)/material->phsDensity);
+		if( Vp > self->speedOfSound )
+			self->speedOfSound = Vp;
+	}
 
 	/* Initialise output data */
 	element->volume=0.0;

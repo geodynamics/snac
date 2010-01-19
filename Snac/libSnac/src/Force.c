@@ -65,11 +65,7 @@ void Snac_Force(
 	const double			factor4 = 1.0f / 4.0f;
 	double				dirnorm;
 	double				dir2centr[3];
-	Index				i;
 	const double			gravity = self->gravity;
-	int				Spherical = 0;
-	Dictionary_Entry_Value* pluginsList;
-	Dictionary_Entry_Value* plugin;
 
 	if(self->spherical) {
 		Coord*	coord = Snac_NodeCoord_P( self, node_lI );
@@ -87,40 +83,6 @@ void Snac_Force(
 	memset( *force, 0, sizeof(Force) );
 	memset( *balance, 0, sizeof(Force) );
 	if( self->forceCalcType == Snac_Force_Complete ) {
-		/* Work out the inertial mass contributions */
-		if( self->dtType != Snac_DtType_Constant ) {
-			/* for each element of this node */
-			for( nodeElement_I = 0; nodeElement_I < nodeElementCount; nodeElement_I++ ) {
-				Element_DomainIndex		element_lI = self->mesh->nodeElementTbl[node_lI][nodeElement_I];
-
-				/* Nodes on the meshes boundary do not have all 8 neighbouring elements... however we are now
-				   using a shadow depth of 1, so they are in the domain tables */
-				if( element_lI < self->mesh->elementDomainCount ) {
-					Snac_Element*			element = Snac_Element_At( self, element_lI );
-					Material_Index			material_I = element->material_I;
-					const Snac_Material*		material = &self->materialProperty[material_I];
-					const Density			inertialDensity = (material->lambda + 2.0f * material->mu )/
-										(speedOfSound * speedOfSound);
-					Index				index;
-
-					Journal_DFirewall(
-						inertialDensity > 0.0f,
-						self->snacError,
-						"forceCalc: Quick, dtType != Constant, element_lI: %u, inertialDensity is less than 0", element_lI );
-
-					/* for each tetra that refers to this node */
-					for( index = 0; index < Node_Element_Tetrahedra_Count;index++ ) {
-						Tetrahedra_Index	tetra_I = NodeToTetra[nodeElement_I][index];
-
-						*inertialMass += factor4 * inertialDensity * element->tetra[tetra_I].volume;
-						Journal_DFirewall(
-							!isnan( *inertialMass ) && !isinf( *inertialMass ),
-							self->snacError,
-							"forceCalc: Quick, dtType: !Constant, element_lI: %u, inertialDensity is either nan or inf", element_lI );
-					}
-				}
-			}
-		}
 
 		for( nodeElement_I = 0; nodeElement_I < nodeElementCount; nodeElement_I++ ) { /* for each element of this node */
 			Element_DomainIndex		element_lI = self->mesh->nodeElementTbl[node_lI][nodeElement_I];
@@ -128,29 +90,36 @@ void Snac_Force(
 			/* Nodes on the meshes boundary do not have all 8 neighbouring elements... but they are stored in
 			   in the domain */
 			if( element_lI < self->mesh->elementDomainCount ) {
-				Snac_Element*		element = Snac_Element_At( self, element_lI );
+				Snac_Element*			element = Snac_Element_At( self, element_lI );
 				Material_Index			material_I = element->material_I;
-				const Snac_Material*		material = &self->materialProperty[material_I];
-				Index			index;
+				const Snac_Material*	material = &self->materialProperty[material_I];
+				const Density			inertialDensity = (material->lambda + 2.0f * material->mu )/(speedOfSound * speedOfSound);
+				Index					index;
 
 				/* for each tetra that refers to this node */
 				for( index = 0; index < Node_Element_Tetrahedra_Count;index++ ) {
-					const Tetrahedra_Index			tetra_I = NodeToTetra[nodeElement_I][index];
+					const Tetrahedra_Index				tetra_I = NodeToTetra[nodeElement_I][index];
 					const Tetrahedra_Surface_Index		surface_I = NodeToSurface[nodeElement_I][index];
 
 					/* Element info shortcuts */
-					const Snac_Element_Tetrahedra*		tetra = &element->tetra[tetra_I];
-					const StressTensor*			stress = (const StressTensor*) &tetra->stress;
+					const Snac_Element_Tetrahedra*			tetra = &element->tetra[tetra_I];
+					const StressTensor*						stress = (const StressTensor*) &tetra->stress;
 					const Snac_Element_Tetrahedra_Surface*	surface = &tetra->surface[surface_I];
-					const Normal*				normal = &surface->normal;
-					const Density               effDensity = tetra->density;
+					const Normal*							normal = &surface->normal;
+					const Density 							effDensity = tetra->density;
 
-					/*ccccc*/
-					if( self->dtType == Snac_DtType_Constant ) {
-						double				alpha1 = (material->lambda + 2.0f / 3.0f *
-											material->mu ) + 4.0f / 3.0f *
-											material->mu;
-						int				dim;
+					/* Work out the mass contributions */
+					if( self->dtType == Snac_DtType_Dynamic ) {
+
+						*inertialMass += factor4 * inertialDensity * element->tetra[tetra_I].volume;
+						Journal_DFirewall(
+							!isnan( *inertialMass ) && !isinf( *inertialMass ),
+							self->snacError,
+							"forceCalc: Complete, dtType: Dynamic, element_lI: %u, inertialDensity is either nan or inf", element_lI );
+					}
+					else if( self->dtType == Snac_DtType_Constant ) {
+						double				alpha1 = (material->lambda + 2.0f*material->mu);
+						int					dim;
 						double				temp;
 						double				area_sum = 0.0;
 
@@ -164,7 +133,20 @@ void Snac_Force(
 						Journal_DFirewall(
 							!isnan( *inertialMass ) && !isinf( *inertialMass ),
 							self->snacError,
-							"forceCalc: Quick, dtType: Constant, element_lI: %u, inertialDensity is either nan or inf", element_lI );
+							"forceCalc: Complete, dtType: Constant, element_lI: %u, inertialDensity is either nan or inf", element_lI );
+					}
+					else if( self->dtType == Snac_DtType_Wave ) {
+						*inertialMass += factor4 * effDensity * element->tetra[tetra_I].volume;
+						Journal_DFirewall(
+							!isnan( *inertialMass ) && !isinf( *inertialMass ),
+							self->snacError,
+							"forceCalc: Complete, dtType: Courant, element_lI: %u, inertialDensity is either nan or inf", element_lI );
+					}
+					else {
+						Journal_DFirewall(
+							0,
+							self->snacError,
+							"forceCalc: Complete, dtType: Unknown. Aborting.\n");
 					}
 					/*ccccc*/
 
