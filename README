@@ -1,0 +1,37 @@
+Some customization is required for installation of SNAC on some platforms.
+
+1. Mac OS X Leopard (and probably Snow Leopard)
+
+The following steps are recommended in order to ensure that all the relevant utilities, libraries and environment variables are set up as needed by SNAC.
+	- install XCode
+	- install MacPorts (and Porticus if you want the GUI)
+	- using MacPorts/Porticus, install gsl and mpich2 (don't choose a variant)
+	- set a bunch of environment variables to help the configure script find them
+
+The recommended setting of environment variables is:
+
+setenv MPI_DIR /opt/local
+setenv MPI_BINDIR ${MPI_DIR}/bin
+setenv MPI_INCDIR ${MPI_DIR}/include/mpich2
+setenv MPI_LIBDIR ${MPI_DIR}/lib
+setenv MPI_RUN ${MPI_BINDIR}/mpirun
+setenv PATH ${MPI_BINDIR}:{$PATH}
+setenv LD_LIBRARY_PATH ${MPI_LIBDIR}:{LD_LIBRARY_PATH}
+setenv GSL_DIR /opt/local
+setenv DL_DIR /usr
+setenv SNAC_DIR $HOME/Src/SNAC
+setenv SNAC_BLDDIR ${SNAC_DIR}/build-optimised
+setenv SNAC_BINDIR ${SNAC_BLDDIR}/bin
+setenv SNAC_INCDIR ${SNAC_BLDDIR}/include
+setenv SNAC_LIBDIR ${SNAC_BLDDIR}/lib
+setenv PATH ${SNAC_BINDIR}:{$PATH}
+setenv LD_LIBRARY_PATH ${SNAC_LIBDIR}:{LD_LIBRARY_PATH}
+setenv CC mpicc
+setenv CXX mpicxx
+
+An onerous little change is also required to two Makefiles:
+	- remove "-u __dummy" EXPORT_DYNAMIC_LFLAGS in StGermain/Makefile.system
+        - remove "-u __dummy" EXPORT_DYNAMIC_LFLAGS in Snac/Makefile.system
+This change can/should be made earlier upon detection of the Darwin kernel and Leopard/Snow Leopard (?)
+
+
