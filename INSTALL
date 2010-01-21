@@ -1,6 +1,10 @@
+These notes are somewhat deprecated and need more details.
+See the README for more current info on installation issues, particularly as regards platform-specific customizations.
+
 SNAC has two dependencies:
 1. libxml2
 2. MPICH1 or 2
+3. GSL (Gnu Scientific Library)
 
 Building SNAC takes two steps:
 1. ./configure.sh
