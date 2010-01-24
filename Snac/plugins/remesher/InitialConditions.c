@@ -82,8 +82,8 @@ void _SnacRemesher_InitialConditions( void* _context, void* data ) {
 		char path[PATH_MAX];
 		double	x,y,z;
 
-		sprintf(path, "%s/snac.initcoord.%d.%06d.restart",context->outputPath,context->rank,context->restartTimestep);
-		Journal_Firewall( ( (fp=fopen(path,"r")) != NULL), context->snacError, "Can't find %s", path );
+		sprintf(path, "%s/snac.initCoord.%d.%06d.restart",context->outputPath,context->rank,context->restartTimestep);
+		Journal_Firewall( ( (fp=fopen(path,"r")) != NULL), context->snacError, "Can't find %s\n", path );
 		for( lNode_i = 0; lNode_i < mesh->nodeLocalCount; lNode_i++ ) {
 			fscanf( fp, "%le %le %le", &x,&y,&z);
 			meshExt->newNodeCoords[lNode_i][0] = x;

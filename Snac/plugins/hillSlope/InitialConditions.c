@@ -112,6 +112,11 @@ void _SnacHillSlope_InitialConditions( void* _context, void* data ) {
 	    plugin = plugin->next;
 	}
     }
+    /* 
+    if(context->restartTimestep > 0) {
+	restart = TRUE;
+    }
+    */
     if( restart ) {
 	fprintf(stderr, "Restarting: thus bailing from hillSlope/InitialConditions.c to avoid overwriting the mesh geometry\n");
 	return;
