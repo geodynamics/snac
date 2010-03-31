@@ -218,7 +218,7 @@ void _Snac_Context_Init( Snac_Context* self ) {
 
 	/* Building StGermain Variables of nodal quantities... we must the "complex" constructor for Variable... the
 	 * info needs to be wrapped this generic way... */
-	Index			nodeOffsetCount = 8;
+	Index			nodeOffsetCount = 28;
 	SizeT			nodeOffsets[] = {
 					GetOffsetOfMember( tmpNode, velocity ),
 					GetOffsetOfMember( tmpNode, velocity[0] ),
@@ -227,34 +227,74 @@ void _Snac_Context_Init( Snac_Context* self ) {
 					GetOffsetOfMember( tmpNode, force ),
 					GetOffsetOfMember( tmpNode, force[0] ),
 					GetOffsetOfMember( tmpNode, force[1] ),
-					GetOffsetOfMember( tmpNode, force[2] ) };
+					GetOffsetOfMember( tmpNode, force[2] ),
+					GetOffsetOfMember( tmpNode, dh ),
+					GetOffsetOfMember( tmpNode, residualFr ),
+					GetOffsetOfMember( tmpNode, residualFt ),
+					GetOffsetOfMember( tmpNode, inertialMass ),
+					GetOffsetOfMember( tmpNode, stressSPR ),
+					GetOffsetOfMember( tmpNode, stressSPR[0] ),
+					GetOffsetOfMember( tmpNode, stressSPR[1] ),
+					GetOffsetOfMember( tmpNode, stressSPR[2] ),
+					GetOffsetOfMember( tmpNode, stressSPR[3] ),
+					GetOffsetOfMember( tmpNode, stressSPR[4] ),
+					GetOffsetOfMember( tmpNode, stressSPR[5] ),
+					GetOffsetOfMember( tmpNode, strainSPR ),
+					GetOffsetOfMember( tmpNode, strainSPR[0] ),
+					GetOffsetOfMember( tmpNode, strainSPR[1] ),
+					GetOffsetOfMember( tmpNode, strainSPR[2] ),
+					GetOffsetOfMember( tmpNode, strainSPR[3] ),
+					GetOffsetOfMember( tmpNode, strainSPR[4] ),
+					GetOffsetOfMember( tmpNode, strainSPR[5] ),
+					GetOffsetOfMember( tmpNode, material_ISPR ),
+					GetOffsetOfMember( tmpNode, densitySPR ) };
 	Variable_DataType	nodeDataTypes[] = {
-					Variable_DataType_Double,
-					Variable_DataType_Double,
-					Variable_DataType_Double,
-					Variable_DataType_Double,
-					Variable_DataType_Double,
-					Variable_DataType_Double,
-					Variable_DataType_Double,
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
+					Variable_DataType_Double, 
 					Variable_DataType_Double };
+
 	Index			nodeDataTypeCounts[] = {
-					3,
-					1,
-					1,
-					1,
-					3,
-					1,
-					1,
-					1 };
+					3, 1, 1, 1,
+					3, 1, 1, 1,
+					1, 1, 1, 1,
+					6, 1, 1, 1, 1, 1, 1,
+					6, 1, 1, 1, 1, 1, 1,
+					1, 1 };
 	Name			nodeNames[] = {
-					"velocity",
-					"vx",
-					"vy",
-					"vz",
-					"force",
-					"fx",
-					"fy",
-					"fz" };
+					"velocity", "vx", "vy", "vz",
+					"force", "fx", "fy", "fz",
+					"dh", "residualFr", "residualFt",
+					"inertialMass",
+					"stressSPR","stressSPRxx","stressSPRyy","stressSPRzz",
+					"stressSPRxy","stressSPRxz","stressSPRyz",
+					"strainSPR","strainSPRxx","strainSPRyy","strainSPRzz",
+					"strainSPRxy","strainSPRxz","strainSPRyz",
+					"material_ISPR","densitySPR" };
 
 	/* Building StGermain Variables of element quantities... we must the "complex" constructor for Variable... the
 	 * info needs to be wrapped this generic way... */

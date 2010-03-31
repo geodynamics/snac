@@ -163,6 +163,7 @@ void Snac_Force(
 						( (*stress)[0][2] * (*normal)[0] +
 						  (*stress)[1][2] * (*normal)[1] +
 						  (*stress)[2][2] * (*normal)[2] ) * surface->area / 6.0f;
+					
 					if(self->spherical) {
 						(*force)[0] -= dir2centr[0] * (gravity * effDensity * tetra->volume / 8.0f);
 						(*force)[1] -= dir2centr[1] * (gravity * effDensity * tetra->volume / 8.0f);

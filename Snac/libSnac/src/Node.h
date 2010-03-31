@@ -47,13 +47,14 @@
 	#define __Snac_Node \
 		Velocity	velocity; \
 		Force		force; \
-		double		stressSPR[6]; \
-		double		strainSPR[6]; \
-		double		material_ISPR; \
 		double	    dh; \
 		double		residualFr; \
 		double		residualFt; \
-		Mass		inertialMass;
+		Mass		inertialMass; \
+		double		stressSPR[6]; \
+		double		strainSPR[6]; \
+		double		material_ISPR; \
+		double		densitySPR;
 	struct _Snac_Node { __Snac_Node };
 
 	/* Print the contents of an Mesh construct */
