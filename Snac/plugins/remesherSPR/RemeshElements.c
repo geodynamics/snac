@@ -84,8 +84,8 @@ void _SnacRemesher_UpdateElements( void* _context ) {
 /* 			if( element->tetra[tetra_I].material_I==2 ) */
 /* 				fprintf(stderr,"\t int matId=%e (%d)\n",materialInd, (Material_Index)((materialInd/(100*Tetrahedra_Count))+0.5)); */
 		}
-		if( element->material_I ==2 ) //element_lI==0 )
-			fprintf(stderr,"int matId=%d\n",(Material_Index)(materialInd/10+0.5));
+/* 		if( element->material_I ==2 ) //element_lI==0 ) */
+/* 			fprintf(stderr,"int matId=%d\n",(Material_Index)(materialInd/10+0.5)); */
 		//element->material_I = ((Material_Index)(((double)materialInd/(Tetrahedra_Count))+0.5))/100;
 		element->material_I = (Material_Index)(materialInd/10+0.5);
 
@@ -113,20 +113,36 @@ void _SnacRemesher_InterpolateElement( void* _context,
 	Index i,j;
 	double strain[6];
 	double stress[6];
-	double materialInd;
+	float materialInd;
+	double density;
 
 	/* Compute averages of recovered fields for this tet.*/
 	for(j=0;j<6;j++) {
 		strain[j] = 0.0;
 		stress[j] = 0.0;
 		for(i=0;i<4;i++) {
-			strain[j] += (0.25f*Snac_Element_Node_P(context, dstEltInd, TetraToNode[dstTetInd][i])->strainSPR[j]);
-			stress[j] += (0.25f*Snac_Element_Node_P(context, dstEltInd, TetraToNode[dstTetInd][i])->stressSPR[j]);
+			Index dstNodeNum = Element_Node_I(context, dstEltInd, TetraToNode[dstTetInd][i]);
+ 			Snac_Node* dstNode = Snac_Node_At( context, dstNodeNum );
+ 			strain[j] += 0.25f * dstNode->strainSPR[j];
+			stress[j] += 0.25f * dstNode->stressSPR[j];
+			/* The next two lines can possibly replace the above codes, but need testing. */
+			/* strain[j] += (0.25f*Snac_Element_Node_P(context, dstEltInd, TetraToNode[dstTetInd][i])->strainSPR[j]); */
+			/* stress[j] += (0.25f*Snac_Element_Node_P(context, dstEltInd, TetraToNode[dstTetInd][i])->stressSPR[j]); */
 		}
 	}
 	materialInd = 0.0;
-	for(i=0;i<4;i++) 
-		materialInd += 0.25f*Snac_Element_Node_P(context, dstEltInd, TetraToNode[dstTetInd][i])->material_ISPR;
+	for(i=0;i<4;i++) {
+		Index dstNodeNum = Element_Node_I(context, dstEltInd, TetraToNode[dstTetInd][i]);
+		Snac_Node* dstNode = Snac_Node_At( context, dstNodeNum );
+		materialInd += 0.25f*(dstNode->material_ISPR);
+	}
+
+	density = 0.0;
+	for(i=0;i<4;i++) {
+		Index dstNodeNum = Element_Node_I(context, dstEltInd, TetraToNode[dstTetInd][i]);
+		Snac_Node* dstNode = Snac_Node_At( context, dstNodeNum );
+		density += 0.25f*(dstNode->densitySPR);
+	}
 
 	/* Assign the computed averages to the tets. */
 	dstElt->tetra[dstTetInd].strain[0][0] = strain[0];
@@ -149,7 +165,14 @@ void _SnacRemesher_InterpolateElement( void* _context,
 	dstElt->tetra[dstTetInd].stress[2][0] = stress[4];
 	dstElt->tetra[dstTetInd].stress[2][1] = stress[5];
 
- 	dstElt->tetra[dstTetInd].material_I = (Material_Index)(materialInd); 
+ 	dstElt->tetra[dstTetInd].material_I = 0;
+/* 	if( dstElt->tetra[dstTetInd].material_I != 0 ) */
+/* 		fprintf(stderr,"%d %d %e %d\n",dstEltInd,dstTetInd,dstElt->tetra[dstTetInd].material_I, */
+/* 				(unsigned int)(dstElt->tetra[dstTetInd].material_I)); */
+
+ 	dstElt->tetra[dstTetInd].density = density; 
+
+#if 0
  	if( dstElt->material_I == 2 ) 
  		fprintf(stderr,"el=%d tet=%d elmatI=%d matI=%e (%d) (%e %e %e %e)\n",dstEltInd,dstTetInd,dstElt->material_I,materialInd, 
  				dstElt->tetra[dstTetInd].material_I,
@@ -158,4 +181,5 @@ void _SnacRemesher_InterpolateElement( void* _context,
 				Snac_Element_Node_P(context, dstEltInd, TetraToNode[dstTetInd][2])->material_ISPR,
 				Snac_Element_Node_P(context, dstEltInd, TetraToNode[dstTetInd][3])->material_ISPR
 				); 
+#endif
 }

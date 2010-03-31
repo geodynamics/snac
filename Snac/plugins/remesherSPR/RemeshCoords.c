@@ -542,7 +542,6 @@ void _SnacRemesher_NewCoords_Cartesian( void* _context ) {
 								}
 								//fprintf(stderr,"dett=%e det0=%e det1=%e det2=%e shape=%e %e %e\n",dett,det[0],det[1],det[2],shape[0],shape[1],shape[2]);
 
-								/* Assign proper values of velocities and temperatures from old mesh to new mesh */
 								meshExt->newNodeCoord[node_lI][0] = initialNodeCoord[0];
 								meshExt->newNodeCoord[node_lI][1] = y1*shape[0] + y2*shape[1] + y3*shape[2];
 								//meshExt->newNodeCoord[node_lI][1] -= TOL*fabs(meshExt->newNodeCoord[node_lI][1]);
@@ -726,7 +725,6 @@ void _SnacRemesher_NewCoords_Cartesian( void* _context ) {
                                     shape[tNode_I] = det[tNode_I] / dett;
                                 }
 
-                                /* Assign proper values of velocities and temperatures from old mesh to new mesh */
                                 meshExt->newNodeCoord[node_lI][0] = initialNodeCoord[0];
                                 meshExt->newNodeCoord[node_lI][1] = y1*shape[0] + y2*shape[1] + y3*shape[2];
                                 meshExt->newNodeCoord[node_lI][2] = initialNodeCoord[2];
@@ -918,7 +916,6 @@ void _SnacRemesher_NewCoords_Cartesian( void* _context ) {
 										shape[tNode_I] = det[tNode_I] / dett;
 									}
 
-									/* Assign proper values of velocities and temperatures from old mesh to new mesh */
 									meshExt->newNodeCoord[node_lI][0] = initialNodeCoord[0];
 									meshExt->newNodeCoord[node_lI][1] = y1*shape[0] + y2*shape[1] + y3*shape[2];
 									meshExt->newNodeCoord[node_lI][2] = initialNodeCoord[2];
@@ -1106,7 +1103,6 @@ void _SnacRemesher_NewCoords_Cartesian( void* _context ) {
                                         shape[tNode_I] = det[tNode_I] / dett;
                                     }
 
-                                    /* Assign proper values of velocities and temperatures from old mesh to new mesh */
                                     meshExt->newNodeCoord[node_lI][0] = initialNodeCoord[0];
                                     meshExt->newNodeCoord[node_lI][1] = y1*shape[0] + y2*shape[1] + y3*shape[2];
                                     meshExt->newNodeCoord[node_lI][2] = initialNodeCoord[2];
@@ -1380,7 +1376,6 @@ void _SnacRemesher_NewCoords_Spherical( void* _context ) {
 									shape[tNode_I] = det[tNode_I] / dett;
 								}
 
-								/* Assign proper values of velocities and temperatures from old mesh to new mesh */
 								x1[0] = initialNodeCoordS[0];
 								x1[1] = y1*shape[0] + y2*shape[1] + y3*shape[2];
 								x1[2] = initialNodeCoordS[2];
@@ -1578,7 +1573,6 @@ void _SnacRemesher_NewCoords_Spherical( void* _context ) {
                                     shape[tNode_I] = det[tNode_I] / dett;
                                 }
 
-                                /* Assign proper values of velocities and temperatures from old mesh to new mesh */
                                 x1[0] = initialNodeCoordS[0];
                                 x1[1] = y1*shape[0] + y2*shape[1] + y3*shape[2];
                                 x1[2] = initialNodeCoordS[2];
@@ -1782,7 +1776,6 @@ void _SnacRemesher_NewCoords_Spherical( void* _context ) {
 										shape[tNode_I] = det[tNode_I] / dett;
 									}
 
-									/* Assign proper values of velocities and temperatures from old mesh to new mesh */
 									x1[0] = initialNodeCoordS[0];
 									x1[1] = y1*shape[0] + y2*shape[1] + y3*shape[2];
 									x1[2] = initialNodeCoordS[2];
@@ -1979,7 +1972,6 @@ void _SnacRemesher_NewCoords_Spherical( void* _context ) {
                                         shape[tNode_I] = det[tNode_I] / dett;
                                     }
 
-                                    /* Assign proper values of velocities and temperatures from old mesh to new mesh */
                                     x1[0] = initialNodeCoordS[0];
                                     x1[1] = y1*shape[0] + y2*shape[1] + y3*shape[2];
                                     x1[2] = initialNodeCoordS[2];

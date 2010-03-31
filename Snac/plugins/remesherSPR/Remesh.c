@@ -49,14 +49,14 @@
 void _SnacRemesher_Remesh( void* _context, void* data ) {
 	Snac_Context*			context = (Snac_Context*)_context;
 	SnacRemesher_Context*	contextExt = ExtensionManager_Get(
-									context->extensionMgr,
-									context,
-									SnacRemesher_ContextHandle );
+															  context->extensionMgr,
+															  context,
+															  SnacRemesher_ContextHandle );
 	Mesh*					mesh = context->mesh;
 	SnacRemesher_Mesh*		meshExt = ExtensionManager_Get(
-									context->meshExtensionMgr,
-									mesh,
-									SnacRemesher_MeshHandle );
+														   context->meshExtensionMgr,
+														   mesh,
+														   SnacRemesher_MeshHandle );
 	Bool 					remesh;
 
 	Journal_DPrintf( context->debug, "In: %s\n", __func__ );
@@ -123,7 +123,7 @@ void _SnacRemesher_Remesh( void* _context, void* data ) {
 		
 		/* Remesh the coordinates. */
 		_SnacRemesher_NewCoords( context );
-		
+
 		/* Interpolate current nodal values onto new coordinates. */
 		meshExt->newNodes = (Snac_Node*)ExtensionManager_Malloc( mesh->nodeExtensionMgr, mesh->nodeLocalCount );
 		_SnacRemesher_InterpolateNodes( context );
@@ -132,28 +132,36 @@ void _SnacRemesher_Remesh( void* _context, void* data ) {
 		   This simple copy works because bottoms nodes are always bottom 
 		   and remeshing doesn't change the node number. */
 		for( newNode_i = 0; newNode_i < mesh->nodeLocalCount; newNode_i++ ) {
-			Snac_Node* dstNode = 
-				(Snac_Node*)ExtensionManager_At( context->mesh->nodeExtensionMgr,
-												 meshExt->newNodes,
-												 newNode_i );
+			Snac_Node* dstNode = (Snac_Node*)ExtensionManager_At( context->mesh->nodeExtensionMgr,
+																  meshExt->newNodes,
+																  newNode_i );
 
-			Snac_Node* srcNode = 
-				Snac_Node_At( context, newNode_i );
+			Snac_Node* srcNode = Snac_Node_At( context, newNode_i );
 
 			dstNode->residualFr = srcNode->residualFr;
 			dstNode->residualFt = srcNode->residualFt;
 		}
 		
-		/* Copy accross the new coord, node & element information to the current arrays. */
-		memcpy( mesh->nodeCoord, meshExt->newNodeCoords, mesh->nodeLocalCount * sizeof(Coord) );
-		memcpy( mesh->node, meshExt->newNodes, mesh->nodeExtensionMgr->finalSize * mesh->nodeLocalCount );
+		/* Copy accross the new coord */
+  		memcpy( mesh->nodeCoord, meshExt->newNodeCoords, mesh->nodeLocalCount * sizeof(Coord) );
+
+		/* Copy node structures to the current array */
+		/* The next single line can possibly replace the for loop.
+		   memcpy( mesh->node, meshExt->newNodes, mesh->nodeExtensionMgr->finalSize * mesh->nodeLocalCount );  */
+		for( newNode_i = 0; newNode_i < mesh->nodeLocalCount; newNode_i++ ) {
+			Snac_Node* dstNode = Snac_Node_At( context, newNode_i );
+			Snac_Node* srcNode = (Snac_Node*)ExtensionManager_At( context->mesh->nodeExtensionMgr,
+																  meshExt->newNodes,
+																  newNode_i );
+			memcpy( dstNode, srcNode, mesh->nodeExtensionMgr->finalSize );
+		}
 
 		/* Simply average the recovered fields at the barycenter of each tet and run updateElements. */
-		_SnacRemesher_InterpolateElements( context );
-		_SnacRemesher_UpdateElements( context );
+   		_SnacRemesher_InterpolateElements( context );
+  		_SnacRemesher_UpdateElements( context ); 
 		
 		/* Free some space, as it won't be needed until the next remesh. */
-		ExtensionManager_Free( mesh->nodeExtensionMgr, meshExt->newNodes );
+ 		ExtensionManager_Free( mesh->nodeExtensionMgr, meshExt->newNodes );
 		meshExt->newNodes = NULL;
 		
 		/*
