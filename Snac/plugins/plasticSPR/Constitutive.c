@@ -182,7 +182,6 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
                         ind=0;
 			if( fs < 0.0f || ft > 0.0f ) {
                                 if(!plasticStrainReportedFlag) {
-                                        fprintf(stderr, "r=%d, ts=%d:  *** Plastic failure *** at (%d, %d, %d)\n",context->rank, context->timeStep, ijk[0],ijk[1],ijk[2]);
                                         plasticStrainReportedFlag=1;
                                 }
 				/*! Failure: shear or tensile */

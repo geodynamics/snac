@@ -39,7 +39,6 @@
 
 void SnacPlastic_Node_Print( void* node ) {
 	SnacPlastic_Node*	self = (SnacPlastic_Node*)node;
-	Tetrahedra_Index	tetra_I;
 	
 	printf( "SnacPlastic_Node:\n" );
 	printf( "\tplasticStrainSPR: " );

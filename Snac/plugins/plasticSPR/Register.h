@@ -48,6 +48,8 @@
 	
 	extern ExtensionInfo_Index SnacPlastic_ElementHandle;
 	
+	extern ExtensionInfo_Index SnacPlastic_MeshHandle;
+	
 	extern ExtensionInfo_Index SnacPlastic_ContextHandle;
 	
 	Index _SnacPlastic_Register( PluginsManager* pluginsMgr );

@@ -50,7 +50,9 @@ void _SnacPlastic_RecoverNode( void* _context, unsigned nodeInd )
 {
 	Snac_Context*			context = (Snac_Context*)_context;
 	Mesh*					mesh = context->mesh;
-	NodeLayout*				nLayout = mesh->layout->nodeLayout;
+	MeshLayout*				layout = (MeshLayout*)mesh->layout;
+	HexaMD*					decomp = (HexaMD*)layout->decomp;
+	NodeLayout*				nLayout = layout->nodeLayout;
 
 	Snac_Node*				node = Snac_Node_At( context, nodeInd );
 	SnacPlastic_Node*		nodeExt = ExtensionManager_Get( context->mesh->nodeExtensionMgr, 
@@ -63,72 +65,122 @@ void _SnacPlastic_RecoverNode( void* _context, unsigned nodeInd )
 	gsl_matrix*				matA;
 	gsl_vector* 			vecaPlStrain;
 	gsl_vector* 			vecbPlStrain;
-	Index 	 	 	 	 	i; 
+	Index 	 	 	 	 	i;
+	IJK						ijk;
+	Node_GlobalIndex		node_gI = _MeshDecomp_Node_LocalToGlobal1D( decomp, nodeInd );
+	Node_GlobalIndex		gNodeI = decomp->nodeGlobal3DCounts[0];
+	Node_GlobalIndex		gNodeJ = decomp->nodeGlobal3DCounts[1];
+	Node_GlobalIndex		gNodeK = decomp->nodeGlobal3DCounts[2];
+	Node_GlobalIndex		intNode_gI;
+	Node_DomainIndex		intNode_lI;
+	unsigned int			isBoundaryNode=0, patchCenterNum=1, patchCenterI, patchCenterList[2];
 		
+	RegularMeshUtils_Node_1DTo3D( decomp, node_gI, &ijk[0], &ijk[1], &ijk[2] );
+
+	/* If boundary node, find a (topologically?) nearest interior node. 
+	   Loosely following 
+	       Khoei and Gharehbaghi, 2007, The superconvergent patch recovery techinique and data transfer operators in 3D plasticity problems,
+	       Finite Elements in Analysis and Design 43 (2007) 630-- 648. */
+	if( (gNodeI>2) && (ijk[0]==0) ) {
+		ijk[0] += 1;
+		isBoundaryNode = 1;
+	}
+	if( (gNodeI>2) && (ijk[0]==decomp->nodeGlobal3DCounts[0]-1) ) {
+		ijk[0] -= 1;
+		isBoundaryNode = 1;
+	}
+	if( (gNodeJ>2) && (ijk[1]==0) ) {
+		ijk[1] += 1;
+		isBoundaryNode = 1;
+	}
+	if( (gNodeJ>2) && (ijk[1]==decomp->nodeGlobal3DCounts[1]-1) ) {
+		ijk[1] -= 1;
+		isBoundaryNode = 1;
+	}
+	if( (gNodeK>2) && (ijk[2]==0) ) {
+		ijk[2] += 1;
+		isBoundaryNode = 1;
+	}
+	if( (gNodeK>2) && (ijk[2]==decomp->nodeGlobal3DCounts[2]-1) ) {
+		ijk[2] -= 1;
+		isBoundaryNode = 1;
+	}
+
+	/* node_lI itself always becomes a patch center,
+	 and if the current node is a boundary node, find an interior node and add it to the patch center list. */
+	patchCenterList[0] = nodeInd; 
+	if( isBoundaryNode ) {
+		patchCenterNum=2;
+		intNode_gI = ijk[0]+gNodeI*ijk[1]+gNodeI*gNodeJ*ijk[2];
+		patchCenterList[1] = Mesh_NodeMapGlobalToLocal( mesh, intNode_gI );
+	}
 	/* initialize gsl vectors and matrix. */
 	matA = gsl_matrix_alloc(4,4); gsl_matrix_set_zero( matA );
 	vecaPlStrain = gsl_vector_alloc(4); gsl_vector_set_zero( vecaPlStrain );
 	vecbPlStrain = gsl_vector_alloc(4); gsl_vector_set_zero( vecbPlStrain );
 			
-	/* For each incident element, find inicident tets. */
-	for( nodeElement_I = 0; nodeElement_I < nodeElementCount; nodeElement_I++ ) {
-		Element_DomainIndex		element_dI = context->mesh->nodeElementTbl[nodeInd][nodeElement_I];
-
-		if( element_dI < mesh->elementDomainCount ) {
-			Index elementTetra_I;
-			Snac_Element* 				element = Snac_Element_At( context, element_dI );
-			SnacPlastic_Element*		elementExt = ExtensionManager_Get( context->mesh->elementExtensionMgr, 
-																		   element, 
-																		   SnacPlastic_ElementHandle );
-
-			/* Extract the element's node indices.  Note that there should always be eight of these. */
-			{
-				Element_GlobalIndex	element_gI;
-					
-				elements = Memory_Alloc_Array( Node_DomainIndex, nodeElementCount, "SnacRemesher" );
-				element_gI = Mesh_ElementMapDomainToGlobal( mesh, element_dI );
-				nLayout->buildElementNodes( nLayout, element_gI, elements );
-			}
+	/* For each patch center */
+	for( patchCenterI=0; patchCenterI < patchCenterNum; patchCenterI++ ) {
+		/* For each incident element, find inicident tets. */
+		for( nodeElement_I = 0; nodeElement_I < nodeElementCount; nodeElement_I++ ) {
+			Element_DomainIndex		element_dI = context->mesh->nodeElementTbl[nodeInd][nodeElement_I];
+			
+			if( element_dI < mesh->elementDomainCount ) {
+				Index elementTetra_I;
+				Snac_Element* 				element = Snac_Element_At( context, element_dI );
+				SnacPlastic_Element*		elementExt = ExtensionManager_Get( context->mesh->elementExtensionMgr, 
+																			   element, 
+																			   SnacPlastic_ElementHandle );
 				
-			/* Convert global node indices to domain. */
-			{
-				unsigned	eltNode_i;
+				/* Extract the element's node indices.  Note that there should always be eight of these. */
+				{
+					Element_GlobalIndex	element_gI;
 					
-				for( eltNode_i = 0; eltNode_i < nodeElementCount; eltNode_i++ ) {
-					elements[eltNode_i] = Mesh_NodeMapGlobalToDomain( mesh, elements[eltNode_i] );
+					elements = Memory_Alloc_Array( Node_DomainIndex, nodeElementCount, "SnacRemesher" );
+					element_gI = Mesh_ElementMapDomainToGlobal( mesh, element_dI );
+					nLayout->buildElementNodes( nLayout, element_gI, elements );
 				}
-			}
-
-			/* For each incident tetrahedron in the incident element,
-			   add up contributions to P, A, and b as in Zienkiewicz and Zhu (1992), p. 1336 */
-			for( elementTetra_I = 0; elementTetra_I < Node_Element_Tetrahedra_Count;elementTetra_I++ ) {
-				Tetrahedra_Index	tetra_I = NodeToTetra[nodeElement_I][elementTetra_I];
-				Coord	tCrds[4];
-				double 	positionP[4] = {1.0,0.0,0.0,0.0};
-				Index 	ii,jj;
-
-				/* Extract the tetrahedron's coordinates. */
-				Vector_Set( tCrds[0], mesh->nodeCoord[elements[TetraToNode[tetra_I][0]]] );
-				Vector_Set( tCrds[1], mesh->nodeCoord[elements[TetraToNode[tetra_I][1]]] );
-				Vector_Set( tCrds[2], mesh->nodeCoord[elements[TetraToNode[tetra_I][2]]] );
-				Vector_Set( tCrds[3], mesh->nodeCoord[elements[TetraToNode[tetra_I][3]]] );
+				
+				/* Convert global node indices to domain. */
+				{
+					unsigned	eltNode_i;
 					
-				for(ii=1;ii<4;ii++)
-					for(jj=0;jj<4;jj++)
-						positionP[ii] += (0.25f * tCrds[jj][ii-1]);
-					
-				for(ii=0;ii<4;ii++) {
-					double tmp = gsl_vector_get(vecbPlStrain,ii) + positionP[ii]*elementExt->plasticStrain[tetra_I];
-					gsl_vector_set(vecbPlStrain,ii,tmp); 
-					
-					for(jj=0;jj<4;jj++) {
-						tmp = gsl_matrix_get(matA,ii,jj) + positionP[ii]*positionP[jj];
-						gsl_matrix_set(matA,ii,jj,tmp);
+					for( eltNode_i = 0; eltNode_i < nodeElementCount; eltNode_i++ ) {
+						elements[eltNode_i] = Mesh_NodeMapGlobalToDomain( mesh, elements[eltNode_i] );
 					}
-				} /* end of verteces of a tet. */
-			} /* end of incident tets. */
-		} /* if within my domain */
-	} /* end of incident elements. */
+				}
+				
+				/* For each incident tetrahedron in the incident element,
+				   add up contributions to P, A, and b as in Zienkiewicz and Zhu (1992), p. 1336 */
+				for( elementTetra_I = 0; elementTetra_I < Node_Element_Tetrahedra_Count;elementTetra_I++ ) {
+					Tetrahedra_Index	tetra_I = NodeToTetra[nodeElement_I][elementTetra_I];
+					Coord	tCrds[4];
+					double 	positionP[4] = {1.0,0.0,0.0,0.0};
+					Index 	ii,jj;
+					
+					/* Extract the tetrahedron's coordinates. */
+					Vector_Set( tCrds[0], mesh->nodeCoord[elements[TetraToNode[tetra_I][0]]] );
+					Vector_Set( tCrds[1], mesh->nodeCoord[elements[TetraToNode[tetra_I][1]]] );
+					Vector_Set( tCrds[2], mesh->nodeCoord[elements[TetraToNode[tetra_I][2]]] );
+					Vector_Set( tCrds[3], mesh->nodeCoord[elements[TetraToNode[tetra_I][3]]] );
+					
+					for(ii=1;ii<4;ii++)
+						for(jj=0;jj<4;jj++)
+							positionP[ii] += (0.25f * tCrds[jj][ii-1]);
+					
+					for(ii=0;ii<4;ii++) {
+						double tmp = gsl_vector_get(vecbPlStrain,ii) + positionP[ii]*elementExt->plasticStrain[tetra_I];
+						gsl_vector_set(vecbPlStrain,ii,tmp); 
+						
+						for(jj=0;jj<4;jj++) {
+							tmp = gsl_matrix_get(matA,ii,jj) + positionP[ii]*positionP[jj];
+							gsl_matrix_set(matA,ii,jj,tmp);
+						}
+					} /* end of verteces of a tet. */
+				} /* end of incident tets. */
+			} /* if within my domain */
+		} /* end of incident elements. */
+	} /* end of patchCenterI */
 		
 	/* compute parameter vectors. */
 	{
