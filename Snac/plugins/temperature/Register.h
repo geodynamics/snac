@@ -45,7 +45,11 @@
 	
 	/* Handles to extensions for quicker access */
 	extern ExtensionInfo_Index SnacTemperature_ContextHandle;
+
 	extern ExtensionInfo_Index SnacTemperature_ElementHandle;
+
+	extern ExtensionInfo_Index SnacViscoPlastic_MeshHandle;
+
 	extern ExtensionInfo_Index SnacTemperature_NodeHandle;
 	
 	Index _SnacTemperature_Register( PluginsManager* pluginsMgr );

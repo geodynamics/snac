@@ -49,13 +49,14 @@ void SnacTemperature_LoopNodes( void* _context ) {
 	Node_LocalIndex			node_lI;
 
 	Journal_Printf( context->debug, "In %s(): updating temperature of all nodes.\n", __func__ );
+	Journal_Printf( context->snacInfo, "In %s(): updating temperature of all nodes.\n", __func__ );
 
 	for( node_lI = 0; node_lI < context->mesh->nodeLocalCount; node_lI++ )  {
 		Snac_Heat( context, node_lI, 0 );
 	}
-	/* update density using updated temperature */
-	effectiveDensity( context );
-	Journal_Printf( context->snacInfo, "In %s(): updating temperature of all nodes.\n", __func__ );
+
+	/* update tetra average temp to recompute density later in Snac_Stress(). */
+	UpdateAverageTemp_LoopElements( context );
 
 	SnacTemperature_BoundaryConditions( context );
 }
@@ -135,6 +136,7 @@ void Snac_Heat( void* _context, Node_LocalIndex node_lI, double sourceterm ) {
 
 	nodeExt->temperature0 = nodeExt->temperature;
 	nodeExt->temperature += (energy + source) * -1.0f * context->dt / lumpVolume;
+
 }
 
 

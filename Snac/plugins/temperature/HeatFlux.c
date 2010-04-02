@@ -60,10 +60,6 @@ void SnacTemperature_LoopElements( void* _context ) {
 
 void Snac_HeatFlux( void* _context, Element_LocalIndex element_lI ) {
 	Snac_Context*					context = (Snac_Context*)_context;
-	SnacTemperature_Context*		contextExt = ExtensionManager_Get(
-			context->extensionMgr,
-			context,
-			SnacTemperature_ContextHandle );
 	Tetrahedra_Index				tetra_I;
 	Snac_Element*					element = Snac_Element_At( context, element_lI );
 	SnacTemperature_Element*		elementExt = ExtensionManager_Get(

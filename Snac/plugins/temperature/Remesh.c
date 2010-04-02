@@ -55,8 +55,6 @@ void _SnacTemperature_InterpolateNode( void* _context,
 	SnacTemperature_Node*		dstNodeExt = ExtensionManager_Get( mesh->nodeExtensionMgr, 
 									dstNode, 
 									SnacTemperature_NodeHandle );
-	Snac_Node*			srcNode;
-	SnacTemperature_Node*		srcNodeExt;
 	unsigned			tetNode_i;
 	
 #ifdef DEBUG
@@ -88,14 +86,14 @@ void _SnacTemperature_InterpolateNode( void* _context,
 	dstNodeExt->temperature = 0;
 
 	for( tetNode_i = 0; tetNode_i < 4; tetNode_i++ ) {
-		srcNode = Snac_Node_At( context, eltNodes[tetNodeInds[tetNode_i]] );
-		srcNodeExt = ExtensionManager_Get( mesh->nodeExtensionMgr, 
-										   srcNode, 
-										   SnacTemperature_NodeHandle );
+		Snac_Node*					srcNode = Snac_Node_At( context, eltNodes[tetNodeInds[tetNode_i]] );;
+		SnacTemperature_Node*		srcNodeExt =  ExtensionManager_Get( mesh->nodeExtensionMgr, 
+																		srcNode, 
+																		SnacTemperature_NodeHandle );
 
 		dstNodeExt->temperature += srcNodeExt->temperature * weights[tetNode_i];
 	}
 /* 	fprintf(stderr,"%e (%e %e %e %e)\t",srcNodeExt->temperature, */
-/* 		weights[0],weights[1],weights[2],weights[3]); */
+/* 			weights[0],weights[1],weights[2],weights[3]); */
 /* 	fprintf(stderr,"after T=%e \n",dstNodeExt->temperature); */
 }

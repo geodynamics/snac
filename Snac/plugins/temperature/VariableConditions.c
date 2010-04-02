@@ -135,7 +135,7 @@ void _SnacTemperature_Citcom_Compatible(
 	const double                    R = 6371000.0;
 	const double                    kappa = 1.0e-06;
 	double                          scalet = R*R/kappa/(1.0e+06*365.25*24.0*3600.0);
-	double                          age = 5.01f, temp=0.0f;
+	double                          age = 2.01f, temp=0.0f;
 
 	double*                         temperature = (double*)result;
 	Dictionary*                     meshStruct= Dictionary_Entry_Value_AsDictionary(
@@ -165,7 +165,9 @@ void _SnacTemperature_Citcom_Compatible(
 		age = 0.01f + 1.0f*abs(ijk[0]-midI)/5.0*5.01;
 	}
 #endif
+#if 0
 	age = 0.5 - 0.2*ijk[2]/(decomp->nodeGlobal3DCounts[2]-1);
+#endif
 
 	temp = (rMax-r) * 0.5f / sqrt(age/scalet);
 	*temperature = rTemp * erf(temp);
@@ -248,7 +250,7 @@ void _SnacTemperature_InitialConditions( void* _context ) {
 		memset( elementExt->heatFlux, 0, sizeof(elementExt->heatFlux) );
 	}
 
-	effectiveDensity( context );
+	/* effectiveDensity( context ); */
 
 }
 
@@ -272,7 +274,7 @@ void SnacTemperature_BoundaryConditions( void* _context ) {
 
 	Journal_Printf( context->debug, "In %s(): re-applying temp BCs\n", __func__ );
 
-	VariableCondition_Apply( contextExt->temperatureBCs, context );
+ 	VariableCondition_Apply( contextExt->temperatureBCs, context );
 }
 
 void SnacTemperature_HeatFluxBC( void* _context ) {

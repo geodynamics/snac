@@ -52,9 +52,9 @@
 /* Textual name of this class */
 const Type SnacTemperature_Type = "SnacTemperature";
 
-ExtensionInfo_Index SnacTemperature_ContextHandle = -1;
-ExtensionInfo_Index SnacTemperature_ElementHandle = -1;
-ExtensionInfo_Index SnacTemperature_NodeHandle = -1;
+ExtensionInfo_Index SnacTemperature_ContextHandle;
+ExtensionInfo_Index SnacTemperature_ElementHandle;
+ExtensionInfo_Index SnacTemperature_NodeHandle;
 
 
 Index _SnacTemperature_Register( PluginsManager* pluginsMgr ) {
@@ -93,18 +93,9 @@ void _SnacTemperature_Construct( void* component, Stg_ComponentFactory* cf, void
 	#endif
 
 	/* Add extensions to nodes, elements and the context */
-	SnacTemperature_ContextHandle = ExtensionManager_Add(
-		context->extensionMgr,
-		SnacTemperature_Type,
-		sizeof(SnacTemperature_Context) );
-	SnacTemperature_ElementHandle = ExtensionManager_Add(
-		context->mesh->elementExtensionMgr,
-		SnacTemperature_Type,
-		sizeof(SnacTemperature_Element) );
-	SnacTemperature_NodeHandle = ExtensionManager_Add(
-		context->mesh->nodeExtensionMgr,
-		SnacTemperature_Type,
-		sizeof(SnacTemperature_Node) );
+	SnacTemperature_NodeHandle = ExtensionManager_Add( context->mesh->nodeExtensionMgr, SnacTemperature_Type, sizeof(SnacTemperature_Node) );
+	SnacTemperature_ElementHandle = ExtensionManager_Add( context->mesh->elementExtensionMgr, SnacTemperature_Type, sizeof(SnacTemperature_Element) );
+	SnacTemperature_ContextHandle = ExtensionManager_Add( context->extensionMgr, SnacTemperature_Type, sizeof(SnacTemperature_Context) );
 
 	#ifdef DEBUG
 		printf( "\tcontext extension handle: %u\n", SnacTemperature_ContextHandle );

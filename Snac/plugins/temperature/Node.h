@@ -42,7 +42,7 @@
 	
 	/* Node Information */
 	struct _SnacTemperature_Node {
-		double			temperature; \
+		double			temperature;
 		double			temperature0;
 	};
 	
