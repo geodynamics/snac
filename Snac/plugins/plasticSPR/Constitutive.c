@@ -171,8 +171,19 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 				}
 			}
 			else {
-				/* frictionAngle < 0.0 violates second law of thermodynamics */
-				abort();
+				if( plasticStrain < 0.0 ) {
+					plasticElement->plasticStrain[tetra_I] = 0.0;
+					plasticStrain = plasticElement->plasticStrain[tetra_I];
+					fprintf(stderr,"Warning: negative plastic strain. Setting to zero, but check if remesher is on and this happended for an external tet. rank:%d elem:%d tet:%d plasticStrain=%e frictionAngle=%e\n",context->rank,element_lI,tetra_I,plasticStrain,frictionAngle);
+					frictionAngle = material->frictionAngle[0];
+					dilationAngle = material->dilationAngle[0];
+					cohesion = material->cohesion[0];
+				}
+				else {
+					/* frictionAngle < 0.0 violates second law of thermodynamics */
+					fprintf(stderr,"Error due to an unknown reason: rank:%d elem:%d tet:%d plasticStrain=%e frictionAngle=%e\n",context->rank,element_lI,tetra_I,plasticStrain,frictionAngle);
+					assert(0);
+				}
 			}
 			
 			
@@ -224,6 +235,9 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 				/* Second invariant of accumulated plastic increament  */
 				depm = ( dep1 + dep2 + dep3 ) / 3.0f;
 				plasticElement->plasticStrain[tetra_I] += sqrt( 0.5f * ((dep1-depm) * (dep1-depm) + (dep2-depm) * (dep2-depm) + (dep3-depm) * (dep3-depm) + depm*depm) );
+
+				/* linear healing */
+				plasticElement->plasticStrain[tetra_I] *= (1.0/(1.0+context->dt/3.0e+13));
 
 				memset( stress, 0, sizeof((*stress)) );
 				/* Resolve back to global axes  */
