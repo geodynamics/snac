@@ -249,6 +249,12 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 					}
 				}
 			}
+
+			/* linear healing: applied whether this tet has yielded or not. 
+			   Parameters are hardwired for now, but should be given through an input file. */
+			/* viscoplasticElement->plasticStrain[tetra_I] *= (1.0/(1.0+context->dt/1.0e+12)); */
+			plasticElement->plasticStrain[tetra_I] *= (1.0/(1.0+context->dt/(ind?1.0e+13:5.0e+11)));
+
 			depls += plasticElement->plasticStrain[tetra_I]*element->tetra[tetra_I].volume;
 			totalVolume += element->tetra[tetra_I].volume;
 /* 			if(element_lI==738) fprintf(stderr,"   *****  %d: depm=%g  acc plastic strain=%g\n", tetra_I, depm, element->tetra[tetra_I].volume); */

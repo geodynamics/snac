@@ -354,9 +354,6 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 						depm = ( dep1 + dep2 + dep3 ) / 3.0f;
 						viscoplasticElement->plasticStrain[tetra_I] += sqrt( 0.5f * ((dep1-depm) * (dep1-depm) + (dep2-depm) * (dep2-depm) + (dep3-depm) * (dep3-depm) + depm*depm) );
 
-						/* linear healing */
-						viscoplasticElement->plasticStrain[tetra_I] *= (1.0/(1.0+context->dt/3.0e+13));
-
 						/* Stress projection back to euclidean coordinates */
 						memset( stress, 0, sizeof((*stress)) );
 						/* Resolve back to global axes  */
@@ -371,6 +368,11 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 				}
 			else
 				Journal_Firewall( (0>1), "In %s: \"mohrcoulomb\" is the only available yield criterion.\n", __func__ );
+
+			/* linear healing: applied whether this tet has yielded or not. 
+			   Parameters are hardwired for now, but should be given through an input file. */
+			/* viscoplasticElement->plasticStrain[tetra_I] *= (1.0/(1.0+context->dt/1.0e+12)); */
+			viscoplasticElement->plasticStrain[tetra_I] *= (1.0/(1.0+context->dt/(ind?1.0e+13:5.0e+11)));
 
 			depls += viscoplasticElement->plasticStrain[tetra_I]*element->tetra[tetra_I].volume;
 			totalVolume += element->tetra[tetra_I].volume;
