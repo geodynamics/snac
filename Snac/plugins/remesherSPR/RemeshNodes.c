@@ -493,7 +493,8 @@ void _SnacRemesher_RecoverNode( void* _context, unsigned node_lI )
 						tmp = gsl_vector_get(vecbStress[5],ii) + positionP[ii]*element->tetra[tetra_I].stress[1][2];
 						gsl_vector_set(vecbStress[5],ii,tmp);
 
-						tmp = gsl_vector_get(vecbMaterial_I,ii) + positionP[ii]*((double)(element->tetra[tetra_I].material_I)+0.5);
+/* 						tmp = gsl_vector_get(vecbMaterial_I,ii) + positionP[ii]*((double)(element->tetra[tetra_I].material_I)+0.5); */
+						tmp = gsl_vector_get(vecbMaterial_I,ii) + positionP[ii]*pow(10.0,(double)(element->tetra[tetra_I].material_I));
 						gsl_vector_set(vecbMaterial_I,ii,tmp); 
 
 						tmp = gsl_vector_get(vecbDensity,ii) + positionP[ii]*element->tetra[tetra_I].density;

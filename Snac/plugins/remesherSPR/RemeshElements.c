@@ -28,10 +28,7 @@
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 **
 ** $Id: RemeshElements.c 3259 2006-11-09 20:06:31Z EunseoChoi $
-**
-**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-#include <mpi.h>
+*/
 #include <StGermain/StGermain.h>
 #include <StGermain/FD/FD.h>
 #include "Snac/Snac.h"
@@ -75,19 +72,19 @@ void _SnacRemesher_UpdateElements( void* _context ) {
 		double elementMinLengthScale;
 		Tetrahedra_Index	tetra_I;
 		Snac_Element*	element = Snac_Element_At( context, element_lI );
- 		double materialInd = 0.0; 
+ 		float materialInd = 0.0; 
 /* 		Material_Index materialInd = 0;  */
 
 		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
-/* 			materialInd += (1.0f*element->tetra[tetra_I].material_I)/((double)Tetrahedra_Count); */
-			materialInd += (1.0*element->tetra[tetra_I].material_I+0.1);
-/* 			if( element->tetra[tetra_I].material_I==2 ) */
-/* 				fprintf(stderr,"\t int matId=%e (%d)\n",materialInd, (Material_Index)((materialInd/(100*Tetrahedra_Count))+0.5)); */
+ 			materialInd += (1.0f*element->tetra[tetra_I].material_I)/((float)Tetrahedra_Count); 
+/* 			materialInd += (1.0*element->tetra[tetra_I].material_I+0.1); */
 		}
-/* 		if( element->material_I ==2 ) //element_lI==0 ) */
-/* 			fprintf(stderr,"int matId=%d\n",(Material_Index)(materialInd/10+0.5)); */
-		//element->material_I = ((Material_Index)(((double)materialInd/(Tetrahedra_Count))+0.5))/100;
-		element->material_I = (Material_Index)(materialInd/10+0.5);
+		/* Ad-hoc rounding-off. Notet that 0.6 is not a typo. 
+		   There is a fundamental issue with mapping integer field during remeshing and 
+		   the usual roundoff causes too severe artificial diffusin. 
+		   0.6 is a conservative choice (than 0.5) to reduce the artefact, but it is not guaranteed to work always. */
+		element->material_I = ((materialInd>0.6)?1:0);
+/* 		element->material_I = (Material_Index)(materialInd/10+0.5); */
 
 		KeyCall( context, context->updateElementK, Snac_UpdateElementMomentum_CallCast* )
 			( KeyHandle(context,context->updateElementK),
@@ -165,10 +162,9 @@ void _SnacRemesher_InterpolateElement( void* _context,
 	dstElt->tetra[dstTetInd].stress[2][0] = stress[4];
 	dstElt->tetra[dstTetInd].stress[2][1] = stress[5];
 
- 	dstElt->tetra[dstTetInd].material_I = 0;
-/* 	if( dstElt->tetra[dstTetInd].material_I != 0 ) */
-/* 		fprintf(stderr,"%d %d %e %d\n",dstEltInd,dstTetInd,dstElt->tetra[dstTetInd].material_I, */
-/* 				(unsigned int)(dstElt->tetra[dstTetInd].material_I)); */
+	/* There is a fundamental issue with mapping integer field for multiple phases during remeshing. 
+	   Note that the following roundoff is not guaranteed to work always.  */
+  	dstElt->tetra[dstTetInd].material_I = ((log10(materialInd)>0.5)?1:0);
 
  	dstElt->tetra[dstTetInd].density = density; 
 
