@@ -40,7 +40,7 @@ if test "${GSL_INCDIR}x" = "x"; then
 	setValueWithDefault GSL_INCDIR   '${GSL_DIR}/include'
 fi
 
-# set depending on system. on most systems, just default to mpich
+# set depending on system.
 if test "${GSL_LIBFILES}x" = "x"; then
 	GSL_LIBFILES='-lgsl -lgslcblas'
 	resolveVariable GSL_LIBRARY_FILE "${GSL_LIBDIR}/libgsl.a"
