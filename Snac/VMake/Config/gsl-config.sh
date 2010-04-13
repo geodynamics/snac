@@ -23,9 +23,9 @@ parsePackageConfigOptions $@
 if test "${GSL_DIR}x" = "x"; then
 	case ${SYSTEM} in
 		Linux|CYGWIN|Darwin|SunOS|ranger)
-			setValueWithDefault GSL_DIR   "/usr";;
+			setValueWithDefault GSL_DIR   "/usr/local";;
 		OSF1)
-			setValueWithDefault GSL_DIR   "/usr";;
+			setValueWithDefault GSL_DIR   "/usr/local";;
 		*)
 			if test "${GSL_DIR}x" = "x" ; then
 				echo "Error: GSL_DIR for system \"${SYSTEM}\" unknown. Set the environment variable."
