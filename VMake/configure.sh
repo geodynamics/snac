@@ -1111,7 +1111,7 @@ if test "${EXPORT_DYNAMIC_LFLAGS}x" = "x"; then
 				Linux|CYGWIN)
 					EXPORT_DYNAMIC_LFLAGS="-Xlinker -export-dynamic";;
 				Darwin)
-					EXPORT_DYNAMIC_LFLAGS="-u __dummy -framework System -framework CoreServices -framework Foundation";;
+					EXPORT_DYNAMIC_LFLAGS="-framework System -framework CoreServices -framework Foundation";;
 				SunOS)
 					EXPORT_DYNAMIC_LFLAGS="-B dynamic";;
 				OSF1)
