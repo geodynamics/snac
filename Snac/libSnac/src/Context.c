@@ -338,8 +338,8 @@ void _Snac_Context_Init( Snac_Context* self ) {
 	/* Snac_Context info */
 	/* Although we set this for safely (use of it will give 0s), it shouldn't be used... the new value should be set before
 	    hand */
-	self->restartTimestep = Dictionary_Entry_Value_AsUnsignedInt(
-		Dictionary_GetDefault( self->dictionary, "restartStep", Dictionary_Entry_Value_FromUnsignedInt( 0 ) ) );
+/* 	self->restartTimestep = Dictionary_Entry_Value_AsUnsignedInt( */
+/* 		Dictionary_GetDefault( self->dictionary, "restartStep", Dictionary_Entry_Value_FromUnsignedInt( 0 ) ) ); */
 
 	tmpStr = Dictionary_Entry_Value_AsString( Dictionary_Get( self->dictionary, "dtType" ) );
 	if( !strcmp( tmpStr, Snac_DtType_Constant ) ) {
