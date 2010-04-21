@@ -49,9 +49,11 @@
 
 void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTimeStep, double time );
 
+char		origPath[PATH_MAX];
 char		readPath[PATH_MAX];
 char		writePath[PATH_MAX];
 FILE*		stressTensorIn;
+FILE*		initCoordIn;
 FILE*		coordIn;
 FILE*		velIn;
 FILE*		tempIn;
@@ -71,6 +73,31 @@ const double	velocityDampingFactor = 1.0;
 
 const unsigned	numStressVectorComponent = 6; /* 6 components in stress vector */
 const unsigned	numStressComponentsPerElement = 60; /* 6 components times 10 tets per element */
+
+void checkArgumentTypeStrict( int argNum, char* arglist[] ) {
+    if( argNum == 5 ) {
+		if( atoi(arglist[1]) && !atoi(arglist[2]) && !atoi(arglist[3]) && !atoi(arglist[4])) {
+			restartStep = atoi(arglist[1]);
+			sprintf( origPath, "%s", arglist[2]);
+			sprintf( readPath, "%s", arglist[3]);
+			sprintf( writePath, "%s", arglist[4]);
+			fprintf(stderr,"Reading Snac initial state files from %s/\n",origPath);
+			fprintf(stderr,"Reading Snac state files for time step ts=%d from %s/\n",restartStep,readPath);
+			fprintf(stderr,"Writing Snac restart files to %s/\n",writePath);
+			return;
+		}
+		else {
+			fprintf(stderr,"Wrong argument type\n\tUsage: %s [integer timeStep] [path to first outputs] [your \"outputPath\"] [path to write restart files]\n",arglist[0]);
+			exit(0);
+		}
+    }
+    else {
+		fprintf(stderr,"Number and kinds of arguments must be exactly like the following:\n");
+		fprintf(stderr,"Usage: %s [timeStep] [path to first outputs] [your \"outputPath\"] [path to write restart files]\n",arglist[0]);
+		exit(0);
+    }
+}
+
 
 void checkArgumentType( int argNum, char* arglist[] ) {
     if( argNum == 1 ) {
@@ -151,7 +178,8 @@ int main( int argc, char* argv[] ) {
 	unsigned int	rankI, rankJ, rankK;
 
     /* safety check and assign restartStep and path */
-    checkArgumentType( argc, argv );
+    checkArgumentTypeStrict( argc, argv );
+/*     checkArgumentType( argc, argv ); */
 
     fprintf(stderr, "Parsing Snac output files\n");
 
@@ -218,6 +246,7 @@ int main( int argc, char* argv[] ) {
 				assert(0);
 				abort();
 			}
+
 			sprintf( tmpBuf, "%s/coordCP.%u", readPath, rank );
 			fprintf(stderr,"Reading from %s\n",tmpBuf); 
 			if( (coordIn = fopen( tmpBuf, "r" )) == NULL ) {
@@ -226,6 +255,19 @@ int main( int argc, char* argv[] ) {
 				assert(0);
 				abort();
 			}
+			if( strcmp( readPath, origPath ) ) {
+				sprintf( tmpBuf, "%s/coord.%u", origPath, rank );
+				fprintf(stderr,"Reading init coords from %s\n",tmpBuf); 
+				if( (initCoordIn = fopen( tmpBuf, "r" )) == NULL ) {
+					/* failed to open file for reading */
+					fprintf(stderr, " ... failed - no such file\n");
+					assert(0);
+					abort();
+				}
+			}
+			else
+				initCoordIn = coordIn;
+
 			sprintf( tmpBuf, "%s/velCP.%u", readPath, rank );
 			fprintf(stderr,"Reading from %s\n",tmpBuf); 
 			if( (velIn = fopen( tmpBuf, "r" )) == NULL ) {
@@ -234,7 +276,7 @@ int main( int argc, char* argv[] ) {
 				assert(0);
 				abort();
 			}
-			sprintf( tmpBuf, "%s/minLengthScale.0", readPath );
+			sprintf( tmpBuf, "%s/minLengthScale.0", origPath );
 			fprintf(stderr,"Reading from %s\n",tmpBuf); 
 			if( (minLengthIn = fopen( tmpBuf, "r" )) == NULL ) {
 				/* failed to open file for reading */
@@ -266,7 +308,13 @@ int main( int argc, char* argv[] ) {
 				fclose( tempIn );
 			}
 			fclose( velIn );
-			fclose( coordIn );
+			if( strcmp( readPath, origPath) ) { /* if different */
+				fclose( coordIn );
+				fclose( initCoordIn );
+			}
+			else {
+				fclose( coordIn );
+			}
 			fclose( stressTensorIn );
 			fclose( minLengthIn );
 
@@ -315,10 +363,10 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 		fprintf(stderr, "Failed to open %s for writing\n", tmpBuf);
 		exit(0);
     }
-    fseek( coordIn, 0 * nodeLocalCount * sizeof(float) * 3, SEEK_SET );
+    fseek( initCoordIn, 0, SEEK_SET );
     for( node_gI = 0; node_gI < nodeLocalCount; node_gI++ ) {
 		float		coord[3];
-		fread( &coord, sizeof(float), 3, coordIn );
+		fread( &coord, sizeof(float), 3, initCoordIn );
 		fprintf( restartOut, "%.9e %.9e %.9e\n", coord[0], coord[1], coord[2] );
     }
     if( restartOut )
