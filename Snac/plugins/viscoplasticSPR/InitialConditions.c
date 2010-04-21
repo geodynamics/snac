@@ -100,7 +100,7 @@ void SnacViscoPlastic_InitialConditions( void* _context, void* data ) {
 			if( material->yieldcriterion == mohrcoulomb ) {
 				Tetrahedra_Index	tetra_I;
 				double              depls = 0.0f;
-				double              totalVolume = 0.0f;
+				/* double              totalVolume = 0.0f; */
 				
 				for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
 					double			tetraPlStrain;
@@ -110,16 +110,18 @@ void SnacViscoPlastic_InitialConditions( void* _context, void* data ) {
 
 					fscanf( plStrainIn, "%le", &tetraPlStrain );
 					viscoplasticElement->plasticStrain[tetra_I] = tetraPlStrain;
-					depls += viscoplasticElement->plasticStrain[tetra_I]*element->tetra[tetra_I].volume;
-					totalVolume += element->tetra[tetra_I].volume;
-				}//for tets
+					depls += viscoplasticElement->plasticStrain[tetra_I];
+					/* depls += viscoplasticElement->plasticStrain[tetra_I]*element->tetra[tetra_I].volume; */
+					/* totalVolume += element->tetra[tetra_I].volume; */
+				}/* for tets */
 				/* volume-averaged accumulated plastic strain, aps */
-				viscoplasticElement->aps = depls/totalVolume;
-			}//if(mohrcoulomb)
-		}//for elements
+				viscoplasticElement->aps = depls/Tetrahedra_Count;
+				/* viscoplasticElement->aps = depls/totalVolume; */
+			}/* if(mohrcoulomb) */
+		}/* for elements */
 		if( plStrainIn )
 			fclose( plStrainIn );
-	}// if restarting.
+	}/* if restarting.*/
 	else {
 		/* Set the plastic element initial conditions */
 		for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
