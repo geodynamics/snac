@@ -51,6 +51,22 @@
 #include <gsl/gsl_linalg.h>
 
 
+void _SnacRemesher_RecoverNodes( void* _context ) {
+	Snac_Context*			context = (Snac_Context*)_context;
+	SnacRemesher_Context*	contextExt = ExtensionManager_Get( context->extensionMgr,
+															   context,
+															   SnacRemesher_ContextHandle );
+	Mesh*					mesh = context->mesh;
+	Node_LocalIndex			newNode_i;
+
+	/*
+	** Populate arrays for recovered fields using the SPR method.
+	*/
+	for( newNode_i = 0; newNode_i < mesh->nodeLocalCount; newNode_i++ )
+		SnacRemesher_RecoverNode( context, contextExt, newNode_i );
+}
+
+
 void _SnacRemesher_InterpolateNodes( void* _context ) {
 	Snac_Context*			context = (Snac_Context*)_context;
 	SnacRemesher_Context*	contextExt = ExtensionManager_Get( context->extensionMgr,
@@ -72,12 +88,6 @@ void _SnacRemesher_InterpolateNodes( void* _context ) {
 
 	FreeArray( meshExt->externalNodes );
 	meshExt->nExternalNodes = 0;
-
-	/*
-	** Populate arrays for recovered fields using the SPR method.
-	*/
-	for( newNode_i = 0; newNode_i < mesh->nodeLocalCount; newNode_i++ )
-		SnacRemesher_RecoverNode( context, contextExt, newNode_i );
 
 	/*
 	** Scoot over all the new nodes and find the old element in which each one resides, then interpolate.
@@ -147,6 +157,7 @@ void _SnacRemesher_InterpolateNodes( void* _context ) {
 			memcpy( (unsigned char*)meshExt->newNodes + newNode_i * mesh->nodeExtensionMgr->finalSize,
 				(unsigned char*)mesh->node + newNode_i * mesh->nodeExtensionMgr->finalSize,
 				mesh->nodeExtensionMgr->finalSize );
+
 			/* assert(0); */
 		}
 
@@ -568,6 +579,6 @@ void _SnacRemesher_RecoverNode( void* _context, unsigned node_lI )
 
 	/* Free the element node array. */
 	FreeArray( elements );
-	
+
 	/* end of recovery. */
 }

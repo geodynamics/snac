@@ -116,6 +116,8 @@ void _SnacRemesher_Remesh( void* _context, void* data ) {
 			}
 		}
 		
+		_SnacRemesher_RecoverNodes( context );
+
 		/* Sync the mesh. */
 		if( mesh->layout->decomp->procsInUse > 1 ) {
 			Mesh_Sync( mesh );
@@ -158,7 +160,7 @@ void _SnacRemesher_Remesh( void* _context, void* data ) {
 
 		/* Simply average the recovered fields at the barycenter of each tet and run updateElements. */
    		_SnacRemesher_InterpolateElements( context );
-  		_SnacRemesher_UpdateElements( context ); 
+   		_SnacRemesher_UpdateElements( context );
 		
 		/* Free some space, as it won't be needed until the next remesh. */
  		ExtensionManager_Free( mesh->nodeExtensionMgr, meshExt->newNodes );

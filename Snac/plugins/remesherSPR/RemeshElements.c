@@ -85,7 +85,7 @@ void _SnacRemesher_UpdateElements( void* _context ) {
 		   0.6 is a conservative choice (than 0.5) to reduce the artefact, but it is not guaranteed to work always. */
 		element->material_I = ((materialInd>0.6)?1:0);
 /* 		element->material_I = (Material_Index)(materialInd/10+0.5); */
-
+#if 0
 		KeyCall( context, context->updateElementK, Snac_UpdateElementMomentum_CallCast* )
 			( KeyHandle(context,context->updateElementK),
 			  context,
@@ -94,6 +94,7 @@ void _SnacRemesher_UpdateElements( void* _context ) {
 		if( elementMinLengthScale < context->minLengthScale ) {
 			context->minLengthScale = elementMinLengthScale;
 		}
+#endif
 	}
 }
 
@@ -117,7 +118,7 @@ void _SnacRemesher_InterpolateElement( void* _context,
 	for(j=0;j<6;j++) {
 		strain[j] = 0.0;
 		stress[j] = 0.0;
-		for(i=0;i<4;i++) {
+		for(i=0;i<Tetrahedra_Point_Count;i++) {
 			Index dstNodeNum = Element_Node_I(context, dstEltInd, TetraToNode[dstTetInd][i]);
  			Snac_Node* dstNode = Snac_Node_At( context, dstNodeNum );
  			strain[j] += 0.25f * dstNode->strainSPR[j];
@@ -128,14 +129,14 @@ void _SnacRemesher_InterpolateElement( void* _context,
 		}
 	}
 	materialInd = 0.0;
-	for(i=0;i<4;i++) {
+	for(i=0;i<Tetrahedra_Point_Count;i++) {
 		Index dstNodeNum = Element_Node_I(context, dstEltInd, TetraToNode[dstTetInd][i]);
 		Snac_Node* dstNode = Snac_Node_At( context, dstNodeNum );
 		materialInd += 0.25f*(dstNode->material_ISPR);
 	}
 
 	density = 0.0;
-	for(i=0;i<4;i++) {
+	for(i=0;i<Tetrahedra_Point_Count;i++) {
 		Index dstNodeNum = Element_Node_I(context, dstEltInd, TetraToNode[dstTetInd][i]);
 		Snac_Node* dstNode = Snac_Node_At( context, dstNodeNum );
 		density += 0.25f*(dstNode->densitySPR);

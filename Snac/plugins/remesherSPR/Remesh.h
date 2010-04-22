@@ -46,6 +46,7 @@
 	void _SnacRemesher_NewCoords( void* _context );
 
 	void _SnacRemesher_InterpolateNodes( void* _context );
+	void _SnacRemesher_RecoverNodes( void* context );
 	void _SnacRemesher_RecoverNode( void* context, unsigned nodeInd );
 	void _SnacRemesher_InterpolateNode( void* context,
 					    unsigned nodeInd, unsigned elementInd, unsigned tetInd, 
