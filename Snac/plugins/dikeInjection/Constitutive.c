@@ -91,7 +91,7 @@ void SnacDikeInjection_Constitutive( void* _context, Element_LocalIndex element_
 					(Snac_Element_NodeCoord( context, element_lI, 5)[0]-Snac_Element_NodeCoord( context, element_lI, 4)[0]) + 
 					(Snac_Element_NodeCoord( context, element_lI, 6)[0]-Snac_Element_NodeCoord( context, element_lI, 7)[0]) 
 					 );
-	fprintf(stderr,"elem_dX=%e dikeWidth=%e\n",elem_dX,contextExt->dikeWidth);
+	/* fprintf(stderr,"elem_dX=%e dikeWidth=%e\n",elem_dX,contextExt->dikeWidth); */
 	epsilon_xx = (contextExt->injectionRate*context->dt)/elem_dX;
 	/*	epsilon_xx = (contextExt->injectionRate*context->dt)/contextExt->dikeWidth; */
 	
