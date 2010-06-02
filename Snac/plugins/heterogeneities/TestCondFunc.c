@@ -43,6 +43,8 @@ void _Snac_Dyke(double a,double b,double c,double d,double e,Coord x,int*  pans)
       double   dummy = (a*x[0]+b*x[1]+c*x[2]+d);
       double   Distance = dummy*dummy/(a*a+b*b+c*c);
       *pans  = Distance <= e*e/4 ;
+	  if( *pans )
+		  fprintf(stderr,"%e %e %e %e %e (%e %e %e) dist=%e, %e\n",a,b,c,d,e,x[0],x[1],x[2],Distance,e*e/4);
 }
 
 void _Snac_Sphere(double a,double b,double c,double d,double e,Coord x,int*  ans) {
@@ -71,7 +73,6 @@ void _Snac_CylinderH(double a,double b,double c,double d,double e,Coord x, int* 
 }
 
 void _Snac_CylinderV(double a,double b,double c,double d,double e,Coord x, int*    ans ) {
-
       double  dummy0 = x[0]-a;
       double  dummy2 = x[2]-c;
       double Distance = dummy0*dummy0+dummy2*dummy2;
@@ -83,24 +84,36 @@ void _Snac_UpperLimit(double a,double b,double c,double d,double e,Coord x, int*
       *ans    =  x[1] <= Distance;
 }
 
-void _Snac_RightLimit(double a,double b,double c,double d,double e,Coord x, int*  ans   ) {
+void _Snac_LowerLimit(double a,double b,double c,double d,double e,Coord x, int*    ans ) {
+      double   Distance = (a*x[0]+c*x[2]+d)/b;
+      *ans    =  x[1] >= Distance;
+}
 
+void _Snac_RightLimit(double a,double b,double c,double d,double e,Coord x, int*  ans   ) {
       double   Distance = (-b*x[1]-c*x[2]-d)/a;
       *ans    = x[0] <= Distance  ;
 }
 
+void _Snac_LeftLimit(double a,double b,double c,double d,double e,Coord x, int*  ans   ) {
+      double   Distance = (b*x[1]+c*x[2]+d)/a;
+      *ans    = x[0] >= Distance  ;
+}
+
 void _Snac_FrontLimit(double a,double b,double c,double d,double e,Coord x, int*  ans   ) {
-       
       double   Distance = (-a*x[0]-b*x[1]-d)/c;
       *ans    = x[2] <= Distance  ;
 }
 
+void _Snac_BackLimit(double a,double b,double c,double d,double e,Coord x, int*  ans   ) {
+      double   Distance = (a*x[0]+b*x[1]+d)/c;
+      *ans    = x[2] >= Distance  ;
+}
 
 void _SnacHetero_node ( Index numHetero, Index node_dI,  void* _context, void* _heteroProperty ) {
         Snac_Context*                   context         = (Snac_Context*)_context;
         Snac_Hetero*                    heteroProperty  = (Snac_Hetero*)_heteroProperty;
         Coord*                          coord;
-        int                             WhichOne;
+        Index                           WhichOne;
         Index                           hetero_I;
             coord       = Snac_NodeCoord_P( context, node_dI );
             WhichOne = 0;
@@ -136,13 +149,15 @@ void _SnacHetero_element ( Index numHetero, Index element_dI,  void* _context, v
         X[2]        = X[2]/8;
         pX  = &X;
         for (hetero_I = 0; hetero_I<numHetero; hetero_I++){
-             if (heteroProperty[hetero_I].IsElementVC)  Is_coord_Inside(&WhichOne,hetero_I,heteroProperty,pX);
-             }
-        if (WhichOne >0) VariableCondition_ApplyToIndex(heteroProperty[WhichOne-1].elementVC,element_dI,context);
+			if (heteroProperty[hetero_I].IsElementVC)  Is_coord_Inside(&WhichOne,hetero_I,heteroProperty,pX);
+		}
+        if (WhichOne >0) {
+			VariableCondition_ApplyToIndex(heteroProperty[WhichOne-1].elementVC,element_dI,context);
+		}
 
 }     
 
-void Is_coord_Inside(int* pWhichOne,Index hetero_I, void* _heteroProperty,Coord* coord) {
+void Is_coord_Inside(Index* pWhichOne,Index hetero_I, void* _heteroProperty,Coord* coord) {
         Snac_Hetero*                    hetero  =  (Snac_Hetero*)_heteroProperty;
         int                             In_or_Out;        
   
@@ -179,15 +194,29 @@ void Is_coord_Inside(int* pWhichOne,Index hetero_I, void* _heteroProperty,Coord*
                                 break;
 
                         case 6:
-                                _Snac_RightLimit(hetero[hetero_I].a_shape,hetero[hetero_I].b_shape,hetero[hetero_I].c_shape,hetero[hetero_I].d_shape,hetero[hetero_I].e_shape,*coord,&In_or_Out);
+                                _Snac_LowerLimit(hetero[hetero_I].a_shape,hetero[hetero_I].b_shape,hetero[hetero_I].c_shape,hetero[hetero_I].d_shape,hetero[hetero_I].e_shape,*coord,&In_or_Out);
                                 if(In_or_Out) *pWhichOne = (hetero_I+1);
                                 break;
 
                         case 7:
+                                _Snac_RightLimit(hetero[hetero_I].a_shape,hetero[hetero_I].b_shape,hetero[hetero_I].c_shape,hetero[hetero_I].d_shape,hetero[hetero_I].e_shape,*coord,&In_or_Out);
+                                if(In_or_Out) *pWhichOne = (hetero_I+1);
+                                break;
+
+                        case 8:
+                                _Snac_LeftLimit(hetero[hetero_I].a_shape,hetero[hetero_I].b_shape,hetero[hetero_I].c_shape,hetero[hetero_I].d_shape,hetero[hetero_I].e_shape,*coord,&In_or_Out);
+                                if(In_or_Out) *pWhichOne = (hetero_I+1);
+                                break;
+
+                        case 9:
                                 _Snac_FrontLimit(hetero[hetero_I].a_shape,hetero[hetero_I].b_shape,hetero[hetero_I].c_shape,hetero[hetero_I].d_shape,hetero[hetero_I].e_shape,*coord,&In_or_Out);
                                 if(In_or_Out) *pWhichOne = (hetero_I+1);
                                 break;
 
+                        case 10:
+                                _Snac_BackLimit(hetero[hetero_I].a_shape,hetero[hetero_I].b_shape,hetero[hetero_I].c_shape,hetero[hetero_I].d_shape,hetero[hetero_I].e_shape,*coord,&In_or_Out);
+                                if(In_or_Out) *pWhichOne = (hetero_I+1);
+                                break;
 
                         default:
                                 assert(0);

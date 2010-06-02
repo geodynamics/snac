@@ -43,7 +43,7 @@
   
 
         //typedef enum    {nodeIC,elementIC,bothIC} heterogeneityType;
-        typedef enum    {SnacDyke,SnacSphere,SnacCylinder,SnacCylinder_H,SnacCylinder_V,SnacUpperLimit,SnacRightLimit,SnacFrontLimit} heterogeneitygeometry;
+typedef enum    {SnacDyke,SnacSphere,SnacCylinder,SnacCylinder_H,SnacCylinder_V,SnacUpperLimit,SnacLowerLimit,SnacRightLimit,SnacLeftLimit,SnacFrontLimit,SnacBackLimit} heterogeneitygeometry;
         typedef struct _Snac_Hetero                     Snac_Hetero;
         /* Heterogeneity*/
         struct _Snac_Hetero {
@@ -64,7 +64,7 @@
         void _SnacHetero_InitialCondition( void* _context );
         void SnacHetero_Apply(Index phaseI, Index nodeI,Index elementI,  void* _context, void* _heteroProperty);
         void  printHetero_Properties( void* _heteroproperty, int hetero_I, Stream* stream );
-        void  getHetero_Dictionary_Entry_Values( Dictionary*     heteroDict , int hetero_I,int* nodeI,int* elementI, void* _context, void* _heteroProperty);
+        void  getHetero_Dictionary_Entry_Values( Dictionary* heteroDict, Index hetero_I, Index* nodeI, Index* elementI, void* _context, void* _heteroProperty);
         void _Snac_Dyke(double a,double b,double c,double d,double e,Coord x,int*  ans);
         void _Snac_Sphere(double a,double b,double c,double d,double e,Coord x,int*  ans);
         void _Snac_Cylinder(double a,double b,double c,double d,double e,Coord x,int*  ans);
@@ -75,5 +75,5 @@
         void _Snac_FrontLimit(double a,double b,double c,double d,double e,Coord x,int*  ans);
         void _SnacHetero_node ( Index numHetero, Index node_dI,  void* _context, void* _heteroProperty );
         void _SnacHetero_element ( Index numHetero, Index element_dI,  void* _context, void* _heteroProperty );
-        void Is_coord_Inside(int* WhichOne,Index hetero_I, void* _heteroProperty,Coord* coord);
+        void Is_coord_Inside(Index* WhichOne,Index hetero_I, void* _heteroProperty,Coord* coord);
 #endif /* __SnacCartesian_hetero_h__ */

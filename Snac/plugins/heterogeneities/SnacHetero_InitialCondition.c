@@ -86,13 +86,14 @@ void SnacHetero_Apply(Index phaseI, Index  nodeI,Index elementI,  void* _context
          }
          if (elementI == 1) 
          if( context->rank == 0 ) Journal_Printf( context->snacInfo,"%s: element 1 = %d\n",__func__,elementI);
+         if( context->rank == 0 ) fprintf(stderr,"%s: element 1 = %d\n",__func__,elementI);
          for( element_dI = 0; element_dI < context->mesh->elementLocalCount; element_dI++ )
           _SnacHetero_element (phaseI, element_dI,context, heteroProperty );
 
 }
 
 
-void getHetero_Dictionary_Entry_Values( Dictionary*     heteroDict , int hetero_I,int* pnodeI, int* pelementI, void* _context, void* _heteroProperty)
+void getHetero_Dictionary_Entry_Values( Dictionary* heteroDict, Index hetero_I, Index* pnodeI, Index* pelementI, void* _context, void* _heteroProperty)
 
 {
         Snac_Hetero*    heteroProperty  = (Snac_Hetero*)_heteroProperty;
@@ -120,10 +121,16 @@ void getHetero_Dictionary_Entry_Values( Dictionary*     heteroDict , int hetero_
                 heteroProperty[hetero_I].geom = SnacCylinder_H;
         else if( !strcmp( heterogeneity_geom, "UpperLimit" ))
                 heteroProperty[hetero_I].geom = SnacUpperLimit;
+        else if( !strcmp( heterogeneity_geom, "LowerLimit" ))
+                heteroProperty[hetero_I].geom = SnacLowerLimit;
         else if( !strcmp( heterogeneity_geom, "RightLimit" ))
                 heteroProperty[hetero_I].geom = SnacRightLimit;
+        else if( !strcmp( heterogeneity_geom, "LeftLimit" ))
+                heteroProperty[hetero_I].geom = SnacLeftLimit;
         else if( !strcmp( heterogeneity_geom, "FrontLimit" ))
                 heteroProperty[hetero_I].geom = SnacFrontLimit;
+        else if( !strcmp( heterogeneity_geom, "BackLimit" ))
+                heteroProperty[hetero_I].geom = SnacBackLimit;
 
         heteroProperty[hetero_I].a_shape   = Dictionary_Entry_Value_AsDouble(
                 Dictionary_GetDefault( heteroDict, "a_shape", Dictionary_Entry_Value_FromDouble( 1.0f ) ) );
@@ -156,19 +163,19 @@ void getHetero_Dictionary_Entry_Values( Dictionary*     heteroDict , int hetero_
 }
 
 
-        void  printHetero_Properties( void* _heteroproperty, int hetero_I, Stream* stream ) {
-        Snac_Hetero* heteroProperty = (Snac_Hetero*)_heteroproperty;
-        Journal_Printf( stream, "You inserted a heterogeneity of geometry  %d\n",heteroProperty[hetero_I].geom);
-         if(heteroProperty[hetero_I].IsElementVC) VariableCondition_PrintConcise( heteroProperty[hetero_I].elementVC, stream );
-         if(heteroProperty[hetero_I].IsNodeVC) {
+void  printHetero_Properties( void* _heteroproperty, int hetero_I, Stream* stream ) {
+	Snac_Hetero* heteroProperty = (Snac_Hetero*)_heteroproperty;
+	Journal_Printf( stream, "You inserted a heterogeneity of geometry  %d\n",heteroProperty[hetero_I].geom);
+	if(heteroProperty[hetero_I].IsElementVC) VariableCondition_PrintConcise( heteroProperty[hetero_I].elementVC, stream );
+	if(heteroProperty[hetero_I].IsNodeVC) {
         Journal_Printf( stream, "You shouldn't be in there");
-         VariableCondition_PrintConcise( heteroProperty[hetero_I].nodeVC, stream );}
-        Journal_Printf( stream, "with parameters:\n");
-        Journal_Printf( stream, "\t a_shape   = %g\n",heteroProperty[hetero_I].a_shape );
-        Journal_Printf( stream, "\t b_shape   = %g\n",heteroProperty[hetero_I].b_shape );
-        Journal_Printf( stream, "\t c_shape   = %g\n",heteroProperty[hetero_I].c_shape );
-        Journal_Printf( stream, "\t d_shape   = %g\n",heteroProperty[hetero_I].d_shape );
-        Journal_Printf( stream, "\t e_shape   = %g\n",heteroProperty[hetero_I].e_shape );
-
+		VariableCondition_PrintConcise( heteroProperty[hetero_I].nodeVC, stream );}
+	Journal_Printf( stream, "with parameters:\n");
+	Journal_Printf( stream, "\t a_shape   = %g\n",heteroProperty[hetero_I].a_shape );
+	Journal_Printf( stream, "\t b_shape   = %g\n",heteroProperty[hetero_I].b_shape );
+	Journal_Printf( stream, "\t c_shape   = %g\n",heteroProperty[hetero_I].c_shape );
+	Journal_Printf( stream, "\t d_shape   = %g\n",heteroProperty[hetero_I].d_shape );
+	Journal_Printf( stream, "\t e_shape   = %g\n",heteroProperty[hetero_I].e_shape );
+	
 }
 

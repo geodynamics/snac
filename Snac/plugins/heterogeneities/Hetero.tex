@@ -1,0 +1,76 @@
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{booktabs}
+
+\begin{document}
+\paragraph{Inserting heterogeneities}:
+Heterogeneities are inserted using parametric functions of the $(x,y,z)$
+coordinates of the nodes or the center of the elements to which a
+given \texttt{StGermain Variable Condition} is applied. As for regular
+BC and ICs, the latest may be defined either as a constant value set
+in the input file or as one of the function from the condition
+function register.
+
+The geometric parameters of a heterogeneity are defined in the XML
+input file following the general syntax provided in\\
+\texttt{Snac/plugins/heterogeneity/Hetero.xml.meta}.
+
+Heterogeneities are inserted in the model in the same order you enter
+them in the xml file. For instance, if the second heterogeneity
+overlaps the space of the first heterogeneity for the same variable,
+the variable will be set to the value provided by the variable
+condition of the second heterogeneity.
+
+Units are assumed to be the same with those for mesh geometry.
+Defult value of \texttt{a\_shape} is set to 1.0 while defult values
+of \texttt{b\_shape} to \texttt{e\_shape} are set to 0.0. Default
+geometry is \texttt{FrontLimit}.
+
+This means that by default the program will set all the point behind
+$0$ to the value defined by the provided \texttt{Variable Condition}.
+For normally set (i.e., $z_{min}\ge0$)model, nothing is going to happen.
+
+There are currently 11 shape functions in this plugins:
+\begin{enumerate}
+\item Dyke: $2(Ax+By+Cz+D)^{2}/(A^2+B^2+C^2) \le t$
+\item Sphere: $(x-Xc)^2+(y-Yc)^2+(z-Zc)^2 \le r^2$
+\item Cylinder: $x=C_x z+p$; $y=C_y z+q$;
+  $[(x-Az-p)^2+(y-Cz-q)^2+(C(x-p)+A(y-q))^2]/(A^2+C^2+1) \le r^2$
+\item Cylinder\_V: $(x-Xc)^2+(z-Zc)^2 \le r^2$
+\item Cylinder\_H: $(x-Az-B)^2 \le r^2$
+\item UpperLimit: $y_p=-(Ax+Cz+D)/B \ge y$
+\item LowerLimit: $y_p \le y$
+\item RightLimit: $x_p=-(By+Cz+D)/A \ge x$
+\item LeftLimit: $x_p \le x$
+\item FrontLimit: $z_p=-(Ax+By+D)/C \ge z$
+\item BackLimit: $z_p \le z$
+\end{enumerate}
+
+\begin{minipage}{1.0\linewidth}
+\begin{tabular}{@{}cccccc@{}} \toprule
+&a\_shape & b\_shape & c\_shape & d\_shape & e\_shape\\ \midrule
+Dyke & A & B & C & D & thickness (r) \\ 
+Sphere & $X_c$ & $Y_c$ & $Z_c$ & not used & radius (r) \\ 
+Cylinder\footnote{will not work for vertical.} & $C_x$ & $C_y$ & $p$ & q & radius (r) \\ 
+Cylinder\_V & $X_c$ & not used & $Z_c$ & not used & radius (r) \\ 
+Cylinder\_H & $C_x$ & not used & $p$ & not used & radius (r) \\ 
+UpperLimit\footnote{will not work for vertical.} & A & B & C & D & not used \\ 
+LowerLimit & A & B & C & D & not used \\ 
+RightLimit\footnote{will not work for $x=const$ vertical plane.} & A & B & C & D & not used \\ 
+LeftLimit & A & B & C & D & not used \\ 
+FrontLimit\footnote{will not work for $z=const$ vertical plane.} & A & B & C & D & not used \\ 
+BackLimit & A & B & C & D & not used \\ \bottomrule
+\end{tabular}
+\end{minipage}
+
+\paragraph{For programers}: To create a new shape, add the geometric
+function in \texttt{TestCondFunc.c} and declare it in
+\texttt{SnacHetero.h}. And call it within the function
+\texttt{Is\_coord\_Inside} in \texttt{TestCondFunc.c} by creating a new
+case in the \texttt{switch-case} block. Also define a name of
+the geometry to be used in the XML input file in
+\texttt{SnacHeterogeneity\_InitialConditions.c}. Don't forget to update
+this documentation! ;-)
+
+
+\end{document}
