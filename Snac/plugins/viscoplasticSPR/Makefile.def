@@ -43,10 +43,12 @@ def_srcs = \
 	Output.c \
 	Register.c \
 	InitialConditions.c \
+	Destroy.c \
 	Remesh.c \
 
 def_hdrs = \
 	types.h \
+	units.h \
 	Node.h \
 	Element.h \
 	Mesh.h \
@@ -57,5 +59,6 @@ def_hdrs = \
 	Register.h \
 	InitialConditions.h \
 	Remesh.h \
+	Destroy.h \
 	ViscoPlastic.h
 

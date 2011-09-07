@@ -311,8 +311,8 @@ void _SnacViscoPlastic_InterpolateElement( void* _context,
 	for(i=0;i<4;i++) {
 		Snac_Node*			node = Snac_Element_Node_P( context, dstEltInd, TetraToNode[dstTetInd][i] );
 		SnacViscoPlastic_Node*	nodeExt = ExtensionManager_Get( context->mesh->nodeExtensionMgr, 
-															node, 
-															SnacViscoPlastic_NodeHandle );
+									node, 
+									SnacViscoPlastic_NodeHandle );
 		plasticStrain += 0.25f*nodeExt->plStrainSPR;
 /* 		viscosity += 0.25f*nodeExt->viscositySPR; */
 

@@ -33,17 +33,18 @@
 #include <StGermain/StGermain.h>
 #include <StGermain/FD/FD.h>
 #include "Snac/Snac.h"
-#include "types.h"
-#include "Node.h"
+#include "ConstructExtensions.h"
+#include "Constitutive.h"
+#include "Context.h"
+#include "Destroy.h"
+#include "InitialConditions.h"
 #include "Element.h"
 #include "Mesh.h"
-#include "Context.h"
-#include "Constitutive.h"
-#include "ConstructExtensions.h"
+#include "Node.h"
 #include "Output.h"
-#include "InitialConditions.h"
-#include "Remesh.h"
 #include "Register.h"
+#include "Remesh.h"
+#include "types.h"
 #include <stdio.h>
 
 /* Textual name of this class */
@@ -135,6 +136,11 @@ void _SnacViscoPlastic_Construct( void* component, Stg_ComponentFactory* cf, voi
 		Context_GetEntryPoint( context, Snac_EP_CalcStresses ),
 		"SnacViscoPlastic_WriteViscosity",
 		_SnacViscoPlastic_WriteViscosity,
+		SnacViscoPlastic_Type );
+	EntryPoint_Append( /* perform clean-ups like closing output files. */
+		Context_GetEntryPoint( context, AbstractContext_EP_DestroyExtensions ),
+		"SnacViscoPlastic_Destory",
+		_SnacViscoPlastic_Destroy,
 		SnacViscoPlastic_Type );
 
 	/* Add extensions to the interpolate element entry point, but it will only exist if the remesher is loaded. */

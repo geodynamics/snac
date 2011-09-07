@@ -46,6 +46,7 @@
 		FILE*				plStrainOut;
 		FILE*				viscOut;
 		FILE*				plStrainCheckpoint;
+		FILE*				avgPlStrainCheckpoint;
 		FILE*				viscCheckpoint;
 		FILE*				plstrainTensorOut;
 	};

@@ -33,11 +33,7 @@
 #include <StGermain/StGermain.h>
 #include <StGermain/FD/FD.h>
 #include "Snac/Snac.h"
-#include "types.h"
-#include "Context.h"
-#include "Register.h"
-#include "Element.h"
-#include "ConstructExtensions.h"
+#include "ViscoPlastic.h"
 #include <assert.h>
 #include <limits.h>
 #ifndef PATH_MAX
@@ -97,6 +93,11 @@ void _SnacViscoPlastic_ConstructExtensions( void* _context, void* data ) {
 	sprintf( tmpBuf, "%s/plStrainCP.%u", context->outputPath, context->rank );
 	if( (contextExt->plStrainCheckpoint = fopen( tmpBuf, "w+" )) == NULL ) {
 		assert( contextExt->plStrainCheckpoint /* failed to open file for writing */ );
+		abort();
+	}
+	sprintf( tmpBuf, "%s/avgPlStrainCP.%u", context->outputPath, context->rank );
+	if( (contextExt->avgPlStrainCheckpoint = fopen( tmpBuf, "w+" )) == NULL ) {
+		assert( contextExt->avgPlStrainCheckpoint /* failed to open file for writing */ );
 		abort();
 	}
 	sprintf( tmpBuf, "%s/viscosity.%u", context->outputPath, context->rank );
