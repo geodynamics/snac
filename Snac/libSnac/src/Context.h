@@ -224,6 +224,7 @@
 
 	/* Solve volumes, normals, etc for each element */
 	void _Snac_Context_LoopElements( void* context );
+	void _Snac_Context_LoopElements_Restart( void* context );
 
 	/* Sync for the Snac implementation */
 	void _Snac_Context_Sync( void* context );

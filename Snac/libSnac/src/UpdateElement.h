@@ -44,5 +44,6 @@
 #define __Snac_UpdateElement_h__
 	
 	void Snac_UpdateElementMomentum( void* context, Element_LocalIndex element_lI, double* elementMinLengthScale );
+	void Snac_UpdateElementMomentum_Restart( void* context, Element_LocalIndex element_lI, double* elementMinLengthScale );
 	
 #endif /* __Snac_UpdateElement_h__ */

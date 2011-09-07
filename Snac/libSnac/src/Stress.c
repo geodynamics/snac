@@ -145,7 +145,7 @@ void Snac_Stress( void* context, Element_LocalIndex element_lI ) {
 			element->tetra[tetra_I].stress[1][2] * element->tetra[tetra_I].stress[1][2] +
 			element->tetra[tetra_I].stress[0][2] * element->tetra[tetra_I].stress[0][2];
 
-		pressure += -1.0f * (element->tetra[tetra_I].stress[0][0]+element->tetra[tetra_I].stress[1][1]+element->tetra[tetra_I].stress[2][2])/3.0f;
+		pressure += (element->tetra[tetra_I].stress[0][0]+element->tetra[tetra_I].stress[1][1]+element->tetra[tetra_I].stress[2][2])/3.0f;
 	}
 	sVolAvg /= Tetrahedra_Count;
 	sOtherAvg /= Tetrahedra_Count;
@@ -153,7 +153,7 @@ void Snac_Stress( void* context, Element_LocalIndex element_lI ) {
 
 	/* Calculate the element stress from the tetrahedra stress tensors */
 	element->stress         = 0.5f * sqrt( 0.5f * fabs( -1.0f * sVolAvg + sOtherAvg ) );
-	element->hydroPressure  = pressure;
+	element->hydroPressure  = -1.0*pressure;
 
 	/* To catch nan or inf in the stress values even in the optimised mode. */
 	/* In the usual DEBUG mode, the above Journal_DFirewalls are sufficient. */

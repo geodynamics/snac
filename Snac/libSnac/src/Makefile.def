@@ -46,6 +46,7 @@ def_srcs = \
 	Force.c \
 	UpdateNode.c \
 	Parallel.c \
+	Restart.c \
 	Context.c \
 	SnacSync.c \
 	Init.c \
@@ -63,6 +64,7 @@ def_hdrs = \
 	Element.h \
 	EntryPoint.h \
 	UpdateElement.h \
+	Restart.h \
 	StrainRate.h \
 	Stress.h \
 	Force.h \

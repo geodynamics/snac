@@ -75,7 +75,7 @@ void Snac_UpdateElementMomentum( void* context, Element_LocalIndex element_lI, d
 	/* Calculate the volume, surface { area, normal and velocity }, and smallest length scale for each tetrahedra. */
 	for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
 		Tetrahedra_Surface_Index	surface_I;
-		double				lengthScale;
+		double				lengthScale;	
 
 		/*ccccc*/
 		memset( element->tetra[tetra_I].strain, 0, sizeof(element->tetra[tetra_I].strain) );
@@ -83,10 +83,10 @@ void Snac_UpdateElementMomentum( void* context, Element_LocalIndex element_lI, d
 		/* Calculate this tetrahedra's volume */
 		element->tetra[tetra_I].old_volume = element->tetra[tetra_I].volume;
 		element->tetra[tetra_I].volume = Tetrahedra_Volume(
-			Snac_Element_NodeCoord( self, element_lI, TetraToNode[tetra_I][0] ),
-			Snac_Element_NodeCoord( self, element_lI, TetraToNode[tetra_I][1] ),
-			Snac_Element_NodeCoord( self, element_lI, TetraToNode[tetra_I][2] ),
-			Snac_Element_NodeCoord( self, element_lI, TetraToNode[tetra_I][3] ) );
+		Snac_Element_NodeCoord( self, element_lI, TetraToNode[tetra_I][0] ),
+		Snac_Element_NodeCoord( self, element_lI, TetraToNode[tetra_I][1] ),
+		Snac_Element_NodeCoord( self, element_lI, TetraToNode[tetra_I][2] ),
+		Snac_Element_NodeCoord( self, element_lI, TetraToNode[tetra_I][3] ) );
 		if(self->timeStep == 0)
 			element->tetra[tetra_I].old_volume = element->tetra[tetra_I].volume;
 
@@ -239,7 +239,7 @@ void Snac_UpdateElementMomentum( void* context, Element_LocalIndex element_lI, d
 		element->tetra[tetra_I].strain[1][2] += ( rotation[tetra_I][1][2] *
 			(element->tetra[tetra_I].strain[2][2] - element->tetra[tetra_I].strain[1][1] ) ) * self->dt +
 			( (-1.0f*rotation[tetra_I][0][1]) * element->tetra[tetra_I].strain[0][2] -
-			  rotation[tetra_I][0][2] * element->tetra[tetra_I].strain[0][1] ) * self->dt;
+			  rotation[tetra_I][0][2] * element->tetra[tetra_I].strain[0][1] ) * self->dt;	
 
 		/* Rotate the stress of this tetrahedra. */
 		element->tetra[tetra_I].stress[0][0] += (
@@ -263,6 +263,97 @@ void Snac_UpdateElementMomentum( void* context, Element_LocalIndex element_lI, d
 			(element->tetra[tetra_I].stress[2][2] - element->tetra[tetra_I].stress[1][1] ) ) * self->dt +
 			( (-1.0f*rotation[tetra_I][0][1]) * element->tetra[tetra_I].stress[0][2] -
 			  rotation[tetra_I][0][2] * element->tetra[tetra_I].stress[0][1] ) * self->dt;
+	}
+	if( Tetrahedra_Count > 5 )
+		element->volume *= 0.5;
+}
+
+void Snac_UpdateElementMomentum_Restart( void* context, Element_LocalIndex element_lI, double* elementMinLengthScale ) {
+	Snac_Context*		self = (Snac_Context*)context;
+	Tetrahedra_Index	tetra_I;
+	Snac_Element*		element = Snac_Element_At( self, element_lI );
+
+	Snac_Material*      material = &self->materialProperty[element->material_I];
+
+
+	/* Find this processor's maximum Vp and store it as speedOfSound. */
+	if( self->dtType == Snac_DtType_Wave ) {
+		double Vp = sqrt((material->lambda+2.0f*material->mu)/material->phsDensity);
+		if( Vp > self->speedOfSound )
+			self->speedOfSound = Vp;
+	}
+
+	/* Initialise output data */
+	element->volume=0.0;
+	*elementMinLengthScale = Tetrahedra_Max_Propagation_Length;
+
+	/* Calculate the volume, surface { area, normal and velocity }, and smallest length scale for each tetrahedra. */
+	for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
+		Tetrahedra_Surface_Index	surface_I;
+		double				lengthScale;
+
+		/*ccccc*/
+		memset( element->tetra[tetra_I].strain, 0, sizeof(element->tetra[tetra_I].strain) );
+
+		/* Calculate this tetrahedra's volume */
+		element->tetra[tetra_I].old_volume = element->tetra[tetra_I].volume;
+		element->tetra[tetra_I].volume = Tetrahedra_Volume(
+			Snac_Element_NodeCoord( self, element_lI, TetraToNode[tetra_I][0] ),
+			Snac_Element_NodeCoord( self, element_lI, TetraToNode[tetra_I][1] ),
+			Snac_Element_NodeCoord( self, element_lI, TetraToNode[tetra_I][2] ),
+			Snac_Element_NodeCoord( self, element_lI, TetraToNode[tetra_I][3] ) );
+		if(self->timeStep == 0)
+			element->tetra[tetra_I].old_volume = element->tetra[tetra_I].volume;
+
+		/* Calculate this tetrahedra's area, normal and velocity for each surface. */
+		for( surface_I = 0; surface_I < Tetrahedra_Surface_Count; surface_I++ ) {
+			element->tetra[tetra_I].surface[surface_I].area = Tetrahedra_SurfaceArea(
+				Snac_Element_NodeCoord( self, element_lI, TetraToNode[tetra_I][FaceToNode[surface_I][0]] ),
+				Snac_Element_NodeCoord( self, element_lI, TetraToNode[tetra_I][FaceToNode[surface_I][1]] ),
+				Snac_Element_NodeCoord( self, element_lI, TetraToNode[tetra_I][FaceToNode[surface_I][2]] ) );
+
+			Tetrahedra_SurfaceNormal(
+				Snac_Element_NodeCoord( self, element_lI, TetraToNode[tetra_I][FaceToNode[surface_I][0]] ),
+				Snac_Element_NodeCoord( self, element_lI, TetraToNode[tetra_I][FaceToNode[surface_I][1]] ),
+				Snac_Element_NodeCoord( self, element_lI, TetraToNode[tetra_I][FaceToNode[surface_I][2]] ),
+				&element->tetra[tetra_I].surface[surface_I].normal );
+		}
+
+
+		/* keep track of this processor's smallest length scale */
+		lengthScale = element->tetra[tetra_I].surface[0].area;
+		if( lengthScale ) {
+			lengthScale = fabs( element->tetra[tetra_I].volume / lengthScale );
+			if( *elementMinLengthScale > lengthScale ) {
+				*elementMinLengthScale = lengthScale;
+			}
+		}
+
+		lengthScale = element->tetra[tetra_I].surface[1].area;
+		if( lengthScale ) {
+		lengthScale = fabs( element->tetra[tetra_I].volume / lengthScale );
+			if( *elementMinLengthScale > lengthScale ) {
+				*elementMinLengthScale = lengthScale;
+			}
+		}
+
+		lengthScale = element->tetra[tetra_I].surface[2].area;
+		if( lengthScale ) {
+			lengthScale = fabs( element->tetra[tetra_I].volume / lengthScale );
+			if( *elementMinLengthScale > lengthScale ) {
+				*elementMinLengthScale = lengthScale;
+			}
+		}
+
+		lengthScale = element->tetra[tetra_I].surface[3].area;
+		if( lengthScale ) {
+			lengthScale = fabs( element->tetra[tetra_I].volume / lengthScale );
+			if( *elementMinLengthScale > lengthScale ) {
+				*elementMinLengthScale = lengthScale;
+			}
+		}
+		/* Ammend the element volume with this tetrahedra's contribution */
+		element->volume += element->tetra[tetra_I].volume;
 	}
 	if( Tetrahedra_Count > 5 )
 		element->volume *= 0.5;

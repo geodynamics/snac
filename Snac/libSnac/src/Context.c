@@ -48,6 +48,7 @@
 #include "Force.h"
 #include "UpdateNode.h"
 #include "Parallel.h"
+#include "Restart.h"
 #include "Context.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -994,7 +995,7 @@ void Snac_Context_TimeStepZero( void* context ) {
 	/* Write out timeStep info */
 	_Snac_Context_WriteLoopInfo( self );
 
-	if( self->restartTimestep == 0 ) {
+	if( self->restartTimestep == 0 ) { /* If not restarting (i.e., starting normally) */
 		for( element_lI = 0; element_lI < self->mesh->elementLocalCount && self->restartTimestep == 0; element_lI++ ) {
 			Snac_Element* element = Snac_Element_At( self, element_lI );
 			Material_Index                  material_I = element->material_I;
@@ -1017,10 +1018,16 @@ void Snac_Context_TimeStepZero( void* context ) {
 			}
 			element->stress = 0.5f * sqrt( 0.5f * fabs( sVolAvg/Tetrahedra_Count ) );
 		}
+		/* Update all the elements, and in the process work out this processor's minLengthScale */
+		KeyCall( self, self->loopElementsMomentumK, EntryPoint_VoidPtr_CallCast* )( KeyHandle(self,self->loopElementsMomentumK), self );
 	}
-
-	/* Update all the elements, and in the process work out this processor's minLengthScale */
-	KeyCall( self, self->loopElementsMomentumK, EntryPoint_VoidPtr_CallCast* )( KeyHandle(self,self->loopElementsMomentumK), self );
+	else if( (self->restartTimestep > 0) && (self->timeStep==self->restartTimestep) ) { /* if restarting */
+		_Snac_Restart_ResetMinLengthScale( self );
+		_Snac_Restart_InitialCoords( self );
+		_Snac_Restart_InitialVelocities( self );
+		_Snac_Context_LoopElements_Restart( self );
+		_Snac_Restart_InitialStress( self );
+	}
 
 	_Snac_Context_WriteOutput( self );
 
@@ -1170,6 +1177,27 @@ void _Snac_Context_LoopElements( void* context ) {
 			self,
 			element_lI,
 			&elementMinLengthScale );
+		if( elementMinLengthScale < self->minLengthScale ) {
+			self->minLengthScale = elementMinLengthScale;
+		}
+	}
+}
+
+void _Snac_Context_LoopElements_Restart( void* context ) {
+	Snac_Context* 		self = (Snac_Context*)context;
+	Element_LocalIndex	element_lI;
+
+	if( self->rank == 0 ) Journal_DPrintf( self->debug, "In: %s\n", __func__ );
+	if( self->rank == 0 ) Journal_Printf(
+		self->verbose,
+		"For each element, calc volume, surface vel, and then min length scale\n" );
+
+	/* Update all the elements, and in the process work out this processor's minLengthScale */
+	element_lI = 0;
+	Snac_UpdateElementMomentum_Restart( self, element_lI, &self->minLengthScale );
+	for( element_lI = 1; element_lI < self->mesh->elementLocalCount; element_lI++ ) {
+		double elementMinLengthScale;
+		Snac_UpdateElementMomentum_Restart( self, element_lI, &elementMinLengthScale );
 		if( elementMinLengthScale < self->minLengthScale ) {
 			self->minLengthScale = elementMinLengthScale;
 		}
