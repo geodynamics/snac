@@ -492,7 +492,7 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 			exit(0);
 		}
 
-		fseek( apsIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET );
+		fseek( apsIn, dumpIteration * elementLocalCount * Tetrahedra_Count * sizeof(float), SEEK_SET );
 		for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
 			for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
 				float		plstrain;
