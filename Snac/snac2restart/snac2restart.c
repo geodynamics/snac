@@ -58,6 +58,7 @@ FILE*		coordIn;
 FILE*		velIn;
 FILE*		tempIn;
 FILE*		apsIn;
+FILE*		avgApsIn;
 /* FILE*		tetApsIn; */
 FILE*		minLengthIn;
 FILE*		forceIn;
@@ -67,6 +68,7 @@ unsigned int	rank_array[3];
 unsigned int	elementLocalSize[3];
 unsigned int 	doTemp = 1;
 unsigned int 	doAps = 1;
+unsigned int 	doAvgAps = 1;
 unsigned int 	restartStep = -1;
 
 const double	velocityDampingFactor = 1.0;
@@ -296,13 +298,21 @@ int main( int argc, char* argv[] ) {
 				fprintf( stderr,"Warning, no plstrainCP.%u found... assuming plastic plugin not used.\n", rank );
 				doAps = 0;
 			}
+			sprintf( tmpBuf, "%s/avgPlStrainCP.%u", readPath, rank );
+			fprintf(stderr,"Reading from %s\n",tmpBuf); 
+			if( (avgApsIn = fopen( tmpBuf, "r" )) == NULL ) {
+				fprintf( stderr,"Warning, no avgPlstrainCP.%u found... assuming plastic plugin not used.\n", rank );
+				doAvgAps = 0;
+			}
 
 			ConvertTimeStep( rank, dumpIteration, simTimeStep, time );
 
 			/* Close the input files */
 			if( apsIn ) {
 				fclose( apsIn );
-				/* 	    fclose( tetApsIn ); */
+			}
+			if( avgApsIn ) {
+				fclose( avgApsIn );
 			}
 			if( tempIn ) {
 				fclose( tempIn );
@@ -489,6 +499,25 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 				fread( &plstrain, sizeof(float), 1, apsIn );
 				fprintf( restartOut, "%.9e\n", plstrain );
 			}
+		}
+		if( restartOut )
+			fclose( restartOut );
+    }
+    /* Write out avg. plstrain array */
+    if(doAvgAps) {
+		sprintf( tmpBuf, "%s/snac.avgPlStrain.%i.%06u.restart", writePath, rank, simTimeStep );
+		fprintf(stderr,"\tWriting out %s\n",tmpBuf);
+		if( (restartOut = fopen( tmpBuf, "w" )) == NULL ) {
+			/* failed to open file for writing */
+			fprintf(stderr, "Failed to open %s for writing\n", tmpBuf);
+			exit(0);
+		}
+
+		fseek( avgApsIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET );
+		for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
+			float		plstrain;
+			fread( &plstrain, sizeof(float), 1, avgApsIn );
+			fprintf( restartOut, "%.9e\n", plstrain );
 		}
 		if( restartOut )
 			fclose( restartOut );
