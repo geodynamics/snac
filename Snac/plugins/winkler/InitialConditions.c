@@ -64,12 +64,13 @@ void _SnacWinklerForce_InitialConditions( void* _context, void* data ) {
 		}
 		fclose( fp );
 
+#if 0
 		sprintf( path, "%s/pisos.restart", context->outputPath );
 		fprintf(stderr,"%d: reading %s\n",context->rank,path);
 		Journal_Firewall( ( ( fp = fopen( path, "r") ) == NULL ), context->snacError, "Failed to open %s!!\n", path );
 		fscanf( fp, "%le", &(context->pisos) );
 		fclose( fp );
-
+#endif
 	}
 }
 
