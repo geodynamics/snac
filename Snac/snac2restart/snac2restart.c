@@ -66,6 +66,7 @@ FILE*		forceIn;
 unsigned int	elementGlobalSize[3];
 unsigned int	rank_array[3];
 unsigned int	elementLocalSize[3];
+unsigned int 	doForce = 1;
 unsigned int 	doTemp = 1;
 unsigned int 	doAps = 1;
 unsigned int 	doAvgAps = 1;
@@ -286,6 +287,12 @@ int main( int argc, char* argv[] ) {
 				assert(0);
 				abort();
 			}
+			sprintf( tmpBuf, "%s/isoForce.%u", origPath, rank );
+			fprintf(stderr,"Reading from %s\n",tmpBuf); 
+			if( (forceIn = fopen( tmpBuf, "r" )) == NULL ) {
+				fprintf( stderr,"Warning, no isoForce.%u found... assuming Winkler plugin not used.\n", rank );
+				doForce = 0;
+			}
 			sprintf( tmpBuf, "%s/temperatureCP.%u", readPath, rank );
 			fprintf(stderr,"Reading from %s\n",tmpBuf); 
 			if( (tempIn = fopen( tmpBuf, "r" )) == NULL ) {
@@ -308,6 +315,9 @@ int main( int argc, char* argv[] ) {
 			ConvertTimeStep( rank, dumpIteration, simTimeStep, time );
 
 			/* Close the input files */
+			if( forceIn ) {
+				fclose( forceIn );
+			}
 			if( apsIn ) {
 				fclose( apsIn );
 			}
@@ -461,6 +471,26 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 	}
     if( restartOut )
 		fclose( restartOut );
+
+    /* Write out isoForce array */
+    if(doForce) {
+		sprintf( tmpBuf, "%s/snac.isoForce.%i.%06u.restart", writePath, rank, simTimeStep );
+		fprintf(stderr,"\tWriting out %s\n",tmpBuf);
+		if( (restartOut = fopen( tmpBuf, "w" )) == NULL ) {
+			/* failed to open file for writing */
+			fprintf(stderr, "Failed to open %s for writing\n", tmpBuf);
+			exit(0);
+		}
+
+		fseek( forceIn, dumpIteration * nodeLocalCount * sizeof(float), SEEK_SET );
+		for( node_gI = 0; node_gI < nodeLocalCount; node_gI++ ) {
+			float		Fr;
+			fread( &Fr, sizeof(float), 1, forceIn );
+			fprintf( restartOut, "%.9e\n", Fr );
+		}
+		if( restartOut )
+			fclose( restartOut );
+    }
 
     /* Write out temperature array */
     if(doTemp) {
