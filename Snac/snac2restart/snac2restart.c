@@ -95,8 +95,8 @@ void checkArgumentTypeStrict( int argNum, char* arglist[] ) {
 		}
     }
     else {
-		fprintf(stderr,"Number and kinds of arguments must be exactly like the following:\n");
-		fprintf(stderr,"Usage: %s [timeStep] [path to first outputs] [your \"outputPath\"] [path to write restart files]\n",arglist[0]);
+		fprintf(stderr,"\nNumber and kinds of arguments must be exactly like the following:\n");
+		fprintf(stderr,"Usage**: %s [timeStep] [path to first outputs] [your \"outputPath\"] [path to write restart files]\n\n** Note that all four arguments are required.\n\n",arglist[0]);
 		exit(0);
     }
 }
@@ -258,18 +258,15 @@ int main( int argc, char* argv[] ) {
 				assert(0);
 				abort();
 			}
-			if( strcmp( readPath, origPath ) ) {
-				sprintf( tmpBuf, "%s/coord.%u", origPath, rank );
-				fprintf(stderr,"Reading init coords from %s\n",tmpBuf); 
-				if( (initCoordIn = fopen( tmpBuf, "r" )) == NULL ) {
-					/* failed to open file for reading */
-					fprintf(stderr, " ... failed - no such file\n");
-					assert(0);
-					abort();
-				}
+
+			sprintf( tmpBuf, "%s/coord.%u", origPath, rank );
+			fprintf(stderr,"Reading init coords from %s\n",tmpBuf); 
+			if( (initCoordIn = fopen( tmpBuf, "r" )) == NULL ) {
+				/* failed to open file for reading */
+				fprintf(stderr, " ... failed - no such file\n");
+				assert(0);
+				abort();
 			}
-			else
-				initCoordIn = coordIn;
 
 			sprintf( tmpBuf, "%s/velCP.%u", readPath, rank );
 			fprintf(stderr,"Reading from %s\n",tmpBuf); 
@@ -383,7 +380,7 @@ void ConvertTimeStep( int rank, unsigned int dumpIteration, unsigned int simTime
 		fprintf(stderr, "Failed to open %s for writing\n", tmpBuf);
 		exit(0);
     }
-    fseek( initCoordIn, 0, SEEK_SET );
+    fseek( initCoordIn, 0, SEEK_SET ); 
     for( node_gI = 0; node_gI < nodeLocalCount; node_gI++ ) {
 		float		coord[3];
 		fread( &coord, sizeof(float), 3, initCoordIn );
