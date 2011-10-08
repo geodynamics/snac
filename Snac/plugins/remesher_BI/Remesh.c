@@ -164,7 +164,7 @@ void _SnacRemesher_Remesh( void* _context, void* data ) {
 		Memory_Free( meshExt->oldBarycenters );
 		Memory_Free( meshExt->newBarycenters ); 
 		Memory_Free( meshExt->barcoef );
-		Memory_Free( meshExt->barcoef );
+		Memory_Free( meshExt->barcord );
 		ExtensionManager_Free( mesh->nodeExtensionMgr, meshExt->newNodes );
 		ExtensionManager_Free( mesh->elementExtensionMgr, meshExt->newElements );
 		meshExt->newNodes = NULL;

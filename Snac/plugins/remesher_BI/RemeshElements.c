@@ -48,7 +48,6 @@
 #include <assert.h>
 #include <float.h>
 
-
 void _SnacRemesher_InterpolateElements( void* _context ) {
 	Snac_Context*			context = (Snac_Context*)_context;
 	SnacRemesher_Context*	contextExt = ExtensionManager_Get( context->extensionMgr, 
@@ -74,17 +73,8 @@ void _SnacRemesher_InterpolateElements( void* _context ) {
 	
 	void Tet_Barycenter( Coord tetCrds[4], Coord center );
 	void createBarycenterGrids( void* _context );
+	int dist_compare( const void* dist1, const void* dist2 ); 
 
-	struct dist_elem_pair { double dist; unsigned int id; };
-	int dist_compare( const void* dist1, const void* dist2 ) {
-		/* double v1 = *(double *)dist1; */
-		/* double v2 = *(double *)dist2; */
-		double v1 = ((struct dist_elem_pair *)dist1)->dist;
-		double v2 = ((struct dist_elem_pair *)dist2)->dist;
-		//return (dist1<dist2) ? -1 : (dist1>dist2) ? 1 : 0;
-		return (v1<v2) ? -1 : (v1>v2) ? 1 : 0;
-	};
-	
 	/* Create old and new grids of barycenters */
 	createBarycenterGrids( context );
 	
@@ -245,7 +235,7 @@ void _SnacRemesher_InterpolateElements( void* _context ) {
 				if( !found_tet ) { 
 					Index 					dim_I;
 					Coord					hexCrds[8];
-					struct dist_elem_pair 	dist_apexes[4];
+					struct dist_id_pair 			dist_apexes[4];
 					double 					dist_sum;
 					Index 					apex_I;
 
@@ -272,7 +262,7 @@ void _SnacRemesher_InterpolateElements( void* _context ) {
 						dist_apexes[apex_I].dist = sqrt(tmp);
 						dist_apexes[apex_I].id = apex_I;
 					}
-					qsort( (void *)dist_apexes, 4, sizeof(struct dist_elem_pair), dist_compare ); /* dist arrary sorted in the ascending order. */
+					qsort( (void *)dist_apexes, 4, sizeof(struct dist_id_pair), dist_compare ); /* dist arrary sorted in the ascending order. */
 					
 					dist_sum = 0.0;
 					for( apex_I = 0; apex_I < 3; apex_I++ ) 
@@ -298,6 +288,12 @@ void _SnacRemesher_InterpolateElements( void* _context ) {
 	
 }
 
+int dist_compare( const void* dist1, const void* dist2 ) {
+	double v1 = ((struct dist_id_pair *)dist1)->dist;
+	double v2 = ((struct dist_id_pair *)dist2)->dist;
+	return (v1<v2) ? -1 : (v1>v2) ? 1 : 0;
+};
+
 void createBarycenterGrids( void* _context ) {
 
 	Snac_Context*			context = (Snac_Context*)_context;
@@ -320,7 +316,7 @@ void createBarycenterGrids( void* _context ) {
 			
 			nEltNodes = 8;
 			eltNodes = Memory_Alloc_Array( Node_DomainIndex, nEltNodes, "SnacRemesher" );
-			//element_gI = Mesh_ElementMapLocalToGlobal( mesh, element_lI );
+			gEltInd = Mesh_ElementMapLocalToGlobal( mesh, element_lI );
 			nLayout->buildElementNodes( nLayout, gEltInd, eltNodes );
 		}
 		
@@ -352,7 +348,7 @@ void createBarycenterGrids( void* _context ) {
 			
 			nEltNodes = 8;
 			eltNodes = Memory_Alloc_Array( Node_DomainIndex, nEltNodes, "SnacRemesher" );
-			//element_gI = Mesh_ElementMapDomainToGlobal( mesh, element_dI );
+			gEltInd = Mesh_ElementMapDomainToGlobal( mesh, element_dI );
 			nLayout->buildElementNodes( nLayout, gEltInd, eltNodes );
 		}
 		
@@ -408,12 +404,20 @@ void _SnacRemesher_InterpolateElement( void*				_context,
 {
 
 	Snac_Context*		context = (Snac_Context*)_context;
+	Mesh*				mesh = context->mesh;
+	SnacRemesher_Mesh*	meshExt = ExtensionManager_Get( context->meshExtensionMgr,
+															mesh, 
+															SnacRemesher_MeshHandle );
+	HexaMD*				decomp = (HexaMD*)mesh->layout->decomp;
 	Snac_Element*		dstElt = (Snac_Element*)ExtensionManager_At( context->mesh->elementExtensionMgr, 
 																	 dstEltArray, 
 																	 dstEltInd );
 	Element_DomainIndex eltdI[8],eldI,eldJ,eldK;
-	Tetrahedra_Index 	srcTet[8];
 	double 				dblMaterial_I;
+	Index 				coef_I;
+
+	Element_DomainIndex	neldI =  decomp->elementDomain3DCounts[0];
+	Element_DomainIndex	neldJ =  decomp->elementDomain3DCounts[1];
 
 	/* Decompose srcEltInd into ijk indexes. */
 	eldI = srcEltInd % neldI;
@@ -433,29 +437,29 @@ void _SnacRemesher_InterpolateElement( void*				_context,
 	memset( dstElt->tetra[tetInd].strain, 0, sizeof(double)*3*3 );
 	memset( dstElt->tetra[tetInd].stress, 0, sizeof(double)*3*3 );
 	dblMaterial_I = 0.0;
-	dstElt->tetra[dstTetInd].density = 0.0;
+	dstElt->tetra[tetInd].density = 0.0;
 	for(coef_I=0;coef_I<4;coef_I++) {
 		/* The actual src elements are the apexes of the tet in the old barycenter grid. */
 		Snac_Element* srcElt = Snac_Element_At( context, eltdI[TetraToNode[srcTetInd][coef_I]] );
 
-		dstElt->tetra[tetInd].strain[0][0] += meshExt->barcord[element_lI].L[coef_I]*srcElt->tetra[tetInd].strain[0][0];
-		dstElt->tetra[tetInd].strain[1][1] += meshExt->barcord[element_lI].L[coef_I]*srcElt->tetra[tetInd].strain[1][1];
-		dstElt->tetra[tetInd].strain[2][2] += meshExt->barcord[element_lI].L[coef_I]*srcElt->tetra[tetInd].strain[2][2];
-		dstElt->tetra[tetInd].strain[0][1] += meshExt->barcord[element_lI].L[coef_I]*srcElt->tetra[tetInd].strain[0][1];
-		dstElt->tetra[tetInd].strain[0][2] += meshExt->barcord[element_lI].L[coef_I]*srcElt->tetra[tetInd].strain[0][2];
-		dstElt->tetra[tetInd].strain[1][2] += meshExt->barcord[element_lI].L[coef_I]*srcElt->tetra[tetInd].strain[1][2];
+		dstElt->tetra[tetInd].strain[0][0] += meshExt->barcord[dstEltInd].L[coef_I]*srcElt->tetra[tetInd].strain[0][0];
+		dstElt->tetra[tetInd].strain[1][1] += meshExt->barcord[dstEltInd].L[coef_I]*srcElt->tetra[tetInd].strain[1][1];
+		dstElt->tetra[tetInd].strain[2][2] += meshExt->barcord[dstEltInd].L[coef_I]*srcElt->tetra[tetInd].strain[2][2];
+		dstElt->tetra[tetInd].strain[0][1] += meshExt->barcord[dstEltInd].L[coef_I]*srcElt->tetra[tetInd].strain[0][1];
+		dstElt->tetra[tetInd].strain[0][2] += meshExt->barcord[dstEltInd].L[coef_I]*srcElt->tetra[tetInd].strain[0][2];
+		dstElt->tetra[tetInd].strain[1][2] += meshExt->barcord[dstEltInd].L[coef_I]*srcElt->tetra[tetInd].strain[1][2];
 
-		dstElt->tetra[tetInd].stress[0][0] += meshExt->barcord[element_lI].L[coef_I]*srcElt->tetra[tetInd].stress[0][0];
-		dstElt->tetra[tetInd].stress[1][1] += meshExt->barcord[element_lI].L[coef_I]*srcElt->tetra[tetInd].stress[1][1];
-		dstElt->tetra[tetInd].stress[2][2] += meshExt->barcord[element_lI].L[coef_I]*srcElt->tetra[tetInd].stress[2][2];
-		dstElt->tetra[tetInd].stress[0][1] += meshExt->barcord[element_lI].L[coef_I]*srcElt->tetra[tetInd].stress[0][1];
-		dstElt->tetra[tetInd].stress[0][2] += meshExt->barcord[element_lI].L[coef_I]*srcElt->tetra[tetInd].stress[0][2];
-		dstElt->tetra[tetInd].stress[1][2] += meshExt->barcord[element_lI].L[coef_I]*srcElt->tetra[tetInd].stress[1][2];
+		dstElt->tetra[tetInd].stress[0][0] += meshExt->barcord[dstEltInd].L[coef_I]*srcElt->tetra[tetInd].stress[0][0];
+		dstElt->tetra[tetInd].stress[1][1] += meshExt->barcord[dstEltInd].L[coef_I]*srcElt->tetra[tetInd].stress[1][1];
+		dstElt->tetra[tetInd].stress[2][2] += meshExt->barcord[dstEltInd].L[coef_I]*srcElt->tetra[tetInd].stress[2][2];
+		dstElt->tetra[tetInd].stress[0][1] += meshExt->barcord[dstEltInd].L[coef_I]*srcElt->tetra[tetInd].stress[0][1];
+		dstElt->tetra[tetInd].stress[0][2] += meshExt->barcord[dstEltInd].L[coef_I]*srcElt->tetra[tetInd].stress[0][2];
+		dstElt->tetra[tetInd].stress[1][2] += meshExt->barcord[dstEltInd].L[coef_I]*srcElt->tetra[tetInd].stress[1][2];
 
-		dblMaterial_I += meshExt->barcord[element_lI].L[coef_I]*srcElt->tetra[tetInd].material_I;
-		dstElt->tetra[dstTetInd].density = meshExt->barcord[element_lI].L[coef_I]*srcElt->tetra[tetInd].density; 
+		dblMaterial_I += meshExt->barcord[dstEltInd].L[coef_I]*srcElt->tetra[tetInd].material_I;
+		dstElt->tetra[tetInd].density += meshExt->barcord[dstEltInd].L[coef_I]*srcElt->tetra[tetInd].density; 
 	}
-	dstElt->tetra[dstTetInd].material_I = (Material_Index)dblMaterial_I;
+	dstElt->tetra[tetInd].material_I = (Material_Index)dblMaterial_I;
 
 }
 

@@ -61,5 +61,7 @@
 		Element_DomainIndex	srcEltInd, 
 		Tetrahedra_Index	srcTetInd );
 
+	struct dist_id_pair { double dist; unsigned int id; };
+
 
 #endif /* __SnacRemesher_Remesh_h__ */
