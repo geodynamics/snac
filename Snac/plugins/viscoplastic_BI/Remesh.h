@@ -40,9 +40,11 @@
 #ifndef __SnacViscoPlastic_Remesh_h__
 #define __SnacViscoPlastic_Remesh_h__
 	
-	void _SnacViscoPlastic_InterpolateElement( void* _context, 
-						   unsigned dstElementInd, unsigned dstTetInd, 
-						   Snac_Element* dstElements, 
-						   unsigned srcElementInd, unsigned srcTetInd );
+void _SnacViscoPlastic_InterpolateElement(  void*				 	_context, 
+											Element_LocalIndex 		dstEltInd, 
+											Tetrahedra_Index	 	dstTetInd, 
+											Snac_Element*	 		dstElements, 
+											Element_DomainIndex 	srcEltInd, 
+											Tetrahedra_Index		srcTetInd );
 	
 #endif /* __SnacViscoPlastic_Remesh_h__ */
