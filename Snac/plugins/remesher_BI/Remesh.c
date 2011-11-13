@@ -147,7 +147,9 @@ void _SnacRemesher_Remesh( void* _context, void* data ) {
 		meshExt->newBarycenters = Memory_Alloc_Array( Coord, mesh->elementLocalCount, "SnacRemesher" );
 		meshExt->barcoef =  Memory_Alloc_Array( SnacRemesher_ElementBarcoef, mesh->elementDomainCount, "SnacRemesher" );
 		meshExt->barcord =  Memory_Alloc_Array( SnacRemesher_ElementBarcord, mesh->elementLocalCount, "SnacRemesher" );
+		meshExt->orderedToDomain =  Memory_Alloc_Array( Element_DomainIndex, mesh->elementDomainCount, "SnacRemesher" );
 		meshExt->newElements = (Snac_Element*)ExtensionManager_Malloc( mesh->elementExtensionMgr, mesh->elementLocalCount );
+
 
 		/* Do the linear interpolation between grids of barycenters. */
 		_SnacRemesher_InterpolateElements( context );
