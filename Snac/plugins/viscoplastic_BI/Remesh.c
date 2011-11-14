@@ -88,7 +88,8 @@ void _SnacViscoPlastic_InterpolateElement(  void*				 	_context,
 	elementExt->plasticStrain[dstTetInd] = 0.0;
 	for(coef_I=0;coef_I<4;coef_I++) {
 		/* The actual src elements are the four apexes of a tet (srcTetInd) in the old barycenter grid. */
-		Snac_Element* 				srcElt = Snac_Element_At( context, eltdI[TetraToNode[srcTetInd][coef_I]]);
+		Snac_Element* 				srcElt = Snac_Element_At( context, 
+															  meshExt->orderedToDomain[eltdI[TetraToNode[srcTetInd][coef_I]]] );
 		SnacViscoPlastic_Element*	srcEltExt = ExtensionManager_Get(
 													context->mesh->elementExtensionMgr,
 													srcElt,
