@@ -33,7 +33,6 @@
 #include <StGermain/StGermain.h>
 #include <StGermain/FD/FD.h>
 #include "Snac/Snac.h"
-#include "units.h"
 #include "types.h"
 #include "Element.h"
 #include "InitialConditions.h"
@@ -85,10 +84,13 @@ void SnacViscoPlastic_InitialConditions( void* _context, void* data ) {
 	}
 	if( context->restartTimestep > 0 ) {
 		FILE*				plStrainIn;
+		FILE*				avgPlStrainIn;
 		char				path[PATH_MAX];
 		
 		sprintf(path, "%s/snac.plStrain.%d.%06d.restart",context->outputPath,context->rank,context->restartTimestep);
 		Journal_Firewall( (plStrainIn = fopen(path,"r")) != NULL, "Can't find %s", path );
+		sprintf(path, "%s/snac.avgPlStrain.%d.%06d.restart",context->outputPath,context->rank,context->restartTimestep);
+		Journal_Firewall( (avgPlStrainIn = fopen(path,"r")) != NULL, "Can't find %s", path );
 		
 		/* read in restart file to reconstruct the previous plastic strain.*/
 		for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
@@ -98,29 +100,30 @@ void SnacViscoPlastic_InitialConditions( void* _context, void* data ) {
 			const Snac_Material* 		material = &context->materialProperty[element->material_I];
 
 			vis_min = context->materialProperty[element->material_I].vis_min;
+			/* To-Do: Read in viscosity and assign it to tets and elements. */
 			if( material->yieldcriterion == mohrcoulomb ) {
 				Tetrahedra_Index	tetra_I;
-				double              depls = 0.0f;
-				double              totalVolume = 0.0f;
+				double                  avgPlStrain = 0.0f;
 				
 				for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
-					double			tetraPlStrain;
+					double			tetraPlStrain = 0.0f;
 
 					/* not the actual viscosity at restartTimestep, but doesn't affect the calculation afterwards */
 					viscoplasticElement->viscosity[tetra_I] = vis_min;
 
 					fscanf( plStrainIn, "%le", &tetraPlStrain );
 					viscoplasticElement->plasticStrain[tetra_I] = tetraPlStrain;
-					depls += viscoplasticElement->plasticStrain[tetra_I]*element->tetra[tetra_I].volume;
-					totalVolume += element->tetra[tetra_I].volume;
-				}//for tets
+				}/* for tets */
 				/* volume-averaged accumulated plastic strain, aps */
-				viscoplasticElement->aps = depls/totalVolume;
-			}//if(mohrcoulomb)
-		}//for elements
+				fscanf( avgPlStrainIn, "%le", &avgPlStrain );
+				viscoplasticElement->aps = avgPlStrain;
+			}/* if(mohrcoulomb) */
+		}/* for elements */
 		if( plStrainIn )
 			fclose( plStrainIn );
-	}// if restarting.
+		if( avgPlStrainIn )
+			fclose( avgPlStrainIn );
+	}/* if restarting.*/
 	else {
 		/* Set the plastic element initial conditions */
 		for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {

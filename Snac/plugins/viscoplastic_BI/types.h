@@ -44,7 +44,9 @@
 #define __SnacViscoPlastic_types_h__
 	
 	/* Plastic */
+	typedef struct _SnacViscoPlastic_Node		SnacViscoPlastic_Node;
 	typedef struct _SnacViscoPlastic_Element	SnacViscoPlastic_Element;
+	typedef struct _SnacViscoPlastic_Mesh		SnacViscoPlastic_Mesh;
 	typedef struct _SnacViscoPlastic_Context	SnacViscoPlastic_Context;
 	
 #endif /* __SnacViscoPlastic_types_h__ */

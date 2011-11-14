@@ -33,76 +33,56 @@
 #include <StGermain/StGermain.h>
 #include <StGermain/FD/FD.h>
 #include "Snac/Snac.h"
-#include "types.h"
-#include "Context.h"
-#include "Register.h"
-#include "Element.h"
-#include "ConstructExtensions.h"
+#include "ViscoPlastic.h"
 #include <assert.h>
 #include <limits.h>
 #ifndef PATH_MAX
 	#define PATH_MAX 1024
 #endif
 
-void _SnacVelocity_VariableCondition( Index index, Variable_Index var_I, void* _context, void* result ){
-	Snac_Context*			context = (Snac_Context*)_context;
-
-	double*				vy = (double*)result;
-        if(context->timeStep > 0.02 * context->maxTimeSteps) 
-            (*vy)=0.0;
-        else 
-            (*vy) = 0.005*erfc(context->currentTime*4.0);
-        
-}
-
-
 void _SnacViscoPlastic_ConstructExtensions( void* _context, void* data ) {
 	Snac_Context*				context = (Snac_Context*)_context;
 	SnacViscoPlastic_Context*			contextExt = ExtensionManager_Get(
-							context->extensionMgr,
-							context,
-							SnacViscoPlastic_ContextHandle );
-        Snac_Element                            tmpElement;
-        SnacViscoPlastic_Element*               tmpElementExt = ExtensionManager_Get(
-                                                        context->mesh->elementExtensionMgr,
-                                                        &tmpElement,
-                                                        SnacViscoPlastic_ElementHandle );
+																		  context->extensionMgr,
+																		  context,
+																		  SnacViscoPlastic_ContextHandle );
+	Snac_Element                            tmpElement;
+	SnacViscoPlastic_Element*               tmpElementExt = ExtensionManager_Get(
+																				 context->mesh->elementExtensionMgr,
+																				 &tmpElement,
+																				 SnacViscoPlastic_ElementHandle );
 	char					tmpBuf[PATH_MAX];
-        /* Because plastic strain is not an array by itself, we must the "complex" constructor for Variable... the info needs to be
-         * wrapped this generic way... */
-        Index                                   viscoplasticOffsetCount = 1;
-        SizeT                                   viscoplasticOffsets[] = { 
-                   (SizeT)((char*)&tmpElementExt->aps - (char*)&tmpElement) };
-        Variable_DataType                       viscoplasticDataTypes[] = { Variable_DataType_Double };
-        Index                                   viscoplasticDataTypeCounts[] = { 1 };
+	/* Because plastic strain is not an array by itself, we must the "complex" constructor for Variable... the info needs to be
+	 * wrapped this generic way... */
+	Index                                   viscoplasticOffsetCount = 1;
+	SizeT                                   viscoplasticOffsets[] = { 
+		(SizeT)((char*)&tmpElementExt->aps - (char*)&tmpElement) };
+	Variable_DataType                       viscoplasticDataTypes[] = { Variable_DataType_Double };
+	Index                                   viscoplasticDataTypeCounts[] = { 1 };
 
-      //	#if DEBUG
-         if( context->rank == 0 )		printf( "In %s()\n", __func__ );
-      //	#endif
-        /* Create the StGermain variable aps, which is stored on an element extension */
-        Variable_New(
-                "plStrain",
-                viscoplasticOffsetCount,
-                viscoplasticOffsets,
-                viscoplasticDataTypes,
-                viscoplasticDataTypeCounts,
-                0,
-                &ExtensionManager_GetFinalSize( context->mesh->elementExtensionMgr ),
-                &context->mesh->layout->decomp->elementDomainCount,
-                (void**)&context->mesh->element,
-                context->variable_Register );
-        int element_lI;        
-        for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
-                        Snac_Element*           element = Snac_Element_At( context, element_lI );
-                        SnacViscoPlastic_Element*       viscoplasticElement = ExtensionManager_Get( context->mesh->elementExtensionMgr, element,
-                                                                                                                SnacViscoPlastic_ElementHandle );
-                        viscoplasticElement->aps = 0.0f;
-                }//for
+	//	#if DEBUG
+	if( context->rank == 0 )		printf( "In %s()\n", __func__ );
+	//	#endif
+	/* Create the StGermain variable aps, which is stored on an element extension */
+	Variable_New(
+				 "plStrain",
+				 viscoplasticOffsetCount,
+				 viscoplasticOffsets,
+				 viscoplasticDataTypes,
+				 viscoplasticDataTypeCounts,
+				 0,
+				 &ExtensionManager_GetFinalSize( context->mesh->elementExtensionMgr ),
+				 &context->mesh->layout->decomp->elementDomainCount,
+				 (void**)&context->mesh->element,
+				 context->variable_Register );
+	int element_lI;        
+	for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
+		Snac_Element*           element = Snac_Element_At( context, element_lI );
+		SnacViscoPlastic_Element*       viscoplasticElement = ExtensionManager_Get( context->mesh->elementExtensionMgr, element,
+																					SnacViscoPlastic_ElementHandle );
+		viscoplasticElement->aps = 0.0f;
+	}//for
 
-
-        ConditionFunction_Register_Add(
-		context->condFunc_Register,
-		ConditionFunction_New( _SnacVelocity_VariableCondition, "variablevelBC" ) );
 
 	/* Prepare the dump file */
 	sprintf( tmpBuf, "%s/plStrain.%u", context->outputPath, context->rank );
@@ -113,6 +93,11 @@ void _SnacViscoPlastic_ConstructExtensions( void* _context, void* data ) {
 	sprintf( tmpBuf, "%s/plStrainCP.%u", context->outputPath, context->rank );
 	if( (contextExt->plStrainCheckpoint = fopen( tmpBuf, "w+" )) == NULL ) {
 		assert( contextExt->plStrainCheckpoint /* failed to open file for writing */ );
+		abort();
+	}
+	sprintf( tmpBuf, "%s/avgPlStrainCP.%u", context->outputPath, context->rank );
+	if( (contextExt->avgPlStrainCheckpoint = fopen( tmpBuf, "w+" )) == NULL ) {
+		assert( contextExt->avgPlStrainCheckpoint /* failed to open file for writing */ );
 		abort();
 	}
 	sprintf( tmpBuf, "%s/viscosity.%u", context->outputPath, context->rank );

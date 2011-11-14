@@ -33,23 +33,27 @@
 #include <StGermain/StGermain.h>
 #include <StGermain/FD/FD.h>
 #include "Snac/Snac.h"
-#include "types.h"
-#include "Element.h"
-#include "Context.h"
-#include "Constitutive.h"
 #include "ConstructExtensions.h"
-#include "Output.h"
+#include "Constitutive.h"
+#include "Context.h"
+#include "Destroy.h"
 #include "InitialConditions.h"
-#include "Remesh.h"
+#include "Element.h"
+#include "Mesh.h"
+#include "Node.h"
+#include "Output.h"
 #include "Register.h"
+#include "Remesh.h"
+#include "types.h"
 #include <stdio.h>
 
 /* Textual name of this class */
 const Type SnacViscoPlastic_Type = "SnacViscoPlastic";
 
+ExtensionInfo_Index SnacViscoPlastic_NodeHandle;
 ExtensionInfo_Index SnacViscoPlastic_ElementHandle;
+ExtensionInfo_Index SnacViscoPlastic_MeshHandle;
 ExtensionInfo_Index SnacViscoPlastic_ContextHandle;
-
 
 Index _SnacViscoPlastic_Register( PluginsManager* pluginsMgr ) {
 	return PluginsManager_Submit( pluginsMgr, 
@@ -87,12 +91,16 @@ void _SnacViscoPlastic_Construct( void* component, Stg_ComponentFactory* cf, voi
 	#endif
 
 	/* Add extensions to nodes, elements and the context */
+	SnacViscoPlastic_NodeHandle = ExtensionManager_Add( context->mesh->nodeExtensionMgr, SnacViscoPlastic_Type, sizeof(SnacViscoPlastic_Node) );
 	SnacViscoPlastic_ElementHandle = ExtensionManager_Add( context->mesh->elementExtensionMgr, SnacViscoPlastic_Type, sizeof(SnacViscoPlastic_Element) );
+	SnacViscoPlastic_MeshHandle = ExtensionManager_Add( context->meshExtensionMgr, SnacViscoPlastic_Type, sizeof(SnacViscoPlastic_Mesh) );
 	SnacViscoPlastic_ContextHandle = ExtensionManager_Add( context->extensionMgr, SnacViscoPlastic_Type, sizeof(SnacViscoPlastic_Context) );
 
 	#ifdef DEBUG
 		printf( "\tcontext extension handle: %u\n", SnacViscoPlastic_ContextHandle );
-		printf( "\telement extension handle: %u\n", SnacViscoPlastic_ElementHandle );
+		printf( "\tmesh extension handle: %u\n", SnacViscoPlastic_MeshHandle );
+		printf( "\tnode extension handle: %u\n", SnacViscoPlastic_ElementHandle );
+		printf( "\telement extension handle: %u\n", SnacViscoPlastic_NodeHandle );
 	#endif
 
 	/* Add extensions to the entry points */
@@ -127,15 +135,20 @@ void _SnacViscoPlastic_Construct( void* component, Stg_ComponentFactory* cf, voi
 		"SnacViscoPlastic_WriteViscosity",
 		_SnacViscoPlastic_WriteViscosity,
 		SnacViscoPlastic_Type );
+	EntryPoint_Append( /* perform clean-ups like closing output files. */
+		Context_GetEntryPoint( context, AbstractContext_EP_DestroyExtensions ),
+		"SnacViscoPlastic_Destory",
+		_SnacViscoPlastic_Destroy,
+		SnacViscoPlastic_Type );
 
 	/* Add extensions to the interpolate element entry point, but it will only exist if the remesher is loaded. */
 	interpolateElementEP = Context_GetEntryPoint( context,	"SnacRemesher_EP_InterpolateElement" );
 	if( interpolateElementEP ) {
 		EntryPoint_Append(
-			interpolateElementEP,
-			SnacViscoPlastic_Type,
-			_SnacViscoPlastic_InterpolateElement,
-			SnacViscoPlastic_Type );
+						  interpolateElementEP,
+						  SnacViscoPlastic_Type,
+						  _SnacViscoPlastic_InterpolateElement,
+						  SnacViscoPlastic_Type );
 	}
 
 	/* Construct. */

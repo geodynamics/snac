@@ -97,13 +97,19 @@ void _SnacViscoPlastic_CheckpointPlasticStrain( void* _context ) {
 													context->mesh->elementExtensionMgr,
 													element,
 													SnacViscoPlastic_ElementHandle );
+		float avgPlasticStrain = elementExt->aps;
 		Tetrahedra_Index	tetra_I;
+
 		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
 			float plasticStrain = elementExt->plasticStrain[tetra_I];
 			fwrite( &plasticStrain, sizeof(float), 1, contextExt->plStrainCheckpoint );
 		}
 		fflush( contextExt->plStrainCheckpoint );
+
+
+		fwrite( &avgPlasticStrain, sizeof(float), 1, contextExt->avgPlStrainCheckpoint );
 	}
+	fflush( contextExt->avgPlStrainCheckpoint );
 }
 
 

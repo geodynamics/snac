@@ -25,35 +25,23 @@
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 **
-*/
-/** \file
-** Role:
-**
-** Assumptions:
-**	Only one can be registered at the time (limitation).
-**
-** Comments:
-**
-** $Id: ViscoPlastic.h 2202 2004-10-19 08:43:09Z SteveQuenette $
+** $Id: Node.c 1792 2004-07-30 05:42:39Z SteveQuenette $
 **
 **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-#ifndef __SnacViscoPlastic_h__
-#define __SnacViscoPlastic_h__
-	
-#include "ViscoPlastic.h"
-#include "Destroy.h"
-#include "Context.h"
-#include "Constitutive.h"
-#include "ConstructExtensions.h"
-#include "Element.h"
-#include "InitialConditions.h"
-#include "Mesh.h"
-#include "Node.h"
-#include "Output.h"
-#include "Register.h"
-#include "Remesh.h"
+#include <mpi.h>
+#include <StGermain/StGermain.h>
+#include <StGermain/FD/FD.h>
+#include "Snac/Snac.h"
 #include "types.h"
-#include "units.h"
+#include "Node.h"
+#include <stdio.h>
 
-#endif /* __SnacViscoPlastic_h__ */
+void SnacViscoPlastic_Node_Print( void* node ) {
+	SnacViscoPlastic_Node*	self = (SnacViscoPlastic_Node*)node;
+	Tetrahedra_Index	tetra_I;
+	
+	printf( "SnacViscoPlastic_Node:\n" );
+	printf( "\tplasticStrainSPR: %g,\n", self->plStrainSPR );
+	printf( "\tviscositySPR: %g", self->viscositySPR );
+}

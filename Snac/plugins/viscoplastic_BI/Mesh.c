@@ -1,6 +1,6 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **
-** Copyright (C), 2003, 
+** Copyright (C), 2003,
 **	Steve Quenette, 110 Victoria Street, Melbourne, Victoria, 3053, Australia.
 **	Californian Institute of Technology, 1200 East California Boulevard, Pasadena, California, 91125, USA.
 **	University of Texas, 1 University Station, Austin, Texas, 78712, USA.
@@ -15,45 +15,38 @@
 ** under the terms of the GNU General Public License as published by the
 ** Free Software Foundation; either version 2, or (at your option) any
 ** later version.
-** 
+**
 ** This program is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 **
-*/
-/** \file
-** Role:
-**
-** Assumptions:
-**	Only one can be registered at the time (limitation).
-**
-** Comments:
-**
-** $Id: ViscoPlastic.h 2202 2004-10-19 08:43:09Z SteveQuenette $
+** $Id: Mesh.c 3095 2005-07-13 09:50:46Z LukeHodkinson $
 **
 **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-#ifndef __SnacViscoPlastic_h__
-#define __SnacViscoPlastic_h__
-	
-#include "ViscoPlastic.h"
-#include "Destroy.h"
-#include "Context.h"
-#include "Constitutive.h"
-#include "ConstructExtensions.h"
-#include "Element.h"
-#include "InitialConditions.h"
-#include "Mesh.h"
-#include "Node.h"
-#include "Output.h"
-#include "Register.h"
-#include "Remesh.h"
-#include "types.h"
-#include "units.h"
+#include <mpi.h>
+#include <StGermain/StGermain.h>
+#include <StGermain/FD/FD.h>
 
-#endif /* __SnacViscoPlastic_h__ */
+#include "Snac/Snac.h"
+#include "types.h"
+#include "Mesh.h"
+
+#include <stdio.h>
+
+
+/*
+** Due to the rewrite this func is severely useless.  Need to fix it.
+*/
+
+void SnacViscoPlastic_Mesh_Print( void* mesh, Stream* stream ) {
+	SnacViscoPlastic_Mesh*	self = (SnacViscoPlastic_Mesh*)mesh;
+
+	Journal_Printf( stream, "SnacViscoPlastic_Mesh:\n" );
+
+}

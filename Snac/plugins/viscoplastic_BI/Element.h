@@ -46,8 +46,6 @@
 		Strain			plasticStrain[Tetrahedra_Count];
 		double			viscosity[Tetrahedra_Count];
 		Strain			aps;
-		StrainTensor	plasticstrainTensor[Tetrahedra_Count];
-		StrainTensor	creepstrainTensor[Tetrahedra_Count];
 	};
 
 	/* Print the contents of an Element */

@@ -87,13 +87,14 @@ void _SnacViscoPlastic_InterpolateElement(  void*				 	_context,
 
 	elementExt->plasticStrain[dstTetInd] = 0.0;
 	for(coef_I=0;coef_I<4;coef_I++) {
-		/* The actual src elements are the apexes of the tet in the old barycenter grid. */
-		Snac_Element*				srcElt = (Snac_Element*)ExtensionManager_At( context->mesh->elementExtensionMgr, 
-												dstElements, 
-												meshExt->orderedToDomain[eltdI[TetraToNode[srcTetInd][coef_I]]] );
-		SnacViscoPlastic_Element*	srcEltExt = ExtensionManager_Get( context->mesh->elementExtensionMgr, 
-																  srcElt, 
-																  SnacViscoPlastic_ElementHandle );
+		/* The actual src elements are the four apexes of a tet (srcTetInd) in the old barycenter grid. */
+		Snac_Element* 				srcElt = Snac_Element_At( context, eltdI[TetraToNode[srcTetInd][coef_I]]);
+		SnacViscoPlastic_Element*	srcEltExt = ExtensionManager_Get(
+													context->mesh->elementExtensionMgr,
+													srcElt,
+													SnacViscoPlastic_ElementHandle );
+		/* Weights are associated only with destination element but not on the tet level. 
+		   So, "dstTetInd" is used in both source and destination terms. */
 		elementExt->plasticStrain[dstTetInd] += meshExt->barcord[dstEltInd].L[coef_I]*srcEltExt->plasticStrain[dstTetInd];
 	}
 }

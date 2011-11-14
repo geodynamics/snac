@@ -44,8 +44,12 @@
 	/* Textual name of this class */
 	extern const Type SnacViscoPlastic_Type;
 	
+	extern ExtensionInfo_Index SnacViscoPlastic_NodeHandle;
+
 	extern ExtensionInfo_Index SnacViscoPlastic_ElementHandle;
-	
+
+	extern ExtensionInfo_Index SnacViscoPlastic_MeshHandle;
+
 	extern ExtensionInfo_Index SnacViscoPlastic_ContextHandle;
 	
 	Index _SnacViscoPlastic_Register( PluginsManager* pluginsMgr );
