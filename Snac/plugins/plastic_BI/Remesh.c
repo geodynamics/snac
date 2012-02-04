@@ -42,34 +42,34 @@
 #include "Remesh.h"
 #include "Register.h"
 
-void _SnacPlastic_InterpolateElement( void*				 	_context, 
-									  Element_LocalIndex 	dstEltInd, 
-									  Tetrahedra_Index	 	dstTetInd, 
-									  Snac_Element*	 		dstElements, 
-									  Element_DomainIndex 	srcEltInd, 
-									  Tetrahedra_Index		 srcTetInd )
+void _SnacPlastic_InterpolateElement(  void*				 	_context, 
+									   Element_LocalIndex	 	dstEltInd, 
+									   Tetrahedra_Index	 	dstTetInd, 
+									   Snac_Element*	 		dstElements, 
+									   Element_DomainIndex 	srcEltInd, 
+									   Tetrahedra_Index		srcTetInd )
 {
-	Snac_Context* 			context = (Snac_Context*)_context;
-	Mesh*					mesh = context->mesh;
-	SnacRemesher_Mesh*		meshExt = ExtensionManager_Get( context->meshExtensionMgr,
+	Snac_Context* 				context = (Snac_Context*)_context;
+	Mesh*						mesh = context->mesh;
+	SnacRemesher_Mesh*			meshExt = ExtensionManager_Get( context->meshExtensionMgr,
 															mesh, 
 															SnacRemesher_MeshHandle );
-	HexaMD*					decomp = (HexaMD*)mesh->layout->decomp;
-	Snac_Element*			element = (Snac_Element*)ExtensionManager_At( context->mesh->elementExtensionMgr, 
+	HexaMD*						decomp = (HexaMD*)mesh->layout->decomp;
+	Snac_Element*				element = (Snac_Element*)ExtensionManager_At( context->mesh->elementExtensionMgr, 
 										      dstElements, 
 										      dstEltInd );
 	SnacPlastic_Element*	elementExt = ExtensionManager_Get( context->mesh->elementExtensionMgr, 
 									   element, 
 									   SnacPlastic_ElementHandle );
-	Element_DomainIndex 	eltdI[8],eldI,eldJ,eldK;
-	Index 					coef_I;
-	Element_DomainIndex		neldI =  decomp->elementDomain3DCounts[0];
-	Element_DomainIndex		neldJ =  decomp->elementDomain3DCounts[1];
+	Element_DomainIndex 		eltdI[8],eldI,eldJ,eldK;
+	Index 						coef_I;
+	Element_DomainIndex			neldI =  decomp->elementDomain3DCounts[0];
+	Element_DomainIndex			neldJ =  decomp->elementDomain3DCounts[1];
 
 #ifdef DEBUG
-	printf( "element_lI: %u, fromElement_lI: %u\n", dstEltInd, srcEltInd );
+	printf( "element_lI: %u, fromElement_lI: %u\n", dstElementInd, srcElementInd );
 #endif
-	
+
 	/* Decompose srcEltInd into ijk indexes. */
 	eldI = (srcEltInd % neldI);
 	eldJ = (((srcEltInd-eldI)/neldI) % neldJ);
@@ -85,19 +85,19 @@ void _SnacPlastic_InterpolateElement( void*				 	_context,
 	eltdI[6] = (eldI+1) + (eldJ+1)*neldI + (eldK+1)*neldI*neldJ;
 	eltdI[7] = eldI     + (eldJ+1)*neldI + (eldK+1)*neldI*neldJ;
 
+#if 0
 	elementExt->plasticStrain[dstTetInd] = 0.0;
 	for(coef_I=0;coef_I<4;coef_I++) {
-		/* The actual src elements are the apexes of the tet in the old barycenter grid. */
-		Snac_Element*			srcElt = (Snac_Element*)ExtensionManager_At( context->mesh->elementExtensionMgr, 
-												dstElements, 
-												meshExt->orderedToDomain[eltdI[TetraToNode[srcTetInd][coef_I]]] );
-		SnacPlastic_Element*	srcEltExt = ExtensionManager_Get( context->mesh->elementExtensionMgr, 
-																  srcElt, 
-																  SnacPlastic_ElementHandle );
+		/* The actual src elements are the four apexes of a tet (srcTetInd) in the old barycenter grid. */
+		Snac_Element* 			srcElt = Snac_Element_At( context, 
+														  meshExt->orderedToDomain[eltdI[TetraToNode[srcTetInd][coef_I]]] );
+		SnacPlastic_Element*	srcEltExt = ExtensionManager_Get(
+													context->mesh->elementExtensionMgr,
+													srcElt,
+													SnacPlastic_ElementHandle );
+		/* Weights are associated only with destination element but not on the tet level. 
+		   So, "dstTetInd" is used in both source and destination terms. */
 		elementExt->plasticStrain[dstTetInd] += meshExt->barcord[dstEltInd].L[coef_I]*srcEltExt->plasticStrain[dstTetInd];
 	}
-	/* if( (context->rank==1 && (dstElementInd <=7 && dstElementInd >= 6) ) ) //(context->rank==2 && dstElementInd <=2 ) */
-	/* 	fprintf(stderr, "element_lI: (%u %u %e), fromElement_lI: (%u %u %e)\n",  */
-	/* 			dstElementInd, dstTetInd, elementExt->plasticStrain[dstTetInd], */
-	/* 			srcElementInd, srcTetInd, fromElementExt->plasticStrain[srcTetInd] ); */
+#endif
 }

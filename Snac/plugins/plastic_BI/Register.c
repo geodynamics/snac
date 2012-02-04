@@ -34,7 +34,9 @@
 #include <StGermain/FD/FD.h>
 #include "Snac/Snac.h"
 #include "types.h"
+#include "Node.h"
 #include "Element.h"
+#include "Mesh.h"
 #include "Context.h"
 #include "Constitutive.h"
 #include "ConstructExtensions.h"
@@ -47,7 +49,9 @@
 /* Textual name of this class */
 const Type SnacPlastic_Type = "SnacPlastic";
 
+ExtensionInfo_Index SnacPlastic_NodeHandle;
 ExtensionInfo_Index SnacPlastic_ElementHandle;
+ExtensionInfo_Index SnacPlastic_MeshHandle;
 ExtensionInfo_Index SnacPlastic_ContextHandle;
 
 
@@ -87,11 +91,15 @@ void _SnacPlastic_Construct( void* component, Stg_ComponentFactory* cf, void* da
 	#endif
 	
 	/* Add extensions to nodes, elements and the context */
+	SnacPlastic_NodeHandle = ExtensionManager_Add( context->mesh->nodeExtensionMgr, SnacPlastic_Type, sizeof(SnacPlastic_Node) );
 	SnacPlastic_ElementHandle = ExtensionManager_Add( context->mesh->elementExtensionMgr, SnacPlastic_Type, sizeof(SnacPlastic_Element) );
+	SnacPlastic_MeshHandle = ExtensionManager_Add( context->meshExtensionMgr, SnacPlastic_Type, sizeof(SnacPlastic_Mesh) );
 	SnacPlastic_ContextHandle = ExtensionManager_Add( context->extensionMgr, SnacPlastic_Type, sizeof(SnacPlastic_Context) );
 	
 	#ifdef DEBUG
 		printf( "\tcontext extension handle: %u\n", SnacPlastic_ContextHandle );
+		printf( "\tmesh extension handle: %u\n", SnacPlastic_MeshHandle );
+		printf( "\tnode extension handle: %u\n", SnacPlastic_NodeHandle );
 		printf( "\telement extension handle: %u\n", SnacPlastic_ElementHandle );
 	#endif
 	
@@ -122,12 +130,11 @@ void _SnacPlastic_Construct( void* component, Stg_ComponentFactory* cf, void* da
 	interpolateElementEP = Context_GetEntryPoint( context,	"SnacRemesher_EP_InterpolateElement" );
 	if( interpolateElementEP ) {
 		EntryPoint_Append( 
-			interpolateElementEP,
-			SnacPlastic_Type, 
-			_SnacPlastic_InterpolateElement, 
-			SnacPlastic_Type );
+						  interpolateElementEP,
+						  SnacPlastic_Type, 
+						  _SnacPlastic_InterpolateElement, 
+						  SnacPlastic_Type );
 	}
-
 
 	/* Construct. */
 	_SnacPlastic_ConstructExtensions( context, data );

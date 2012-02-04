@@ -25,28 +25,22 @@
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 **
-*/
-/** \file
-** Role:
-**	Plastic types.
-**
-** Assumptions:
-**	None as yet.
-**
-** Comments:
-**	None as yet.
-**
-** $Id: types.h 1677 2004-07-20 10:30:34Z SteveQuenette $
+** $Id: Node.c 1792 2004-07-30 05:42:39Z SteveQuenette $
 **
 **~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-#ifndef __SnacPlastic_types_h__
-#define __SnacPlastic_types_h__
+#include <mpi.h>
+#include <StGermain/StGermain.h>
+#include <StGermain/FD/FD.h>
+#include "Snac/Snac.h"
+#include "types.h"
+#include "Node.h"
+#include <stdio.h>
+
+void SnacPlastic_Node_Print( void* node ) {
+	SnacPlastic_Node*	self = (SnacPlastic_Node*)node;
 	
-	/* Plastic */
-	typedef struct _SnacPlastic_Node	SnacPlastic_Node;
-	typedef struct _SnacPlastic_Element	SnacPlastic_Element;
-	typedef struct _SnacPlastic_Mesh	SnacPlastic_Mesh;
-	typedef struct _SnacPlastic_Context	SnacPlastic_Context;
-	
-#endif /* __SnacPlastic_types_h__ */
+	printf( "SnacPlastic_Node:\n" );
+	printf( "\tplasticStrainSPR: " );
+	printf( "%g, ", self->plStrainSPR );
+}

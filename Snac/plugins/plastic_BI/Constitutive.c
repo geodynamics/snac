@@ -1,11 +1,13 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **
-** Copyright (C), 2003,
+** Copyright (C), 2004,
+**       Pururav Thoutireddy, Center for Advanced Computing Research, Caltech.
 **	Steve Quenette, 110 Victoria Street, Melbourne, Victoria, 3053, Australia.
 **	Californian Institute of Technology, 1200 East California Boulevard, Pasadena, California, 91125, USA.
 **	University of Texas, 1 University Station, Austin, Texas, 78712, USA.
 **
 ** Authors:
+**      Pururav Thoutireddy, Center for Advanced Computing Research, Caltech. ( puru@cacr.caltech.edu)
 **	Stevan M. Quenette, Senior Software Engineer, VPAC. (steve@vpac.org)
 **	Stevan M. Quenette, Visitor in Geophysics, Caltech.
 **	Luc Lavier, Research Scientist, The University of Texas. (luc@utig.ug.utexas.edu)
@@ -44,7 +46,7 @@
 #ifndef PI
 #ifndef M_PIl
 #ifndef M_PI
-#define PI 3.14159265358979323846
+#define PI 4.0*atan(1.0)
 #else
 #define PI M_PI
 #endif
@@ -53,64 +55,63 @@
 #endif
 #endif
 
-//#define DEBUG
 
 void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
-	Snac_Context			*context = (Snac_Context*)_context;
-	Snac_Element			*element = Snac_Element_At( context, element_lI );
-	SnacPlastic_Element		*plasticElement = ExtensionManager_Get( context->mesh->elementExtensionMgr, element, SnacPlastic_ElementHandle );
-	const Snac_Material		*material = &context->materialProperty[element->material_I];
+	Snac_Context* context = (Snac_Context*)_context;
+	Snac_Element* element = Snac_Element_At( context, element_lI );
+	SnacPlastic_Element* plasticElement = ExtensionManager_Get( context->mesh->elementExtensionMgr, element, SnacPlastic_ElementHandle );
+	const Snac_Material* material = &context->materialProperty[element->material_I];
 
+	/*ccccc*/
 	MeshLayout*			meshLayout = (MeshLayout*)context->meshLayout;
 	HexaMD*				decomp = (HexaMD*)meshLayout->decomp;
 	IJK				ijk;
 	Element_GlobalIndex		element_gI = _MeshDecomp_Element_LocalToGlobal1D( decomp, element_lI );
-	RegularMeshUtils_Element_1DTo3D( decomp, element_gI, &ijk[0], &ijk[1], &ijk[2] );
+	EntryPoint* 			temperatureEP;
 
+	RegularMeshUtils_Element_1DTo3D( decomp, element_gI, &ijk[0], &ijk[1], &ijk[2] );
+	/*ccccc*/
+
+	temperatureEP = Context_GetEntryPoint( context,	"Snac_EP_LoopElementsEnergy" );
+
+	/* If this is a Plastic material, calculate its stress. */
 	if ( material->rheology & Snac_Material_Plastic ) {
 		Tetrahedra_Index	tetra_I;
-		double			cohesion = 0.0f;
-		double			frictionAngle = 0.0f;
-		double			dilationAngle = 0.0f;
-		double			hardening = 0.0f;
-		double			sphi = 0.0f;
-		double			spsi = 0.0f;
-		double			st = 0.0f;
-		const double		degrad = PI / 180.0f;
-		double			totalVolume=0.0f,depls=0.0f;
-		int principal_stresses(StressTensor* stress,double sp[],double cn[3][3]);
 
-		unsigned int	        i;
-		double                  tmp = 0.0f;
-		double		        anphi = 0.0f;
-		double		        anpsi = 0.0f;
+		/* plastic material properties */
+		StressTensor*		stress;
+		StrainTensor*		strain;
+		Strain		        plasticStrain;
+		double				trace_strain;
+		plModel             yieldcriterion=material->yieldcriterion;
+		/* elasto-plastic material properties */
+		double				cohesion = 0.0f;
+		double				frictionAngle = 0.0f;
+		double				dilationAngle = 0.0f;
+		double				hardening = 0.0f;
+		double				tension_cutoff=0.0;
+		const double		degrad = PI / 180.0f;
+		double				totalVolume=0.0f,depls=0.0f;
+		int principal_stresses(StressTensor* stress,double sp[],double cn[3][3]);
+		unsigned int		i;
+		double				tmp=0.0;
 		const double		a1 = material->lambda + 2.0f * material->mu ;
 		const double		a2 = material->lambda ;
-		int                     ind=0;
+		int					ind=0;
 
-                static char             plasticStrainReportedFlag=0;
+		/*    printf("Entered Plastic update \n"); */
 
-		/* 
-		 *   Work out the plastic material properties of this element 
-		*/
+		/* Work out the plastic material properties of this element */
 		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
-			double		        cn[3][3] = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}};
-			double		        s[3] = {0.0,0.0,0.0};
-			double			alam=0.0f, dep1, dep2, dep3, depm;
-			double			fs,ft,aP,sP,h;
-			unsigned int		k, m, n;
-			double		        trace_strain;
-			StressTensor*		stress = &element->tetra[tetra_I].stress;
-			StrainTensor*		strain = &element->tetra[tetra_I].strain;
-			/*  
-			 *  CPS bug fix:  was set to zero, thus not picking up plastic strain weakening except at t=0
-			 */
-			Strain		        plasticStrain = plasticElement->plasticStrain[tetra_I];
+			double			cn[3][3] = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}};
+			double			s[3] = {0.0,0.0,0.0};
+			double			alam, dep1, dep2, dep3, depm;
+			/*ccccc*/
 
+			stress = &element->tetra[tetra_I].stress;
+			strain = &element->tetra[tetra_I].strain;
+			plasticStrain = plasticElement->plasticStrain[tetra_I];
 
-			/* 
-			 *  Compute elastic stress first 
-			 */
 			trace_strain = (*strain)[0][0] + (*strain)[1][1] + (*strain)[2][2];
 
 			(*stress)[0][0] += (2.0f * material->mu) * (*strain)[0][0] + material->lambda * (trace_strain );
@@ -122,14 +123,9 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 
 			principal_stresses(stress,s,cn);
 
-			/*
-			 *  Calculate material props (friction angle, cohesion, etc) from piecewise-linear
-			 *    functions defined in terms of plastic strain.
-			 */
-			Journal_DFirewall( (material->plstrain[0]==0.0), context->snacError, "The initial segment should start from the plastic strain of 0.0" );
-			Journal_OFirewall( (material->plstrain[0]==0.0), context->snacError,  __FILE__, __func__, __LINE__,
-							   "timeStep=%u rank=%u: The initial segment should start from the plastic strain of 0.0.",
-							   context->timeStep, context->rank );
+			/* compute friction and dilation angles based on accumulated plastic strain in tetrahedra */
+			/* Piece-wise linear softening */
+			/* Find current properties from linear interpolation */
 			for( i = 0; i < material->nsegments; i++ ) {
 				const double pl1 = material->plstrain[i];
 				const double pl2 = material->plstrain[i+1];
@@ -143,107 +139,113 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 					dilationAngle = material->dilationAngle[i] + tgd * (plasticStrain - pl1);
 					cohesion = material->cohesion[i] + tgc * (plasticStrain - pl1);
 					hardening = tgc;
-					break;
-				} else if(i==material->nsegments-1 && plasticStrain > pl2) {
-				    /*
-				     *  CPS mod:  one extra test if pl strain is outside piecewise range, is last piece, and 
-				     *    has pl strain larger than piece  -  then set physical params to maxima for this piece
-				     *  Purpose:  to prevent crazy behavior for extreme plastic strains
-				     */
-				    frictionAngle = material->frictionAngle[material->nsegments];
-				    dilationAngle = material->dilationAngle[material->nsegments];
-				    cohesion = material->cohesion[material->nsegments];
-				    hardening = 0.0;
-					break;
 				}
 			}
 
-			sphi = sin( frictionAngle * degrad );
-			spsi = sin( dilationAngle * degrad );
-			anphi = (1.0f + sphi) / (1.0f - sphi);
-			anpsi = (1.0f + spsi) / (1.0f - spsi);
-			
-			if( frictionAngle >= 0.0f ) {
-				st = material->ten_off;
+			if( frictionAngle > 0.0f ) {
+				tension_cutoff = material->ten_off;
 				if( frictionAngle > 0.0) {
 					tmp = cohesion / tan( frictionAngle * degrad);
-					if(tmp < st)st=tmp;
+					if(tmp < tension_cutoff) tension_cutoff=tmp;
 				}
 			}
 			else {
-				/* frictionAngle < 0.0 violates second law of thermodynamics */
-				abort();
-			}
-			
-			
-			/* CHECK FOR COMPOSITE YIELD CRITERION  */
-			fs = s[0] - s[2] * anphi + 2 * cohesion * sqrt( anphi );
-			ft = s[2] - st;
-                        ind=0;
-			if( fs < 0.0f || ft > 0.0f ) {
-                                if(!plasticStrainReportedFlag) {
-                                        plasticStrainReportedFlag=1;
-                                }
-				/*! Failure: shear or tensile */
-				ind=1;
-				aP = sqrt( 1.0f + anphi * anphi ) + anphi;
-				sP = st * anphi - 2 * cohesion * sqrt( anphi );
-				h = s[2] - st + aP * ( s[0] - sP );
-				
-				if( h < 0.0f ) {
-					/* !shear failure  */
-					alam = fs / ( a1 - a2 * anpsi + a1 * anphi * anpsi - a2 * anphi + 2.0*sqrt(anphi)*hardening );
-					s[0] -= alam * ( a1 - a2 * anpsi );
-					s[1] -= alam * a2 * ( 1.0f - anpsi );
-					s[2] -= alam * ( a2 - a1 * anpsi );
-					dep1 = alam;
-					dep2 = 0.0f;
-					dep3 = -alam * anpsi;
+				if( plasticStrain < 0.0 ) {
+					plasticElement->plasticStrain[tetra_I] = 0.0;
+					plasticStrain = plasticElement->plasticStrain[tetra_I];
+					fprintf(stderr,"Warning: negative plastic strain. Setting to zero, but check if remesher is on and this happended for an external tet. rank:%d elem:%d tet:%d plasticStrain=%e frictionAngle=%e\n",context->rank,element_lI,tetra_I,plasticStrain,frictionAngle);
+					frictionAngle = material->frictionAngle[0];
+					dilationAngle = material->dilationAngle[0];
+					cohesion = material->cohesion[0];
 				}
 				else {
-					/* tensile failure */
-					alam = ft / a1;
-					s[0] -= alam * a2;
-					s[1] -= alam * a2;
-					s[2] -= alam * a1;
-					dep1 = 0.0f;
-					dep2 = 0.0f;
-					dep3 = alam;
+					/* frictionAngle < 0.0 violates second law of thermodynamics */
+					fprintf(stderr,"Error due to an unknown reason: rank:%d elem:%d tet:%d plasticStrain=%e frictionAngle=%e\n",context->rank,element_lI,tetra_I,plasticStrain,frictionAngle);
+					assert(0);
 				}
 			}
-			else {
-				/* ! no failure - just elastic increament */
 
-				dep1 = 0.0f;
-				dep2 = 0.0f;
-				dep3 = 0.0f;
-			}
+			if( yieldcriterion == mohrcoulomb )
+				{
 
-			depm=0.0;
-			if(ind) {
-				/* Second invariant of accumulated plastic increament  */
-				depm = ( dep1 + dep2 + dep3 ) / 3.0f;
-				plasticElement->plasticStrain[tetra_I] += sqrt( 0.5f * ((dep1-depm) * (dep1-depm) + (dep2-depm) * (dep2-depm) + (dep3-depm) * (dep3-depm) + depm*depm) );
+					double sphi = sin( frictionAngle * degrad );
+					double spsi = sin( dilationAngle * degrad );
+					double anphi = (1.0f + sphi) / (1.0f - sphi);
+					double anpsi = (1.0f + spsi) / (1.0f - spsi);
+					double fs = s[0] - s[2] * anphi + 2 * cohesion * sqrt( anphi );
+					double ft = s[2] - tension_cutoff;
+					/* CHECK FOR COMPOSITE YIELD CRITERION  */
+					ind=0;
+					if( fs < 0.0f || ft > 0.0f ) {
+						/*! Failure: shear or tensile */
+						double aP = sqrt( 1.0f + anphi * anphi ) + anphi;
+						double sP = tension_cutoff * anphi - 2 * cohesion * sqrt( anphi );
+						double h = s[2] - tension_cutoff + aP * ( s[0] - sP );
 
-				memset( stress, 0, sizeof((*stress)) );
-				/* Resolve back to global axes  */
-				for( m = 0; m < 3; m++ ) {
-					for( n = m; n < 3; n++ ) {
-						for( k = 0; k < 3; k++ ) {
-							(*stress)[m][n] += cn[k][m] * cn[k][n] * s[k];
+						ind=1;
+
+						if( h < 0.0f ) {
+							/* !shear failure  */
+							alam = fs / ( a1 - a2 * anpsi + a1 * anphi * anpsi - a2 * anphi + 2.0*sqrt(anphi)*hardening );
+							s[0] -= alam * ( a1 - a2 * anpsi );
+							s[1] -= alam * a2 * ( 1.0f - anpsi );
+							s[2] -= alam * ( a2 - a1 * anpsi );
+							dep1 = alam;
+							dep2 = 0.0f;
+							dep3 = -alam * anpsi;
+						}
+						else {
+							/* tensile failure */
+							alam = ft / a1;
+							s[0] -= alam * a2;
+							s[1] -= alam * a2;
+							s[2] -= alam * a1;
+							dep1 = 0.0f;
+							dep2 = 0.0f;
+							dep3 = alam;
+						}
+					}
+					else {
+						/* ! no failure - just elastic increment */
+
+						dep1 = 0.0f;
+						dep2 = 0.0f;
+						dep3 = 0.0f;
+					}
+					if(ind) {
+						unsigned int k,m,n;
+						/* Second invariant of accumulated plastic increment  */
+						depm = ( dep1 + dep2 + dep3 ) / 3.0f;
+						plasticElement->plasticStrain[tetra_I] += sqrt( 0.5f * ((dep1-depm) * (dep1-depm) + (dep2-depm) * (dep2-depm) + (dep3-depm) * (dep3-depm) + depm*depm) );
+
+						/* Stress projection back to euclidean coordinates */
+						memset( stress, 0, sizeof((*stress)) );
+						/* Resolve back to global axes  */
+						for( m = 0; m < 3; m++ ) {
+							for( n = m; n < 3; n++ ) {
+								for( k = 0; k < 3; k++ ) {
+									(*stress)[m][n] += cn[k][m] * cn[k][n] * s[k];
+								}
+							}
 						}
 					}
 				}
-			}
+			else
+				Journal_Firewall( (0>1), "In %s: \"mohrcoulomb\" is the only available yield criterion.\n", __func__ );
+
+			/* linear healing: applied whether this tet has yielded or not. 
+			   Parameters are hardwired for now, but should be given through an input file. */
+			/* plasticElement->plasticStrain[tetra_I] *= (1.0/(1.0+context->dt/1.0e+12)); */
+			/* plasticElement->plasticStrain[tetra_I] *= (1.0/(1.0+context->dt/(ind?1.0e+13:5.0e+11))); */
+
 			depls += plasticElement->plasticStrain[tetra_I]*element->tetra[tetra_I].volume;
 			totalVolume += element->tetra[tetra_I].volume;
-/* 			if(element_lI==738) fprintf(stderr,"   *****  %d: depm=%g  acc plastic strain=%g\n", tetra_I, depm, element->tetra[tetra_I].volume); */
 		}
 		/* volume-averaged accumulated plastic strain, aps */
 		plasticElement->aps = depls/totalVolume;
-/* 		if(element_lI==738) fprintf(stderr,"   *****  acc plastic strain=%g\n", plasticElement->aps); */
 	}
 }
+
 
 int principal_stresses(StressTensor* stress, double sp[3], double cn[3][3])
 {
@@ -409,7 +411,7 @@ int eigsrt(double* d, double** v)
 }
 
 double **dmatrix(long nrl, long nrh, long ncl, long nch)
-	/* allocate a double matrix with subscript range m[nrl..nrh][ncl..nch] */
+/* allocate a double matrix with subscript range m[nrl..nrh][ncl..nch] */
 {
 	long i, nrow=nrh-nrl+1,ncol=nch-ncl+1;
 	double **m;
@@ -431,7 +433,7 @@ double **dmatrix(long nrl, long nrh, long ncl, long nch)
 
 
 void free_dmatrix(double **m, long nrl, long nrh, long ncl, long nch)
-	/* free a double matrix allocated by dmatrix() */
+/* free a double matrix allocated by dmatrix() */
 {
 	free((FREE_ARG) (m[nrl]+ncl-NR_END));
 	free((FREE_ARG) (m+nrl-NR_END));
@@ -448,7 +450,7 @@ void nrerror(char error_text[])
 
 
 double *dvector(long nl, long nh)
-	/* allocate a double vector with subscript range v[nl..nh] */
+/* allocate a double vector with subscript range v[nl..nh] */
 {
 	double *v;
 	v=(double *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(double)));
@@ -457,7 +459,7 @@ double *dvector(long nl, long nh)
 }
 
 int *ivector(long nl, long nh)
-	/* allocate an int vector with subscript range v[nl..nh] */
+/* allocate an int vector with subscript range v[nl..nh] */
 {
 	int *v;
 	v=(int *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(int)));
@@ -466,13 +468,13 @@ int *ivector(long nl, long nh)
 }
 
 void free_dvector(double *v, long nl, long nh)
-	/* free a double vector allocated with dvector() */
+/* free a double vector allocated with dvector() */
 {
 	free((FREE_ARG) (v+nl-NR_END));
 }
 
 void free_ivector(int *v, long nl, long nh)
-	/* free an int vector allocated with ivector() */
+/* free an int vector allocated with ivector() */
 {
 	free((FREE_ARG) (v+nl-NR_END));
 }

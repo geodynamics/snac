@@ -44,7 +44,7 @@
 	/* Element Information */
 	struct _SnacPlastic_Element {
 		Strain			plasticStrain[Tetrahedra_Count];
-		Strain		        aps;
+		Strain			aps;
 	};
 
 	/* Print the contents of an Element */
