@@ -42,22 +42,22 @@
 #include "Remesh.h"
 #include "Register.h"
 
-void _SnacPlastic_InterpolateElement(  void*				 	_context, 
-									   Element_LocalIndex	 	dstEltInd, 
+void _SnacPlastic_InterpolateElement(  void*				_context, 
+									   Element_LocalIndex	dstEltInd, 
 									   Tetrahedra_Index	 	dstTetInd, 
-									   Snac_Element*	 		dstElements, 
+									   Snac_Element*	 	dstElements, 
 									   Element_DomainIndex 	srcEltInd, 
 									   Tetrahedra_Index		srcTetInd )
 {
 	Snac_Context* 				context = (Snac_Context*)_context;
 	Mesh*						mesh = context->mesh;
 	SnacRemesher_Mesh*			meshExt = ExtensionManager_Get( context->meshExtensionMgr,
-															mesh, 
-															SnacRemesher_MeshHandle );
+											mesh, 
+											SnacRemesher_MeshHandle );
 	HexaMD*						decomp = (HexaMD*)mesh->layout->decomp;
 	Snac_Element*				element = (Snac_Element*)ExtensionManager_At( context->mesh->elementExtensionMgr, 
-										      dstElements, 
-										      dstEltInd );
+											dstElements, 
+											dstEltInd );
 	SnacPlastic_Element*	elementExt = ExtensionManager_Get( context->mesh->elementExtensionMgr, 
 									   element, 
 									   SnacPlastic_ElementHandle );
@@ -85,7 +85,6 @@ void _SnacPlastic_InterpolateElement(  void*				 	_context,
 	eltdI[6] = (eldI+1) + (eldJ+1)*neldI + (eldK+1)*neldI*neldJ;
 	eltdI[7] = eldI     + (eldJ+1)*neldI + (eldK+1)*neldI*neldJ;
 
-#if 0
 	elementExt->plasticStrain[dstTetInd] = 0.0;
 	for(coef_I=0;coef_I<4;coef_I++) {
 		/* The actual src elements are the four apexes of a tet (srcTetInd) in the old barycenter grid. */
@@ -99,5 +98,4 @@ void _SnacPlastic_InterpolateElement(  void*				 	_context,
 		   So, "dstTetInd" is used in both source and destination terms. */
 		elementExt->plasticStrain[dstTetInd] += meshExt->barcord[dstEltInd].L[coef_I]*srcEltExt->plasticStrain[dstTetInd];
 	}
-#endif
 }
