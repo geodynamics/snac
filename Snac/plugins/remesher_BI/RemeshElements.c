@@ -242,7 +242,7 @@ void _SnacRemesher_InterpolateElements( void* _context ) {
 							for(tet_I=0;tet_I<5;tet_I++) {
 								Index	coef_I;
 								double 	lambda[4];
-								double 	tol_error = 1e-4;
+								double 	tol_error = 1e-12;
 
 								lambda[3] = 1.0;
 								for(coef_I=0;coef_I<3;coef_I++) {
