@@ -85,6 +85,7 @@ void nrerror(char error_text[]);
 int jacobi(double** a, double* d, double** v);
 int eigsrt(double* d, double** v);
 struct stressMeasures {
+    double     	stressComponents[6];
     double     	principalStresses[3];
     double	eigenvectors[3][3];
     double	pressure;
@@ -485,6 +486,7 @@ void ConvertTimeStep(
      */
     fprintf( vtkOut, "      <CellData Scalars=\"Plastic strain\">\n");
 
+
     /*
      * Write out the plastic strain information 
      */
@@ -545,6 +547,130 @@ void ConvertTimeStep(
     }
     fprintf( vtkOut, "        </DataArray>\n");
 	
+    /*
+     * Write out the stress tensor 
+     */
+    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Sxx\" format=\"ascii\">\n");
+    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float) * numStressComponentsPerElement, SEEK_SET )!=0) {
+		fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+				rank, rankI, rankJ, rankK,
+				dumpIteration, nodeLocalCount );
+		exit(1);
+    }
+	for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
+		double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
+		struct stressMeasures	elementStressMeasures;
+		/*
+		 *  Build average stress tensor for element and derive useful stress measures
+		 */
+		DeriveStressMeasures(stressTensorIn, elementStressTensor, &elementStressMeasures);
+		/*
+		 *  Write the chosen derived stress value to Paraview file
+		 */
+		fprintf( vtkOut, "%g ", elementStressMeasures.stressComponents[0] );
+    }
+    fprintf( vtkOut, "        </DataArray>\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Syy\" format=\"ascii\">\n");
+    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float) * numStressComponentsPerElement, SEEK_SET )!=0) {
+		fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+				rank, rankI, rankJ, rankK,
+				dumpIteration, nodeLocalCount );
+		exit(1);
+    }
+	for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
+		double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
+		struct stressMeasures	elementStressMeasures;
+		/*
+		 *  Build average stress tensor for element and derive useful stress measures
+		 */
+		DeriveStressMeasures(stressTensorIn, elementStressTensor, &elementStressMeasures);
+		/*
+		 *  Write the chosen derived stress value to Paraview file
+		 */
+		fprintf( vtkOut, "%g ", elementStressMeasures.stressComponents[1] );
+    }
+    fprintf( vtkOut, "        </DataArray>\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Szz\" format=\"ascii\">\n");
+    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float) * numStressComponentsPerElement, SEEK_SET )!=0) {
+		fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+				rank, rankI, rankJ, rankK,
+				dumpIteration, nodeLocalCount );
+		exit(1);
+    }
+	for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
+		double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
+		struct stressMeasures	elementStressMeasures;
+		/*
+		 *  Build average stress tensor for element and derive useful stress measures
+		 */
+		DeriveStressMeasures(stressTensorIn, elementStressTensor, &elementStressMeasures);
+		/*
+		 *  Write the chosen derived stress value to Paraview file
+		 */
+		fprintf( vtkOut, "%g ", elementStressMeasures.stressComponents[2] );
+    }
+    fprintf( vtkOut, "        </DataArray>\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Sxy\" format=\"ascii\">\n");
+    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float) * numStressComponentsPerElement, SEEK_SET )!=0) {
+		fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+				rank, rankI, rankJ, rankK,
+				dumpIteration, nodeLocalCount );
+		exit(1);
+    }
+	for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
+		double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
+		struct stressMeasures	elementStressMeasures;
+		/*
+		 *  Build average stress tensor for element and derive useful stress measures
+		 */
+		DeriveStressMeasures(stressTensorIn, elementStressTensor, &elementStressMeasures);
+		/*
+		 *  Write the chosen derived stress value to Paraview file
+		 */
+		fprintf( vtkOut, "%g ", elementStressMeasures.stressComponents[3] );
+    }
+    fprintf( vtkOut, "        </DataArray>\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Sxz\" format=\"ascii\">\n");
+    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float) * numStressComponentsPerElement, SEEK_SET )!=0) {
+		fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+				rank, rankI, rankJ, rankK,
+				dumpIteration, nodeLocalCount );
+		exit(1);
+    }
+	for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
+		double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
+		struct stressMeasures	elementStressMeasures;
+		/*
+		 *  Build average stress tensor for element and derive useful stress measures
+		 */
+		DeriveStressMeasures(stressTensorIn, elementStressTensor, &elementStressMeasures);
+		/*
+		 *  Write the chosen derived stress value to Paraview file
+		 */
+		fprintf( vtkOut, "%g ", elementStressMeasures.stressComponents[4] );
+    }
+    fprintf( vtkOut, "        </DataArray>\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Syz\" format=\"ascii\">\n");
+    if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float) * numStressComponentsPerElement, SEEK_SET )!=0) {
+		fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
+				rank, rankI, rankJ, rankK,
+				dumpIteration, nodeLocalCount );
+		exit(1);
+    }
+	for( element_gI = 0; element_gI < elementLocalCount; element_gI++ ) {
+		double	        	elementStressTensor[3][3]={{0,0,0},{0,0,0},{0,0,0}};
+		struct stressMeasures	elementStressMeasures;
+		/*
+		 *  Build average stress tensor for element and derive useful stress measures
+		 */
+		DeriveStressMeasures(stressTensorIn, elementStressTensor, &elementStressMeasures);
+		/*
+		 *  Write the chosen derived stress value to Paraview file
+		 */
+		fprintf( vtkOut, "%g ", elementStressMeasures.stressComponents[5] );
+    }
+    fprintf( vtkOut, "        </DataArray>\n");
+
     /*
      * Write out the pressure information 
      */
@@ -924,6 +1050,12 @@ void ConvertTimeStep(
 	if( doAps )
 	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Plastic strain\"/>\n");
 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Strain rate\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Sxx\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Syy\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Szz\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Sxy\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Sxz\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Syz\"/>\n");
 	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Pressure\"/>\n");
 	if( doHPr )
 	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Hydrostatic pressure\"/>\n");
@@ -1268,6 +1400,13 @@ DeriveStressMeasures(FILE *stressTensorIn, double elementStressTensor[3][3], str
 	elementStressTensor[2][0]=stressTensorArray[4];
 	elementStressTensor[2][1]=stressTensorArray[5];
 
+    elementStressMeasures->stressComponents[0] = stressTensorArray[0];
+    elementStressMeasures->stressComponents[1] = stressTensorArray[1];
+    elementStressMeasures->stressComponents[2] = stressTensorArray[2];
+    elementStressMeasures->stressComponents[3] = stressTensorArray[3];
+    elementStressMeasures->stressComponents[4] = stressTensorArray[4];
+    elementStressMeasures->stressComponents[5] = stressTensorArray[5];
+
     /*
      *  Diagonalize and find principal stresses from mean stress tensor for element
      */
@@ -1283,7 +1422,7 @@ DeriveStressMeasures(FILE *stressTensorIn, double elementStressTensor[3][3], str
      *  Calculate maximum shear stress sigma1-sigma3
      */
     if(elementStressMeasures->principalStresses[2]>elementStressMeasures->principalStresses[0]) fprintf(stderr,"[2]>[0]\n");
-    elementStressMeasures->maxShearStress = (elementStressMeasures->principalStresses[0]-elementStressMeasures->principalStresses[2]);
+    elementStressMeasures->maxShearStress = 0.5 * (elementStressMeasures->principalStresses[0]-elementStressMeasures->principalStresses[2]);
     /*
      *  Calculate 2nd deviatoric stress invariant
      */
