@@ -65,15 +65,25 @@ void _SnacPlastic_InterpolateElement(  void*				_context,
 	Index 						coef_I;
 	Element_DomainIndex			neldI =  decomp->elementDomain3DCounts[0];
 	Element_DomainIndex			neldJ =  decomp->elementDomain3DCounts[1];
-
+	Element_DomainIndex			neldK =  decomp->elementDomain3DCounts[2];
+	enum						{ threeD, xy, undefined } geomType;
+	
 #ifdef DEBUG
 	printf( "element_lI: %u, fromElement_lI: %u\n", dstElementInd, srcElementInd );
 #endif
 
-	/* Decompose srcEltInd into ijk indexes. */
-	eldI = (srcEltInd % neldI);
-	eldJ = (((srcEltInd-eldI)/neldI) % neldJ);
-	eldK = ((srcEltInd-eldI-eldJ*neldI)/(neldI*neldJ));
+	geomType = undefined;
+	if( neldI>1 && neldJ>1 && neldK>1 ) geomType = threeD;
+	else if( neldI>1 && neldJ>1 && neldK==1 ) geomType = xy;
+	
+	switch(geomType) {
+	case undefined:
+		Journal_Firewall( 0, context->snacError, "Remeshing is currently allowed only for xy or threeD!!\n");
+	case threeD:
+		/* Decompose srcEltInd into ijk indexes. */
+		eldI = (srcEltInd % neldI);
+		eldJ = (((srcEltInd-eldI)/neldI) % neldJ);
+		eldK = ((srcEltInd-eldI-eldJ*neldI)/(neldI*neldJ));
 
 	/* Eight-node hex defined on the old barycenter grid. */
 	eltdI[0] = eldI     + eldJ*neldI     + eldK*neldI*neldJ;

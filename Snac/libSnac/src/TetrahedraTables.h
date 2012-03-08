@@ -60,5 +60,8 @@
 	/* Maps from a given node of an element, the surface of the 5 tetras of the element that use the node. */
 	extern const Tetrahedra_Index		NodeToSurface[Node_Element_Count][Node_Element_Tetrahedra_Count];
 	
+	/* Maps triangle's apexes to local numbering of 4-node element -- For 2D remeshing. */
+	extern const Index		TriToNode[2][3]; /* 2 triangles and 3 apexes for each. */
+
 #endif /* __Snac_TetrahedraTables_h__ */
 

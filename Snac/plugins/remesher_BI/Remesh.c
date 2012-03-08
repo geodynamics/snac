@@ -62,7 +62,7 @@ void _SnacRemesher_Remesh( void* _context, void* data ) {
 			/* Remeshing on multiples of "OnTimeStep", but don't remesh on loop 0. */
 			Journal_Firewall( contextExt->OnTimeStep, context->snacError, 
 					  "Invalid remesh timestep criterion." );
-			remesh = (context->timeStep <= 1) ? False : 
+			remesh = (context->timeStep <= 1 || context->timeStep==context->restartTimestep) ? False : 
 				(context->timeStep % contextExt->OnTimeStep == 0) ? True : False;
 			break;
 
@@ -143,10 +143,16 @@ void _SnacRemesher_Remesh( void* _context, void* data ) {
 		}
 		
 		/* Interpolate current elemental values onto new coordinates. */
+		/* Barycentric coordinates of the old domain hex element set. */
 		meshExt->oldBarycenters = Memory_Alloc_Array( Coord, mesh->elementDomainCount, "SnacRemesher" );
+		/* Barycentric coordinates of the new local hex element set. */
 		meshExt->newBarycenters = Memory_Alloc_Array( Coord, mesh->elementLocalCount, "SnacRemesher" );
+		/* Coefficients for evaluating interpolation weight - function of old barycenters only. */
 		meshExt->barcoef =  Memory_Alloc_Array( SnacRemesher_ElementBarcoef, mesh->elementDomainCount, "SnacRemesher" );
 		meshExt->barcord =  Memory_Alloc_Array( SnacRemesher_ElementBarcord, mesh->elementLocalCount, "SnacRemesher" );
+		/* Since ghost elements are numbered after local elements, 
+		   a mapping from domain id to an ordered id listis constructed for straightforward interpolation:
+		   i.e. orderedToDomain: ordered ID -> domainID. */
 		meshExt->orderedToDomain =  Memory_Alloc_Array( Element_DomainIndex, mesh->elementDomainCount, "SnacRemesher" );
 		meshExt->newElements = (Snac_Element*)ExtensionManager_Malloc( mesh->elementExtensionMgr, mesh->elementLocalCount );
 

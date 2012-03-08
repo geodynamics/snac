@@ -83,3 +83,13 @@ const Tetrahedra_Index NodeToSurface[Node_Element_Count][Node_Element_Tetrahedra
 	{ 0, 1, 0, 3, 3 }, /* 7: right, top,    near element of node... node of element = 0 */
 };
 
+/* tri 0:    3 o----o 2
+                 \  |
+                   \|
+	                o 1
+   tri 1:    3 o
+	           |\
+               | \
+             0 o---o 1
+*/
+const Index	TriToNode[2][3] = { {1,2,3}, {0,1,3} };

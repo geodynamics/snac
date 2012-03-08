@@ -53,6 +53,6 @@
 	Node_DomainIndex findClosestNodeInElement( void* _context, Coord point,	unsigned nEltNodes, Node_DomainIndex *eltNodes );
 	
 	Bool pointInElement( void* _context, Coord point, Element_DomainIndex dElementInd );
-	
+
 	
 #endif /* __SnacRemesher_Utils_h__ */

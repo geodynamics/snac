@@ -41,7 +41,6 @@
 #ifndef __SnacRemesher_Mesh_h__
 #define __SnacRemesher_Mesh_h__
 
-
 	typedef enum {
 		SnacRemesher_Spherical, 
 		SnacRemesher_Cartesian, 
@@ -107,66 +106,6 @@
 		/* The sync class provides remote terminals for interpolating bulk nodes. */
 		SnacSync*	sync;
 	};
-	
-
-#if 0
-	/* Mesh Information */
-	struct _SnacRemesher_Mesh {
-		
-		Coord*		initialNodeCoord;	/* Array of initial node coordinates */
-		Coord*		newNodeCoord;	/* Array of new/temporary node coordinates */
-		Snac_Node*	newNode;	/* Array of new/temporary node values */
-		Snac_Element*	newElement;	/* Array of new Elements */
-
-		/* Node count... may not otherwise be directly available from this structure, so we keep a copy here */
-		Node_LocalIndex		nodeLocalCount;
-		Node_DomainIndex		nodeDomainCount;
-		Node_GlobalIndex		nodeGlobalCount;
-		Element_LocalIndex		elementLocalCount;
-		Element_DomainIndex		elementDomainCount;
-		Element_GlobalIndex		elementGlobalCount;
-
-		/* Mesh type */
-		SnacRemesher_MeshType		meshType;
-
-		/* Rank neighbour info */
-		Partition_Index	neighbourRankCount;
-		Partition_Index*	neighbourRank;
-
-		/* The walls (except for positive radial dir) remesh back to initial positions... maintain as one local set */
-		IndexSet*		wallSet;
-		Index 		wallCount;
-		Index*		wallArray; /* content is local indices */
-
-		/* The positive radial dir wall internal nodes are free... maintain as one local set */
-		IndexSet*		topInternalSet;
-		Index 		topInternalCount;
-		Index*		topInternalArray;
-
-		/* The positive radial dir wall internal nodes are free... maintain as one local set */
-		IndexSet*		bottomInternalSet;
-		Index 		bottomInternalCount;
-		Index*		bottomInternalArray;
-
-		/* Internal nodes are interpolated in the radial dir... maintain as one set */
-		IndexSet*		internalSet;
-		Index 		internalCount;
-		Index*		internalArray; /* content is local indices */
-
-		/* Shadow node tables */
-		Node_LocalIndex*		shadowNodeLocalCount;
-		Node_LocalIndex**		shadowNodeLocalArray;
-		Node_ShadowIndex*		shadowNodeRemoteCount;
-		Node_LocalIndex**		shadowNodeRemoteArray;
-		Coord**				shadowNodeRemoteCoord;
-		Snac_Node**			shadowNodeRemote;
-		Element_LocalIndex*		shadowElementLocalCount;
-		Element_LocalIndex**	shadowElementLocalArray;
-		Element_ShadowIndex*	shadowElementRemoteCount;
-		Element_GlobalIndex**	shadowElementRemoteArray;
-		Snac_Element**			shadowElementRemote;
-	};
-#endif
 
 	/* Print the contents of a mesh */
 	void SnacRemesher_Mesh_Print( void* mesh, Stream* stream );
