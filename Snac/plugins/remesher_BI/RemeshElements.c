@@ -125,18 +125,20 @@ void _SnacRemesher_UpdateElements( void* _context ) {
 	Snac_Context*			context = (Snac_Context*)_context;
 	Element_LocalIndex	element_lI;
 
-				/* if(context->rank==13) { */
-				/* 	fprintf(stderr,"Looking %d (ijk:%d/%d %d/%d %d/%d)\n",element_lI,ellI,nellI-1,ellJ,nellJ-1,ellK,nellK-1); */
-				/* 	fprintf(stderr,"           %d to %d/%d %d to %d/%d %d to %d/%d)\n",mindI,maxdI,neldI-1,mindJ,maxdJ,neldJ-1,mindK,maxdK,neldK-1); */
-				/* } */
-				for( eldK = mindK; eldK < maxdK; eldK++ ) {
-					for( eldJ = mindJ; eldJ < maxdJ; eldJ++ ) {
-						for( eldI = mindI; eldI < maxdI; eldI++ ) {
-							element_dI = eldI+eldJ*neldI+eldK*neldI*neldJ;
-							for(tet_I=0;tet_I<5;tet_I++) {
-								Index	coef_I;
-								double 	lambda[4];
-								double 	tol_error = 1e-12;
+	/* Update all the elements, and in the process work out this processor's minLengthScale */
+	for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
+		double elementMinLengthScale;
+		
+		KeyCall( context, context->updateElementK, Snac_UpdateElementMomentum_CallCast* )
+			( KeyHandle(context,context->updateElementK),
+			  context,
+			  element_lI,
+			  &elementMinLengthScale );
+		if( elementMinLengthScale < context->minLengthScale ) {
+			context->minLengthScale = elementMinLengthScale;
+		}
+	}
+}
 
 
 /*

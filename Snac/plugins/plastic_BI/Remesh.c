@@ -58,9 +58,9 @@ void _SnacPlastic_InterpolateElement(  void*				_context,
 	Snac_Element*				element = (Snac_Element*)ExtensionManager_At( context->mesh->elementExtensionMgr, 
 											dstElements, 
 											dstEltInd );
-	SnacPlastic_Element*	elementExt = ExtensionManager_Get( context->mesh->elementExtensionMgr, 
-									   element, 
-									   SnacPlastic_ElementHandle );
+	SnacPlastic_Element*		elementExt = ExtensionManager_Get( context->mesh->elementExtensionMgr, 
+												element, 
+									 			SnacPlastic_ElementHandle );
 	Element_DomainIndex 		eltdI[8],eldI,eldJ,eldK;
 	Index 						coef_I;
 	Element_DomainIndex			neldI =  decomp->elementDomain3DCounts[0];
@@ -85,27 +85,54 @@ void _SnacPlastic_InterpolateElement(  void*				_context,
 		eldJ = (((srcEltInd-eldI)/neldI) % neldJ);
 		eldK = ((srcEltInd-eldI-eldJ*neldI)/(neldI*neldJ));
 
-	/* Eight-node hex defined on the old barycenter grid. */
-	eltdI[0] = eldI     + eldJ*neldI     + eldK*neldI*neldJ;
-	eltdI[1] = (eldI+1) + eldJ*neldI     + eldK*neldI*neldJ;
-	eltdI[2] = (eldI+1) + (eldJ+1)*neldI + eldK*neldI*neldJ;
-	eltdI[3] = eldI     + (eldJ+1)*neldI + eldK*neldI*neldJ;
-	eltdI[4] = eldI     + eldJ*neldI     + (eldK+1)*neldI*neldJ;
-	eltdI[5] = (eldI+1) + eldJ*neldI     + (eldK+1)*neldI*neldJ;
-	eltdI[6] = (eldI+1) + (eldJ+1)*neldI + (eldK+1)*neldI*neldJ;
-	eltdI[7] = eldI     + (eldJ+1)*neldI + (eldK+1)*neldI*neldJ;
-
-	elementExt->plasticStrain[dstTetInd] = 0.0;
-	for(coef_I=0;coef_I<4;coef_I++) {
-		/* The actual src elements are the four apexes of a tet (srcTetInd) in the old barycenter grid. */
-		Snac_Element* 			srcElt = Snac_Element_At( context, 
-														  meshExt->orderedToDomain[eltdI[TetraToNode[srcTetInd][coef_I]]] );
-		SnacPlastic_Element*	srcEltExt = ExtensionManager_Get(
-													context->mesh->elementExtensionMgr,
-													srcElt,
-													SnacPlastic_ElementHandle );
-		/* Weights are associated only with destination element but not on the tet level. 
-		   So, "dstTetInd" is used in both source and destination terms. */
-		elementExt->plasticStrain[dstTetInd] += meshExt->barcord[dstEltInd].L[coef_I]*srcEltExt->plasticStrain[dstTetInd];
+		/* Eight-node hex defined on the old barycenter grid. */
+		eltdI[0] = eldI     + eldJ*neldI     + eldK*neldI*neldJ;
+		eltdI[1] = (eldI+1) + eldJ*neldI     + eldK*neldI*neldJ;
+		eltdI[2] = (eldI+1) + (eldJ+1)*neldI + eldK*neldI*neldJ;
+		eltdI[3] = eldI     + (eldJ+1)*neldI + eldK*neldI*neldJ;
+		eltdI[4] = eldI     + eldJ*neldI     + (eldK+1)*neldI*neldJ;
+		eltdI[5] = (eldI+1) + eldJ*neldI     + (eldK+1)*neldI*neldJ;
+		eltdI[6] = (eldI+1) + (eldJ+1)*neldI + (eldK+1)*neldI*neldJ;
+		eltdI[7] = eldI     + (eldJ+1)*neldI + (eldK+1)*neldI*neldJ;
+		
+		elementExt->plasticStrain[dstTetInd] = 0.0;
+		for(coef_I=0;coef_I<4;coef_I++) {
+			/* The actual src elements are the four apexes of a tet (srcTetInd) in the old barycenter grid. */
+			Snac_Element* 			srcElt = Snac_Element_At( context, 
+															  meshExt->orderedToDomain[eltdI[TetraToNode[srcTetInd][coef_I]]] );
+			SnacPlastic_Element*	srcEltExt = ExtensionManager_Get(
+																	 context->mesh->elementExtensionMgr,
+																	 srcElt,
+																	 SnacPlastic_ElementHandle );
+			/* Weights are associated only with destination element but not on the tet level. 
+			   So, "dstTetInd" is used in both source and destination terms. */
+			elementExt->plasticStrain[dstTetInd] += meshExt->barcord[dstEltInd].L[coef_I]*srcEltExt->plasticStrain[dstTetInd];
+		}
+		break;
+	case xy:
+		/* Decompose srcEltInd into ijk indexes. */
+		eldI = (srcEltInd % neldI);
+		eldJ = (((srcEltInd-eldI)/neldI) % neldJ);
+		
+		/* Eight-node hex defined on the old barycenter grid. */
+		eltdI[0] = eldI     + eldJ*neldI;     
+		eltdI[1] = (eldI+1) + eldJ*neldI;
+		eltdI[2] = (eldI+1) + (eldJ+1)*neldI;
+		eltdI[3] = eldI     + (eldJ+1)*neldI;
+		
+		elementExt->plasticStrain[dstTetInd] = 0.0;
+		for(coef_I=0;coef_I<3;coef_I++) {
+			/* The actual src elements are the four apexes of a tet (srcTetInd) in the old barycenter grid. */
+			Snac_Element* 			srcElt = Snac_Element_At( context,
+															  meshExt->orderedToDomain[eltdI[TriToNode[srcTetInd][coef_I]]] );
+			SnacPlastic_Element*	srcEltExt = ExtensionManager_Get(
+																	 context->mesh->elementExtensionMgr,
+																	 srcElt,
+																	 SnacPlastic_ElementHandle );
+			/* Weights are associated only with destination element but not on the tet level.
+			   So, "dstTetInd" is used in both source and destination terms. */
+			elementExt->plasticStrain[dstTetInd] += meshExt->barcord[dstEltInd].L[coef_I]*srcEltExt->plasticStrain[dstTetInd];
+		}
+		break;
 	}
 }
