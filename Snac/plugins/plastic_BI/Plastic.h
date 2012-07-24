@@ -41,13 +41,13 @@
 #ifndef __SnacPlastic_h__
 #define __SnacPlastic_h__
 	
+#include "Plastic.h"
 #include "Constitutive.h"
 #include "ConstructExtensions.h"
 #include "Context.h"
 #include "Element.h"
 #include "InitialConditions.h"
 #include "Output.h"
-#include "Plastic.h"
 #include "Register.h" 
 /* #include "Remesh.h" */
 #include "types.h"

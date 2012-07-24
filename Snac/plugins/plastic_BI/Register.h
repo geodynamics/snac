@@ -44,11 +44,7 @@
 	/* Textual name of this class */
 	extern const Type SnacPlastic_Type;
 	
-	extern ExtensionInfo_Index SnacPlastic_NodeHandle;
-	
 	extern ExtensionInfo_Index SnacPlastic_ElementHandle;
-	
-	extern ExtensionInfo_Index SnacPlastic_MeshHandle;
 	
 	extern ExtensionInfo_Index SnacPlastic_ContextHandle;
 	

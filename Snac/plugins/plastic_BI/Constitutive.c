@@ -57,22 +57,12 @@
 
 
 void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
-	Snac_Context* context = (Snac_Context*)_context;
-	Snac_Element* element = Snac_Element_At( context, element_lI );
-	SnacPlastic_Element* plasticElement = ExtensionManager_Get( context->mesh->elementExtensionMgr, element, SnacPlastic_ElementHandle );
-	const Snac_Material* material = &context->materialProperty[element->material_I];
+	Snac_Context*			context = (Snac_Context*)_context;
+	Snac_Element*			element = Snac_Element_At( context, element_lI );
+	SnacPlastic_Element*	plasticElement = ExtensionManager_Get( context->mesh->elementExtensionMgr, element, SnacPlastic_ElementHandle );
+	const Snac_Material*	material = &context->materialProperty[element->material_I];
 
-	/*ccccc*/
-	MeshLayout*			meshLayout = (MeshLayout*)context->meshLayout;
-	HexaMD*				decomp = (HexaMD*)meshLayout->decomp;
-	IJK				ijk;
-	Element_GlobalIndex		element_gI = _MeshDecomp_Element_LocalToGlobal1D( decomp, element_lI );
-	EntryPoint* 			temperatureEP;
-
-	RegularMeshUtils_Element_1DTo3D( decomp, element_gI, &ijk[0], &ijk[1], &ijk[2] );
-	/*ccccc*/
-
-	temperatureEP = Context_GetEntryPoint( context,	"Snac_EP_LoopElementsEnergy" );
+	EntryPoint*				temperatureEP = Context_GetEntryPoint( context,	"Snac_EP_LoopElementsEnergy" );
 
 	/* If this is a Plastic material, calculate its stress. */
 	if ( material->rheology & Snac_Material_Plastic ) {

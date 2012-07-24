@@ -42,26 +42,26 @@
 #include "Remesh.h"
 #include "Register.h"
 
-void _SnacPlastic_InterpolateElement( void*			_context, 
-					Element_LocalIndex	dstEltInd, 
-					Tetrahedra_Index	dstTetInd, 
-					SnacRemesher_Element*	dstElements, 
-					Element_DomainIndex 	srcEltInd, 
-					Tetrahedra_Index	srcTetInd )
+void _SnacPlastic_InterpolateElement( void*		_context, 
+					Element_LocalIndex			dstEltInd, 
+					Tetrahedra_Index			dstTetInd, 
+					SnacRemesher_Element*		dstElements, 
+					Element_DomainIndex 		srcEltInd, 
+					Tetrahedra_Index			srcTetInd )
 {
 	Snac_Context* 			context = (Snac_Context*)_context;
-	Mesh*				mesh = context->mesh;
+	Mesh*					mesh = context->mesh;
 	SnacRemesher_Mesh*		meshExt = ExtensionManager_Get( context->meshExtensionMgr,
 									mesh, 
 									SnacRemesher_MeshHandle );
-	HexaMD*				decomp = (HexaMD*)mesh->layout->decomp;
-	SnacRemesher_Element* 		dstElt = &dstElements[dstEltInd];
-	Element_DomainIndex 		eltdI[8],eldI,eldJ,eldK;
-	Index 				coef_I;
+	HexaMD*					decomp = (HexaMD*)mesh->layout->decomp;
+	SnacRemesher_Element*	dstElt = &dstElements[dstEltInd];
+	Element_DomainIndex 	eltdI[8],eldI,eldJ,eldK;
+	Index 					coef_I;
 	Element_DomainIndex		neldI =  decomp->elementDomain3DCounts[0];
 	Element_DomainIndex		neldJ =  decomp->elementDomain3DCounts[1];
 	Element_DomainIndex		neldK =  decomp->elementDomain3DCounts[2];
-	enum				{ threeD, xy, undefined } geomType;
+	enum					{ threeD, xy, undefined } geomType;
 	
 #ifdef DEBUG
 	printf( "element_lI: %u, fromElement_lI: %u\n", dstElementInd, srcElementInd );
@@ -136,19 +136,19 @@ void _SnacPlastic_InterpolateElement( void*			_context,
   Copy interpolated values stored in newElement array 
   back to the original element array. 
 */
-void _SnacPlastic_CopyElement( void* 			_context, 
-				Element_LocalIndex	eltInd, 
-				Tetrahedra_Index	tetInd, 
-				SnacRemesher_Element*	srcEltArray )
+void _SnacPlastic_CopyElement( void* 					_context, 
+							   Element_LocalIndex		eltInd, 
+							   Tetrahedra_Index			tetInd, 
+							   SnacRemesher_Element*	srcEltArray )
 {
 
-	Snac_Context*		context = (Snac_Context*)_context;
+	Snac_Context*			context = (Snac_Context*)_context;
 	SnacRemesher_Element* 	srcElt = &srcEltArray[eltInd];
-	Snac_Element* 		dstElt = Snac_Element_At( context, eltInd );
+	Snac_Element* 			dstElt = Snac_Element_At( context, eltInd );
 	SnacPlastic_Element*	dstEltExt = ExtensionManager_Get(
-						context->mesh->elementExtensionMgr,
-						dstElt,
-						SnacPlastic_ElementHandle );
+								context->mesh->elementExtensionMgr,
+								dstElt,
+								SnacPlastic_ElementHandle );
 
 	dstEltExt->plasticStrain[tetInd] = srcElt->plasticStrain[tetInd];
 
