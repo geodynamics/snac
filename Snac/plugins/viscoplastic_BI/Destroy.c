@@ -51,8 +51,6 @@ void _SnacViscoPlastic_Destroy( void* _context ) {
 		fclose( contextExt->plStrainOut );	
 	if( contextExt->plStrainCheckpoint )
 		fclose( contextExt->plStrainCheckpoint );	
-	if( contextExt->avgPlStrainCheckpoint )
-		fclose( contextExt->avgPlStrainCheckpoint );	
 	if( contextExt->viscOut )
 		fclose( contextExt->viscOut );	
 	if( contextExt->viscCheckpoint )

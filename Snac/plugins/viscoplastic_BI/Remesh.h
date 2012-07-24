@@ -43,8 +43,13 @@
 void _SnacViscoPlastic_InterpolateElement(  void*				 	_context, 
 											Element_LocalIndex 		dstEltInd, 
 											Tetrahedra_Index	 	dstTetInd, 
-											Snac_Element*	 		dstElements, 
+											SnacRemesher_Element*	dstElements, 
 											Element_DomainIndex 	srcEltInd, 
 											Tetrahedra_Index		srcTetInd );
-	
+
+void _SnacViscoPlastic_CopyElement( void*					_context, 
+									Element_LocalIndex		EltInd, 
+									Tetrahedra_Index			tetInd, 
+									SnacRemesher_Element*	srcEltArray );	
+
 #endif /* __SnacViscoPlastic_Remesh_h__ */

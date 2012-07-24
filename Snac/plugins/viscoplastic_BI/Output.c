@@ -105,11 +105,7 @@ void _SnacViscoPlastic_CheckpointPlasticStrain( void* _context ) {
 			fwrite( &plasticStrain, sizeof(float), 1, contextExt->plStrainCheckpoint );
 		}
 		fflush( contextExt->plStrainCheckpoint );
-
-
-		fwrite( &avgPlasticStrain, sizeof(float), 1, contextExt->avgPlStrainCheckpoint );
 	}
-	fflush( contextExt->avgPlStrainCheckpoint );
 }
 
 
@@ -188,54 +184,3 @@ void _SnacViscoPlastic_CheckpointViscosity( void* _context ) {
 	}
 	fflush( contextExt->viscCheckpoint );
 }
-
-
-#if 0
-void _SnacViscoPlastic_DumpPlasticStrainTensor( void* _context ) {
-	Snac_Context*				context = (Snac_Context*) _context;
-	SnacViscoPlastic_Context*			contextExt = ExtensionManager_Get(
-							context->extensionMgr,
-							context,
-							SnacViscoPlastic_ContextHandle );
-
-#if DEBUG
-	printf( "In %s()\n", __func__ );
-#endif
-
-
-	if( context->timeStep ==0 || (context->timeStep-1) % context->dumpEvery == 0 ) {
-		Element_LocalIndex			element_lI;
-
-		for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
-			Snac_Element* 				element = Snac_Element_At( context, element_lI );
-			SnacViscoPlastic_Element*			elementExt = ExtensionManager_Get(
-																				  context->mesh->elementExtensionMgr,
-																				  element,
-																				  SnacViscoPlastic_ElementHandle );
-			const Snac_Material* material = &context->materialProperty[element->material_I];
-			Tetrahedra_Index tetra_I;
-
-
-			if( material->yieldcriterion == druckerprager ) {
-				for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
-					Index i,j;
-					float tensor[3][3];
-					for(i=0;i<3;i++)
-						for(j=0;j<3;j++) {
-							tensor[i][j] = elementExt->plasticstrainTensor[tetra_I][i][j];
-							fwrite( &tensor[i][j], sizeof(float), 1, contextExt->plstrainTensorOut );
-						}
-				}
-			}
-			else if( material->yieldcriterion == mohrcoulomb ) {
-				for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
-					float tetraStrain;
-					tetraStrain = elementExt->plasticStrain[tetra_I];
-					fwrite( &tetraStrain, sizeof(float), 1, contextExt->plstrainTensorOut );
-				}
-			}
-		}
-		fflush( contextExt->plstrainTensorOut );
-	}
-}
-#endif

@@ -48,12 +48,9 @@
 #include "ConstructExtensions.h"
 #include "Element.h"
 #include "InitialConditions.h"
-#include "Mesh.h"
-#include "Node.h"
 #include "Output.h"
 #include "Register.h"
-#include "Remesh.h"
+/* #include "Remesh.h" */
 #include "types.h"
-#include "units.h"
 
 #endif /* __SnacViscoPlastic_h__ */

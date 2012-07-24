@@ -38,6 +38,5 @@
 	void _SnacViscoPlastic_CheckpointPlasticStrain( void* _context );
 	void _SnacViscoPlastic_DumpViscosity( void* _context );
 	void _SnacViscoPlastic_CheckpointViscosity( void* _context );
-	void _SnacViscoPlastic_DumpPlasticStrainTensor( void* _context );
 
 #endif

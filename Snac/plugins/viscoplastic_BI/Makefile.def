@@ -34,9 +34,7 @@ def_mod = SnacViscoPlastic
 def_inc = Snac/ViscoPlastic
 
 def_srcs = \
-	Node.c \
 	Element.c \
-	Mesh.c \
 	Context.c \
 	ConstructExtensions.c \
 	Constitutive.c \
@@ -48,10 +46,7 @@ def_srcs = \
 
 def_hdrs = \
 	types.h \
-	units.h \
-	Node.h \
 	Element.h \
-	Mesh.h \
 	Context.h \
 	ConstructExtensions.h \
 	Constitutive.h \

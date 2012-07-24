@@ -46,51 +46,50 @@
 #endif
 
 void SnacViscoPlastic_InitialConditions( void* _context, void* data ) {
-	Snac_Context*		context = (Snac_Context*)_context;
-	Element_LocalIndex	element_lI;
-	double                  mu,vis_min,dt_maxwellI;
-	double                  dt_maxwell = 0;
-	const double            mfrac      = 9.0e-01;
+	Snac_Context*			context = (Snac_Context*)_context;
+	Element_LocalIndex		element_lI;
+	double					mu,vis_min,dt_maxwellI;
+	double					dt_maxwell = 0;
+	const double			mfrac      = 9.0e-01;
 	
 	// loop over the phase using the dictionary
     
 	Dictionary_Entry_Value* materialList = Dictionary_Get( context->dictionary, "materials" );
-	int                           PhaseI = 0;
+	int						PhaseI = 0;
 	if( materialList ) {
 		Dictionary_Entry_Value* materialEntry = Dictionary_Entry_Value_GetFirstElement( materialList );
 		/* loop around the  phases to initialize rheology */
 		while( materialEntry ) {
 			context->materialProperty[PhaseI].rheology |= Snac_Material_ViscoPlastic;
-			mu                                          = context->materialProperty[PhaseI].mu;
-			vis_min                                     = context->materialProperty[PhaseI].vis_min;
-			dt_maxwellI                                 = mfrac*vis_min/mu;
-			dt_maxwell                                  = (PhaseI==0)?dt_maxwellI:min(dt_maxwellI,dt_maxwell);
+			mu											= context->materialProperty[PhaseI].mu;
+			vis_min										= context->materialProperty[PhaseI].vis_min;
+			dt_maxwellI									= mfrac*vis_min/mu;
+			dt_maxwell									= (PhaseI==0)?dt_maxwellI:min(dt_maxwellI,dt_maxwell);
 			PhaseI++;
-			materialEntry                               = materialEntry->next;
+			materialEntry								= materialEntry->next;
 			
 		}
 	}
 	else {
 		context->materialProperty[PhaseI].rheology |= Snac_Material_ViscoPlastic;
-		mu                                          = context->materialProperty[PhaseI].mu;
-		vis_min                                      = context->materialProperty[PhaseI].vis_min;
-		dt_maxwell                                   = mfrac*vis_min/mu;
+		mu												= context->materialProperty[PhaseI].mu;
+		vis_min											= context->materialProperty[PhaseI].vis_min;
+		dt_maxwell										= mfrac*vis_min/mu;
 	}
+
 	if( context->dt > dt_maxwell) {
 		if(context->dtType == Snac_DtType_Constant) {
 			fprintf(stderr,"dt(%e) should be smaller than dt_maxwell(%e) (mu=%e vis_min=%e mfrac=%e)\n",context->dt,dt_maxwell,mu,vis_min,mfrac);
 		}
 		else    context->dt = dt_maxwell;
 	}
+
 	if( context->restartTimestep > 0 ) {
 		FILE*				plStrainIn;
-		FILE*				avgPlStrainIn;
 		char				path[PATH_MAX];
 		
 		sprintf(path, "%s/snac.plStrain.%d.%06d.restart",context->outputPath,context->rank,context->restartTimestep);
 		Journal_Firewall( (plStrainIn = fopen(path,"r")) != NULL, "Can't find %s", path );
-		sprintf(path, "%s/snac.avgPlStrain.%d.%06d.restart",context->outputPath,context->rank,context->restartTimestep);
-		Journal_Firewall( (avgPlStrainIn = fopen(path,"r")) != NULL, "Can't find %s", path );
 		
 		/* read in restart file to reconstruct the previous plastic strain.*/
 		for( element_lI = 0; element_lI < context->mesh->elementLocalCount; element_lI++ ) {
@@ -103,7 +102,7 @@ void SnacViscoPlastic_InitialConditions( void* _context, void* data ) {
 			/* To-Do: Read in viscosity and assign it to tets and elements. */
 			if( material->yieldcriterion == mohrcoulomb ) {
 				Tetrahedra_Index	tetra_I;
-				double                  avgPlStrain = 0.0f;
+				double              depls = 0.0f;
 				
 				for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
 					double			tetraPlStrain = 0.0f;
@@ -113,16 +112,13 @@ void SnacViscoPlastic_InitialConditions( void* _context, void* data ) {
 
 					fscanf( plStrainIn, "%le", &tetraPlStrain );
 					viscoplasticElement->plasticStrain[tetra_I] = tetraPlStrain;
+					depls += viscoplasticElement->plasticStrain[tetra_I];
 				}/* for tets */
-				/* volume-averaged accumulated plastic strain, aps */
-				fscanf( avgPlStrainIn, "%le", &avgPlStrain );
-				viscoplasticElement->aps = avgPlStrain;
+				viscoplasticElement->aps = depls/Tetrahedra_Count;
 			}/* if(mohrcoulomb) */
 		}/* for elements */
 		if( plStrainIn )
 			fclose( plStrainIn );
-		if( avgPlStrainIn )
-			fclose( avgPlStrainIn );
 	}/* if restarting.*/
 	else {
 		/* Set the plastic element initial conditions */
