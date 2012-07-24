@@ -26,11 +26,11 @@
 	
 	<!-- Extension modules -->
 	<!--
-		<param> SnacRemesher </param>
 		<param> SnacWinklerForce </param>
 		<param> SnacCustomCartesian </param>
 	-->
 	<list name="extensions">
+		<param> SnacRemesher </param>
 		<param> SnacTemperature </param>
 		<param> SnacViscoPlastic </param>
 		<param> SnacHydroStaticIC </param>
@@ -93,24 +93,26 @@
 		<param name="cohesion2"> 0.0e+00 </param>
 		<param name="ten_off"> 1.0e+13 </param>
 		<!-- Temperature variables -->
-		<param name="topTemp"> 0.0 </param>
-		<param name="bottomTemp"> 700.0 </param>
 		<param name="thermal_conduct"> 1.6 </param>
 		<param name="heatCapacity"> 1000.0 </param>
 	</struct>
 	</list>
+
 	<!-- Remesher info -->
 	<!-- 
 		<param name="remeshCondition"> onBothTimeStepLength </param>
 		<param name="remeshCondition"> onTimeStep </param>
 		<param name="remeshCondition"> onMinLengthScale </param>
+		<param name="remeshCondition"> off </param>
 	-->
-	<param name="remeshCondition"> onMinLengthScale </param>
-	<param name="remeshTimeStepCriterion"> 15000 </param>
+	<param name="remeshCondition"> onTimeStep </param>
+	<param name="remeshTimeStepCriterion"> 7 </param>
 	<param name="remeshLengthCriterion"> 0.7 </param>
 	<param name="bottomResotre"> on </param>
 	
 	<!-- node ICs -->
+	<param name="topTemp"> 0.0 </param>
+	<param name="bottomTemp"> 700.0 </param>
 	<struct name="nodeICs">
 		<list name="vcList">
 			<struct>
