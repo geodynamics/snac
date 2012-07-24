@@ -53,6 +53,7 @@ void SnacRemesher_Context_Print( void* _context ) {
 	
 	printf( "\tinterpolateNodeK: %u\n", self->interpolateNodeK );
 	printf( "\tinterpolateElementK: %u\n", self->interpolateElementK );
+	printf( "\tcopyElementK: %u\n", self->copyElementK );
 }
 
 void SnacRemesher_InterpolateNodeFunction( void* _context, SnacRemesher_Context* self, 
@@ -69,22 +70,31 @@ void SnacRemesher_InterpolateNodeFunction( void* _context, SnacRemesher_Context*
 }
 
 void SnacRemesher_InterpolateElementFunction( 
-		void*			_context, 
+		void*					_context, 
 		SnacRemesher_Context*	self, 
-		Element_LocalIndex	dstEltInd, 
-		Tetrahedra_Index	dstTetInd, 
-		Snac_Element*		dstEltArray, 
-		Element_DomainIndex	srcEltInd, 
-		Tetrahedra_Index	srcTetInd )
+		Element_LocalIndex		dstEltInd, 
+		Tetrahedra_Index		dstTetInd, 
+		SnacRemesher_Element*	dstEltArray, 
+		Element_DomainIndex		srcEltInd, 
+		Tetrahedra_Index		srcTetInd )
 {
 	Snac_Context*			context = (Snac_Context*)_context;
 		
 	SnacRemesher_InterpolateElementMacro( 
-		context,
-		self,
-		dstEltInd, 
-		dstTetInd, 
-		dstEltArray, 
-		srcEltInd, 
-		srcTetInd );
+						context, self,
+						dstEltInd, dstTetInd, dstEltArray,
+						srcEltInd, srcTetInd );
+}
+
+
+void SnacRemesher_CopyElementFunction( 
+		void*					_context, 
+		SnacRemesher_Context*	self, 
+		Element_LocalIndex		eltInd,  
+		Tetrahedra_Index		tetInd, 
+		SnacRemesher_Element*	eltArray )
+{
+	Snac_Context*			context = (Snac_Context*)_context;
+		
+	SnacRemesher_CopyElementMacro( context, self, eltInd, tetInd, eltArray ); 
 }

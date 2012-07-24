@@ -191,7 +191,7 @@ void _SnacRemesher_ConstructExtensions( void* _context, void* data ) {
 	contextExt->bottomRestore = 0;
 	if( !strcmp( Dictionary_Entry_Value_AsString( Dictionary_GetDefault( context->dictionary, "bottomRestore", Dictionary_Entry_Value_FromString( OFF_STR ) ) ), ON_STR) )
 		contextExt->bottomRestore = 1;
-	
+	fprintf(stderr,"bottomRestore=%d\n",contextExt->bottomRestore);
 	
 	/* Register these functions for use in VCs */
 	ConditionFunction_Register_Add(
@@ -215,6 +215,9 @@ void _SnacRemesher_ConstructExtensions( void* _context, void* data ) {
 	contextExt->interpolateElementK = EntryPoint_Register_GetHandle( 
 		context->entryPoint_Register, 
 		SnacRemesher_EP_InterpolateElement );
+	contextExt->copyElementK = EntryPoint_Register_GetHandle( 
+		context->entryPoint_Register, 
+		SnacRemesher_EP_CopyElement );
 
 	/* Prepare the dump file */
 	if( context->rank == 0) {

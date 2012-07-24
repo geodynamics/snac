@@ -42,6 +42,7 @@
 #include "Register.h"
 #include "Utils.h"
 #include "Output.h"
+#include "RemesherElement.h"
 
 #include <string.h>
 #include <assert.h>
@@ -93,6 +94,7 @@ void _SnacRemesher_Remesh( void* _context, void* data ) {
 								mesh,
 								SnacRemesher_MeshHandle );
 		Node_LocalIndex		newNode_i;
+		/* Element_LocalIndex		newElement_i; */
 
 		Journal_Printf( context->snacInfo, "Remeshing!\n" );
 		
@@ -101,7 +103,6 @@ void _SnacRemesher_Remesh( void* _context, void* data ) {
 		** then we'll need to convert the current mesh's cartesian coordinates 
 		** to spherical coordinates first.
 		*/
-		
 		if( meshExt->meshType == SnacRemesher_Spherical ) {
 			Node_LocalIndex	lNode_i;
 			
@@ -144,18 +145,18 @@ void _SnacRemesher_Remesh( void* _context, void* data ) {
 		
 		/* Interpolate current elemental values onto new coordinates. */
 		/* Barycentric coordinates of the old domain hex element set. */
-		meshExt->oldBarycenters = Memory_Alloc_Array( Coord, mesh->elementDomainCount, "SnacRemesher" );
+		meshExt->oldBarycenters = Memory_Alloc_Array( Coord, mesh->elementDomainCount, "OldBarycenters" );
 		/* Barycentric coordinates of the new local hex element set. */
-		meshExt->newBarycenters = Memory_Alloc_Array( Coord, mesh->elementLocalCount, "SnacRemesher" );
+		meshExt->newBarycenters = Memory_Alloc_Array( Coord, mesh->elementLocalCount, "NewBarycenters" );
 		/* Coefficients for evaluating interpolation weight - function of old barycenters only. */
-		meshExt->barcoef =  Memory_Alloc_Array( SnacRemesher_ElementBarcoef, mesh->elementDomainCount, "SnacRemesher" );
-		meshExt->barcord =  Memory_Alloc_Array( SnacRemesher_ElementBarcord, mesh->elementLocalCount, "SnacRemesher" );
+		meshExt->barcoef =  Memory_Alloc_Array( SnacRemesher_ElementBarcoef, mesh->elementDomainCount, "BarCoef" );
+		meshExt->barcord =  Memory_Alloc_Array( SnacRemesher_ElementBarcord, mesh->elementLocalCount, "BarCord" );
 		/* Since ghost elements are numbered after local elements, 
 		   a mapping from domain id to an ordered id listis constructed for straightforward interpolation:
 		   i.e. orderedToDomain: ordered ID -> domainID. */
-		meshExt->orderedToDomain =  Memory_Alloc_Array( Element_DomainIndex, mesh->elementDomainCount, "SnacRemesher" );
-		meshExt->newElements = (Snac_Element*)ExtensionManager_Malloc( mesh->elementExtensionMgr, mesh->elementLocalCount );
-
+		meshExt->orderedToDomain =  Memory_Alloc_Array( Element_DomainIndex, mesh->elementDomainCount, "OrderedToDomain" );
+		meshExt->newElements = Memory_Alloc_Array( SnacRemesher_Element, mesh->elementLocalCount, "NewElements" );
+		//memcpy( meshExt->newElements, mesh->element, mesh->elementExtensionMgr->finalSize * mesh->elementDomainCount );
 
 		/* Do the linear interpolation between grids of barycenters. */
 		_SnacRemesher_InterpolateElements( context );
@@ -163,7 +164,17 @@ void _SnacRemesher_Remesh( void* _context, void* data ) {
 		/* Copy accross the new coord, node & element information to the current arrays. */
 		memcpy( mesh->nodeCoord, meshExt->newNodeCoords, mesh->nodeLocalCount * sizeof(Coord) );
 		memcpy( mesh->node, meshExt->newNodes, mesh->nodeExtensionMgr->finalSize * mesh->nodeLocalCount );
-		memcpy( mesh->element, meshExt->newElements, mesh->elementExtensionMgr->finalSize * mesh->elementLocalCount );
+		/* don't need to copy here because it's now donw in _SnacRemesher_InterpolateElements. */
+		//memcpy( mesh->element, meshExt->newElements, mesh->elementExtensionMgr->finalSize * mesh->elementLocalCount );
+		/* for( newElement_i = 0; newElement_i < mesh->elementLocalCount; newElement_i++ ) { */
+		/* 	Snac_Element* srcElement =  */
+		/* 		(Snac_Element*)ExtensionManager_At( context->mesh->elementExtensionMgr, */
+		/* 											meshExt->newElements, */
+		/* 											newElement_i ); */
+			
+		/* 	Snac_Element* dstElement = Snac_Element_At( context, newElement_i );  */
+		/* 	memcpy( dstElement, srcElement, sizeof(Snac_Element)/2 ); */
+		/* } */
 		
 		/* Update element attributes based on the new coordinates and the transferred variables. */
 		_SnacRemesher_UpdateElements( context );
@@ -173,10 +184,13 @@ void _SnacRemesher_Remesh( void* _context, void* data ) {
 		Memory_Free( meshExt->newBarycenters ); 
 		Memory_Free( meshExt->barcoef );
 		Memory_Free( meshExt->barcord );
+		Memory_Free( meshExt->orderedToDomain ); 
+		Memory_Free( meshExt->newElements );
+
 		ExtensionManager_Free( mesh->nodeExtensionMgr, meshExt->newNodes );
-		ExtensionManager_Free( mesh->elementExtensionMgr, meshExt->newElements );
+		//ExtensionManager_Free( mesh->elementExtensionMgr, meshExt->newElements );
 		meshExt->newNodes = NULL;
-		meshExt->newElements = NULL;
+		//meshExt->newElements = NULL;
 		
 		/*
 		** If in spherical mode, convert back to cartesian coordinates.

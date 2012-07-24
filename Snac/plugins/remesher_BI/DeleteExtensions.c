@@ -59,9 +59,11 @@ void _SnacRemesher_DeleteExtensions( void* _context, void* data ) {
 		ExtensionManager_Free( mesh->nodeExtensionMgr, meshExt->newNodes );
 	}
 	
+#if 0
 	if( meshExt->newElements ) {
 		ExtensionManager_Free( mesh->nodeExtensionMgr, meshExt->newElements );
 	}
+#endif
 	
 	
 	/*

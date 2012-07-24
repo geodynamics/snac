@@ -40,8 +40,12 @@
 
 	typedef void (SnacRemesher_InterpolateElement_Cast)( void* context, 
 							     unsigned dstElementInd, unsigned dstTetInd, 
-							     Snac_Element* elementArray, 
+							     SnacRemesher_Element* elementArray, 
 							     unsigned srcElementInd, unsigned srcTetInd );
+
+	typedef void (SnacRemesher_CopyElement_Cast)( void* context, 
+												  unsigned elementInd, unsigned tetInd, 
+												  SnacRemesher_Element* elementArray );
 
 	typedef void (SnacRemesher_InterpolateNode_CallCast)( void* entryPoint, void* context, 
 							      unsigned nodeInd, unsigned elementInd, unsigned tetInd, 
@@ -50,12 +54,17 @@
 
 	typedef void (SnacRemesher_InterpolateElement_CallCast)( void* entryPoint, void* context, 
 								 unsigned dstElementInd, unsigned dstTetInd, 
-								 Snac_Element* elementArray, 
+								 SnacRemesher_Element* elementArray, 
 								 unsigned srcElementInd, unsigned srcTetInd );
+
+	typedef void (SnacRemesher_CopyElement_CallCast)( void* entryPoint, void* context, 
+													  unsigned elementInd, unsigned tetInd, 
+													  SnacRemesher_Element* elementArray );
 
 	#define SnacRemesher_InterpolateNode_CastType		(Snac_CastType_MAX + 1)
 	#define SnacRemesher_InterpolateElement_CastType	(SnacRemesher_InterpolateNode_CastType + 1)
-	#define SnacRemesher_CastType_MAX			(SnacRemesher_InterpolateElement_CastType + 1)
+	#define SnacRemesher_CopyElement_CastType			(SnacRemesher_InterpolateElement_CastType + 1)
+	#define SnacRemesher_CastType_MAX					(SnacRemesher_CopyElement_CastType + 1)
 
 	/** Textual name of this class */
 	extern const Type SnacRemesher_EntryPoint_Type;
@@ -103,7 +112,12 @@
 	/* Snac remesher entry point run... for interpolating an element */
 	void _SnacRemesher_EntryPoint_Run_InterpolateElement( void* entryPoint, void* context, 
 							      unsigned dstElementInd, unsigned dstTetInd, 
-							      Snac_Element* elementArray, 
+							      SnacRemesher_Element* elementArray, 
 							      unsigned srcElementInd, unsigned srcTetInd );
+
+	/* Snac remesher entry point run... for copying interpolated values to an element */
+	void _SnacRemesher_EntryPoint_Run_CopyElement( void* entryPoint, void* context, 
+									unsigned ElementInd, unsigned TetInd, 
+									SnacRemesher_Element* elementArray );
 
 #endif /* __SnacRemesher_EntryPoint_h__ */

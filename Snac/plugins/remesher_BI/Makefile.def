@@ -64,5 +64,6 @@ def_hdrs = \
 	TestCondFunc.h \
 	Remesh.h \
 	DeleteExtensions.h \
+	RemesherElement.h \
 	Remesher.h
 

@@ -50,6 +50,7 @@
 	/* Names to new entry points */
 	extern const Name SnacRemesher_EP_InterpolateNode;
 	extern const Name SnacRemesher_EP_InterpolateElement;
+	extern const Name SnacRemesher_EP_CopyElement;
 
 	Index _SnacRemesher_Register( PluginsManager* pluginsMgr );
 

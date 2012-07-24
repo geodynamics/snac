@@ -44,6 +44,7 @@
 	
 	/* Plastic */
 	typedef struct _SnacRemesher_Context	SnacRemesher_Context;
+	typedef struct _SnacRemesher_Element_Tetrahedra		SnacRemesher_Element_Tetrahedra;
 	typedef struct _SnacRemesher_Element	SnacRemesher_Element;
 	typedef struct _SnacRemesher_Node	SnacRemesher_Node;
 	typedef struct _SnacRemesher_Mesh	SnacRemesher_Mesh;

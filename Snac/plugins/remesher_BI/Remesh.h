@@ -54,12 +54,17 @@
 	void _SnacRemesher_InterpolateElements( void* context );
 	void _SnacRemesher_UpdateElements( void* context );
 	void _SnacRemesher_InterpolateElement(
-		void*			_context,
-		Element_LocalIndex	dstEltInd, 
-		Tetrahedra_Index	dstTetInd, 
-		Snac_Element*		dstEltArray, 
-		Element_DomainIndex	srcEltInd, 
-		Tetrahedra_Index	srcTetInd );
+		void*					_context,
+		Element_LocalIndex		dstEltInd, 
+		Tetrahedra_Index		dstTetInd, 
+		SnacRemesher_Element*	dstEltArray, 
+		Element_DomainIndex		srcEltInd, 
+		Tetrahedra_Index		srcTetInd );
+	void _SnacRemesher_CopyElement(
+		void*					_context,
+		Element_LocalIndex		eltInd, 
+		Tetrahedra_Index		tetInd, 
+		SnacRemesher_Element*	eltArray );
 
 	struct dist_id_pair { double dist; unsigned int id; };
 

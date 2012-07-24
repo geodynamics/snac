@@ -42,6 +42,8 @@
 	
 	#include "types.h"  
 	#include "Utils.h"
+	#include "Mesh.h"  
+	#include "RemesherElement.h"  
 	#include "Context.h"  
 	#include "Register.h"  
 	#include "ConstructExtensions.h"  

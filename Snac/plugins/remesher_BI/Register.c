@@ -51,8 +51,9 @@ const Type SnacRemesher_Type = "SnacRemesher";
 ExtensionInfo_Index SnacRemesher_ContextHandle;
 ExtensionInfo_Index SnacRemesher_MeshHandle;
 
-const Name SnacRemesher_EP_InterpolateNode =		"SnacRemesher_EP_InterpolateNode";
-const Name SnacRemesher_EP_InterpolateElement =		"SnacRemesher_EP_InterpolateElement";
+const Name SnacRemesher_EP_InterpolateNode =	"SnacRemesher_EP_InterpolateNode";
+const Name SnacRemesher_EP_InterpolateElement =	"SnacRemesher_EP_InterpolateElement";
+const Name SnacRemesher_EP_CopyElement =		"SnacRemesher_EP_CopyElement";
 
 
 Index _SnacRemesher_Register( PluginsManager* pluginsMgr ) {
@@ -107,6 +108,9 @@ void _SnacRemesher_Construct( void* component, Stg_ComponentFactory* cf, void* d
 	Context_AddEntryPoint(
 		context,
 		SnacRemesher_EntryPoint_New( SnacRemesher_EP_InterpolateElement, SnacRemesher_InterpolateElement_CastType ) );
+	Context_AddEntryPoint(
+		context,
+		SnacRemesher_EntryPoint_New( SnacRemesher_EP_CopyElement, SnacRemesher_CopyElement_CastType ) );
 
 	/* Add extensions to the entry points */
 	EntryPoint_Append(
@@ -133,6 +137,11 @@ void _SnacRemesher_Construct( void* component, Stg_ComponentFactory* cf, void* d
 		Context_GetEntryPoint( context, SnacRemesher_EP_InterpolateElement ),
 		SnacRemesher_Type,
 		_SnacRemesher_InterpolateElement,
+		SnacRemesher_Type );
+	EntryPoint_Append(
+		Context_GetEntryPoint( context, SnacRemesher_EP_CopyElement ),
+		SnacRemesher_Type,
+		_SnacRemesher_CopyElement,
 		SnacRemesher_Type );
 	EntryPoint_Append(
 		Context_GetEntryPoint( context, AbstractContext_EP_DestroyExtensions ),

@@ -248,6 +248,7 @@ void _SnacRemesher_InterpolateNode( void* _context,
 	dstNode->velocity[1] = 0.0;
 	dstNode->velocity[2] = 0.0;
 
+
 	/* Loop over each contributing node. */
 	for( tetNode_i = 0; tetNode_i < 4; tetNode_i++ ) {
 		Snac_Node*	srcNode;
@@ -260,5 +261,14 @@ void _SnacRemesher_InterpolateNode( void* _context,
 		dstNode->velocity[0] += srcNode->velocity[0] * weights[tetNode_i];
 		dstNode->velocity[1] += srcNode->velocity[1] * weights[tetNode_i];
 		dstNode->velocity[2] += srcNode->velocity[2] * weights[tetNode_i];
+
+		/* fprintf(stderr,"\t src vel[%d]=%e %e %e\n",tetNode_i,srcNode->velocity[0],srcNode->velocity[1],srcNode->velocity[2]); */
+		/* if(sqrt(dstNode->velocity[0]*dstNode->velocity[0]+dstNode->velocity[1]*dstNode->velocity[1]+dstNode->velocity[2]*dstNode->velocity[2])>=5e-10) { */
+		/* 	fprintf(stderr,"node=%d in element %d tet nodes: %d %d %d %d weights: %e %e %e %e\n",nodeInd,elementInd, */
+		/* 			tetNodeInds[0],tetNodeInds[1],tetNodeInds[2],tetNodeInds[3], */
+		/* 			weights[0],weights[1],weights[2],weights[3]); */
+		/* 	fprintf(stderr,"\t after vel=%e %e %e\n",dstNode->velocity[0],dstNode->velocity[1],dstNode->velocity[2]); */
+		/* } */
+
 	}
 }

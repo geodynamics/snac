@@ -65,7 +65,7 @@ void _SnacRemesher_DumpInfo( void* _context ) {
 		break;
 	}
 
-	fprintf( contextExt->remesherOut, "%6u: %s %6d %6u %12g %12g %12g %12g\n",
+	fprintf( contextExt->remesherOut, "%6lu: %s %6d %6lu %12g %12g %12g %12g\n",
 			 (long unsigned int)contextExt->remeshingCount,
 			 cr,
 			 context->timeStep,

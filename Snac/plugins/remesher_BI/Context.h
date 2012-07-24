@@ -45,8 +45,8 @@
 		SnacRemesher_Off, 
 		SnacRemesher_OnTimeStep, 
 		SnacRemesher_OnMinLengthScale, 
-		SnacRemesher_OnBothTimeStepLength, 
-		SnacRemesher_ConditionMax
+		SnacRemesher_OnBothTimeStepLength
+		/* SnacRemesher_ConditionMax */
 	} SnacRemesher_Condition;
 	
 
@@ -59,6 +59,7 @@
 		
 		EntryPoint_Index		interpolateNodeK;	/* Key to node interpolation entry point (for speed) */
 		EntryPoint_Index		interpolateElementK;	/* Key to element interpolation entry point (for speed) */
+		EntryPoint_Index		copyElementK;	/* Key to copy element values (for speed) */
 
 		Stream*				debugIC;
 		Stream*				debugCoords;
@@ -114,7 +115,7 @@
 						      SnacRemesher_Context*	self, 
 						      Element_LocalIndex	dstEltInd, 
 						      Tetrahedra_Index		dstTetInd, 
-						      Snac_Element*		dstEltArray, 
+						      SnacRemesher_Element*	dstEltArray, 
 						      Element_DomainIndex	srcEltInd, 
 						      Tetrahedra_Index		srcTetInd );
 
@@ -122,6 +123,29 @@
 		#define SnacRemesher_InterpolateElement SnacRemesher_InterpolateElementFunction
 	#else
 		#define SnacRemesher_InterpolateElement SnacRemesher_InterpolateElementMacro
+	#endif
+
+
+	/* Run the copy element entry point */
+	#define SnacRemesher_CopyElementMacro( context, self, \
+										   elementInd, tetInd,	\
+										   elementArray )	\
+		( KeyCall( context, self->copyElementK, SnacRemesher_CopyElement_CallCast* ) ( \
+			KeyHandle( context, self->copyElementK ), \
+			context, \
+			elementInd, \
+			tetInd, \
+			elementArray ) )
+	void SnacRemesher_CopyElementFunction( void*					_context, 
+										   SnacRemesher_Context*	self, 
+										   Element_LocalIndex		eltInd, 
+										   Tetrahedra_Index			tetInd, 
+										   SnacRemesher_Element*	eltArray );
+
+	#ifdef MACRO_AS_FUNC
+		#define SnacRemesher_CopyElement SnacRemesher_CopyElementFunction
+	#else
+		#define SnacRemesher_CopyElement SnacRemesher_CopyElementMacro
 	#endif
 
 #endif /* __SnacRemesher_Context_h__ */

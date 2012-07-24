@@ -75,7 +75,8 @@
 		unsigned 	local_range_min[3];	
 		unsigned 	local_range_max[3];	
 
-		Snac_Element*	newElements;
+		SnacRemesher_Element*   newElements;
+		//Snac_Element*	newElements;
 		Element_DomainIndex*	orderedToDomain;
 		
 		/* If during the remesh nodes are found outside the old mesh they will be stored here. */

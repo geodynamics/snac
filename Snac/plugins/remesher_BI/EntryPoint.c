@@ -127,9 +127,13 @@ Func_Ptr _SnacRemesher_EntryPoint_GetRun( void* snac_EntryPoint ) {
 	switch( self->castType ) {
 		case SnacRemesher_InterpolateNode_CastType:
 			return _SnacRemesher_EntryPoint_Run_InterpolateNode;
-		
+
 		case SnacRemesher_InterpolateElement_CastType:
 			return _SnacRemesher_EntryPoint_Run_InterpolateElement;
+
+		case SnacRemesher_CopyElement_CastType:
+			return _SnacRemesher_EntryPoint_Run_CopyElement;
+
 		default:
 			return _Snac_EntryPoint_GetRun( self );
 	}
@@ -165,7 +169,7 @@ void _SnacRemesher_EntryPoint_Run_InterpolateNode( void* entryPoint, void* conte
 
 void _SnacRemesher_EntryPoint_Run_InterpolateElement( void* entryPoint, void* context, 
 						      unsigned dstElementInd, unsigned dstTetInd, 
-						      Snac_Element* elementArray, 
+						      SnacRemesher_Element* elementArray, 
 						      unsigned srcElementInd, unsigned srcTetInd )
 {
 	SnacRemesher_EntryPoint* self = (SnacRemesher_EntryPoint*)entryPoint;
@@ -190,3 +194,27 @@ void _SnacRemesher_EntryPoint_Run_InterpolateElement( void* entryPoint, void* co
 	#endif
 }
 
+void _SnacRemesher_EntryPoint_Run_CopyElement( void* entryPoint, void* context, 
+											   unsigned elementInd, unsigned tetInd, 
+											   SnacRemesher_Element* elementArray )
+{
+	SnacRemesher_EntryPoint* self = (SnacRemesher_EntryPoint*)entryPoint;
+	Hook_Index hookIndex;
+	
+	#ifdef USE_PROFILE
+		Stg_CallGraph_Push( stgCallGraph, _SnacRemesher_EntryPoint_Run_CopyElement, self->name );
+	#endif
+
+	for( hookIndex = 0; hookIndex < self->hooks->count; hookIndex++ ) {
+		void*	funcPtr;
+
+		funcPtr = ((Hook*)self->hooks->data[hookIndex])->funcPtr;
+		(*(SnacRemesher_CopyElement_Cast*)funcPtr)( context, 
+													elementInd, tetInd, 
+													elementArray ); 
+	}
+
+	#ifdef USE_PROFILE
+		Stg_CallGraph_Pop( stgCallGraph );
+	#endif
+}
