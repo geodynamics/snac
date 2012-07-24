@@ -42,31 +42,26 @@
 #include "Remesh.h"
 #include "Register.h"
 
-void _SnacPlastic_InterpolateElement(  void*				_context, 
-									   Element_LocalIndex	dstEltInd, 
-									   Tetrahedra_Index	 	dstTetInd, 
-									   Snac_Element*	 	dstElements, 
-									   Element_DomainIndex 	srcEltInd, 
-									   Tetrahedra_Index		srcTetInd )
+void _SnacPlastic_InterpolateElement( void*			_context, 
+					Element_LocalIndex	dstEltInd, 
+					Tetrahedra_Index	dstTetInd, 
+					SnacRemesher_Element*	dstElements, 
+					Element_DomainIndex 	srcEltInd, 
+					Tetrahedra_Index	srcTetInd )
 {
-	Snac_Context* 				context = (Snac_Context*)_context;
-	Mesh*						mesh = context->mesh;
-	SnacRemesher_Mesh*			meshExt = ExtensionManager_Get( context->meshExtensionMgr,
-											mesh, 
-											SnacRemesher_MeshHandle );
-	HexaMD*						decomp = (HexaMD*)mesh->layout->decomp;
-	Snac_Element*				element = (Snac_Element*)ExtensionManager_At( context->mesh->elementExtensionMgr, 
-											dstElements, 
-											dstEltInd );
-	SnacPlastic_Element*		elementExt = ExtensionManager_Get( context->mesh->elementExtensionMgr, 
-												element, 
-									 			SnacPlastic_ElementHandle );
+	Snac_Context* 			context = (Snac_Context*)_context;
+	Mesh*				mesh = context->mesh;
+	SnacRemesher_Mesh*		meshExt = ExtensionManager_Get( context->meshExtensionMgr,
+									mesh, 
+									SnacRemesher_MeshHandle );
+	HexaMD*				decomp = (HexaMD*)mesh->layout->decomp;
+	SnacRemesher_Element* 		dstElt = &dstElements[dstEltInd];
 	Element_DomainIndex 		eltdI[8],eldI,eldJ,eldK;
-	Index 						coef_I;
-	Element_DomainIndex			neldI =  decomp->elementDomain3DCounts[0];
-	Element_DomainIndex			neldJ =  decomp->elementDomain3DCounts[1];
-	Element_DomainIndex			neldK =  decomp->elementDomain3DCounts[2];
-	enum						{ threeD, xy, undefined } geomType;
+	Index 				coef_I;
+	Element_DomainIndex		neldI =  decomp->elementDomain3DCounts[0];
+	Element_DomainIndex		neldJ =  decomp->elementDomain3DCounts[1];
+	Element_DomainIndex		neldK =  decomp->elementDomain3DCounts[2];
+	enum				{ threeD, xy, undefined } geomType;
 	
 #ifdef DEBUG
 	printf( "element_lI: %u, fromElement_lI: %u\n", dstElementInd, srcElementInd );
@@ -95,18 +90,18 @@ void _SnacPlastic_InterpolateElement(  void*				_context,
 		eltdI[6] = (eldI+1) + (eldJ+1)*neldI + (eldK+1)*neldI*neldJ;
 		eltdI[7] = eldI     + (eldJ+1)*neldI + (eldK+1)*neldI*neldJ;
 		
-		elementExt->plasticStrain[dstTetInd] = 0.0;
+		dstElt->plasticStrain[dstTetInd] = 0.0;
 		for(coef_I=0;coef_I<4;coef_I++) {
 			/* The actual src elements are the four apexes of a tet (srcTetInd) in the old barycenter grid. */
-			Snac_Element* 			srcElt = Snac_Element_At( context, 
-															  meshExt->orderedToDomain[eltdI[TetraToNode[srcTetInd][coef_I]]] );
+			Snac_Element* 		srcElt = Snac_Element_At( context,
+									  meshExt->orderedToDomain[eltdI[TetraToNode[srcTetInd][coef_I]]] );
 			SnacPlastic_Element*	srcEltExt = ExtensionManager_Get(
-																	 context->mesh->elementExtensionMgr,
-																	 srcElt,
-																	 SnacPlastic_ElementHandle );
+										 context->mesh->elementExtensionMgr,
+										 srcElt,
+										 SnacPlastic_ElementHandle );
 			/* Weights are associated only with destination element but not on the tet level. 
 			   So, "dstTetInd" is used in both source and destination terms. */
-			elementExt->plasticStrain[dstTetInd] += meshExt->barcord[dstEltInd].L[coef_I]*srcEltExt->plasticStrain[dstTetInd];
+			dstElt->plasticStrain[dstTetInd] += meshExt->barcord[dstEltInd].L[coef_I]*srcEltExt->plasticStrain[dstTetInd];
 		}
 		break;
 	case xy:
@@ -120,19 +115,41 @@ void _SnacPlastic_InterpolateElement(  void*				_context,
 		eltdI[2] = (eldI+1) + (eldJ+1)*neldI;
 		eltdI[3] = eldI     + (eldJ+1)*neldI;
 		
-		elementExt->plasticStrain[dstTetInd] = 0.0;
+		dstElt->plasticStrain[dstTetInd] = 0.0;
 		for(coef_I=0;coef_I<3;coef_I++) {
 			/* The actual src elements are the four apexes of a tet (srcTetInd) in the old barycenter grid. */
-			Snac_Element* 			srcElt = Snac_Element_At( context,
-															  meshExt->orderedToDomain[eltdI[TriToNode[srcTetInd][coef_I]]] );
+			Snac_Element* 		srcElt = Snac_Element_At( context,
+									  meshExt->orderedToDomain[eltdI[TriToNode[srcTetInd][coef_I]]] );
 			SnacPlastic_Element*	srcEltExt = ExtensionManager_Get(
-																	 context->mesh->elementExtensionMgr,
-																	 srcElt,
-																	 SnacPlastic_ElementHandle );
+										 context->mesh->elementExtensionMgr,
+										 srcElt,
+										 SnacPlastic_ElementHandle );
 			/* Weights are associated only with destination element but not on the tet level.
 			   So, "dstTetInd" is used in both source and destination terms. */
-			elementExt->plasticStrain[dstTetInd] += meshExt->barcord[dstEltInd].L[coef_I]*srcEltExt->plasticStrain[dstTetInd];
+			dstElt->plasticStrain[dstTetInd] += meshExt->barcord[dstEltInd].L[coef_I]*srcEltExt->plasticStrain[dstTetInd];
 		}
 		break;
 	}
+}
+
+/*
+  Copy interpolated values stored in newElement array 
+  back to the original element array. 
+*/
+void _SnacPlastic_CopyElement( void* 			_context, 
+				Element_LocalIndex	eltInd, 
+				Tetrahedra_Index	tetInd, 
+				SnacRemesher_Element*	srcEltArray )
+{
+
+	Snac_Context*		context = (Snac_Context*)_context;
+	SnacRemesher_Element* 	srcElt = &srcEltArray[eltInd];
+	Snac_Element* 		dstElt = Snac_Element_At( context, eltInd );
+	SnacPlastic_Element*	dstEltExt = ExtensionManager_Get(
+						context->mesh->elementExtensionMgr,
+						dstElt,
+						SnacPlastic_ElementHandle );
+
+	dstEltExt->plasticStrain[tetInd] = srcElt->plasticStrain[tetInd];
+
 }

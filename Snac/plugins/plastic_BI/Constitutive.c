@@ -85,28 +85,25 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 		double				trace_strain;
 		plModel             yieldcriterion=material->yieldcriterion;
 		/* elasto-plastic material properties */
-		double				cohesion = 0.0f;
-		double				frictionAngle = 0.0f;
+		double				cohesion = 30.0e6;
+		double				frictionAngle = 30.0f;
 		double				dilationAngle = 0.0f;
-		double				hardening = 0.0f;
 		double				tension_cutoff=0.0;
 		const double		degrad = PI / 180.0f;
 		double				totalVolume=0.0f,depls=0.0f;
-		int principal_stresses(StressTensor* stress,double sp[],double cn[3][3]);
 		unsigned int		i;
 		double				tmp=0.0;
 		const double		a1 = material->lambda + 2.0f * material->mu ;
 		const double		a2 = material->lambda ;
 		int					ind=0;
-
-		/*    printf("Entered Plastic update \n"); */
+		int principal_stresses(StressTensor* stress,double sp[],double cn[3][3]);
+		int principal_stresses_orig(StressTensor* stress, double sp[3], double cn[3][3]);
 
 		/* Work out the plastic material properties of this element */
 		for( tetra_I = 0; tetra_I < Tetrahedra_Count; tetra_I++ ) {
 			double			cn[3][3] = {{0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}};
 			double			s[3] = {0.0,0.0,0.0};
 			double			alam, dep1, dep2, dep3, depm;
-			/*ccccc*/
 
 			stress = &element->tetra[tetra_I].stress;
 			strain = &element->tetra[tetra_I].strain;
@@ -120,8 +117,11 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 			(*stress)[0][1] += (2.0f * material->mu) * (*strain)[0][1];
 			(*stress)[0][2] += (2.0f * material->mu) * (*strain)[0][2];
 			(*stress)[1][2] += (2.0f * material->mu) * (*strain)[1][2];
+			(*stress)[1][0] = (*stress)[0][1];
+			(*stress)[2][0] = (*stress)[0][2];
+			(*stress)[2][1] = (*stress)[1][2];
 
-			principal_stresses(stress,s,cn);
+			principal_stresses(stress,s,cn); /*principal_stresses_orig(stress,s,cn);*/
 
 			/* compute friction and dilation angles based on accumulated plastic strain in tetrahedra */
 			/* Piece-wise linear softening */
@@ -138,7 +138,6 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 					frictionAngle = material->frictionAngle[i] + tgf * (plasticStrain - pl1);
 					dilationAngle = material->dilationAngle[i] + tgd * (plasticStrain - pl1);
 					cohesion = material->cohesion[i] + tgc * (plasticStrain - pl1);
-					hardening = tgc;
 				}
 			}
 
@@ -186,7 +185,7 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 
 						if( h < 0.0f ) {
 							/* !shear failure  */
-							alam = fs / ( a1 - a2 * anpsi + a1 * anphi * anpsi - a2 * anphi + 2.0*sqrt(anphi)*hardening );
+							alam = fs / ( a1 - a2 * anpsi + a1 * anphi * anpsi - a2 * anphi );
 							s[0] -= alam * ( a1 - a2 * anpsi );
 							s[1] -= alam * a2 * ( 1.0f - anpsi );
 							s[2] -= alam * ( a2 - a1 * anpsi );
@@ -224,7 +223,8 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 						for( m = 0; m < 3; m++ ) {
 							for( n = m; n < 3; n++ ) {
 								for( k = 0; k < 3; k++ ) {
-									(*stress)[m][n] += cn[k][m] * cn[k][n] * s[k];
+									/* (*stress)[m][n] += cn[k][m] * cn[k][n] * s[k]; */
+									(*stress)[m][n] += cn[m][k] * cn[n][k] * s[k];
 								}
 							}
 						}
@@ -237,7 +237,6 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 			   Parameters are hardwired for now, but should be given through an input file. */
 			/* plasticElement->plasticStrain[tetra_I] *= (1.0/(1.0+context->dt/1.0e+12)); */
 			/* plasticElement->plasticStrain[tetra_I] *= (1.0/(1.0+context->dt/(ind?1.0e+13:5.0e+11))); */
-
 			depls += plasticElement->plasticStrain[tetra_I]*element->tetra[tetra_I].volume;
 			totalVolume += element->tetra[tetra_I].volume;
 		}
@@ -246,8 +245,280 @@ void SnacPlastic_Constitutive( void* _context, Element_LocalIndex element_lI ) {
 	}
 }
 
+int principal_stresses(StressTensor* stress, double d[3], double V[3][3])
+{
 
-int principal_stresses(StressTensor* stress, double sp[3], double cn[3][3])
+	int i,j;
+	double e[3];
+	void tred2(int n, double d[3], double e[3], double V[3][3]);
+	void tql2 (int n, double d[3], double e[3], double V[3][3]);
+
+	for (i = 0; i < 3; i++) {
+		for (j = 0; j < 3; j++) {
+			V[i][j] = (*stress)[i][j];
+		}
+	}
+
+	// Tridiagonalize.
+	tred2(3, d, e, V);
+   
+	// Diagonalize.
+	tql2(3, d, e, V);
+
+	/* fprintf(stderr,"eig 1: %e eigV: %e %e %e\n",d[0],V[0][0],V[1][0],V[2][0]); */
+	/* fprintf(stderr,"eig 2: %e eigV: %e %e %e\n",d[1],V[0][1],V[1][1],V[2][1]); */
+	/* fprintf(stderr,"eig 3: %e eigV: %e %e %e\n",d[2],V[0][2],V[1][2],V[2][2]); */
+	return(1);
+}
+
+
+// Symmetric Householder reduction to tridiagonal form.
+
+void tred2(int n, double d[3], double e[3], double V[3][3]) {
+
+	int i,j,k;
+	//  This is derived from the Algol procedures tred2 by
+	//  Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
+	//  Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
+	//  Fortran subroutine in EISPACK.
+
+	for (j = 0; j < n; j++) {
+		d[j] = V[n-1][j];
+	}
+
+	// Householder reduction to tridiagonal form.
+   
+	for (i = n-1; i > 0; i--) {
+   
+		// Scale to avoid under/overflow.
+   
+		double scale = 0.0;
+		double h = 0.0;
+		for (k = 0; k < i; k++) {
+            scale = scale + abs(d[k]);
+		}
+		if (scale == 0.0) {
+            e[i] = d[i-1];
+            for (j = 0; j < i; j++) {
+				d[j] = V[i-1][j];
+				V[i][j] = 0.0;
+				V[j][i] = 0.0;
+            }
+		} else {
+   
+			double f, g, hh;
+            // Generate Householder vector.
+            for (k = 0; k < i; k++) {
+				d[k] /= scale;
+				h += d[k] * d[k];
+            }
+            f = d[i-1];
+            g = sqrt(h);
+            if (f > 0) {
+				g = -g;
+            }
+            e[i] = scale * g;
+            h = h - f * g;
+            d[i-1] = f - g;
+            for (j = 0; j < i; j++) {
+				e[j] = 0.0;
+            }
+   
+            // Apply similarity transformation to remaining columns.
+   
+            for (j = 0; j < i; j++) {
+				f = d[j];
+				V[j][i] = f;
+				g = e[j] + V[j][j] * f;
+				for (k = j+1; k <= i-1; k++) {
+					g += V[k][j] * d[k];
+					e[k] += V[k][j] * f;
+				}
+				e[j] = g;
+            }
+            f = 0.0;
+            for (j = 0; j < i; j++) {
+				e[j] /= h;
+				f += e[j] * d[j];
+            }
+            hh = f / (h + h);
+            for (j = 0; j < i; j++) {
+				e[j] -= hh * d[j];
+            }
+            for (j = 0; j < i; j++) {
+				f = d[j];
+				g = e[j];
+				for (k = j; k <= i-1; k++) {
+					V[k][j] -= (f * e[k] + g * d[k]);
+				}
+				d[j] = V[i-1][j];
+				V[i][j] = 0.0;
+            }
+		}
+		d[i] = h;
+	}
+   
+	// Accumulate transformations.
+   
+	for (i = 0; i < n-1; i++) {
+		double h, g;
+		V[n-1][i] = V[i][i];
+		V[i][i] = 1.0;
+		h = d[i+1];
+		if (h != 0.0) {
+            for (k = 0; k <= i; k++) {
+				d[k] = V[k][i+1] / h;
+            }
+            for (j = 0; j <= i; j++) {
+				g = 0.0;
+				for (k = 0; k <= i; k++) {
+					g += V[k][i+1] * V[k][j];
+				}
+				for (k = 0; k <= i; k++) {
+					V[k][j] -= g * d[k];
+				}
+            }
+		}
+		for (k = 0; k <= i; k++) {
+            V[k][i+1] = 0.0;
+		}
+	}
+	for (j = 0; j < n; j++) {
+		d[j] = V[n-1][j];
+		V[n-1][j] = 0.0;
+	}
+	V[n-1][n-1] = 1.0;
+	e[0] = 0.0;
+} 
+
+// Symmetric tridiagonal QL algorithm.
+   
+void tql2 (int n, double d[3], double e[3], double V[3][3]) {
+
+	//  This is derived from the Algol procedures tql2, by
+	//  Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
+	//  Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
+	//  Fortran subroutine in EISPACK.
+	int i,j,k,l;
+	double f = 0.0;
+	double tst1 = 0.0;
+	double eps = pow(2.0,-52.0);
+	
+	for (i = 1; i < n; i++) {
+		e[i-1] = e[i];
+	}
+	e[n-1] = 0.0;
+   
+	for (l = 0; l < n; l++) {
+
+		int m = l;
+
+		// Find small subdiagonal element
+		tst1 = MAX(tst1,abs(d[l]) + abs(e[l]));
+
+        // Original while-loop from Java code
+		while (m < n) {
+            if (abs(e[m]) <= eps*tst1) {
+				break;
+            }
+            m++;
+		}
+
+   
+		// If m == l, d[l] is an eigenvalue,
+		// otherwise, iterate.
+   
+		if (m > l) {
+            int iter = 0;
+            do {
+				// Compute implicit shift
+   
+				double g = d[l];
+				double p = (d[l+1] - g) / (2.0 * e[l]);
+				double r = hypot(p,1.0);
+				double dl1, h, c, c2, c3, el1, s, s2;
+
+				iter = iter + 1;  // (Could check iteration count here.)
+   
+				if (p < 0) {
+					r = -r;
+				}
+				d[l] = e[l] / (p + r);
+				d[l+1] = e[l] * (p + r);
+				dl1 = d[l+1];
+				h = g - d[l];
+				for (i = l+2; i < n; i++) {
+					d[i] -= h;
+				}
+				f = f + h;
+   
+				// Implicit QL transformation.
+   
+				p = d[m];
+				c = 1.0;
+				c2 = c;
+				c3 = c;
+				el1 = e[l+1];
+				s = 0.0;
+				s2 = 0.0;
+				for (i = m-1; i >= l; i--) {
+					c3 = c2;
+					c2 = c;
+					s2 = s;
+					g = c * e[i];
+					h = c * p;
+					r = hypot(p,e[i]);
+					e[i+1] = s * r;
+					s = e[i] / r;
+					c = p / r;
+					p = c * d[i] - s * g;
+					d[i+1] = h + s * (c * g + s * d[i]);
+   
+					// Accumulate transformation.
+   
+					for (k = 0; k < n; k++) {
+						h = V[k][i+1];
+						V[k][i+1] = s * V[k][i] + c * h;
+						V[k][i] = c * V[k][i] - s * h;
+					}
+				}
+				p = -s * s2 * c3 * el1 * e[l] / dl1;
+				e[l] = s * p;
+				d[l] = c * p;
+   
+				// Check for convergence.
+   
+            } while (abs(e[l]) > eps*tst1);
+		}
+		d[l] = d[l] + f;
+		e[l] = 0.0;
+	}
+     
+	// Sort eigenvalues and corresponding vectors.
+   
+	for (i = 0; i < n-1; i++) {
+		double p = d[i];
+		k = i;
+		for (j = i+1; j < n; j++) {
+            if (d[j] < p) {
+				k = j;
+				p = d[j];
+            }
+		}
+		if (k != i) {
+            d[k] = d[i];
+            d[i] = p;
+            for (j = 0; j < n; j++) {
+				p = V[j][i];
+				V[j][i] = V[j][k];
+				V[j][k] = p;
+            }
+		}
+	}
+}
+
+
+int principal_stresses_orig(StressTensor* stress, double sp[3], double cn[3][3])
 {
 
 	double **a,**v,*d;

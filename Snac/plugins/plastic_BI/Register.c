@@ -33,6 +33,7 @@
 #include <StGermain/StGermain.h>
 #include <StGermain/FD/FD.h>
 #include "Snac/Snac.h"
+#include "Snac/Remesher/Remesher.h"
 #include "types.h"
 #include "Node.h"
 #include "Element.h"
@@ -82,6 +83,7 @@ void* _SnacPlastic_DefaultNew( Name name ) {
 void _SnacPlastic_Construct( void* component, Stg_ComponentFactory* cf, void* data ) {
 	Snac_Context*	context;
 	EntryPoint* 	interpolateElementEP;
+	EntryPoint* 	copyElementEP;
 
 	/* Retrieve context. */
 	context = (Snac_Context*)Stg_ComponentFactory_ConstructByName( cf, "context", Snac_Context, True, data ); 
@@ -136,6 +138,15 @@ void _SnacPlastic_Construct( void* component, Stg_ComponentFactory* cf, void* da
 						  SnacPlastic_Type );
 	}
 
+	/* Add extensions to the copyElement entry point, but it will only exist if the remesher is loaded. */
+	copyElementEP = Context_GetEntryPoint( context,	"SnacRemesher_EP_CopyElement" );
+	if( copyElementEP ) {
+		EntryPoint_Append( 
+						  copyElementEP,
+						  SnacPlastic_Type, 
+						  _SnacPlastic_CopyElement, 
+						  SnacPlastic_Type );
+	}
 	/* Construct. */
 	_SnacPlastic_ConstructExtensions( context, data );
 }

@@ -48,6 +48,6 @@ PROJ_LIBS = ${def_libs}
 EXTERNAL_LIBS = -L${STGERMAIN_LIBDIR}  -lSnac -lStGermain 
 EXTERNAL_INCLUDES = -I${STGERMAIN_INCDIR}/StGermain -I${STGERMAIN_INCDIR} 
 
-packages = MPI XML MATH GSL
+packages = MPI XML MATH
 
 include ${PROJ_ROOT}/Makefile.vmake
