@@ -191,7 +191,6 @@ void _SnacRemesher_ConstructExtensions( void* _context, void* data ) {
 	contextExt->bottomRestore = 0;
 	if( !strcmp( Dictionary_Entry_Value_AsString( Dictionary_GetDefault( context->dictionary, "bottomRestore", Dictionary_Entry_Value_FromString( OFF_STR ) ) ), ON_STR) )
 		contextExt->bottomRestore = 1;
-	fprintf(stderr,"bottomRestore=%d\n",contextExt->bottomRestore);
 	
 	/* Register these functions for use in VCs */
 	ConditionFunction_Register_Add(
