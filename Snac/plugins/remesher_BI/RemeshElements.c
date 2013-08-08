@@ -680,7 +680,7 @@ void computeBaryCoords( void* _context )
 								for(tet_I=0;tet_I<5;tet_I++) {
 									Index	coef_I;
 									double 	lambda[4];
-									double 	tol_error = 1e-4;
+									double 	tol_error = 1e-6;
 									
 									lambda[3] = 1.0;
 									for(coef_I=0;coef_I<3;coef_I++) {
@@ -691,7 +691,9 @@ void computeBaryCoords( void* _context )
 											meshExt->barcoef[element_dI].coef[tet_I][coef_I][3];
 										lambda[3] -= lambda[coef_I];
 									}
-
+									for(coef_I=0;coef_I<4;coef_I++) {
+										if( fabs(lambda[coef_I]) < tol_error ) lambda[coef_I] = 0.0;
+									}
 									/* Keep track of closest element in case the current new barycenter is outside of the old grid. */
 									lambda_sqrd = 0.0;
 									for(coef_I=0;coef_I<4;coef_I++) 
