@@ -108,7 +108,7 @@
 	<param name="remeshCondition"> onTimeStep </param>
 	<param name="remeshTimeStepCriterion"> 7 </param>
 	<param name="remeshLengthCriterion"> 0.7 </param>
-	<param name="bottomResotre"> on </param>
+	<param name="bottomRestore"> on </param>
 	
 	<!-- node ICs -->
 	<param name="topTemp"> 0.0 </param>
