@@ -384,7 +384,7 @@ void ConvertTimeStep(
     /*
      * Write out the velocity information 
      */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"velocity\" NumberOfComponents=\"3\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"velocity\" NumberOfComponents=\"3\" format=\"ascii\">\n");
     if (fseek( velIn, dumpIteration * nodeLocalCount * sizeof(float) * 3, SEEK_SET )!=0) {
 	fprintf(stderr, "Cannot find read required portion of Snac velocity output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		rank, rankI, rankJ, rankK,
@@ -419,7 +419,7 @@ void ConvertTimeStep(
      * Write out the force information 
      */
     if( doForce ) {
-	fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"force\" NumberOfComponents=\"3\" format=\"ascii\">\n");
+	fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"force\" NumberOfComponents=\"3\" format=\"ascii\">\n");
 	if (fseek( forceIn, dumpIteration * nodeLocalCount * sizeof(float) * 3, SEEK_SET )!=0) {
 	    fprintf(stderr, "Cannot find read required portion of Snac force output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		    rank, rankI, rankJ, rankK,
@@ -450,7 +450,7 @@ void ConvertTimeStep(
      * Write out the temperature information 
      */
     if( doTemp ) {
-	fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"temperature\" format=\"ascii\">\n");
+	fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"temperature\" format=\"ascii\">\n");
 	if (fseek( tempIn, dumpIteration * nodeLocalCount * sizeof(float), SEEK_SET )!=0) {
 	    fprintf(stderr, "Cannot find read required portion of Snac temperature output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		    rank, rankI, rankJ, rankK,
@@ -491,7 +491,7 @@ void ConvertTimeStep(
      * Write out the plastic strain information 
      */
     if( doAps ) {
-	fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Plastic strain\" format=\"ascii\">\n");
+	fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"Plastic strain\" format=\"ascii\">\n");
 	if (fseek( apsIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET )!=0) {
 	    fprintf(stderr, "Cannot find read required portion of Snac plastic strain output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		    rank, rankI, rankJ, rankK,
@@ -521,7 +521,7 @@ void ConvertTimeStep(
     /*
      * Write out the strain rate information 
      */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Strain rate\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"Strain rate\" format=\"ascii\">\n");
     if (fseek( strainRateIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET )!=0) {
 	fprintf(stderr, "Cannot find read required portion of Snac strain rate output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		rank, rankI, rankJ, rankK,
@@ -550,7 +550,7 @@ void ConvertTimeStep(
     /*
      * Write out the stress tensor 
      */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Sxx\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"Sxx\" format=\"ascii\">\n");
     if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float) * numStressComponentsPerElement, SEEK_SET )!=0) {
 		fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 				rank, rankI, rankJ, rankK,
@@ -570,7 +570,7 @@ void ConvertTimeStep(
 		fprintf( vtkOut, "%g ", elementStressMeasures.stressComponents[0] );
     }
     fprintf( vtkOut, "        </DataArray>\n");
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Syy\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"Syy\" format=\"ascii\">\n");
     if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float) * numStressComponentsPerElement, SEEK_SET )!=0) {
 		fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 				rank, rankI, rankJ, rankK,
@@ -590,7 +590,7 @@ void ConvertTimeStep(
 		fprintf( vtkOut, "%g ", elementStressMeasures.stressComponents[1] );
     }
     fprintf( vtkOut, "        </DataArray>\n");
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Szz\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"Szz\" format=\"ascii\">\n");
     if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float) * numStressComponentsPerElement, SEEK_SET )!=0) {
 		fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 				rank, rankI, rankJ, rankK,
@@ -610,7 +610,7 @@ void ConvertTimeStep(
 		fprintf( vtkOut, "%g ", elementStressMeasures.stressComponents[2] );
     }
     fprintf( vtkOut, "        </DataArray>\n");
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Sxy\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"Sxy\" format=\"ascii\">\n");
     if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float) * numStressComponentsPerElement, SEEK_SET )!=0) {
 		fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 				rank, rankI, rankJ, rankK,
@@ -630,7 +630,7 @@ void ConvertTimeStep(
 		fprintf( vtkOut, "%g ", elementStressMeasures.stressComponents[3] );
     }
     fprintf( vtkOut, "        </DataArray>\n");
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Sxz\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"Sxz\" format=\"ascii\">\n");
     if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float) * numStressComponentsPerElement, SEEK_SET )!=0) {
 		fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 				rank, rankI, rankJ, rankK,
@@ -650,7 +650,7 @@ void ConvertTimeStep(
 		fprintf( vtkOut, "%g ", elementStressMeasures.stressComponents[4] );
     }
     fprintf( vtkOut, "        </DataArray>\n");
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Syz\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"Syz\" format=\"ascii\">\n");
     if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float) * numStressComponentsPerElement, SEEK_SET )!=0) {
 		fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 				rank, rankI, rankJ, rankK,
@@ -674,7 +674,7 @@ void ConvertTimeStep(
     /*
      * Write out the pressure information 
      */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Pressure\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"Pressure\" format=\"ascii\">\n");
     if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float) * numStressComponentsPerElement, SEEK_SET )!=0) {
 		fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 				rank, rankI, rankJ, rankK,
@@ -702,7 +702,7 @@ void ConvertTimeStep(
      * Write out the pressure information 
      */
     if( doHPr ) {
-	fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Hydrostatic pressure\" format=\"ascii\">\n");
+	fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"Hydrostatic pressure\" format=\"ascii\">\n");
 	if (fseek( hydroPressureIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET )!=0) {
 	    fprintf(stderr, "Cannot find read required portion of Snac pressure output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		    rank, rankI, rankJ, rankK,
@@ -732,7 +732,7 @@ void ConvertTimeStep(
     /*
      * Write out the stress information 
      */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Tetra shear stress\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"Tetra shear stress\" format=\"ascii\">\n");
     if (fseek( stressIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET )!=0) {
 	fprintf(stderr, "Cannot find read required portion of Snac shear stress output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		rank, rankI, rankJ, rankK,
@@ -762,7 +762,7 @@ void ConvertTimeStep(
     /*
      * Write out the maxShearStress information 
      */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Max. shear stress\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"Max. shear stress\" format=\"ascii\">\n");
     if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*numStressComponentsPerElement, SEEK_SET )!=0) {
 	fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		rank, rankI, rankJ, rankK,
@@ -790,7 +790,7 @@ void ConvertTimeStep(
     /*
      * Write out the vonMisesStress information 
      */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Von Mises stress\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"Von Mises stress\" format=\"ascii\">\n");
     if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*numStressComponentsPerElement, SEEK_SET )!=0) {
 	fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		rank, rankI, rankJ, rankK,
@@ -817,7 +817,7 @@ void ConvertTimeStep(
     /*
      * Write out the slopeShearStress information 
      */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Shear stress @%gd\" format=\"ascii\">\n",failureAngle);
+    fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"Shear stress @%gd\" format=\"ascii\">\n",failureAngle);
     if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*numStressComponentsPerElement, SEEK_SET )!=0) {
 	fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		rank, rankI, rankJ, rankK,
@@ -845,7 +845,7 @@ void ConvertTimeStep(
     /*
      * Write out the slopeNormalStress information 
      */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Normal stress @%gd\" format=\"ascii\">\n", failureAngle);
+    fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"Normal stress @%gd\" format=\"ascii\">\n", failureAngle);
     if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*numStressComponentsPerElement, SEEK_SET )!=0) {
 	fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		rank, rankI, rankJ, rankK,
@@ -871,7 +871,7 @@ void ConvertTimeStep(
     fprintf( vtkOut, "        </DataArray>\n");
 
     /* Write out the failurePotential information */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Failure potential\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"Failure potential\" format=\"ascii\">\n");
     if (fseek( stressTensorIn, dumpIteration * elementLocalCount * sizeof(float)*numStressComponentsPerElement, SEEK_SET )!=0) {
 	fprintf(stderr, "Cannot find read required portion of Snac stress tensor output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		rank, rankI, rankJ, rankK,
@@ -903,7 +903,7 @@ void ConvertTimeStep(
     /*
      * Write out the phase information 
      */
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Phase\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"Phase\" format=\"ascii\">\n");
     if (fseek( phaseIn, dumpIteration * elementLocalCount * sizeof(unsigned int), SEEK_SET )!=0) {
 	fprintf(stderr, "Cannot find read required portion of Snac phase index output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		rank, rankI, rankJ, rankK,
@@ -934,7 +934,7 @@ void ConvertTimeStep(
      * Write out the viscosity information 
      */
     if( doVisc ) {
-	fprintf( vtkOut, "        <DataArray type=\"Float32\" Name=\"Viscosity\" format=\"ascii\">\n");
+	fprintf( vtkOut, "        <DataArray type=\"Float64\" Name=\"Viscosity\" format=\"ascii\">\n");
 	if (fseek( viscIn, dumpIteration * elementLocalCount * sizeof(float), SEEK_SET )!=0) {
 	    fprintf(stderr, "Cannot find read required portion of Snac viscosity output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		    rank, rankI, rankJ, rankK,
@@ -971,7 +971,7 @@ void ConvertTimeStep(
      *
      */
     fprintf( vtkOut, "      <Points>\n");
-    fprintf( vtkOut, "        <DataArray type=\"Float32\" NumberOfComponents=\"3\" format=\"ascii\">\n");
+    fprintf( vtkOut, "        <DataArray type=\"Float64\" NumberOfComponents=\"3\" format=\"ascii\">\n");
     if (fseek( coordIn, dumpIteration * nodeLocalCount * sizeof(float) * 3, SEEK_SET )!=0) {
 	fprintf(stderr, "Cannot find read required portion of Snac coordinates output file:  rank=%d: %d, %d, %d,  dump iteration=%d, node count=%d\n", 
 		rank, rankI, rankJ, rankK,
@@ -1036,11 +1036,11 @@ void ConvertTimeStep(
 	 * Start the node section 
 	 */
 	fprintf( vtkOut1, "    <PPointData>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Velocity\" NumberOfComponents=\"3\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Velocity\" NumberOfComponents=\"3\"/>\n");
 	if( doForce )
-	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Force\" NumberOfComponents=\"3\"/>\n");
+	    fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Force\" NumberOfComponents=\"3\"/>\n");
 	if( doTemp )
-	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Temperature\"/>\n");
+	    fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Temperature\"/>\n");
 	fprintf( vtkOut1, "    </PPointData>\n");
 
 	/*
@@ -1048,34 +1048,34 @@ void ConvertTimeStep(
 	 */
 	fprintf( vtkOut1, "    <PCellData>\n");
 	if( doAps )
-	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Plastic strain\"/>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Strain rate\"/>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Sxx\"/>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Syy\"/>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Szz\"/>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Sxy\"/>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Sxz\"/>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Syz\"/>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Pressure\"/>\n");
+	    fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Plastic strain\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Strain rate\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Sxx\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Syy\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Szz\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Sxy\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Sxz\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Syz\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Pressure\"/>\n");
 	if( doHPr )
-	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Hydrostatic pressure\"/>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Tetra shear stress\"/>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Max. shear stress\"/>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Von Mises stress\"/>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Shear stress @%gd\"/>\n",failureAngle);
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Normal stress @%gd\"/>\n",failureAngle);
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Failure potential @%gd\"/>\n",failureAngle);
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Phase\"/>\n");
+	    fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Hydrostatic pressure\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Tetra shear stress\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Max. shear stress\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Von Mises stress\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Shear stress @%gd\"/>\n",failureAngle);
+	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Normal stress @%gd\"/>\n",failureAngle);
+	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Failure potential @%gd\"/>\n",failureAngle);
+	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Phase\"/>\n");
 
 	if( doVisc )
-	    fprintf( vtkOut1, "        <PDataArray type=\"Float32\" Name=\"Viscosity\"/>\n");
+	    fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Viscosity\"/>\n");
 	fprintf( vtkOut1, "    </PCellData>\n");
 	
 	/*
 	 * Write out coordinates. 
 	 */
 	fprintf( vtkOut1, "    <PPoints>\n");
-	fprintf( vtkOut1, "        <PDataArray type=\"Float32\" NumberOfComponents=\"3\"/>\n");
+	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" NumberOfComponents=\"3\"/>\n");
 	fprintf( vtkOut1, "    </PPoints>\n");
 
 	/*
