@@ -37,6 +37,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <assert.h>
+#include <string.h>
 #ifndef PI
 	#ifndef M_PIl
 		#ifndef M_PI
@@ -151,7 +152,7 @@ int main( int argc, char* argv[])
     /*
      * Set the default input/output path and range of time steps to process.
      */
-    sprintf( path, argv[1] );
+    strcpy( path, argv[1] );
 	sprintf( tmpBuf, "%s/timeStep.0", path );
 	if( (timeStepIn = fopen( tmpBuf, "r" )) == NULL ) {
 		fprintf(stderr, "\"%s\" not found\n", tmpBuf );
@@ -698,6 +699,7 @@ void ConvertTimeStep(
     }
     fprintf( vtkOut, "        </DataArray>\n");
 
+#if 0
     /*
      * Write out the pressure information 
      */
@@ -895,7 +897,7 @@ void ConvertTimeStep(
 #endif	
     }
     fprintf( vtkOut, "        </DataArray>\n");
-
+#endif
 
 
 
@@ -1057,6 +1059,7 @@ void ConvertTimeStep(
 	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Sxz\"/>\n");
 	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Syz\"/>\n");
 	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Pressure\"/>\n");
+#if 0
 	if( doHPr )
 	    fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Hydrostatic pressure\"/>\n");
 	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Tetra shear stress\"/>\n");
@@ -1065,6 +1068,7 @@ void ConvertTimeStep(
 	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Shear stress @%gd\"/>\n",failureAngle);
 	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Normal stress @%gd\"/>\n",failureAngle);
 	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Failure potential @%gd\"/>\n",failureAngle);
+#endif
 	fprintf( vtkOut1, "        <PDataArray type=\"Float64\" Name=\"Phase\"/>\n");
 
 	if( doVisc )
@@ -1359,7 +1363,6 @@ void free_ivector(int *v, long nl, long nh)
 void 
 DeriveStressMeasures(FILE *stressTensorIn, double elementStressTensor[3][3], struct stressMeasures *elementStressMeasures)
 {
-    int			tetra_I;
     double		failureAngleRadians=elementStressMeasures->failureAngle*M_PI/180.0;
     double		normalVector[3],slopeParallelVector[3],tractionVector[3];
     double		tmp;
@@ -1370,10 +1373,10 @@ DeriveStressMeasures(FILE *stressTensorIn, double elementStressTensor[3][3], str
 	 */
 	if ( fread( stressTensorArray, sizeof(float), numStressVectorComponent, stressTensorIn )==0 )  {
 		if (feof(stressTensorIn)) {
-			fprintf(stderr, "Error (reached EOF prematurely) while reading Snac stress tensor output file: tetrahedral element #%d\n" , tetra_I);
+			fprintf(stderr, "Error (reached EOF prematurely) while reading Snac stress tensor output file.\n");
 			exit(1);
 		} else {
-			fprintf(stderr, "Error while reading Snac stress tensor output file: tetrahedral element #%d\n" , tetra_I);
+			fprintf(stderr, "Error while reading Snac stress tensor output file.\n");
 			exit(1);
 		}
 	}

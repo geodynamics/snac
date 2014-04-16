@@ -1227,8 +1227,8 @@ if test "${DL_DIR}x" = "x"; then
 	case ${SYSTEM} in
 		Linux|CYGWIN|OSF1|SunOS|ranger)
 			DL_DIR="/usr";;
-		Darwin)
-			DL_DIR="/sw";;
+		#Darwin)
+		#	DL_DIR="/sw";;
 		*)
 			echo "Warning: DL_DIR for system \"${SYSTEM}\" unknown. Set the environment variable.";;
 	esac
