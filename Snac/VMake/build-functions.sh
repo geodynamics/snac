@@ -390,7 +390,7 @@ EOF
 }
 
 markAsBuilding() {
-	echo "    $1 Marked as a project building built"
+	echo "    $1 Marked as a project to be built"
 cat <<EOF > ./create-env.tmp
 BUILDING_$1=1
 EOF

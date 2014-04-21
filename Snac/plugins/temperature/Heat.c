@@ -49,7 +49,7 @@ void SnacTemperature_LoopNodes( void* _context ) {
 	Node_LocalIndex			node_lI;
 
 	Journal_Printf( context->debug, "In %s(): updating temperature of all nodes.\n", __func__ );
-	Journal_Printf( context->snacInfo, "In %s(): updating temperature of all nodes.\n", __func__ );
+	//Journal_Printf( context->snacInfo, "In %s(): updating temperature of all nodes.\n", __func__ );
 
 	for( node_lI = 0; node_lI < context->mesh->nodeLocalCount; node_lI++ )  {
 		Snac_Heat( context, node_lI, 0 );

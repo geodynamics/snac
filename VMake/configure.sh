@@ -657,25 +657,25 @@ if ! DoConftest ./VMake/SystemTests/Endian SYSTEM_BIG_ENDIAN; then
 fi
 export SYSTEM_BIG_ENDIAN
 
-if test "${OBJCC}x" = "x"; then
-	case ${CC_TYPE} in
-		gnu)
-			OBJCC="${CC} -x objective-c";;
-		*)
-			echo "Warning: OBJCC for C compiler \"${CC_TYPE}\" unknown. Please set if needed.";;  
-	esac
-	export OBJCC
-fi
+#if test "${OBJCC}x" = "x"; then
+#	case ${CC_TYPE} in
+#		gnu)
+#			OBJCC="${CC} -x objective-c";;
+#		*)
+#			echo "Warning: OBJCC for C compiler \"${CC_TYPE}\" unknown. Please set if needed.";;  
+#	esac
+#	export OBJCC
+#fi
 
-if test "${OBJECTIVEC_LIBS}x" = "x"; then
-	case ${CC_TYPE} in
-		gnu)
-			OBJECTIVEC_LIBS="-lobjc";;
-		*)
-			echo "Warning: OBJECTIVEC_LIBS for C compiler \"${CC_TYPE}\" unknown. Please set if needed.";;  
-	esac
-	export OBJCECTIVEC_LIBS
-fi
+#if test "${OBJECTIVEC_LIBS}x" = "x"; then
+#	case ${CC_TYPE} in
+#		gnu)
+#			OBJECTIVEC_LIBS="-lobjc";;
+#		*)
+#			echo "Warning: OBJECTIVEC_LIBS for C compiler \"${CC_TYPE}\" unknown. Please set if needed.";;  
+#	esac
+#	export OBJCECTIVEC_LIBS
+#fi
 
 	
 
@@ -1282,16 +1282,16 @@ if test "${DL_INCLUDES}x" = "x"; then
 	export DL_INCLUDES
 fi
 
-if test "${DOXYGEN}x" = "x"; then
-	DOXYGEN=`${WHICH} doxygen 2> /dev/null`
-	if whichFailed "${DOXYGEN}"; then
-		DOXYGEN="/usr/bin/doxygen"
-	fi
-	warnValidExecutable "${DOXYGEN}" doxygen
-	export DOXYGEN
-else
-	warnValidExecutableInput "${DOXYGEN}" doxygen
-fi
+#if test "${DOXYGEN}x" = "x"; then
+#	DOXYGEN=`${WHICH} doxygen 2> /dev/null`
+#	if whichFailed "${DOXYGEN}"; then
+#		DOXYGEN="/usr/bin/doxygen"
+#	fi
+#	warnValidExecutable "${DOXYGEN}" doxygen
+#	export DOXYGEN
+#else
+#	warnValidExecutableInput "${DOXYGEN}" doxygen
+#fi
 
 
 if test "${SVN}x" = "x"; then

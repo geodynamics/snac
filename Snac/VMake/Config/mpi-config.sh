@@ -77,7 +77,7 @@ if test "${MPI_LIBFILES}x" = "x"; then
 				MPI_LIBFILES='-lmpich'
 				setValueWithDefault MPI_LIBRARY 'mpich'
 			elif test "${MPI_IMPLEMENTATION}" = "mpich"; then
-				MPI_LIBFILES='-lmpich -lpmpich'
+				MPI_LIBFILES='-lmpich'
 				setValueWithDefault MPI_LIBRARY 'mpich'
 			else
 				MPI_LIBFILES='-lmpi'
