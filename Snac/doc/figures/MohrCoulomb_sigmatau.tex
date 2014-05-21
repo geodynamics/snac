@@ -1,0 +1,28 @@
+\documentclass[12pt]{article}
+\usepackage{pst-all}
+\usepackage{pst-pdf}
+
+\begin{document}
+
+\psset{xunit=1in,yunit=1in, runit=1in, linewidth=1.5pt}
+\begin{pspicture}(-3.5,-2)(3,3)
+% Yield function
+  \psplot[linecolor=red]{-3.0}{1.666667}{x -0.6 mul 1.0 add}
+% Mohr circle
+  \pscircle(-1.28,0){1.516}
+% Arc for the friction angle
+  \psarc(1.666667,0){0.5}{150}{180}
+% Randial line to the intersection
+  \psline[linestyle=dashed](-1.28,0)(-0.5,1.3)
+% Coordinate Axes
+  \psaxes[ticks=none, labels=none]{->}(0,0)(-3.0,-2.0)(3.0,3.0)
+
+% Labels
+  \uput[u](2.8,0){{\huge $\sigma$}}
+  \uput[l](0,2.8){{\huge $\tau$}}
+  \uput[ul](1.1,0){{\huge $\phi$}}
+  \uput[dr](0.236,0){{\huge $\sigma_3$}}
+  \uput[dl](-2.796,0){{\huge $\sigma_1$}}
+\end{pspicture}
+
+\end{document}
