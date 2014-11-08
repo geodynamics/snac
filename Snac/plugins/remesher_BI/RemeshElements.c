@@ -334,11 +334,10 @@ void createBarycenterGrids( void* _context )
 	for( element_lI = 0; element_lI < mesh->elementLocalCount; element_lI++ ) {
 		unsigned			nEltNodes;
 		Node_DomainIndex*	eltNodes;
-		
+        Element_GlobalIndex	gEltInd;
+
 		/* Extract the element's node indices.  Note that there should always be eight of these. */
 		{
-			Element_GlobalIndex	gEltInd;
-			
 			nEltNodes = 8;
 			eltNodes = Memory_Alloc_Array( Node_DomainIndex, nEltNodes, "SnacRemesher" );
 			gEltInd = Mesh_ElementMapLocalToGlobal( mesh, element_lI );
@@ -362,6 +361,21 @@ void createBarycenterGrids( void* _context )
 			/* 	fprintf(stderr,"me=%d el=%d newBC=%e %e %e\n",context->rank,element_lI, */
 			/* 			meshExt->newBarycenters[element_lI][0],meshExt->newBarycenters[element_lI][1], */
 			/* 			meshExt->newBarycenters[element_lI][2]); */
+
+            /* Special treatment to test.
+               Since some boundary elements of the new mesh fail to find containing old element,
+               push the barycenters "inward" by a small amount so that these elements are forced
+               to be inside the old mesh. */
+            RegularMeshUtils_Element_1DTo3D( decomp, gEltInd, &elgI, &elgJ, &elgK ); /* Decompose gEltInd into ijk indexes. */
+            /* The factor 1.0e-3 is totally experimental.
+               To minimize error this treatment introduces into barycentric interpolation,
+               a minimum value would have to be found and used. */
+            if( elgI == 0 )        meshExt->newBarycenters[element_lI][0] += 1.0e-3 * fabs(meshExt->newBarycenters[element_lI][0]);
+            if( elgI == nelgI-1 )  meshExt->newBarycenters[element_lI][0] -= 1.0e-3 * fabs(meshExt->newBarycenters[element_lI][0]);
+            if( elgJ == 0 )        meshExt->newBarycenters[element_lI][1] += 1.0e-3 * fabs(meshExt->newBarycenters[element_lI][1]);
+            if( elgJ == nelgJ-1 )  meshExt->newBarycenters[element_lI][1] -= 1.0e-3 * fabs(meshExt->newBarycenters[element_lI][1]);
+            if( elgK == 0 )        meshExt->newBarycenters[element_lI][2] += 1.0e-3 * fabs(meshExt->newBarycenters[element_lI][2]);
+            if( elgK == nelgK-1 )  meshExt->newBarycenters[element_lI][2] -= 1.0e-3 * fabs(meshExt->newBarycenters[element_lI][2]);
 		}
 	}
 
