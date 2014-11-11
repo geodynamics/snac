@@ -173,7 +173,7 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 			/* compute viscosity and add thermal stress */
 			if( temperatureEP ) {
 
-				srJ2 = sqrt(fabs(straind1*straind2+straind2*straind0+straind0*straind1 -(*strain[0][1])*(*strain[0][1])-(*strain[0][2])*(*strain[0][2])-(*strain[1][2])*(*strain[1][2])))/context->dt;
+				srJ2 = sqrt(fabs(straind1*straind2+straind2*straind0+straind0*straind1 -(*strain)[0][1]*(*strain)[0][1]-(*strain)[0][2]*(*strain)[0][2]-(*strain)[1][2]*(*strain)[1][2]))/context->dt;
 				if(srJ2 == 0.0f) srJ2 = rstrainrate; // temporary. should be vmax/length_scale
 
 				avgTemp=0.0;
@@ -374,7 +374,9 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 			/* linear healing: applied whether this tet has yielded or not. 
 			   Parameters are hardwired for now, but should be given through an input file. */
 			/* viscoplasticElement->plasticStrain[tetra_I] *= (1.0/(1.0+context->dt/1.0e+12)); */
-			viscoplasticElement->plasticStrain[tetra_I] *= (1.0/(1.0+context->dt/(ind?1.0e+13:5.0e+11)));
+
+            /* To use different healing rate according to whether yielding has occurred or not: */
+			/* viscoplasticElement->plasticStrain[tetra_I] *= (1.0/(1.0+context->dt/(ind?1.0e+13:5.0e+11))); */
 
 			depls += viscoplasticElement->plasticStrain[tetra_I]*element->tetra[tetra_I].volume;
 			totalVolume += element->tetra[tetra_I].volume;
