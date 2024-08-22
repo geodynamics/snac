@@ -15,7 +15,8 @@ RUN apt-get update && \
     mpich \
     subversion \
     libapache2-mod-svn \
-    libc6-dev
+    libc6-dev \
+    doxygen
 
 
 RUN useradd \
@@ -42,4 +43,4 @@ ENV PATH=/home/snac_user/snac/docker:$PATH
 RUN cd snac; cd docker; chmod +x cc;
 ENV PATH=/home/snac_user/snac/docker:$PATH
 
-RUN cd snac; cd docker; mv configure.sh /home/snac_user/snac/Snac/Vmake
+RUN cd snac; cd docker; mv configure.sh /home/snac_user/snac; cd ..; chmod +x configure.sh;

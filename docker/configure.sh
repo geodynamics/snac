@@ -1158,7 +1158,8 @@ if test "${CC_OPTIMISATIONLEVEL}x" = "x"; then
 	export CC_OPTIMISATIONLEVEL
 fi
 
-
+#set LIBDIR here
+export DL_LIBDIR=/usr/lib/x86_64-linux-gnu
 
 # Obtain dl information
 if test "${DL_DIR}x" = "x"; then
