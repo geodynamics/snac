@@ -14,4 +14,4 @@ I have made progess towards compiling SNAC but have not been able to yet. If you
 
 5. The next two lines make it so that "gcc" and "cc" run with the -fcommon flag, which is necesary because snac will call gcc when compiling. This allows snac to run these commands without editing the Snac compile scripts to call -fcommon.
 
-6. move configure.sh from docker into the required folder within snac. configure.sh is an edited configure file which will actually run, as opposed to the current snac configure file. In the current snac configure file, there is an issue with newline characters which prevented it from running.
+6. move configure.sh from docker into the required folder within snac. configure.sh is an edited configure file which will actually run, as opposed to the current snac configure file. In the current snac configure file, there is an issue with newline characters which prevented it from running. The new configure.sh also defines DL_DIR which allows the script to find a required library.
