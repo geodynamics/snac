@@ -57,7 +57,7 @@
 		Mass*				inertialMass,
 		Force*				force,
 		Force*				balance );
-	double Spherical_RMin;
-	double Spherical_RMax;
+	extern double Spherical_RMin;
+	extern double Spherical_RMax;
 
 #endif /* __Snac_WinklerForce_VariableConditions_h__ */

@@ -43,7 +43,7 @@
 
 void _SnacHydroStaticIC_IC( void* _context );
 void _SnacHydroStaticIC_IC_Spherical( void* _context );
-	double Spherical_RMin;
-	double Spherical_RMax;
+extern double Spherical_RMin;
+extern double Spherical_RMax;
 
 #endif /* __Snac_HydroStaticIC_VariableConditions_h__ */
