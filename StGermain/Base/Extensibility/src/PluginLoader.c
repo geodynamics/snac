@@ -97,6 +97,7 @@ PluginLoader* PluginLoader_NewLocal( Name pluginName, Stg_ObjectList* directorie
 	stream =  Journal_Register( Info_Type, "PluginLoaders" );
 	debug =  Journal_Register( Debug_Type, "PluginLoaders" );
 	error =  Journal_Register( Error_Type, "PluginLoaders" );
+	(void)error; /* to suppress unused-but-set-variable warning. */
 
 	assert( pluginName );
 

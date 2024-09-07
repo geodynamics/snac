@@ -279,11 +279,13 @@ void SnacViscoPlastic_Constitutive( void* _context, Element_LocalIndex element_l
 				}
 			}
 
-			if( frictionAngle > 0.0f ) {
+			if( frictionAngle >= 0.0f ) {
 				tension_cutoff = material->ten_off;
-				if( frictionAngle > 0.0) {
-					tmp = cohesion / tan( frictionAngle * degrad);
-					if(tmp < tension_cutoff) tension_cutoff=tmp;
+				/* tension_cutoff is 0 by default. If not set by a user, it is set here.*/
+				if( frictionAngle > 0.0 && tension_cutoff == 0.0 ) {
+					tension_cutoff = cohesion / tan( frictionAngle * degrad);
+					/* tmp = cohesion / tan( frictionAngle * degrad);
+					if(tmp < tension_cutoff) tension_cutoff=tmp; */
 				}
 			}
 			else {

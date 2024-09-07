@@ -50,6 +50,10 @@ static char RMAX_STR[] = "rMax";
 static char MESH_STR[] = "mesh";
 static double MIN[] = { -45.0f, -45.0f, 0.5f };
 static double MAX[] = { 45.0f, 45.0f, 1.0f };
+/* First-time definition of these extern variables (Force.h) */
+/* The proper values are asgined in _SnacWinklerForce_Construct. */
+double Spherical_RMin = 0.0;
+double Spherical_RMax = 0.0;
 
 Index _SnacWinklerForce_Register( PluginsManager* pluginsMgr ) {
 	return PluginsManager_Submit( pluginsMgr, 

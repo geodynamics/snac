@@ -318,6 +318,7 @@ Bool PluginsManager_LoadPlugin( void* plugins, Name pluginName, void* _context )
 	stream =  Journal_Register( Info_Type, "Plugins" );
 	debug =  Journal_Register( Debug_Type, "Plugins" );
 	error =  Journal_Register( Error_Type, "Plugins" );
+	(void)error; /* To suppress unused-but-set-variable warning. */
 
 	if ( Stg_ObjectList_Get( self->plugins, pluginName ) != NULL ) {
 		Journal_Printf( debug, "Plugin %s already loaded\n", pluginName );
