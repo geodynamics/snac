@@ -45,7 +45,7 @@ SRCS = ${def_srcs}
 HDRS = ${def_hdrs}
 
 PROJ_LIBS = ${def_libs}
-EXTERNAL_LIBS = -L${STGERMAIN_LIBDIR}  -lSnac -lStGermain 
+EXTERNAL_LIBS = -L${STGERMAIN_LIBDIR}  -lSnac -lStGermain ${SNAC_LIBDIR}/SnacViscoPlasticmodule.so
 EXTERNAL_INCLUDES = -I${STGERMAIN_INCDIR}/StGermain -I${STGERMAIN_INCDIR} 
 
 packages = MPI XML MATH

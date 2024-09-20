@@ -35,9 +35,9 @@ endif
 
 def_sub += libSnac plugins src tests snac2vtk snac2dx snac2restart Python pyre 
 
-ifeq (true,$(shell if test -x $(DOXYGEN); then echo true; fi ))
-	def_sub += doc
-else
-	warn := $(shell echo Not entering doc directory as doxygen not found. 1>&2 )
-	warn := $(shell echo To generate doxgen docs, please set the DOXYGEN environment variable then re-run configure.sh. 1>&2 )
-endif
+#ifeq (true,$(shell if test -x $(DOXYGEN); then echo true; fi ))
+#	def_sub += doc
+#else
+#	warn := $(shell echo Not entering doc directory as doxygen not found. 1>&2 )
+#	warn := $(shell echo To generate doxgen docs, please set the DOXYGEN environment variable then re-run configure.sh. 1>&2 )
+#endif

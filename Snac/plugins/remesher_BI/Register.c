@@ -48,8 +48,9 @@
 /* Textual name of this class */
 const Type SnacRemesher_Type = "SnacRemesher";
 
-ExtensionInfo_Index SnacRemesher_ContextHandle;
-ExtensionInfo_Index SnacRemesher_MeshHandle;
+/* Define these extern variables here and let them take proper values below. */
+ExtensionInfo_Index SnacRemesher_ContextHandle = 0;
+ExtensionInfo_Index SnacRemesher_MeshHandle = 0;
 
 const Name SnacRemesher_EP_InterpolateNode =	"SnacRemesher_EP_InterpolateNode";
 const Name SnacRemesher_EP_InterpolateElement =	"SnacRemesher_EP_InterpolateElement";

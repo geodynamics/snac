@@ -43,12 +43,12 @@
 
 #define TOL 1.0e-09
 
-int				numProcessors;
-int				procToWatch;
-int				rank;
-MPI_Comm			CommWorld;
-Dictionary*			dictionary;
-Snac_Context*			snacContext;
+extern int				numProcessors;
+extern int				procToWatch;
+extern int				rank;
+extern MPI_Comm			CommWorld;
+extern Dictionary*			dictionary;
+extern Snac_Context*			snacContext;
 
 int main( int argc, char* argv[] ) {
 
